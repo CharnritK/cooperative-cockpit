@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenClaw Cooperative Cockpit</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <!-- Core styles -->
+    <link rel="stylesheet" href="styles/fonts.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/layout.css" />
+    <link rel="stylesheet" href="styles/components.css" />
+    <link rel="stylesheet" href="styles/status.css" />
+  </head>
+  <body>
+    <!-- Application shell -->
+    <div id="app-shell">
+      <!-- Top bar -->
+      <header class="top-bar">
+        <div class="top-left">
+          <div class="brand-mark" aria-hidden="true">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" /></svg>
+          </div>
+          <div class="brand-copy">
+            <h1 class="app-title">OpenClaw</h1>
+            <div class="app-subtitle">Cooperative Cockpit</div>
+          </div>
+        </div>
+        <div class="top-center" aria-label="Workflow stage">
+          <div class="workflow-stepper">
+            <span class="workflow-step" data-step="concept">Concept</span>
+            <span class="workflow-step" data-step="workbench">Workbench</span>
+            <span class="workflow-step" data-step="spec">Spec</span>
+            <span class="workflow-step" data-step="review">Review</span>
+            <span class="workflow-step" data-step="preview">Preview</span>
+            <span class="workflow-step" data-step="handoff">Handoff</span>
+          </div>
+        </div>
+        <div class="top-right">
+          <span class="artifact-badge"><span>Active</span><strong>COCKPIT-MVP-014</strong></span>
+          <button class="action-btn" data-action="preview"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg>Preview</button>
+          <button class="action-btn" data-action="validate"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg>Validate</button>
+          <button class="action-btn action-primary" data-action="handoff" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg>Handoff</button>
+        </div>
+      </header>
+      <!-- Left navigation rail -->
+      <nav class="left-rail" aria-label="Main navigation">
+        <div class="rail-progress" aria-label="Workflow progress">
+          <div class="rail-progress-head">
+            <span>Progress</span>
+            <strong id="rail-progress-value">1/6</strong>
+          </div>
+          <div class="rail-progress-bar"><span id="rail-progress-fill"></span></div>
+          <div class="rail-progress-caption" id="rail-progress-caption">Concept intake</div>
+        </div>
+        <ul class="nav-list nav-list-workflow">
+          <li class="nav-section">Workflow</li>
+          <li class="nav-item active" data-page="home" tabindex="0" role="button" aria-current="page"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7" /><path d="M5 10v10h14V10" /><path d="M9 20v-6h6v6" /></svg></span><span>Home</span></li>
+          <li class="nav-item" data-page="workbench" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" /></svg></span><span>Workbench</span></li>
+          <li class="nav-item" data-page="spec-builder" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /><path d="M8 13h8M8 17h6" /></svg></span><span>Spec Builder</span></li>
+          <li class="nav-item" data-page="review-runs" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" /></svg></span><span>Review Runs</span></li>
+          <li class="nav-item" data-page="preview" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg></span><span>Preview</span></li>
+          <li class="nav-section">Governance</li>
+          <li class="nav-item" data-page="decisions" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M10 13 3 20" /><path d="m14 6 4 4" /><path d="m13 7-3 3 4 4 3-3Z" /><path d="M16 16h5" /></svg></span><span>Decisions</span></li>
+          <li class="nav-item" data-page="trace" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1" /><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1" /></svg></span><span>Trace &amp; Evidence</span></li>
+          <li class="nav-item" data-page="rules" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v18" /><path d="M5 7h14" /><path d="m6 7-3 6h6Z" /><path d="m18 7-3 6h6Z" /></svg></span><span>Rules &amp; Scope</span></li>
+        </ul>
+        <div class="rail-status">
+          <span class="status-chip status-validated">System nominal</span>
+          <div class="rail-path">/artifacts/COCKPIT-MVP-014/</div>
+        </div>
+      </nav>
+      <!-- Main content area where pages render -->
+      <main id="main-content" tabindex="0"></main>
+      <!-- Right inspector panel (visibility controlled by JS) -->
+      <aside id="right-inspector" class="right-inspector" aria-label="Inspector"></aside>
+      <!-- Governance strip shown on high‑risk pages -->
+      <footer id="governance-strip" class="governance-strip">
+        <div class="governance-item governance-blocked"><span class="governance-dot" aria-hidden="true"></span><strong>Runtime mutation</strong><span>Blocked</span></div>
+        <div class="governance-item governance-handoff"><span class="governance-dot" aria-hidden="true"></span><strong>Repo writes</strong><span>Handoff only</span></div>
+        <div class="governance-item governance-allowed"><span class="governance-dot" aria-hidden="true"></span><strong>Artifact drafting</strong><span>Allowed</span></div>
+        <div class="governance-item governance-spec"><span class="governance-dot" aria-hidden="true"></span><strong>Dynamic UI</strong><span>Spec first</span></div>
+      </footer>
+    </div>
+    <!-- Scripts -->
+    <script src="src/mockData.js"></script>
+    <script src="src/state.js"></script>
+    <script src="src/router.js"></script>
+    <script src="src/app.js"></script>
+  </body>
+</html>

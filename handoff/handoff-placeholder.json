@@ -1,0 +1,98 @@
+{
+  "project_id": "COCKPIT-MVP-014",
+  "artifact_id": "placeholder-artifact",
+  "spec_summary": "This handoff contains a static representation of the spec, preview, decisions and trace evidence.",
+  "selected_context": [
+    "Architecture View",
+    "GS-001 Rough Concept → Builder Spec",
+    "Feedback Packet"
+  ],
+  "protected_exclusions": [
+    "Runtime state",
+    "Secrets",
+    "Repo write authority"
+  ],
+  "decisions": [
+    {
+      "id": "D-001",
+      "title": "Context Basket placement",
+      "status": "locked",
+      "chosenOption": "Docked"
+    },
+    {
+      "id": "D-002",
+      "title": "Spec Builder access",
+      "status": "locked",
+      "chosenOption": "Both"
+    },
+    {
+      "id": "D-003",
+      "title": "Review action language",
+      "status": "locked",
+      "chosenOption": "Validate"
+    },
+    {
+      "id": "D-004",
+      "title": "Preview naming",
+      "status": "locked",
+      "chosenOption": "Preview"
+    },
+    {
+      "id": "D-005",
+      "title": "Codex handoff gating",
+      "status": "needs-lock",
+      "chosenOption": null
+    }
+  ],
+  "review_findings": [
+    {
+      "name": "Architecture Review",
+      "verdict": "Revise",
+      "findings": 8
+    },
+    {
+      "name": "Security Review",
+      "verdict": "Pass with notes",
+      "findings": 3
+    },
+    {
+      "name": "Red Team Review",
+      "verdict": "2 high-risk ambiguities",
+      "findings": 2
+    },
+    {
+      "name": "UX Review",
+      "verdict": "Preview required",
+      "findings": 1
+    },
+    {
+      "name": "Trace Review",
+      "verdict": "Missing evidence links",
+      "findings": 2
+    },
+    {
+      "name": "Codex Handoff Review",
+      "verdict": "Not ready",
+      "findings": 3
+    }
+  ],
+  "trace_links": [
+    { "source": "node-1", "target": "objective" },
+    { "source": "node-2", "target": "layout-regions" },
+    { "source": "node-2", "target": "interaction-states" },
+    { "source": "spec-field", "target": "D-005" }
+  ],
+  "governance_state": {
+    "runtime_mutation": "blocked",
+    "repo_writes": "handoff-only",
+    "artifact_drafting": "allowed",
+    "dynamic_ui": "spec-first"
+  },
+  "handoff_status": "blocked",
+  "blocked_reasons": [
+    "Spec fields incomplete or not locked",
+    "Decisions unresolved",
+    "Review findings outstanding",
+    "Trace evidence missing"
+  ]
+}

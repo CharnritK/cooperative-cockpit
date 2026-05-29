@@ -1,0 +1,36 @@
+{
+  "package_name": "openclaw-cooperative-cockpit-mvp",
+  "version": "0.1.0",
+  "created_at": "2026-05-27T00:00:00Z",
+  "files": [
+    "index.html",
+    "README.md",
+    "QA_CHECKLIST.md",
+    "BUILD_SPEC.md",
+    "src/app.js",
+    "src/router.js",
+    "src/state.js",
+    "src/mockData.js",
+    "styles/base.css",
+    "styles/layout.css",
+    "styles/components.css",
+    "styles/status.css",
+    "assets/favicon.svg",
+    "handoff/handoff-placeholder.json"
+  ],
+  "non_goals": [
+    "No backend or API integration",
+    "No authentication",
+    "No real AI execution",
+    "No repository writes",
+    "No runtime mutation",
+    "No deployment"
+  ],
+  "safety_constraints": [
+    "Runtime mutation is blocked.",
+    "Repo writes are allowed only during handoff.",
+    "Secrets and external actions are excluded.",
+    "Review agents operate in inspect-only mode.",
+    "Dynamic UI requires a spec-first approach."
+  ]
+}

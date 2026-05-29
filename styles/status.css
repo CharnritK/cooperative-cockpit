@@ -1,0 +1,88 @@
+/* Status chip colour utility classes */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 24px;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 0 18px color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.status-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  animation: status-pulse 1.8s ease-in-out infinite;
+}
+
+.status-active,
+.status-selected,
+.status-spec-first,
+.status-guided,
+.status-needs-sync {
+  color: var(--color-cyan);
+}
+
+.status-allowed,
+.status-validated,
+.status-covered,
+.status-applied,
+.status-ready,
+.status-complete {
+  color: var(--color-green);
+}
+
+.status-needs-lock,
+.status-needs-answer,
+.status-warning,
+.status-pending,
+.status-revise {
+  color: var(--color-amber);
+}
+
+.status-missing,
+.status-blocked,
+.status-unsafe,
+.status-risk {
+  color: var(--color-red);
+}
+
+.status-handoff,
+.status-inspect,
+.status-advisory {
+  color: var(--color-purple);
+}
+
+.status-draft,
+.status-passive,
+.status-neutral,
+.status-unavailable {
+  color: var(--color-gray);
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}

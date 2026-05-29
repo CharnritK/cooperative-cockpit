@@ -1,0 +1,96 @@
+# OpenClaw Cooperative Cockpit MVP Build Specification
+
+This build specification outlines the decisions, scope and acceptance criteria used to create the **static frontend MVP** for the OpenClaw Cooperative Cockpit.
+
+## Locked decisions
+
+- **Context Basket placement** – Docked on the Workbench and collapsible elsewhere.
+- **Spec Builder access** – Available both as a tab in the Workbench inspector and as a focused page.
+- **Review action language** – Use “Validate” or “Start review checks”; avoid unsafe execution-style verbs on buttons and actions.
+- **Preview naming** – The left nav and inspector tab are labelled “Preview”. The page header reads “UI / HTML Viewer”.
+- **Templates** – A set of 10 controlled templates is provided in the Spec Builder.
+- **Top bar** – Brand is shortened to OpenClaw, the Cooperative Cockpit label is secondary, workflow state is shown as Concept → Workbench → Spec → Review → Preview → Handoff, and the active artifact ID sits in a compact right-side badge.
+- **Left rail** – Includes compact progress, workflow grouping and governance grouping while preserving the eight existing page labels and route keys.
+- **Governance strip** – Compact single-row status strip shown on all high-risk pages except Home, preserving the meanings Runtime mutation blocked, repo writes handoff only, artifact drafting allowed and dynamic UI spec first.
+- **Home page** – Shows operational status cards, a full-width pipeline banner, recent activity and next safe actions instead of a generic dashboard.
+- **Deferred pages** – Architecture Map, Golden Scenarios and Feedback & Revisions are deferred to Phase 1.5 and are not part of this MVP.
+- **Codex handoff** – Visible but gated. Handoff actions remain disabled until `appState.handoffReady` is true.
+- **Technology stack** – Plain HTML, CSS and vanilla JavaScript. No frameworks, no packages, no backend, no API calls and no authentication.
+- **Typography assets** – Local bundled fonts only: Rajdhani, Outfit and Fira Code under `assets/fonts`, each with its OFL license file. No CDN font loading is permitted at runtime.
+- **Viewport** – Desktop 16:9 only. Mobile responsiveness is not required.
+- **AI behaviour** – Stubbed only. Suggestions and actions display static text instead of calling real AI services.
+- **Handoff/export** – Generates a static placeholder bundle. Real code generation or repository writes are not permitted.
+
+## MVP pages
+
+The MVP includes eight pages:
+
+1. **Home** – Operational page with context, protected exclusion and pending lock cards, pipeline progress, recent activity and quick actions.
+2. **Workbench** – Operational workflow canvas for selecting connected nodes and managing the docked Context Basket. Shows the governance strip.
+3. **Spec Builder** – Template-driven spec editing. Includes field status chips and gating for handoff.
+4. **Review Runs** – Inspect‑only review orchestration. Shows review types and mock findings.
+5. **Preview** – Static mockup viewer and spec coverage checklist.
+6. **Decisions** – Approval board for decisions requiring Point lock.
+7. **Trace & Evidence** – Displays trace links and warns when evidence is missing.
+8. **Rules & Scope** – Summarises safety rules and review gates.
+
+## Deferred Phase 1.5 items
+
+- **Architecture Map** – Mode for visualising system architecture; not built in MVP.
+- **Golden Scenarios** – Scenario library with acceptance criteria; not built in MVP.
+- **Feedback & Revisions** – Revision history and feedback management; not built in MVP.
+
+## Governance model
+
+The following rules govern all interactions in the MVP:
+
+- **Runtime mutation:** Blocked. No code execution or runtime state changes are possible.
+- **Repo writes:** Handoff only. Export actions produce static bundles; nothing is written to a repository.
+- **Artifact drafting:** Allowed. Users can create and edit specs via the Spec Builder.
+- **Dynamic UI:** Spec first. The UI/HTML preview is static and available only after a spec is in progress.
+- **Secrets:** Excluded. Protected items (runtime state, secrets, repo write authority) are excluded from the AI context.
+- **External actions:** Blocked. There are no external API calls or service integrations.
+- **Review agents:** Inspect only. Review checks produce suggestions but cannot modify state.
+- **Codex handoff:** Gated. Users cannot export a handoff until all fields are completed and decisions resolved.
+
+## Status ontology
+
+Status chips reflect the following colour semantics:
+
+- **Cyan/blue** – Active, selected, spec-first, guided action.
+- **Green** – Allowed, validated, complete.
+- **Amber** – Needs Point lock, needs answer, warning, pending, revise.
+- **Red** – Missing, blocked, unsafe, risk.
+- **Purple** – Handoff only, inspect only, advisory output.
+- **Gray** – Neutral, passive, draft, unavailable.
+
+## Visual system
+
+- **Aesthetic:** Operational Control Center, combining aerospace-style command surfaces with restrained modern SaaS ergonomics.
+- **Surfaces:** Deep graphite/navy background, glass-lite panels, crisp borders, custom scrollbars and subtle scanline/grid texture.
+- **Interaction finish:** Hover/focus/selected states use luminous borders, `--color-accent`, subtle page-enter motion and animated status dots with `prefers-reduced-motion` support.
+- **Icons:** Inline SVG and CSS icons are used for navigation, top actions, nodes, governance and status cues. There is no external icon package.
+- **Workbench connectors:** `window.mockData.workflowEdges` supplies visual-only source/target/tone data for drawing canvas links.
+
+Supported status labels:
+`Active`, `Selected`, `Allowed`, `Validated`, `Covered`, `Applied`, `Needs Point lock`, `Needs answer`, `Needs sync`, `Missing`, `Blocked`, `Revise`, `Handoff only`, `Inspect only`, `Draft`, `Ready for handoff`.
+
+## Acceptance criteria
+
+Refer to the `QA_CHECKLIST.md` file for detailed acceptance criteria. At a high level:
+
+1. All eight pages are reachable via the left navigation.
+2. The prototype reads as a governed AI workflow cockpit rather than a dashboard or chatbot.
+3. The shell is visually consistent across pages, with a refined dark operational palette, local typography, inline icons and clear status chips.
+4. The Workbench is canvas‑first with node selection, visual connectors and a docked context basket.
+5. The Spec Builder clearly shows templates, fields, statuses and gating for handoff.
+6. Review runs are labelled inspect‑only and provide mock findings.
+7. The preview is static and labelled “UI / HTML Viewer”.
+8. Decisions page displays locked and unresolved decisions with options to lock or defer.
+9. Trace and evidence show source–target links and missing-trace warnings.
+10. Rules and scope make safety rules explicit.
+11. No action label uses unsafe execution-style wording.
+12. There are no backend calls, API integrations, secrets or credentials.
+13. Handoff and export actions remain gated until ready.
+
+This specification is included for reference only; the functionality has been implemented directly in the static files.
