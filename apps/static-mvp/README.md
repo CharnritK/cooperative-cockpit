@@ -2,7 +2,7 @@
 
 This directory contains a **static frontend prototype** for the OpenClaw Cooperative Cockpit MVP. The goal of this prototype is to demonstrate the interaction model and visual direction of the product without any backend, API calls or execution of external code. The prototype includes eight focus pages connected through a persistent shell.
 
-The current visual direction is **Operational Control Center**: a dark developer-tool cockpit with a compact workflow stepper, grouped left rail, glass-lite panels, luminous status cues, local typography assets, workflow connectors, and a consistent component system across all pages.
+The current visual direction is **Dify-inspired workflow studio with OpenClaw governance overlays**: a clean light SaaS shell, canvas-first Workbench, dotted workflow canvas, configurable operator nodes, compact top controls, node palette/config/debug surfaces, local typography assets, and secondary governance cues across the higher-risk pages.
 
 ## Running locally
 
@@ -15,9 +15,9 @@ The current visual direction is **Operational Control Center**: a dark developer
 
 The prototype bundles its font files locally under `assets/fonts`:
 
-- **Rajdhani** for headings and command labels.
+- **Rajdhani** for selected headings and compact labels.
 - **Outfit** for body and UI text.
-- **Fira Code** for IDs, chips and technical labels.
+- **Fira Code** for IDs and technical labels where precision matters.
 
 The font license files are included in the same folder. The app does not load fonts, icons, scripts or styles from a CDN at runtime.
 
@@ -26,7 +26,7 @@ The font license files are included in the same folder. The app does not load fo
 The MVP comprises the following pages:
 
 1. **Home** – Provides operational status cards for context, protected exclusions and pending locks, plus pipeline progress, recent activity and local-only next safe actions.
-2. **Workbench** – Displays an operational workflow canvas with connected nodes, a docked context basket for AI context management, and a node inspector. You can select nodes, add them to the context, and see protected exclusions. The governance strip is visible here.
+2. **Workbench** – Displays a light workflow-builder studio with a safe node palette, dotted canvas, configurable operator nodes, local selection state, a docked context basket and a configuration/debug inspector. You can select nodes, add them to the context, and see protected exclusions. The governance strip is visible here as a secondary safety overlay.
 3. **Spec Builder** – Allows you to choose a template, view and fill specification fields, apply simple AI suggestions (stubbed), lock fields and validate the spec. Handoff controls stay disabled until `appState.handoffReady` is true.
 4. **Review Runs** – Lists review types and allows you to simulate running review checks. Results are displayed with severity chips and simple action buttons. Reviews are inspect‑only.
 5. **Preview** – Shows a placeholder preview of the UI/HTML artifact and a spec coverage checklist. You can generate a static mockup, compare it against the spec or start a UX check (all stubbed).

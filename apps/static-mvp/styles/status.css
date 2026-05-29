@@ -8,16 +8,14 @@
   padding: 3px 8px;
   border: 1px solid currentColor;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.035);
+  background: color-mix(in srgb, currentColor 7%, #ffffff);
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
   font-weight: 650;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   line-height: 1;
-  text-transform: uppercase;
   white-space: nowrap;
-  box-shadow: 0 0 18px color-mix(in srgb, currentColor 18%, transparent);
 }
 
 .status-chip::before {
@@ -26,8 +24,6 @@
   height: 6px;
   border-radius: 999px;
   background: currentColor;
-  box-shadow: 0 0 10px currentColor;
-  animation: status-pulse 1.8s ease-in-out infinite;
 }
 
 .status-active,

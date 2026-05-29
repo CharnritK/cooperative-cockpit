@@ -1,7 +1,7 @@
 /*
   Main application logic for the OpenClaw Cooperative Cockpit static MVP.
-  It keeps all behavior local and mock-only while rendering the elevated
-  operational control-center interface.
+  It keeps all behavior local and mock-only while rendering the
+  workflow-studio prototype.
 */
 
 const ICONS = {
@@ -29,11 +29,11 @@ const ICONS = {
 };
 
 const NODE_ICON_BY_TYPE = {
-  concept: 'spark',
+  intake: 'spark',
   context: 'branch',
   spec: 'document',
   review: 'review',
-  preview: 'code',
+  preview: 'eye',
   decision: 'lock',
   trace: 'trace',
   handoff: 'archive',
@@ -140,8 +140,8 @@ function animatePageEnter(main) {
   main.scrollTop = 0;
 }
 
-function renderPageHeader(container, { kicker, title, subtitle, actions = [] }) {
-  const header = createElement('section', 'page-header');
+function renderPageHeader(container, { kicker, title, subtitle, actions = [], className = '' }) {
+  const header = createElement('section', `page-header${className ? ` ${className}` : ''}`);
   const copy = createElement('div');
   copy.innerHTML = `<div class="page-kicker">${kicker}</div><h2 class="page-title">${title}</h2><p class="page-subtitle">${subtitle}</p>`;
   header.appendChild(copy);
@@ -259,7 +259,7 @@ function renderHome(container) {
   banner.innerHTML = `<div>
       <div class="page-kicker">Active artifact</div>
       <h2 class="page-title">COCKPIT-MVP-014</h2>
-      <p class="page-subtitle">Governed static cockpit flow from concept intake to gated handoff. Current stage: <strong>${currentStep.label}</strong>.</p>
+      <p class="page-subtitle">Governed static workflow studio from concept intake to gated handoff. Current stage: <strong>${currentStep.label}</strong>.</p>
     </div>
     <div class="pipeline-steps" aria-label="Pipeline progress">
       ${WORKFLOW_STEPS.map((step) => `<span class="${step.key === currentStep.key ? 'is-active' : ''} ${step.key === 'handoff' && !window.appState.handoffReady ? 'is-blocked' : ''}">${step.label}</span>`).join('')}
@@ -312,15 +312,37 @@ function renderHomeStatusCard({ iconName, label, value, tone, detail }) {
 function renderWorkbench(container) {
   showGovernance(true);
   renderPageHeader(container, {
-    kicker: 'Workbench',
-    title: 'Context Operations Map',
-    subtitle: 'Select workflow nodes, build the context basket, and inspect governed handoff readiness without runtime mutation.',
+    kicker: 'Workflow Studio',
+    title: 'Workbench',
+    subtitle: 'Select static workflow operators, review safe node types, and inspect governed configuration without runtime mutation.',
+    className: 'workbench-header',
   });
 
   const layout = createElement('section', 'workbench-layout');
-  layout.appendChild(renderContextBasket());
+  const sidebar = createElement('aside', 'workbench-sidebar');
+  sidebar.appendChild(renderNodePalette());
+  sidebar.appendChild(renderContextBasket());
+  layout.appendChild(sidebar);
   layout.appendChild(renderNodeCanvas());
   container.appendChild(layout);
+}
+
+function renderNodePalette() {
+  const palette = createElement('section', 'panel node-palette');
+  palette.innerHTML = `<div class="node-palette-header">
+      <h3>Node Palette</h3>
+      <p>OpenClaw-safe static node types. Selection stays local to this mockup.</p>
+    </div>`;
+
+  const list = createElement('ul', 'palette-list');
+  window.mockData.nodePalette.forEach((item) => {
+    const li = createElement('li', `palette-item node-type-${item.type}`);
+    li.innerHTML = `<span class="palette-type-icon">${icon(item.icon || NODE_ICON_BY_TYPE[item.type] || 'spark')}</span>
+      <span><strong>${item.label}</strong><span>${item.description}</span></span>`;
+    list.appendChild(li);
+  });
+  palette.appendChild(list);
+  return palette;
 }
 
 function renderContextBasket() {
@@ -379,7 +401,7 @@ function renderContextBasket() {
 
 function renderNodeCanvas() {
   const canvas = createElement('div', 'node-canvas');
-  canvas.innerHTML = `<div class="canvas-label">Workbench | COCKPIT-MVP-014</div>
+  canvas.innerHTML = `<div class="canvas-label">Static workflow canvas / COCKPIT-MVP-014</div>
     <div class="canvas-toolbar">
       <button class="icon-btn" type="button" aria-label="Grid view">${icon('graph')}</button>
       <span class="mono" style="color: var(--text-muted); font-size: .72rem; padding: 0 6px;">100%</span>
@@ -409,15 +431,28 @@ function renderNodeCanvas() {
   canvas.appendChild(svg);
 
   window.mockData.nodes.forEach((node) => {
-    const card = createElement('button', `node-card status-tone-${statusTone(node.status)}`);
+    const card = createElement('button', `node-card node-type-${node.type} status-tone-${statusTone(node.status)}`);
     card.type = 'button';
     card.style.left = `${node.x}%`;
     card.style.top = `${node.y}%`;
     card.dataset.nodeId = node.id;
     if (window.appState.selectedNodeId === node.id) card.classList.add('selected');
-    card.innerHTML = `<div class="node-topline"><span class="node-index">${node.index || node.id}</span><span class="node-icon">${icon(NODE_ICON_BY_TYPE[node.type] || 'spark')}</span></div>
-      <div><div class="node-label">${node.label}</div><div class="node-meta">${node.type}</div></div>
-      ${renderStatusChip(node.status)}`;
+    card.innerHTML = `<span class="node-handle node-handle-input" aria-hidden="true"></span>
+      <span class="node-handle node-handle-output" aria-hidden="true"></span>
+      <div class="node-topline">
+        <span class="node-type-icon">${icon(NODE_ICON_BY_TYPE[node.type] || 'spark')}</span>
+        <div class="node-copy">
+          <div class="node-type-label">${node.typeLabel || node.type}</div>
+          <div class="node-label">${node.label}</div>
+        </div>
+        <span class="node-index">${node.index || node.id}</span>
+      </div>
+      <div class="node-config-rows">
+        <div class="node-config-row"><span>Config</span><strong>${node.config || 'Static config'}</strong></div>
+        <div class="node-config-row"><span>Model</span><strong>${node.model || 'Mock only'}</strong></div>
+        <div class="node-config-row"><span>Status</span><strong>${statusLabel(node.status)}</strong></div>
+      </div>
+      <div class="node-card-footer">${renderStatusChip(node.status)}</div>`;
     card.addEventListener('click', (event) => {
       event.stopPropagation();
       selectNode(node.id);
@@ -445,32 +480,49 @@ function renderNodeInspector(nodeId) {
   if (!node) return;
 
   setInspectorOpen(true);
-  const inbound = window.mockData.workflowEdges.filter((edge) => edge.target === node.id).length;
-  const outbound = window.mockData.workflowEdges.filter((edge) => edge.source === node.id).length;
+  const inboundEdges = window.mockData.workflowEdges.filter((edge) => edge.target === node.id);
+  const outboundEdges = window.mockData.workflowEdges.filter((edge) => edge.source === node.id);
+  const edgeLabel = (edge, direction) => {
+    const otherId = direction === 'input' ? edge.source : edge.target;
+    const other = window.mockData.nodes.find((n) => n.id === otherId);
+    return other ? other.label : otherId;
+  };
   inspector.innerHTML = `<div class="inspector-header">
       <div>
-        <span class="node-index">${node.index || node.id}</span>
+        <span class="chip chip-secondary">${node.typeLabel || node.type}</span>
         <div class="inspector-title">${node.label}</div>
         <div class="inspector-id">ID: ${node.id}</div>
       </div>
       <button class="icon-btn" type="button" aria-label="Close inspector" id="close-inspector">${icon('close')}</button>
     </div>
     <div class="inspector-section">
-      <h4>Details</h4>
-      <p>${node.description}</p>
+      <h4>Node config summary</h4>
+      <div class="inspector-grid">
+        <div class="inspector-row"><span>Purpose</span><strong>${node.description}</strong></div>
+        <div class="inspector-row"><span>Config</span><strong>${node.config || 'Static config'}</strong></div>
+        <div class="inspector-row"><span>Model</span><strong>${node.model || 'Mock only'}</strong></div>
+        <div class="inspector-row"><span>Status</span><strong>${statusLabel(node.status)}</strong></div>
+      </div>
     </div>
     <div class="inspector-section">
-      <h4>Type</h4>
-      <span class="chip chip-secondary">${node.type}</span>
+      <h4>Inputs</h4>
+      ${renderInspectorList([...(node.inputs || []), ...inboundEdges.map((edge) => `From ${edgeLabel(edge, 'input')}`)])}
     </div>
     <div class="inspector-section">
-      <h4>Status</h4>
-      ${renderStatusChip(node.status)}
+      <h4>Outputs</h4>
+      ${renderInspectorList([...(node.outputs || []), ...outboundEdges.map((edge) => `To ${edgeLabel(edge, 'output')}`)])}
     </div>
     <div class="inspector-section">
-      <h4>Links</h4>
-      <p><strong>Inputs:</strong> ${inbound}</p>
-      <p><strong>Outputs:</strong> ${outbound}</p>
+      <h4>Guardrails</h4>
+      ${renderInspectorList(node.guardrails || ['Static-only behavior'])}
+    </div>
+    <div class="inspector-section">
+      <h4>Trace links</h4>
+      ${renderInspectorList(node.trace || ['No trace links configured'])}
+    </div>
+    <div class="inspector-section">
+      <h4>Static-only notice</h4>
+      <div class="static-notice">This inspector updates local mock UI state only. It does not call AI services, mutate runtime state, write repositories or deploy artifacts.</div>
     </div>`;
 
   const tabs = createElement('div', 'inspector-tabs');
@@ -489,6 +541,11 @@ function renderNodeInspector(nodeId) {
   });
   inspector.appendChild(tabs);
   inspector.querySelector('#close-inspector').addEventListener('click', () => setInspectorOpen(false));
+}
+
+function renderInspectorList(items) {
+  const safeItems = items && items.length ? items : ['None'];
+  return `<ul class="inspector-list">${safeItems.map((item) => `<li>${item}</li>`).join('')}</ul>`;
 }
 
 function addSelectedToContext() {
