@@ -1,59 +1,36 @@
-# OpenClaw Cooperative Cockpit MVP (Static Prototype)
+# Cooperative Cockpit Repository
 
-This repository contains a **static frontend prototype** for the OpenClaw Cooperative Cockpit MVP. The goal of this prototype is to demonstrate the interaction model and visual direction of the product without any backend, API calls or execution of external code. The prototype includes eight focus pages connected through a persistent shell.
+This repository provides the operating system for the **OpenClaw Cooperative Cockpit** project. It defines how agents work together, how artifacts are stored, and how changes are validated before they are applied.
 
-The current visual direction is **Operational Control Center**: a dark developer-tool cockpit with a compact workflow stepper, grouped left rail, glass-lite panels, luminous status cues, local typography assets, workflow connectors, and a consistent component system across all pages.
+The static MVP has been assimilated under `apps/static-mvp/`. Its entrypoint is `apps/static-mvp/index.html`; it remains a plain HTML/CSS/JavaScript prototype with local assets only.
 
-## Running locally
+## Key Policies
 
-1. Ensure you have a modern web browser installed (Chromium, Firefox, Safari or Edge).
-2. Download or extract the `openclaw-cooperative-cockpit-mvp` folder.
-3. Open `index.html` in your browser. There is no build step or server required.
-4. Navigate through the pages using the left navigation or the top bar buttons.
+- **Approval policy:** Product scope, architecture decisions, new dependencies, external services, secrets, deployment, runtime mutation, and writes outside declared paths require Point lock. Routine documentation and scaffolding changes can be performed without review.
+- **Concurrency policy:** Only one agent owns a given path at a time. Branches must follow `agent/<task-id>-<short-name>`. Agents must declare branch, task ID, allowed paths, expected files, and validation commands before starting work. See `docs/ops/CONCURRENCY_POLICY.md`.
+- **Artifact manifest:** Every artifact placed in `artifacts/` must have a manifest describing its ID, type, creation date, owner, source, status, and related task. Use `artifacts/MANIFEST_TEMPLATE.json`.
 
-## Local assets and offline use
+## Running Validation
 
-The prototype bundles its font files locally under `assets/fonts`:
+Node.js is required for the local validation scripts. No package dependencies are required.
 
-- **Rajdhani** for headings and command labels.
-- **Outfit** for body and UI text.
-- **Fira Code** for IDs, chips and technical labels.
+```sh
+npm run validate
+```
 
-The font license files are included in the same folder. The app does not load fonts, icons, scripts or styles from a CDN at runtime.
+The `validate` script checks required structure, JSON syntax, obvious secret markers, task cards, and `.gitignore` safety rules.
 
-## Included pages
+## Repository Layout
 
-The MVP comprises the following pages:
+- `apps/`: product implementations and prototypes. The current static MVP lives in `apps/static-mvp/`. Do not add frameworks, backends, APIs, auth, deployment scripts, or dependencies without Point lock.
+- `artifacts/`: storage for packages, deep research, images, handoffs, evidence, archives, and scratch files. Each artifact must have a manifest.
+- `docs/`: operating policies, folder structure, research, handoffs, decisions, status, roadmap, risks, and task logs.
+- `agents/`: role briefs for planner, builder, reviewer, QA, researcher, and orchestrator agents.
+- `prompts/`: reusable prompts and handoff templates.
+- `quality/`: repository QA checklist and review rubric.
+- `schemas/`: JSON schemas used by tasks and manifests.
+- `scripts/`: dependency-free Node.js validation scripts.
+- `workspace/`: inbox, outbox, and review folders for intermediate working files.
+- `.codex/`: goal templates and per-task goal files.
 
-1. **Home** – Provides operational status cards for context, protected exclusions and pending locks, plus pipeline progress, recent activity and local-only next safe actions.
-2. **Workbench** – Displays an operational workflow canvas with connected nodes, a docked context basket for AI context management, and a node inspector. You can select nodes, add them to the context, and see protected exclusions. The governance strip is visible here.
-3. **Spec Builder** – Allows you to choose a template, view and fill specification fields, apply simple AI suggestions (stubbed), lock fields and validate the spec. Handoff controls stay disabled until `appState.handoffReady` is true.
-4. **Review Runs** – Lists review types and allows you to simulate running review checks. Results are displayed with severity chips and simple action buttons. Reviews are inspect‑only.
-5. **Preview** – Shows a placeholder preview of the UI/HTML artifact and a spec coverage checklist. You can generate a static mockup, compare it against the spec or start a UX check (all stubbed).
-6. **Decisions** – Lists decisions that require Point approval. You can lock or defer decisions and choose between options for each decision.
-7. **Trace & Evidence** – Shows a placeholder trace graph and a table of source‑to‑target links. It warns if any spec fields lack trace evidence.
-8. **Rules & Scope** – Presents the safety rules and governance model, summarising what is allowed or blocked and which review gates are active.
-
-## Static and mock‑only
-
-All data in this prototype is mock data defined in `src/mockData.js`. The pages simulate state transitions on the client side only. There are **no external API calls**, no back‑end, no authentication and no real AI assistance. Actions such as “Generate static mockup” or “Handoff” display simple alerts instead of performing real work.
-
-## Explicitly not implemented
-
-- Architecture Map, Golden Scenarios and Feedback & Revisions pages (deferred to Phase 1.5).
-- Any backend, database or API integration.
-- Real AI calls or dynamic code execution.
-- Full mobile layout design. The prototype remains optimized for a desktop (16:9) viewport.
-- Real network requests or repository writes.
-
-## Known limitations
-
-- The canvas on the Workbench is static; nodes do not move. Connectors are visual-only and based on `mockData.workflowEdges`.
-- Review actions are purely illustrative; they do not modify the state beyond showing simple messages.
-- The preview page does not render real HTML or UI components.
-- The trace graph is a placeholder text area rather than a real graph.
-- Accessibility has been addressed at a basic level (e.g., focus order and contrast), but no formal audit has been completed.
-
-## Validation steps
-
-Refer to `QA_CHECKLIST.md` for a detailed list of smoke tests and acceptance criteria used to validate this prototype.
+Refer to `docs/ops/FOLDER_STRUCTURE.md` and `docs/ops/STATUS.md` for the current operating state.

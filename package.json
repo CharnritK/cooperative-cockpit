@@ -1,0 +1,14 @@
+{
+  "name": "cooperative-cockpit-repo-setup",
+  "version": "1.0.0",
+  "description": "Agent-ready repository operating system for the OpenClaw Cooperative Cockpit project.",
+  "scripts": {
+    "check:structure": "node scripts/check_structure.js",
+    "check:json": "node scripts/check_json.js",
+    "check:secrets": "node scripts/check_no_secrets.js",
+    "check:tasks": "node scripts/check_task_cards.js",
+    "check:gitignore": "node scripts/check_gitignore.js",
+    "validate": "npm run check:structure && npm run check:json && npm run check:secrets && npm run check:tasks && npm run check:gitignore"
+  },
+  "private": true
+}

@@ -1,0 +1,13 @@
+{
+  "artifact_id": "ART-COCKPIT-MVP-001",
+  "artifact_type": "static_mvp_package",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "local_repo_assimilation",
+  "status": "assimilated",
+  "related_task_id": "GOAL-002",
+  "source_file": "cooperative-cockpit-repo-setup-final/.codex/goals/GOAL-002-assimilate-static-mvp-package.md",
+  "storage_path": "apps/static-mvp/",
+  "checksum": "sha256:f0a43005b577f9c7c2133ed1395df955047f90dad8abc07b1b0fd1c2ab5c8172",
+  "notes": "Checksum is derived from sorted sha256 sums of all files under apps/static-mvp/."
+}

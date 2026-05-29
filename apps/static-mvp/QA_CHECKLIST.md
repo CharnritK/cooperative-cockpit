@@ -4,7 +4,7 @@ This checklist guides the manual verification of the static MVP prototype. It en
 
 ## Smoke tests
 
-1. **File structure exists** – The folder `openclaw-cooperative-cockpit-mvp` contains `index.html`, `README.md`, `QA_CHECKLIST.md`, `BUILD_SPEC.md`, the `src`, `styles`, `assets` and `handoff` directories.
+1. **File structure exists** – The folder `apps/static-mvp` contains `index.html`, `README.md`, `QA_CHECKLIST.md`, `BUILD_SPEC.md`, the `src`, `styles`, `assets` and `handoff` directories.
 2. **Local font assets exist** – The folder `assets/fonts` contains Rajdhani, Outfit and Fira Code font files plus OFL license files. `styles/fonts.css` references only local font paths.
 3. **Page navigation** – Opening `index.html` shows the application shell. All eight pages (Home, Workbench, Spec Builder, Review Runs, Preview, Decisions, Trace & Evidence, Rules & Scope) are reachable via the grouped left navigation. The active nav item is highlighted.
 4. **No forbidden labels** – No buttons, CTAs or menu items use unsafe execution-style verbs. The review page name remains “Review Runs”.
@@ -20,7 +20,7 @@ This checklist guides the manual verification of the static MVP prototype. It en
 14. **No external calls** – Inspect the browser’s network panel (Developer Tools) while interacting with the prototype. There should be no network requests beyond loading the local static files, including local fonts.
 15. **No secrets or credentials** – No sensitive information appears in the HTML, JavaScript or console. Protected exclusions are listed but not populated with real data.
 16. **Handoff gating** – The top-bar “Handoff” button and handoff/export-style controls remain disabled until `appState.handoffReady` is true. When enabled and clicked, they display simple alerts instead of producing a real handoff.
-17. **Zip packaging** – The final deliverable is a zip file named `openclaw-cooperative-cockpit-mvp.zip` containing the exact file structure and content described above.
+17. **Package assimilation** – The app is stored under `apps/static-mvp/` and has a corresponding repository artifact manifest.
 
 ## Accessibility checks
 

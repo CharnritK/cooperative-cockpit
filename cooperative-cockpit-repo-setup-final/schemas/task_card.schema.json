@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Card",
+  "type": "object",
+  "properties": {
+    "task_id": { "type": "string" },
+    "description": { "type": "string" },
+    "assigned_agent": { "type": "string" },
+    "start_date": { "type": "string", "format": "date" },
+    "end_date": { "type": ["string", "null"], "format": "date" },
+    "status": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "required": ["task_id", "description", "assigned_agent", "start_date", "status"]
+}
