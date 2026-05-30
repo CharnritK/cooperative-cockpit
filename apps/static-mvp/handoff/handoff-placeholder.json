@@ -1,8 +1,9 @@
 {
   "project_id": "COCKPIT-MVP-014",
   "artifact_id": "placeholder-artifact",
-  "spec_summary": "This handoff contains a static representation of the architecture graph, Context Basket, assistant transcript, packet preview, decisions and trace evidence.",
-  "objective": "Add a static MVP golden path that demonstrates architecture node selection, Context Basket formation, assistant-guided scoping, and a standardized OpenClaw Handoff Packet preview.",
+  "spec_summary": "This handoff contains a static representation of the primary demo path, selected context, governed spec fields, D-005 gating, trace evidence, validation readiness and handoff preview.",
+  "primary_demo_path": "rough context -> governed spec -> decision/evidence gate -> handoff preview",
+  "objective": "Align the static MVP around selected rough context becoming a governed spec and a D-005-gated handoff preview.",
   "allowed_paths": [
     "apps/static-mvp/**",
     "schemas/**",
@@ -21,18 +22,18 @@
     "Do not modify files outside allowed paths"
   ],
   "required_work": [
-    "Add or update static mock data for architecture graph nodes, architecture graph edges, Context Basket, and handoff packet preview",
-    "Add static UI state for architecture graph/canvas area, selected node inspector, Context Basket, chat-style assistant panel, and generated handoff packet preview",
-    "Add schema or validation coverage where existing validation supports it",
-    "Preserve all static MVP constraints",
-    "Run validation and record evidence"
+    "Show selected context and protected exclusions on Workbench",
+    "Show governed spec fields and acceptance-criteria readiness on Spec Builder",
+    "Show D-005 as the Codex handoff governance checkpoint",
+    "Show context, spec, decision, validation and placeholder evidence links",
+    "Keep the handoff preview static and mock-only"
   ],
   "acceptance_criteria": [
-    "User can visually understand Architecture node -> Context Basket -> AI-assisted chat -> Handoff Packet",
-    "Handoff packet includes objective, allowed paths, forbidden actions, required work, acceptance criteria, validation commands, stop conditions, and final response format",
-    "UI does not imply real execution, live repo scanning, backend, API calls, or deployment",
-    "Mock data only",
-    "Validation passes"
+    "User can visually understand rough context -> governed spec -> decision/evidence gate -> handoff preview",
+    "D-005 is visible as the handoff gating decision",
+    "Missing acceptance criteria, evidence, or decision lock visibly blocks readiness",
+    "The preview remains static and mock-only",
+    "Validation commands pass"
   ],
   "validation_commands": [
     "npm run validate",
@@ -55,10 +56,10 @@
     "Next recommended action:"
   ],
   "selected_context": [
-    "Architecture node: Context Selector",
-    "Architecture node: Spec Builder",
-    "Architecture node: Handoff Packet",
-    "Goal brief: static golden path"
+    "Selected context: Context Selector",
+    "Governed spec: Spec Builder",
+    "Handoff preview: Static Handoff Packet",
+    "Rough context: primary demo brief"
   ],
   "protected_exclusions": [
     "Runtime state",
@@ -94,7 +95,85 @@
       "id": "D-005",
       "title": "Codex handoff gating",
       "status": "needs-lock",
-      "chosenOption": null
+      "chosenOption": null,
+      "requiresPointLock": true,
+      "gates": ["handoff-preview"]
+    }
+  ],
+  "primary_demo_stages": [
+    {
+      "id": "rough-context",
+      "page": "Workbench",
+      "status": "selected",
+      "evidenceIds": ["source-context"]
+    },
+    {
+      "id": "governed-spec",
+      "page": "Spec Builder",
+      "status": "needs-criteria",
+      "evidenceIds": ["source-context"]
+    },
+    {
+      "id": "decision-evidence-gate",
+      "page": "Decisions + Trace & Evidence",
+      "status": "blocked",
+      "evidenceIds": ["locked-decision", "validation-readiness"]
+    },
+    {
+      "id": "handoff-preview",
+      "page": "Preview",
+      "status": "mock-preview",
+      "evidenceIds": ["handoff-placeholder"]
+    }
+  ],
+  "evidence_items": [
+    {
+      "id": "source-context",
+      "type": "source_context",
+      "sourceObjectId": "node-2",
+      "targetObjectId": "spec-draft-primary",
+      "status": "attached",
+      "summary": "Selected Context is visible on Workbench and excludes runtime state, secrets and repo write authority."
+    },
+    {
+      "id": "locked-decision",
+      "type": "decision_lock",
+      "sourceObjectId": "D-005",
+      "targetObjectId": "handoff-preview",
+      "status": "missing",
+      "summary": "Missing until Point locks D-005 for the static handoff preview."
+    },
+    {
+      "id": "validation-readiness",
+      "type": "validation_result",
+      "sourceObjectId": "validation-static-local",
+      "targetObjectId": "handoff-preview",
+      "status": "warning",
+      "summary": "Static readiness is blocked while spec fields, evidence review, or D-005 are unresolved."
+    },
+    {
+      "id": "handoff-placeholder",
+      "type": "artifact_reference",
+      "sourceObjectId": "apps/static-mvp/handoff/handoff-placeholder.json",
+      "targetObjectId": "handoff-preview",
+      "status": "attached",
+      "summary": "The placeholder exists as local mock data only and is not a produced handoff artifact."
+    }
+  ],
+  "validation_results": [
+    {
+      "id": "validation-static-local",
+      "scope": "Static MVP primary demo path",
+      "status": "validation_blocked",
+      "command": "npm run validate",
+      "summary": "Repo validation may pass while handoff readiness remains blocked by local mock criteria."
+    },
+    {
+      "id": "validation-manual-static-mvp",
+      "scope": "Manual eight-page static MVP smoke check",
+      "status": "validation_warning",
+      "command": "Manual browser check",
+      "summary": "All eight pages must remain reachable without network/API calls before demo use."
     }
   ],
   "review_findings": [
@@ -133,6 +212,10 @@
     { "source": "node-1", "target": "objective" },
     { "source": "node-2", "target": "layout-regions" },
     { "source": "node-2", "target": "interaction-states" },
+    { "source": "source-context", "target": "objective" },
+    { "source": "locked-decision", "target": "D-005" },
+    { "source": "validation-readiness", "target": "validation-method" },
+    { "source": "handoff-placeholder", "target": "handoff-preview" },
     { "source": "spec-field", "target": "D-005" }
   ],
   "governance_state": {
@@ -143,9 +226,9 @@
   },
   "handoff_status": "blocked",
   "blocked_reasons": [
-    "Spec fields incomplete or not locked",
-    "Decisions unresolved",
-    "Review findings outstanding",
-    "Trace evidence missing"
+    "Acceptance criteria missing",
+    "D-005 needs Point lock",
+    "Required evidence is missing or unreviewed",
+    "Review findings outstanding"
   ]
 }

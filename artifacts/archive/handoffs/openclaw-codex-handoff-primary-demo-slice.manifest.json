@@ -1,0 +1,14 @@
+{
+  "artifact_id": "ART-OPENCLAW-CODEX-HANDOFF-001-SOURCE-ZIP",
+  "artifact_type": "archived_handoff_source_zip",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "artifacts/handoffs/openclaw-codex-handoff-primary-demo-slice.zip",
+  "status": "archived_provenance",
+  "related_task_id": "GOAL-004-primary-demo-alignment",
+  "storage_path": "artifacts/archive/handoffs/openclaw-codex-handoff-primary-demo-slice.zip",
+  "sha256": "f6f0ce7ab654f26c8a69501f5375dc699abb11b21b4774e193d6490c5a0adc35",
+  "size_bytes": 25310,
+  "entry_count": 28,
+  "notes": "Source zip archived after extraction and verification of unpacked canonical package in docs/handoffs/openclaw-codex-handoff-primary-demo-slice/."
+}

@@ -1,0 +1,14 @@
+{
+  "artifact_id": "ART-DR-OPENCLAW-STATIC-MVP-RESEARCH-PACK-V0-1",
+  "artifact_type": "zip_package",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "chatgpt",
+  "status": "draft",
+  "related_task_id": "RESEARCH-PACK-001",
+  "source_file": "conversation_synthesis_and_available_uploaded_context",
+  "storage_path": "artifacts/deep-research/openclaw-static-mvp-research-pack-v0.1/",
+  "checksum": "PENDING_FINAL_ZIP_SHA256",
+  "notes": "Repo-ready deep research reports pack. Includes synthesized/reconstructed reports based on available conversation context and project files. Original Deep Research UI final reports should be added later if exported separately.",
+  "file_count": 19
+}

@@ -10,4 +10,13 @@ This document describes the general workflow for agents working in the cooperati
 6. **Review and QA** – Another agent reviews your work against the acceptance criteria and QA checklist. Address feedback as needed.
 7. **Handoff or merge** – Once approved, deliver the handoff package or merge changes into the main branch, subject to the approval policy.
 
+### Package ingest guardrail
+
+For any incoming package zip in this repository:
+
+1. Extract into the canonical unpacked target first.
+2. Verify extraction parity (zip entries vs extracted files).
+3. Move the source `.zip` into `artifacts/archive/handoffs/` as immutable provenance.
+4. Record an archived-source manifest in `artifacts/archive/handoffs/` (`artifact_type: archived_handoff_source_zip`, `status: archived_provenance`).
+
 Refer to `docs/ops/APPROVAL_POLICY.md` and `docs/ops/CONCURRENCY_POLICY.md` for details on approvals and branching.

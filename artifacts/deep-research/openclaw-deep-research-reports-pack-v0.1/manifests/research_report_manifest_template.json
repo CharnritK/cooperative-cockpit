@@ -1,0 +1,13 @@
+{
+  "artifact_id": "DR-000",
+  "artifact_type": "research_report",
+  "created_at": "YYYY-MM-DD",
+  "owner": "Point",
+  "source": "chatgpt | deep_research | codex | gemini | manual",
+  "status": "draft | reviewed | accepted | archived",
+  "related_task_id": "GOAL-000",
+  "source_file": "",
+  "storage_path": "",
+  "checksum": "",
+  "notes": ""
+}
