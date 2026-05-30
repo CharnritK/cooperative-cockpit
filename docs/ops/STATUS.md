@@ -13,6 +13,10 @@
 - Static golden-path validation evidence is recorded in `artifacts/evidence/GOAL-004-static-architecture-golden-path.md`.
 - Static MVP product-lock validation evidence is recorded in `artifacts/evidence/GOAL-004-validation.md`.
 - PR #3 refreshed the static MVP handoff package inventory to include local font stylesheet, referenced local font files, and OFL license files; fresh validation evidence is recorded in `artifacts/evidence/VALIDATION-REFRESH-PR3.md`.
+- GOAL-005 normalized the static MVP mock data around the locked object model; evidence is recorded in `artifacts/evidence/GOAL-005-validation.md`.
+- GOAL-006 mapped the existing eight-page UI to the locked object model; evidence is recorded in `artifacts/evidence/GOAL-006-validation.md`.
+- GOAL-007 added the Work Packet summary and derived static Handoff Packet preview; evidence is recorded in `artifacts/evidence/GOAL-007-validation.md`.
+- GOAL-008 QA closeout hardens object-model, scope-creep, no-network, unsafe-label, no-new-pages and static handoff-readiness evidence under `quality/`, `apps/static-mvp/QA_CHECKLIST.md` and `artifacts/evidence/GOAL-008-validation.md`.
 
 ## Completed Assimilation
 
@@ -23,15 +27,19 @@
 | GOAL-003A harden gitignore validation | Complete | `scripts/check_gitignore.js` now fails distinctly for unavailable Git, non-work-tree execution, ignored critical files, and unexpected `git check-ignore` errors. Evidence recorded in `artifacts/evidence/GOAL-003A-validation.md`. |
 | GOAL-004 static architecture golden path | Complete | Workbench shows architecture graph flow, selected node context, mock assistant transcript, Context Basket, and standardized handoff packet preview. Evidence recorded in `artifacts/evidence/GOAL-004-static-architecture-golden-path.md`. |
 | GOAL-004 static MVP domain model docs | Complete | Lego pack v0.1 product-lock docs, QA addenda, handoff metadata, prompts, and follow-on Codex goal files are present. This package reuses GOAL-004 as its first internal goal ID; treat it as package-local to avoid confusing it with the earlier static architecture golden path. Evidence recorded in `artifacts/evidence/GOAL-004-validation.md`. |
+| GOAL-005 static mock data normalization | Complete | Static mock data and app state expose the locked object-model entities while preserving existing UI aliases. Evidence recorded in `artifacts/evidence/GOAL-005-validation.md`. |
+| GOAL-006 UI object-model mapping | Complete | Home, Workbench, Review Runs, Trace & Evidence and the current eight-page shell visibly align to the locked object model. Evidence recorded in `artifacts/evidence/GOAL-006-validation.md`. |
+| GOAL-007 Work Packet / Handoff Packet preview | Complete | Preview shows Work Packet as the core object and Handoff Packet as a derived static preview with gated readiness. Evidence recorded in `artifacts/evidence/GOAL-007-validation.md`. |
+| GOAL-008 QA hardening and evidence closeout | Complete | QA docs cover object visibility, scope guardrails, static handoff readiness, no-network, unsafe-label and no-new-pages checks. Evidence recorded in `artifacts/evidence/GOAL-008-validation.md`. |
 
 ## Guardrails
 
 - No dependencies were added.
 - No backend, API, authentication, deployment, real AI, runtime mutation, or repository-write behavior was introduced.
 - Static golden-path additions use mock data only and do not add repo scanning, external connectors, or persistent storage.
-- Product-lock docs are draft-for-Point-review until Point accepts the object-model defaults in `docs/product/POINT_LOCK_DECISIONS.md`.
+- Point accepted the static MVP object-model defaults for GOAL-005 and the GOAL-007 Work Packet / Handoff Packet semantics.
 - `cooperative-cockpit-repo-setup-final/` remains a source package folder and can be removed after verification.
 
 ## Next Recommended Step
 
-Review `docs/product/STATIC_MVP_OBJECT_MODEL.md` and `docs/product/POINT_LOCK_DECISIONS.md`; run package GOAL-005 only after the object model is accepted.
+Use GOAL-008 evidence as the static MVP QA closeout baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
