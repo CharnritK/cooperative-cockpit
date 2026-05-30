@@ -924,46 +924,94 @@ function renderAssistantPanel(selectedNode) {
 }
 
 function renderHandoffPreviewPanel() {
-  const packet = window.appState.handoffPacketPreview || window.mockData.handoffPacketPreview;
+  const legacyPacket = window.appState.handoffPacketPreview || window.mockData.handoffPacketPreview || {};
+  const workPacket = window.appState.workPacket || {};
+  const handoffPacket = window.appState.handoffPacket || {};
   const evidenceItems = window.appState.evidenceItems || [];
-  const sectionKeys = [
-    'primary_demo_path',
-    'objective',
-    'allowed_paths',
-    'forbidden_actions',
-    'required_work',
-    'acceptance_criteria',
-    'validation_commands',
-    'stop_conditions',
-    'final_response_format',
+  const decisions = window.appState.decisions || [];
+  const validationResults = window.appState.validationResults || [];
+  const readiness = getReadinessSummary();
+  const readinessStatus = readiness.ready ? 'handoff-ready' : normalizeObjectStatus(handoffPacket.readiness || legacyPacket.readiness || 'handoff-blocked');
+  const blockedBy = readiness.handoffBlockers.length
+    ? readiness.handoffBlockers
+    : handoffPacket.blockedBy || legacyPacket.blocked_by || ['No blockers'];
+  const includedEvidenceIds = handoffPacket.includedEvidenceIds || legacyPacket.included_evidence_ids || [];
+  const includedDecisionIds = handoffPacket.includedDecisionIds || legacyPacket.included_decision_ids || [];
+  const includedEvidence = evidenceItems.filter((item) => includedEvidenceIds.includes(item.id));
+  const includedDecisions = decisions.filter((decision) => includedDecisionIds.includes(decision.id));
+  const sections = [
+    ['objective', [workPacket.objective || legacyPacket.objective || 'No objective loaded.']],
+    ['allowed_paths', workPacket.allowedPaths || legacyPacket.allowed_paths || []],
+    ['forbidden_actions', workPacket.forbiddenActions || legacyPacket.forbidden_actions || []],
+    ['acceptance_criteria', workPacket.acceptanceCriteria || legacyPacket.acceptance_criteria || []],
+    ['validation_commands', workPacket.validationCommands || legacyPacket.validation_commands || []],
+    ['derived_inputs', [
+      `Work Packet: ${workPacket.id || handoffPacket.workPacketId || 'work-packet-primary-demo'}`,
+      `Decisions: ${includedDecisions.map((decision) => `${decision.id} ${statusLabel(decision.status)}`).join(', ') || 'No decisions linked'}`,
+      `Evidence: ${includedEvidence.map((item) => `${item.id} ${statusLabel(item.status)}`).join(', ') || 'No evidence linked'}`,
+      `Validation Results: ${validationResults.map((result) => `${result.id} ${statusLabel(result.status)}`).join(', ') || 'No validation results linked'}`,
+    ]],
+    ['readiness_status', [statusLabel(readinessStatus), readiness.ready ? 'Static gates are clear in mock state.' : 'Static gates remain blocked in mock state.']],
+    ['blocked_by', blockedBy],
   ];
 
   return `<div class="handoff-preview-head">
       <div>
-        <h4>Static Handoff Packet Preview</h4>
-        <p>${packet.packet_id} / ${packet.title}</p>
+        <h4>Derived static Handoff Packet Preview</h4>
+        <p>${handoffPacket.id || legacyPacket.packet_id} / Derived from Work Packet, Decisions, Evidence, and Validation Results</p>
       </div>
-      ${renderStatusChip(packet.readiness === 'ready' ? 'ready' : 'blocked', packet.readiness === 'ready' ? 'Mock ready' : 'Gated by D-005')}
+      ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Readiness status: Mock ready' : 'Readiness status: Gated locally')}
     </div>
-    <div class="static-notice"><strong>${packet.gate.decision_id}</strong>: ${packet.gate.checkpoint}</div>
+    <div class="static-notice">Work Packet is the core object. Handoff Packet is a derived static preview. Agent Roles: embedded metadata only.</div>
     <div class="handoff-preview-grid">
-      ${sectionKeys.map((key) => {
-        const values = Array.isArray(packet[key]) ? packet[key] : [packet[key]];
-        return `<article class="handoff-preview-section">
+      ${sections.map(([key, values]) => {
+        return `<article class="handoff-preview-section${key === 'objective' ? ' is-wide' : ''}">
             <h5>${formatHandoffSectionLabel(key)}</h5>
             ${renderInspectorList(values)}
           </article>`;
       }).join('')}
       <article class="handoff-preview-section">
-        <h5>Readiness blockers</h5>
-        ${renderInspectorList(packet.blocked_by || ['No blockers'])}
-      </article>
-      <article class="handoff-preview-section">
         <h5>Evidence included</h5>
-        ${renderInspectorList(evidenceItems.map((item) => `${item.label}: ${item.status}`))}
+        ${renderInspectorList(includedEvidence.map((item) => `${item.label}: ${statusLabel(item.status)}`))}
       </article>
     </div>
     <div class="static-notice">This is a static packet preview from mock data. It does not write files, scan a repository, call an API, deploy, or create a real handoff.</div>`;
+}
+
+function renderWorkPacketSummaryPanel() {
+  const workPacket = window.appState.workPacket || {};
+  const handoffPacket = window.appState.handoffPacket || {};
+  return `<div class="handoff-preview-head">
+      <div>
+        <div class="page-kicker">Work Packet summary</div>
+        <h3>${workPacket.title || 'Static MVP Work Packet'}</h3>
+        <p>${workPacket.id || handoffPacket.workPacketId || 'work-packet-primary-demo'} / Work Packet is the core object</p>
+      </div>
+      ${renderStatusChip(workPacket.status || 'draft')}
+    </div>
+    <div class="static-notice">Work Packet is the core object. Handoff Packet is derived from this packet plus Decisions, Evidence, and Validation Results. Agent Roles: embedded metadata only.</div>
+    <div class="handoff-preview-grid">
+      <article class="handoff-preview-section is-wide">
+        <h5>Objective</h5>
+        ${renderInspectorList([workPacket.objective || 'No objective loaded.'])}
+      </article>
+      <article class="handoff-preview-section">
+        <h5>Allowed paths</h5>
+        ${renderInspectorList(workPacket.allowedPaths || [])}
+      </article>
+      <article class="handoff-preview-section">
+        <h5>Forbidden actions</h5>
+        ${renderInspectorList(workPacket.forbiddenActions || [])}
+      </article>
+      <article class="handoff-preview-section">
+        <h5>Acceptance criteria</h5>
+        ${renderInspectorList(workPacket.acceptanceCriteria || [])}
+      </article>
+      <article class="handoff-preview-section">
+        <h5>Validation commands</h5>
+        ${renderInspectorList(workPacket.validationCommands || [])}
+      </article>
+    </div>`;
 }
 
 function formatHandoffSectionLabel(key) {
@@ -975,6 +1023,9 @@ function formatHandoffSectionLabel(key) {
     required_work: 'Required work',
     acceptance_criteria: 'Acceptance criteria',
     validation_commands: 'Validation commands',
+    derived_inputs: 'Derived inputs',
+    readiness_status: 'Readiness status',
+    blocked_by: 'Blocked-by reasons',
     stop_conditions: 'Stop conditions',
     final_response_format: 'Final response format',
   };
@@ -1440,6 +1491,11 @@ function renderPreview(container) {
       <div class="preview-frame-caption">COCKPIT-MVP-014 | offline shell</div>
     </div>`;
   container.appendChild(frame);
+
+  const workPacketSummary = createElement('section', 'panel');
+  workPacketSummary.style.marginTop = '12px';
+  workPacketSummary.innerHTML = renderWorkPacketSummaryPanel();
+  container.appendChild(workPacketSummary);
 
   const handoffPreview = createElement('section', 'panel');
   handoffPreview.style.marginTop = '12px';
