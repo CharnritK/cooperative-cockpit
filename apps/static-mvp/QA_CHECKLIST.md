@@ -41,6 +41,7 @@ This checklist guides the manual verification of the static MVP prototype. It en
 ## Object-model lock checks
 
 - **Product docs source of truth** – `docs/product/STATIC_MVP_OBJECT_MODEL.md`, `STATIC_MVP_SCREEN_MAP.md` and `STATIC_MVP_MOCK_DATA_SPEC.md` are reviewed before changing mock data or UI labels.
+- **Mock entity coverage** – `src/mockData.js` exposes the GOAL-005 static entities: workspace, project, contextNodes, selectedContext, specTemplates, specDraft, specFields, reviewRun, findings, decisions, evidenceItems, artifactRefs, workPacket, handoffPacket, agentRoles and validationResults. `src/state.js` clones and holds those entities while keeping the existing static UI aliases available.
 - **Eight-page boundary** – Object-model alignment must map onto the existing Home, Workbench, Spec Builder, Review Runs, Preview, Decisions, Trace & Evidence and Rules & Scope pages without adding a page.
 - **Static-only object semantics** – Work Packet and Handoff Packet surfaces remain static previews and do not imply export, repo writes, live validation, runtime execution, connectors, auth, database persistence or deployment.
 - **Point-lock gates** – Product decisions listed in `docs/product/POINT_LOCK_DECISIONS.md` must be accepted or redirected before app-source goals GOAL-005 through GOAL-008 begin.
