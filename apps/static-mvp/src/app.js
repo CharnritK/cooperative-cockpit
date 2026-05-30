@@ -48,6 +48,14 @@ const WORKFLOW_STEPS = [
   { key: 'handoff', label: 'Handoff', pages: ['decisions', 'trace', 'rules'], caption: 'Locks and evidence' },
 ];
 
+const INSPECTOR_TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'requirements', label: 'Requirements' },
+  { id: 'evidence', label: 'Evidence' },
+  { id: 'review', label: 'Review' },
+  { id: 'handoff', label: 'Handoff' },
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   window.appState.specValidated = Boolean(window.appState.specValidated);
 
@@ -101,12 +109,44 @@ function getWorkflowStep(page) {
   return WORKFLOW_STEPS.find((step) => step.pages.includes(page)) || WORKFLOW_STEPS[0];
 }
 
+function getMissingEvidenceFields() {
+  return window.appState.specFields.filter((field) => !window.appState.traceLinks.some((link) => link.target === field.id));
+}
+
+function getReviewBlockers() {
+  if (window.appState.reviewBlockersAcknowledged) return [];
+  return window.appState.reviewResults.filter((review) => review.severity === 'high');
+}
+
+function getReadinessSummary() {
+  const unresolvedSpecFields = window.appState.specFields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
+  const pendingDecisions = window.appState.decisions.filter((decision) => decision.status === 'needs-lock');
+  const missingEvidence = window.appState.evidenceReviewed ? [] : getMissingEvidenceFields();
+  const reviewBlockers = getReviewBlockers();
+  const handoffBlockers = [
+    ...unresolvedSpecFields.map((field) => `Spec field missing: ${field.name}`),
+    ...pendingDecisions.map((decision) => `Decision Lock open: ${decision.id}`),
+    ...missingEvidence.map((field) => `Evidence link missing: ${field.name}`),
+    ...reviewBlockers.map((review) => `Review blocker: ${review.name}`),
+  ];
+
+  return {
+    unresolvedSpecFields,
+    missingEvidence,
+    pendingDecisions,
+    reviewBlockers,
+    handoffBlockers,
+    ready: Boolean(window.appState.specValidated) && handoffBlockers.length === 0,
+  };
+}
+
 function updateHandoffReadiness() {
-  window.appState.handoffReady = Boolean(window.appState.specValidated) && !hasUnresolvedSpecFields() && !hasPendingDecisions();
+  window.appState.handoffReady = getReadinessSummary().ready;
 }
 
 function syncShellState(page) {
   updateHandoffReadiness();
+  const readiness = getReadinessSummary();
   const activeStep = getWorkflowStep(page);
   const activeIndex = WORKFLOW_STEPS.findIndex((step) => step.key === activeStep.key);
   const progressIndex = window.appState.handoffReady ? WORKFLOW_STEPS.length : Math.min(activeIndex + 1, WORKFLOW_STEPS.length - 1);
@@ -129,7 +169,15 @@ function syncShellState(page) {
   if (handoffButton) {
     handoffButton.disabled = !window.appState.handoffReady;
     handoffButton.setAttribute('aria-disabled', String(!window.appState.handoffReady));
-    handoffButton.title = window.appState.handoffReady ? 'Open static handoff placeholder' : 'Complete spec, decisions and reviews before handoff';
+    handoffButton.title = window.appState.handoffReady ? 'Prepare static handoff placeholder' : 'Static handoff gated by local readiness checklist';
+  }
+
+  const readinessCount = document.getElementById('readiness-count');
+  if (readinessCount) readinessCount.textContent = String(readiness.handoffBlockers.length);
+  const readinessButton = document.querySelector('.top-right .action-btn[data-action="checklist"]');
+  if (readinessButton) {
+    readinessButton.classList.toggle('is-ready', readiness.ready);
+    readinessButton.title = readiness.ready ? 'Local readiness checklist is clear' : `${readiness.handoffBlockers.length} local readiness blockers`;
   }
 }
 
@@ -167,6 +215,14 @@ function renderStatusChip(status, label) {
 
 function handleTopBarAction(action) {
   switch (action) {
+    case 'checklist':
+      window.appState.utilityTrayCollapsed = false;
+      if (window.appState.currentPage !== 'workbench') {
+        window.navigate('workbench');
+      } else {
+        window.renderPage('workbench');
+      }
+      break;
     case 'preview':
       window.navigate('preview');
       break;
@@ -177,7 +233,7 @@ function handleTopBarAction(action) {
       if (window.appState.handoffReady) {
         alert('Preparing static handoff packet... (placeholder)');
       } else {
-        alert('Cannot prepare handoff yet. Complete the spec, resolve decisions and reviews first.');
+        alert('Cannot prepare handoff yet. Clear the local readiness checklist first.');
       }
       break;
     default:
@@ -309,12 +365,18 @@ function renderHomeStatusCard({ iconName, label, value, tone, detail }) {
   return card;
 }
 
+function getSelectedNode() {
+  return window.mockData.nodes.find((node) => node.id === window.appState.selectedNodeId) || null;
+}
+
 function renderWorkbench(container) {
   showGovernance(true);
+  const selectedNode = getSelectedNode() || window.mockData.nodes[0];
+  if (selectedNode) window.appState.selectedNodeId = selectedNode.id;
   renderPageHeader(container, {
-    kicker: 'Workflow Studio',
+    kicker: 'Artifact-first Builder',
     title: 'Workbench',
-    subtitle: 'Select static workflow operators, review safe node types, and inspect governed configuration without runtime mutation.',
+    subtitle: 'Canvas-first cockpit for Context Nodes, Work Packets, Review Gates, Evidence, Decision Locks, and Handoff Packets. All actions are static and local-only.',
     className: 'workbench-header',
   });
 
@@ -323,15 +385,19 @@ function renderWorkbench(container) {
   sidebar.appendChild(renderNodePalette());
   sidebar.appendChild(renderContextBasket());
   layout.appendChild(sidebar);
-  layout.appendChild(renderNodeCanvas());
+  const workbenchMain = createElement('div', 'workbench-main');
+  workbenchMain.appendChild(renderNodeCanvas());
+  workbenchMain.appendChild(renderUtilityTray(selectedNode));
+  layout.appendChild(workbenchMain);
   container.appendChild(layout);
+  renderNodeInspector(selectedNode ? selectedNode.id : null);
 }
 
 function renderNodePalette() {
   const palette = createElement('section', 'panel node-palette');
   palette.innerHTML = `<div class="node-palette-header">
-      <h3>Node Palette</h3>
-      <p>OpenClaw-safe static node types. Selection stays local to this mockup.</p>
+      <div class="palette-title-row"><h3>OpenClaw Node Families</h3>${renderStatusChip('inspect', 'Mock data')}</div>
+      <p>Static node families only. Selecting or adding a node changes local browser state, never runtime behavior.</p>
     </div>`;
 
   const list = createElement('ul', 'palette-list');
@@ -380,13 +446,13 @@ function renderContextBasket() {
   const row = createElement('div', 'basket-actions');
   [
     ['Add selected', 'add', addSelectedToContext],
-    ['Include upstream', 'branch', () => alert('Include upstream nodes (not implemented)')],
-    ['Include downstream', 'arrow', () => alert('Include downstream nodes (not implemented)')],
+    ['Mark upstream local', 'branch', () => alert('Upstream marker is local-only in this static MVP.')],
+    ['Mark downstream local', 'arrow', () => alert('Downstream marker is local-only in this static MVP.')],
     ['Clear basket', 'close', () => {
       window.appState.context = [];
       window.renderPage('workbench');
     }],
-    ['Preview context', 'eye', () => alert('Context preview not implemented.')],
+    ['Static context preview', 'eye', () => alert('Static context preview only. No external calls are made.')],
   ].forEach(([label, iconName, handler]) => {
     const btn = createElement('button', 'action-btn');
     btn.type = 'button';
@@ -401,11 +467,12 @@ function renderContextBasket() {
 
 function renderNodeCanvas() {
   const canvas = createElement('div', 'node-canvas');
-  canvas.innerHTML = `<div class="canvas-label">Static workflow canvas / COCKPIT-MVP-014</div>
+  canvas.innerHTML = `<div class="canvas-label">Static Workbench canvas / COCKPIT-MVP-014</div>
     <div class="canvas-toolbar">
-      <button class="icon-btn" type="button" aria-label="Grid view">${icon('graph')}</button>
+      <span class="canvas-mode-chip" title="Inspect-only static canvas">Inspect-only</span>
+      <button class="icon-btn" type="button" aria-label="Grid view" title="Static grid view">${icon('graph')}</button>
       <span class="mono" style="color: var(--text-muted); font-size: .72rem; padding: 0 6px;">100%</span>
-      <button class="icon-btn" type="button" aria-label="Lock view">${icon('lock')}</button>
+      <button class="icon-btn" type="button" aria-label="Lock view" title="Local view lock only">${icon('lock')}</button>
     </div>`;
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -436,23 +503,25 @@ function renderNodeCanvas() {
     card.style.left = `${node.x}%`;
     card.style.top = `${node.y}%`;
     card.dataset.nodeId = node.id;
+    card.setAttribute('aria-label', `Select ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}`);
     if (window.appState.selectedNodeId === node.id) card.classList.add('selected');
     card.innerHTML = `<span class="node-handle node-handle-input" aria-hidden="true"></span>
       <span class="node-handle node-handle-output" aria-hidden="true"></span>
       <div class="node-topline">
         <span class="node-type-icon">${icon(NODE_ICON_BY_TYPE[node.type] || 'spark')}</span>
         <div class="node-copy">
-          <div class="node-type-label">${node.typeLabel || node.type}</div>
-          <div class="node-label">${node.label}</div>
+          <div class="node-type-label">${node.familyLabel || node.typeLabel || node.type}</div>
+          <div class="node-label">${node.title || node.label}</div>
         </div>
-        <span class="node-index">${node.index || node.id}</span>
+        <span class="node-index mono">${node.id}</span>
       </div>
-      <div class="node-config-rows">
-        <div class="node-config-row"><span>Config</span><strong>${node.config || 'Static config'}</strong></div>
-        <div class="node-config-row"><span>Model</span><strong>${node.model || 'Mock only'}</strong></div>
-        <div class="node-config-row"><span>Status</span><strong>${statusLabel(node.status)}</strong></div>
+      <p class="node-subtitle">${node.subtitle || node.description}</p>
+      <div class="node-readiness-row">
+        ${renderStatusChip(node.readiness || node.status, readinessLabel(node.readiness || node.status))}
+        <span class="node-metric node-metric-blocker" title="Local blocker count">${node.blockerCount || 0} blockers</span>
+        <span class="node-metric node-metric-evidence" title="Linked mock evidence count">${node.evidenceCount || 0} evidence</span>
       </div>
-      <div class="node-card-footer">${renderStatusChip(node.status)}</div>`;
+      <div class="node-card-footer"><span>${node.config || 'Static config'}</span><strong>${node.model || 'Mock only'}</strong></div>`;
     card.addEventListener('click', (event) => {
       event.stopPropagation();
       selectNode(node.id);
@@ -460,7 +529,24 @@ function renderNodeCanvas() {
     canvas.appendChild(card);
   });
 
-  canvas.addEventListener('click', () => setInspectorOpen(false));
+  const addNode = createElement('button', 'canvas-add-node');
+  addNode.type = 'button';
+  addNode.title = 'Mock add-node affordance. This records local UI state only.';
+  addNode.innerHTML = `${icon('add')}Mock add node<span>Local placeholder only</span>`;
+  addNode.addEventListener('click', (event) => {
+    event.stopPropagation();
+    window.appState.mockAddNodeRequested = true;
+    window.appState.lastLocalValidation = 'Mock add-node request captured locally. No node changed runtime state or persisted.';
+    window.renderPage('workbench');
+  });
+  canvas.appendChild(addNode);
+
+  if (window.appState.mockAddNodeRequested) {
+    const notice = createElement('div', 'canvas-local-note');
+    notice.innerHTML = `${icon('check')}Mock add-node request recorded in local state only. Reloading the page clears it.`;
+    canvas.appendChild(notice);
+  }
+
   canvas.appendChild(createElement('div', 'canvas-minimap'));
   return canvas;
 }
@@ -477,9 +563,24 @@ function renderNodeInspector(nodeId) {
   const inspector = document.getElementById('right-inspector');
   if (!inspector) return;
   const node = window.mockData.nodes.find((n) => n.id === nodeId);
-  if (!node) return;
-
   setInspectorOpen(true);
+  if (!node) {
+    inspector.innerHTML = `<div class="inspector-header">
+        <div>
+          <span class="chip chip-secondary">Workbench</span>
+          <div class="inspector-title">No node selected</div>
+          <div class="inspector-id">Inspect-only static MVP</div>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Close inspector" id="close-inspector">${icon('close')}</button>
+      </div>
+      <div class="inspector-empty">
+        <h4>Select a node to inspect artifact readiness</h4>
+        <p>Use the canvas cards to inspect requirements, evidence, review context, and handoff blockers without leaving the Workbench.</p>
+      </div>`;
+    inspector.querySelector('#close-inspector').addEventListener('click', () => setInspectorOpen(false));
+    return;
+  }
+
   const inboundEdges = window.mockData.workflowEdges.filter((edge) => edge.target === node.id);
   const outboundEdges = window.mockData.workflowEdges.filter((edge) => edge.source === node.id);
   const edgeLabel = (edge, direction) => {
@@ -487,65 +588,218 @@ function renderNodeInspector(nodeId) {
     const other = window.mockData.nodes.find((n) => n.id === otherId);
     return other ? other.label : otherId;
   };
+  const activeTab = window.appState.inspectorTab || 'overview';
   inspector.innerHTML = `<div class="inspector-header">
       <div>
-        <span class="chip chip-secondary">${node.typeLabel || node.type}</span>
-        <div class="inspector-title">${node.label}</div>
-        <div class="inspector-id">ID: ${node.id}</div>
+        <span class="chip chip-secondary">${node.familyLabel || node.typeLabel || node.type}</span>
+        <div class="inspector-title">${node.title || node.label}</div>
+        <div class="inspector-id">${node.id} / ${node.label}</div>
       </div>
       <button class="icon-btn" type="button" aria-label="Close inspector" id="close-inspector">${icon('close')}</button>
     </div>
-    <div class="inspector-section">
-      <h4>Node config summary</h4>
-      <div class="inspector-grid">
-        <div class="inspector-row"><span>Purpose</span><strong>${node.description}</strong></div>
-        <div class="inspector-row"><span>Config</span><strong>${node.config || 'Static config'}</strong></div>
-        <div class="inspector-row"><span>Model</span><strong>${node.model || 'Mock only'}</strong></div>
-        <div class="inspector-row"><span>Status</span><strong>${statusLabel(node.status)}</strong></div>
-      </div>
+    <div class="inspector-tablist" role="tablist" aria-label="Node inspector tabs">
+      ${INSPECTOR_TABS.map((tab) => `<button class="inspector-tab${tab.id === activeTab ? ' active' : ''}" type="button" role="tab" aria-selected="${tab.id === activeTab}" data-tab="${tab.id}">${tab.label}</button>`).join('')}
     </div>
-    <div class="inspector-section">
-      <h4>Inputs</h4>
-      ${renderInspectorList([...(node.inputs || []), ...inboundEdges.map((edge) => `From ${edgeLabel(edge, 'input')}`)])}
-    </div>
-    <div class="inspector-section">
-      <h4>Outputs</h4>
-      ${renderInspectorList([...(node.outputs || []), ...outboundEdges.map((edge) => `To ${edgeLabel(edge, 'output')}`)])}
-    </div>
-    <div class="inspector-section">
-      <h4>Guardrails</h4>
-      ${renderInspectorList(node.guardrails || ['Static-only behavior'])}
-    </div>
-    <div class="inspector-section">
-      <h4>Trace links</h4>
-      ${renderInspectorList(node.trace || ['No trace links configured'])}
+    <div class="inspector-tab-panel">
+      ${renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges, edgeLabel)}
     </div>
     <div class="inspector-section">
       <h4>Static-only notice</h4>
-      <div class="static-notice">This inspector updates local mock UI state only. It does not call AI services, mutate runtime state, write repositories or deploy artifacts.</div>
+      <div class="static-notice">Local only / Mock data / Inspect-only. This inspector updates browser mock state only. It does not call AI services, mutate runtime state, write repositories or deploy artifacts.</div>
     </div>`;
 
-  const tabs = createElement('div', 'inspector-tabs');
-  [
-    ['Spec Builder', 'document', 'spec-builder'],
-    ['Review Runs', 'review', 'review-runs'],
-    ['Preview', 'eye', 'preview'],
-    ['Trace', 'trace', 'trace'],
-    ['Decisions', 'decision', 'decisions'],
-  ].forEach(([label, iconName, page]) => {
-    const btn = createElement('button', 'action-btn');
-    btn.type = 'button';
-    btn.innerHTML = `${icon(iconName)}${label}`;
-    btn.addEventListener('click', () => window.navigate(page));
-    tabs.appendChild(btn);
+  inspector.querySelectorAll('[data-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      window.appState.inspectorTab = tab.dataset.tab;
+      renderNodeInspector(node.id);
+    });
   });
-  inspector.appendChild(tabs);
+
+  const handoffAction = inspector.querySelector('#inspector-handoff-action');
+  if (handoffAction) {
+    handoffAction.addEventListener('click', () => {
+      if (window.appState.handoffReady) {
+        alert('Preparing static handoff packet... (placeholder)');
+      } else {
+        alert('Prepare handoff is gated by local readiness blockers.');
+      }
+    });
+  }
+
   inspector.querySelector('#close-inspector').addEventListener('click', () => setInspectorOpen(false));
+}
+
+function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges, edgeLabel) {
+  const readiness = getReadinessSummary();
+  switch (activeTab) {
+    case 'requirements':
+      return `<div class="inspector-section">
+          <h4>Requirements</h4>
+          ${renderInspectorList(node.requirements || ['No requirements recorded for this mock node'])}
+        </div>
+        <div class="inspector-section">
+          <h4>Inputs</h4>
+          ${renderInspectorList([...(node.inputs || []), ...inboundEdges.map((edge) => `From ${edgeLabel(edge, 'input')}`)])}
+        </div>
+        <div class="inspector-section">
+          <h4>Outputs</h4>
+          ${renderInspectorList([...(node.outputs || []), ...outboundEdges.map((edge) => `To ${edgeLabel(edge, 'output')}`)])}
+        </div>`;
+    case 'evidence':
+      return `<div class="inspector-section">
+          <h4>Evidence</h4>
+          <div class="inspector-count-row">
+            <span>${node.evidenceCount || 0} linked evidence items</span>
+            ${renderStatusChip(readiness.missingEvidence.length ? 'needs-evidence' : 'ready', readiness.missingEvidence.length ? `${readiness.missingEvidence.length} missing` : 'Evidence reviewed')}
+          </div>
+          ${renderInspectorList(node.evidence || node.trace || ['No evidence configured'])}
+        </div>
+        <div class="inspector-section">
+          <h4>Trace links</h4>
+          ${renderInspectorList(node.trace || ['No trace links configured'])}
+        </div>`;
+    case 'review':
+      return `<div class="inspector-section">
+          <h4>Review Gate</h4>
+          <div class="inspector-count-row">
+            <span>${node.blockerCount || 0} local blockers on this node</span>
+            ${renderStatusChip(readiness.reviewBlockers.length ? 'review-blocked' : 'ready', readiness.reviewBlockers.length ? `${readiness.reviewBlockers.length} review blockers` : 'Review acknowledged')}
+          </div>
+          ${renderInspectorList(node.review || ['No review notes configured'])}
+        </div>
+        <div class="inspector-section">
+          <h4>Guardrails</h4>
+          ${renderInspectorList(node.guardrails || ['Static-only behavior'])}
+        </div>`;
+    case 'handoff':
+      return `<div class="inspector-section">
+          <h4>Handoff Packet</h4>
+          <div class="handoff-gate-card">
+            ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Ready locally' : 'Gated locally')}
+            <p>${readiness.ready ? 'The local checklist is clear. Preparing a handoff still creates only a static placeholder.' : 'Prepare handoff stays disabled until the local readiness checklist is clear.'}</p>
+            ${renderInspectorList(readiness.handoffBlockers.length ? readiness.handoffBlockers : ['No local handoff blockers'])}
+            <button class="action-btn action-primary" id="inspector-handoff-action" type="button" ${readiness.ready ? '' : 'disabled'}>${icon('handoff')}Prepare handoff</button>
+          </div>
+        </div>
+        <div class="inspector-section">
+          <h4>Selected node handoff context</h4>
+          ${renderInspectorList(node.handoff || ['No handoff context configured'])}
+        </div>`;
+    case 'overview':
+    default:
+      return `<div class="inspector-section">
+          <h4>Overview</h4>
+          <div class="inspector-grid">
+            <div class="inspector-row"><span>Purpose</span><strong>${node.description}</strong></div>
+            <div class="inspector-row"><span>Family</span><strong>${node.familyLabel || node.typeLabel || node.type}</strong></div>
+            <div class="inspector-row"><span>Config</span><strong>${node.config || 'Static config'}</strong></div>
+            <div class="inspector-row"><span>Mode</span><strong>${node.model || 'Mock only'}</strong></div>
+            <div class="inspector-row"><span>Readiness</span><strong>${readinessLabel(node.readiness || node.status)}</strong></div>
+          </div>
+        </div>`;
+  }
 }
 
 function renderInspectorList(items) {
   const safeItems = items && items.length ? items : ['None'];
   return `<ul class="inspector-list">${safeItems.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+}
+
+function renderUtilityTray(selectedNode) {
+  const readiness = getReadinessSummary();
+  const tray = createElement('section', `utility-tray${window.appState.utilityTrayCollapsed ? ' is-collapsed' : ''}`);
+  tray.setAttribute('aria-label', 'Evidence and validation utility tray');
+  tray.innerHTML = `<div class="utility-tray-header">
+      <div>
+        <h3>Evidence & Validation</h3>
+        <p>${selectedNode ? `${selectedNode.id} / ${selectedNode.title || selectedNode.label}` : 'Select a node to inspect local artifact evidence.'}</p>
+      </div>
+      <div class="utility-tray-actions">
+        ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Ready locally' : `${readiness.handoffBlockers.length} blockers`)}
+        <button class="action-btn" type="button" id="toggle-utility-tray">${window.appState.utilityTrayCollapsed ? 'Expand tray' : 'Collapse tray'}</button>
+      </div>
+    </div>`;
+
+  if (!window.appState.utilityTrayCollapsed) {
+    const body = createElement('div', 'utility-tray-body');
+    body.innerHTML = `<section class="readiness-panel">
+        <div class="readiness-panel-head">
+          <h4>Global readiness checklist</h4>
+          <span class="mode-chip">Static / Local only</span>
+        </div>
+        <div class="readiness-grid">
+          ${renderReadinessTile('Missing evidence', readiness.missingEvidence.length, readiness.missingEvidence.map((field) => field.name), window.appState.evidenceReviewed)}
+          ${renderReadinessTile('Missing decisions', readiness.pendingDecisions.length, readiness.pendingDecisions.map((decision) => decision.id), false)}
+          ${renderReadinessTile('Review blockers', readiness.reviewBlockers.length, readiness.reviewBlockers.map((review) => review.name), window.appState.reviewBlockersAcknowledged)}
+          ${renderReadinessTile('Handoff blockers', readiness.handoffBlockers.length, readiness.handoffBlockers, readiness.ready)}
+        </div>
+        <div class="readiness-actions">
+          <button class="action-btn" type="button" id="mark-evidence-reviewed">${icon('check')}Mark evidence reviewed locally</button>
+          <button class="action-btn" type="button" id="ack-review-blockers">${icon('review')}Acknowledge review blockers locally</button>
+        </div>
+      </section>
+      <section class="selected-evidence-panel">
+        <h4>Selected node evidence surface</h4>
+        ${selectedNode ? renderInspectorList(selectedNode.evidence || selectedNode.trace || ['No evidence attached to this mock node']) : '<div class="empty-state compact">Select a node to see its Evidence, Review, and Handoff context here.</div>'}
+      </section>
+      <section class="selected-evidence-panel">
+        <h4>Local validation note</h4>
+        <p>${window.appState.lastLocalValidation || 'No local validation action has been recorded in this browser session.'}</p>
+        <button class="action-btn" type="button" id="validate-selected-node" ${selectedNode ? '' : 'disabled'}>${icon('review')}Validate selected artifact locally</button>
+      </section>`;
+    tray.appendChild(body);
+  }
+
+  tray.querySelector('#toggle-utility-tray').addEventListener('click', () => {
+    window.appState.utilityTrayCollapsed = !window.appState.utilityTrayCollapsed;
+    window.renderPage('workbench');
+  });
+
+  const markEvidence = tray.querySelector('#mark-evidence-reviewed');
+  if (markEvidence) {
+    markEvidence.addEventListener('click', () => {
+      window.appState.evidenceReviewed = true;
+      window.appState.lastLocalValidation = 'Evidence gaps were marked reviewed in local mock state only.';
+      syncShellState(window.appState.currentPage);
+      window.renderPage('workbench');
+    });
+  }
+
+  const ackReview = tray.querySelector('#ack-review-blockers');
+  if (ackReview) {
+    ackReview.addEventListener('click', () => {
+      window.appState.reviewBlockersAcknowledged = true;
+      window.appState.lastLocalValidation = 'Review blockers were acknowledged in local mock state only.';
+      syncShellState(window.appState.currentPage);
+      window.renderPage('workbench');
+    });
+  }
+
+  const validateSelected = tray.querySelector('#validate-selected-node');
+  if (validateSelected) {
+    validateSelected.addEventListener('click', () => {
+      const node = getSelectedNode();
+      window.appState.lastLocalValidation = node
+        ? `${node.id} ${node.title || node.label} checked locally. No runtime, external service, or repository action occurred.`
+        : 'No node selected for local validation.';
+      window.renderPage('workbench');
+    });
+  }
+
+  return tray;
+}
+
+function renderReadinessTile(label, count, details, resolved) {
+  const status = count === 0 || resolved ? 'ready' : 'blocked';
+  const summary = count === 0 || resolved ? 'Clear' : `${count} open`;
+  const items = details && details.length ? details.slice(0, 3) : ['No open items'];
+  return `<article class="readiness-tile ${status === 'ready' ? 'is-clear' : 'is-blocked'}">
+      <div class="readiness-tile-head">
+        <span>${label}</span>
+        ${renderStatusChip(status, summary)}
+      </div>
+      ${renderInspectorList(items)}
+    </article>`;
 }
 
 function addSelectedToContext() {
@@ -588,6 +842,13 @@ function getStatusClass(status) {
       return 'status-draft';
     case 'needs-sync':
       return 'status-needs-sync';
+    case 'ready':
+    case 'needs-evidence':
+    case 'review-blocked':
+    case 'needs-decision':
+      return `status-${status}`;
+    case 'inspect':
+      return 'status-inspect';
     case 'locked':
       return 'status-validated';
     default:
@@ -638,9 +899,21 @@ function statusLabel(status) {
       return 'Draft';
     case 'needs-sync':
       return 'Needs sync';
+    case 'ready':
+      return 'Ready';
+    case 'needs-evidence':
+      return 'Needs evidence';
+    case 'review-blocked':
+      return 'Review blockers';
+    case 'needs-decision':
+      return 'Needs decision';
     default:
       return status;
   }
+}
+
+function readinessLabel(status) {
+  return statusLabel(status).replace('Needs lock', 'Needs decision');
 }
 
 function renderSpecBuilder(container) {
@@ -729,16 +1002,18 @@ function renderSpecBuilder(container) {
   actions.style.marginTop = '12px';
   const btnValidate = createElement('button', 'action-btn');
   btnValidate.type = 'button';
-  btnValidate.innerHTML = `${icon('review')}Validate`;
+  btnValidate.innerHTML = `${icon('review')}Validate artifacts`;
   btnValidate.addEventListener('click', () => {
     if (hasUnresolvedSpecFields()) {
       alert('Cannot validate: some fields are unresolved.');
     } else {
       window.appState.specValidated = true;
-      if (hasPendingDecisions()) {
-        alert('Specification validated. Handoff remains blocked until decisions are locked.');
+      updateHandoffReadiness();
+      const readiness = getReadinessSummary();
+      if (readiness.handoffBlockers.length) {
+        alert(`Specification validated locally. Handoff remains gated by ${readiness.handoffBlockers.length} local checklist item(s).`);
       } else {
-        alert('Specification validated!');
+        alert('Specification validated locally. Static handoff placeholder is ready.');
       }
       window.renderPage('spec-builder');
     }
@@ -748,12 +1023,12 @@ function renderSpecBuilder(container) {
   const btnHandoff = createElement('button', 'action-btn action-primary');
   btnHandoff.type = 'button';
   btnHandoff.disabled = !window.appState.handoffReady;
-  btnHandoff.innerHTML = `${icon('handoff')}Handoff`;
+  btnHandoff.innerHTML = `${icon('handoff')}Prepare handoff`;
   btnHandoff.addEventListener('click', () => {
     if (window.appState.handoffReady) {
-      alert('Preparing static handoff...');
+      alert('Preparing static handoff placeholder...');
     } else {
-      alert('Handoff not ready. Complete all tasks first.');
+      alert('Prepare handoff is gated by local readiness blockers.');
     }
   });
   actions.appendChild(btnHandoff);
@@ -907,10 +1182,10 @@ function renderPreview(container) {
   const actions = createElement('div', 'button-row');
   actions.style.marginTop = '12px';
   [
-    ['Generate static mockup', 'spark', () => alert('Generating static mockup (placeholder)')],
-    ['Compare against spec', 'check', () => alert('Comparing preview with spec (placeholder)')],
-    ['Start UX check', 'eye', () => alert('Starting UX check (placeholder)')],
-    ['Prepare preview packet', 'handoff', () => alert('Preparing preview packet (placeholder)'), !window.appState.handoffReady],
+    ['View static mockup', 'spark', () => alert('Opening static mockup placeholder. No generation occurs.')],
+    ['Compare static spec', 'check', () => alert('Comparing preview with spec in local mock state only.')],
+    ['Inspect UX notes', 'eye', () => alert('UX notes are inspect-only placeholders.')],
+    ['Prepare preview packet', 'handoff', () => alert('Preparing preview packet placeholder only.'), !window.appState.handoffReady],
   ].forEach(([text, iconName, handler, disabled]) => {
     const btn = createElement('button', 'action-btn');
     btn.type = 'button';

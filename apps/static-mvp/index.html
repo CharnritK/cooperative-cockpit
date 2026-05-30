@@ -37,10 +37,15 @@
           </div>
         </div>
         <div class="top-right">
-          <span class="artifact-badge"><span>Active</span><strong>COCKPIT-MVP-014</strong></span>
-          <button class="action-btn" data-action="preview"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg>Preview</button>
-          <button class="action-btn" data-action="validate"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg>Validate</button>
-          <button class="action-btn action-primary" data-action="handoff" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg>Handoff</button>
+          <span class="artifact-badge"><span>Artifact ID</span><strong>COCKPIT-MVP-014</strong></span>
+          <span class="mode-chip" title="Static MVP. All state is local to this browser session.">Static MVP / Local only</span>
+          <button class="action-btn readiness-btn" data-action="checklist" title="Open local readiness checklist">
+            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11" /><path d="m4 6 1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2" /></svg>
+            Checklist <span id="readiness-count">0</span>
+          </button>
+          <button class="action-btn" data-action="preview" title="Open a static preview snapshot only"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg>Preview snapshot</button>
+          <button class="action-btn" data-action="validate" title="Inspect local mock validation surfaces"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg>Validate artifacts</button>
+          <button class="action-btn action-primary" data-action="handoff" title="Gated static handoff placeholder" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg>Prepare handoff</button>
         </div>
       </header>
       <!-- Left navigation rail -->

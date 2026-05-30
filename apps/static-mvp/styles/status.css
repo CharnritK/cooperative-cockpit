@@ -45,6 +45,8 @@
 
 .status-needs-lock,
 .status-needs-answer,
+.status-needs-decision,
+.status-needs-evidence,
 .status-warning,
 .status-pending,
 .status-revise {
@@ -53,6 +55,7 @@
 
 .status-missing,
 .status-blocked,
+.status-review-blocked,
 .status-unsafe,
 .status-risk {
   color: var(--color-red);
