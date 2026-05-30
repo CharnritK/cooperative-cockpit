@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Static Architecture Graph Mock Data",
+  "type": "object",
+  "properties": {
+    "architectureGraphNodes": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "linkedNodeId": { "type": "string" },
+          "role": { "type": "string" },
+          "output": { "type": "string" }
+        },
+        "required": ["id", "label", "linkedNodeId", "role", "output"]
+      }
+    },
+    "architectureGraphEdges": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "label": { "type": "string" }
+        },
+        "required": ["source", "target", "label"]
+      }
+    }
+  },
+  "required": ["architectureGraphNodes", "architectureGraphEdges"]
+}

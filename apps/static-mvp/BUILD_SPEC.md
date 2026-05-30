@@ -9,7 +9,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 - **Review action language** – Use “Validate” or “Start review checks”; avoid unsafe execution-style verbs on buttons and actions.
 - **Preview naming** – The left nav and inspector tab are labelled “Preview”. The page header reads “UI / HTML Viewer”.
 - **Templates** – A set of 10 controlled templates is provided in the Spec Builder.
-- **Top bar** – Brand is shortened to OpenClaw, the Cooperative Cockpit label is secondary, workflow state is shown as Concept → Workbench → Spec → Review → Preview → Handoff, and the active artifact ID sits in a compact right-side badge.
+- **Top bar** – Brand is shortened to OpenClaw, the governed workflow studio label is secondary, workflow state is shown as Concept → Workbench → Spec → Review → Preview → Handoff, and the active artifact ID sits in a compact right-side badge.
 - **Left rail** – Includes compact progress, workflow grouping and governance grouping while preserving the eight existing page labels and route keys.
 - **Governance strip** – Compact single-row status strip shown on all high-risk pages except Home, preserving the meanings Runtime mutation blocked, repo writes handoff only, artifact drafting allowed and dynamic UI spec first.
 - **Home page** – Shows operational status cards, a full-width pipeline banner, recent activity and next safe actions instead of a generic dashboard.
@@ -26,7 +26,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 The MVP includes eight pages:
 
 1. **Home** – Operational page with context, protected exclusion and pending lock cards, pipeline progress, recent activity and quick actions.
-2. **Workbench** – Operational workflow canvas for selecting connected nodes and managing the docked Context Basket. Shows the governance strip.
+2. **Workbench** – Canvas-first workflow studio for selecting governed operator nodes, reviewing safe node types, managing the docked Context Basket and inspecting node configuration/debug details. Shows the governance strip as a secondary safety overlay.
 3. **Spec Builder** – Template-driven spec editing. Includes field status chips and gating for handoff.
 4. **Review Runs** – Inspect‑only review orchestration. Shows review types and mock findings.
 5. **Preview** – Static mockup viewer and spec coverage checklist.
@@ -66,11 +66,11 @@ Status chips reflect the following colour semantics:
 
 ## Visual system
 
-- **Aesthetic:** Operational Control Center, combining aerospace-style command surfaces with restrained modern SaaS ergonomics.
-- **Surfaces:** Deep graphite/navy background, glass-lite panels, crisp borders, custom scrollbars and subtle scanline/grid texture.
-- **Interaction finish:** Hover/focus/selected states use luminous borders, `--color-accent`, subtle page-enter motion and animated status dots with `prefers-reduced-motion` support.
+- **Aesthetic:** Dify-inspired workflow studio with OpenClaw governance overlays. The Workbench should read as a clean SaaS workflow builder, not a command center, while remaining clearly differentiated through decisions, trace, evidence and handoff concepts.
+- **Surfaces:** Light neutral shell, white studio panels, light dotted Workbench canvas, restrained borders and compact control bars. Avoid heavy glass, scanlines, cockpit cues and neon glow.
+- **Interaction finish:** Hover/focus/selected states use subtle blue, green and orange accents, clear outlines, compact status chips and minimal page-enter motion with `prefers-reduced-motion` support.
 - **Icons:** Inline SVG and CSS icons are used for navigation, top actions, nodes, governance and status cues. There is no external icon package.
-- **Workbench connectors:** `window.mockData.workflowEdges` supplies visual-only source/target/tone data for drawing canvas links.
+- **Workbench connectors:** `window.mockData.workflowEdges` supplies visual-only source/target/tone data for drawing canvas links. Node cards are configurable workflow operators with type icons, config/model/status rows, input/output handles and local-only selection state.
 
 Supported status labels:
 `Active`, `Selected`, `Allowed`, `Validated`, `Covered`, `Applied`, `Needs Point lock`, `Needs answer`, `Needs sync`, `Missing`, `Blocked`, `Revise`, `Handoff only`, `Inspect only`, `Draft`, `Ready for handoff`.
@@ -80,9 +80,9 @@ Supported status labels:
 Refer to the `QA_CHECKLIST.md` file for detailed acceptance criteria. At a high level:
 
 1. All eight pages are reachable via the left navigation.
-2. The prototype reads as a governed AI workflow cockpit rather than a dashboard or chatbot.
-3. The shell is visually consistent across pages, with a refined dark operational palette, local typography, inline icons and clear status chips.
-4. The Workbench is canvas‑first with node selection, visual connectors and a docked context basket.
+2. The prototype reads as a governed AI workflow studio rather than a dashboard, chatbot or dark command center.
+3. The shell is visually consistent across pages, with a light neutral SaaS palette, local typography, inline icons and clear status chips.
+4. The Workbench is canvas‑first with node selection, a node palette, visual connectors, workflow-operator cards, node configuration/debug inspection and a docked context basket.
 5. The Spec Builder clearly shows templates, fields, statuses and gating for handoff.
 6. Review runs are labelled inspect‑only and provide mock findings.
 7. The preview is static and labelled “UI / HTML Viewer”.

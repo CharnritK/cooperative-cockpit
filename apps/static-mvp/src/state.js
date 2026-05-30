@@ -20,6 +20,12 @@
     traceLinks: deepCopy(window.mockData.traceLinks),
     rules: deepCopy(window.mockData.rules),
     // Flags for gating actions
+    inspectorTab: 'overview',
+    utilityTrayCollapsed: false,
+    mockAddNodeRequested: false,
+    evidenceReviewed: false,
+    reviewBlockersAcknowledged: false,
+    lastLocalValidation: null,
     handoffReady: false,
   };
 })();
