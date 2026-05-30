@@ -1,0 +1,14 @@
+{
+  "artifact_id": "ART-DR-OPENCLAW-STATIC-MVP-RESEARCH-PACK-V0-1-SOURCE-ZIP",
+  "artifact_type": "archived_handoff_source_zip",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "artifacts/handoffs/openclaw-deep-research-reports-pack-v0.1.zip",
+  "status": "archived_provenance",
+  "related_task_id": "RESEARCH-PACK-001",
+  "storage_path": "artifacts/archive/handoffs/openclaw-deep-research-reports-pack-v0.1.zip",
+  "sha256": "9dd69dcc417e600f3c28de5926be31de005d4ebf33dd2984dd1a7b76d7d67b33",
+  "size_bytes": 22599,
+  "entry_count": 19,
+  "notes": "Source zip archived after extraction to artifacts/deep-research/openclaw-deep-research-reports-pack-v0.1/."
+}
