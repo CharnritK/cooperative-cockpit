@@ -12,10 +12,22 @@
     // Clone arrays from mockData so we can mutate them without
     // altering the originals. In a real application we would use a
     // proper state management library or framework.
+    workspace: deepCopy(window.mockData.workspace),
+    project: deepCopy(window.mockData.project),
+    contextNodes: deepCopy(window.mockData.contextNodes),
+    selectedContext: deepCopy(window.mockData.selectedContext),
+    specTemplates: deepCopy(window.mockData.specTemplates),
+    specDraft: deepCopy(window.mockData.specDraft),
     context: deepCopy(window.mockData.contextItems),
     protected: deepCopy(window.mockData.protectedItems),
     primaryDemoPath: deepCopy(window.mockData.primaryDemoPath),
-    evidenceItems: deepCopy(window.mockData.primaryDemoPath.evidenceItems),
+    reviewRun: deepCopy(window.mockData.reviewRun),
+    findings: deepCopy(window.mockData.findings),
+    evidenceItems: deepCopy(window.mockData.evidenceItems),
+    artifactRefs: deepCopy(window.mockData.artifactRefs),
+    workPacket: deepCopy(window.mockData.workPacket),
+    handoffPacket: deepCopy(window.mockData.handoffPacket),
+    agentRoles: deepCopy(window.mockData.agentRoles),
     validationResults: deepCopy(window.mockData.validationResults),
     handoffPacketPreview: deepCopy(window.mockData.handoffPacketPreview),
     specFields: deepCopy(window.mockData.specFields),

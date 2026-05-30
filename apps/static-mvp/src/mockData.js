@@ -7,6 +7,117 @@
 */
 
 window.mockData = {
+  workspace: {
+    id: 'workspace-static-mvp',
+    name: 'OpenClaw Static MVP Workspace',
+    mode: 'static_local_only',
+    constraints: [
+      'No backend, API, auth, database, deployment, or external connectors',
+      'No runtime workflow execution or real agent orchestration',
+      'No repo writes from the static prototype',
+    ],
+  },
+
+  project: {
+    id: 'project-cooperative-cockpit-static-mvp',
+    name: 'OpenClaw Cooperative Cockpit Static MVP',
+    artifactId: 'COCKPIT-MVP-014',
+    summary: 'Static local prototype for governed context, spec, review, evidence, decision, and handoff readiness flows.',
+    currentStage: 'GOAL-005 mock data normalization',
+    status: 'draft',
+  },
+
+  contextNodes: [
+    {
+      id: 'node-1',
+      label: 'User Input / Concept Intake',
+      type: 'intake',
+      status: 'validated',
+      description: 'Captures the human-provided goal, constraints and stop conditions before any drafting begins.',
+      x: 20,
+      y: 24,
+      links: ['node-2', 'objective'],
+    },
+    {
+      id: 'node-2',
+      label: 'Context Selector',
+      type: 'context',
+      status: 'validated',
+      description: 'Chooses safe source material for the spec while keeping protected surfaces excluded.',
+      x: 50,
+      y: 20,
+      links: ['node-3', 'source-context'],
+    },
+    {
+      id: 'node-3',
+      label: 'Spec Builder',
+      type: 'spec',
+      status: 'draft',
+      description: 'Turns the selected context into controlled fields, acceptance criteria and handoff gates.',
+      x: 80,
+      y: 32,
+      links: ['node-4', 'spec-draft-primary'],
+    },
+    {
+      id: 'node-6',
+      label: 'Decision Lock',
+      type: 'decision',
+      status: 'needs-lock',
+      description: 'Surfaces unresolved approval points that must be locked before a handoff is available.',
+      x: 20,
+      y: 80,
+      links: ['D-005', 'handoff-preview'],
+    },
+    {
+      id: 'node-8',
+      label: 'Handoff Packet',
+      type: 'handoff',
+      status: 'blocked',
+      description: 'Prepares a static placeholder bundle only after specs, decisions and evidence are ready.',
+      x: 80,
+      y: 82,
+      links: ['work-packet-primary-demo', 'handoff-packet-primary-demo'],
+    },
+  ],
+
+  selectedContext: {
+    includedIds: ['node-2', 'node-3', 'node-8', 'golden-path-brief'],
+    protectedExclusions: [
+      { id: 'runtime-state', label: 'Runtime state', status: 'excluded' },
+      { id: 'secrets', label: 'Secrets', status: 'excluded' },
+      { id: 'repo-write', label: 'Repo write authority', status: 'excluded' },
+    ],
+  },
+
+  specTemplates: [
+    {
+      id: 'template-product-spec',
+      name: 'Product Spec',
+      description: 'Structures objective, protected surfaces, acceptance criteria, and validation method.',
+      fieldIds: ['objective', 'layout-regions', 'interaction-states', 'protected-surfaces', 'acceptance-criteria', 'validation-method'],
+    },
+    {
+      id: 'template-review-brief',
+      name: 'Review Brief',
+      description: 'Frames inspect-only review context and finding evidence expectations.',
+      fieldIds: ['objective', 'interaction-states', 'protected-surfaces', 'validation-method'],
+    },
+    {
+      id: 'template-codex-handoff',
+      name: 'Codex Handoff',
+      description: 'Collects bounded implementation scope, forbidden actions, acceptance criteria, and validation commands.',
+      fieldIds: ['objective', 'protected-surfaces', 'acceptance-criteria', 'validation-method'],
+    },
+  ],
+
+  specDraft: {
+    id: 'spec-draft-primary',
+    templateId: 'template-product-spec',
+    status: 'draft',
+    fieldIds: ['objective', 'layout-regions', 'interaction-states', 'protected-surfaces', 'acceptance-criteria', 'validation-method'],
+    readiness: 'blocked',
+  },
+
   // Nodes displayed on the Workbench canvas. Coordinates are percentages
   // relative to the canvas container for quick placement. These are static
   // workflow operators; they do not call models, services or runtime tools.
@@ -515,6 +626,119 @@ window.mockData = {
     blocked_by: ['Acceptance criteria missing', 'D-005 needs Point lock', 'Required evidence is missing or unreviewed'],
   },
 
+  evidenceItems: [
+    {
+      id: 'source-context',
+      type: 'source_context',
+      label: 'Source context evidence',
+      sourceObjectId: 'node-2',
+      targetObjectId: 'spec-draft-primary',
+      status: 'attached',
+      requiredForHandoff: true,
+      summary: 'Selected Context is visible on Workbench and excludes runtime state, secrets, and repo write authority.',
+    },
+    {
+      id: 'locked-decision',
+      type: 'decision_lock',
+      label: 'D-005 lock evidence',
+      sourceObjectId: 'D-005',
+      targetObjectId: 'handoff-preview',
+      status: 'missing',
+      requiredForHandoff: true,
+      summary: 'Missing until Point locks D-005 for the static handoff preview.',
+    },
+    {
+      id: 'validation-readiness',
+      type: 'validation_result',
+      label: 'Validation readiness evidence',
+      sourceObjectId: 'validation-static-local',
+      targetObjectId: 'handoff-preview',
+      status: 'warning',
+      requiredForHandoff: true,
+      summary: 'Static readiness is blocked while spec fields, evidence review, or D-005 are unresolved.',
+    },
+    {
+      id: 'handoff-placeholder',
+      type: 'artifact_reference',
+      label: 'Handoff placeholder evidence',
+      sourceObjectId: 'apps/static-mvp/handoff/handoff-placeholder.json',
+      targetObjectId: 'handoff-preview',
+      status: 'attached',
+      requiredForHandoff: true,
+      summary: 'The placeholder exists as local mock data only and is not a produced handoff artifact.',
+    },
+  ],
+
+  artifactRefs: [
+    {
+      id: 'artifact-static-mvp',
+      type: 'static_html_app',
+      status: 'needs_sync',
+      label: 'COCKPIT-MVP-014 static prototype',
+      linkedObjectIds: ['project-cooperative-cockpit-static-mvp', 'spec-draft-primary'],
+    },
+    {
+      id: 'artifact-handoff-placeholder',
+      type: 'handoff_placeholder',
+      status: 'handoff_only',
+      label: 'Static handoff placeholder',
+      linkedObjectIds: ['work-packet-primary-demo', 'handoff-packet-primary-demo'],
+    },
+  ],
+
+  workPacket: {
+    id: 'work-packet-primary-demo',
+    title: 'Static MVP Primary Demo Work Packet',
+    objective: 'Align the static MVP around selected rough context becoming a governed spec and a D-005-gated handoff preview.',
+    allowedPaths: ['apps/static-mvp/src/mockData.js', 'apps/static-mvp/src/state.js', 'apps/static-mvp/QA_CHECKLIST.md', 'artifacts/evidence/**'],
+    forbiddenActions: [
+      'Add dependencies',
+      'Add backend, API, auth, database, storage, or deployment',
+      'Add runtime workflow execution or real agent orchestration',
+      'Add external connectors or MCP implementation',
+      'Modify routing or add pages',
+    ],
+    acceptanceCriteria: [
+      'Existing eight pages still load',
+      'Existing interaction flow remains static/local',
+      'Mock data exposes the locked static MVP object model entities',
+      'No backend/API/auth/database/deployment/runtime behavior is introduced',
+      'npm run validate passes',
+    ],
+    validationCommands: ['npm run validate'],
+    status: 'draft',
+  },
+
+  handoffPacket: {
+    id: 'handoff-packet-primary-demo',
+    workPacketId: 'work-packet-primary-demo',
+    readiness: 'handoff_blocked',
+    blockedBy: ['acceptance-criteria', 'D-005', 'locked-decision', 'validation-readiness'],
+    includedEvidenceIds: ['source-context', 'locked-decision', 'validation-readiness', 'handoff-placeholder'],
+    includedDecisionIds: ['D-005'],
+  },
+
+  agentRoles: [
+    {
+      id: 'role-planner',
+      name: 'Planner',
+      purpose: 'Break bounded static MVP work into scoped tasks and acceptance checks.',
+      mustNotDo: ['Add runtime orchestration', 'Expand product scope without Point lock'],
+    },
+    {
+      id: 'role-reviewer',
+      name: 'Reviewer',
+      purpose: 'Inspect static artifacts, findings, decisions, and evidence without modifying runtime state.',
+      mustNotDo: ['Auto-fix source files from the UI', 'Call external services'],
+    },
+    {
+      id: 'role-qa',
+      name: 'QA',
+      purpose: 'Run local validation and smoke checks against the static MVP boundary.',
+      mustNotDo: ['Claim tests passed without running them', 'Treat mock validation as live execution'],
+    },
+  ],
+
   // Specification fields and their statuses.
   specFields: [
     {
@@ -523,6 +747,7 @@ window.mockData = {
       value: 'Align rough context to a governed spec and gated static handoff preview.',
       status: 'draft',
       suggestion: 'Keep the path static: rough context -> governed spec -> decision/evidence gate -> handoff preview.',
+      evidenceIds: ['source-context'],
     },
     {
       id: 'layout-regions',
@@ -530,6 +755,7 @@ window.mockData = {
       value: 'Home summary, Workbench selected context, Spec Builder fields, Decisions gate, Trace evidence, Preview handoff placeholder',
       status: 'draft',
       suggestion: 'List the primary UI regions (header, sidebar, canvas, inspector, footer).',
+      evidenceIds: ['source-context', 'handoff-placeholder'],
     },
     {
       id: 'interaction-states',
@@ -537,6 +763,7 @@ window.mockData = {
       value: 'Blocked by missing acceptance criteria, missing evidence, or open D-005 lock; ready remains mock-only.',
       status: 'draft',
       suggestion: 'Describe blocked and ready handoff readiness states.',
+      evidenceIds: ['validation-readiness', 'locked-decision'],
     },
     {
       id: 'protected-surfaces',
@@ -544,6 +771,7 @@ window.mockData = {
       value: 'Runtime state, Secrets, Repo write authority',
       status: 'locked',
       suggestion: '',
+      evidenceIds: ['source-context'],
     },
     {
       id: 'acceptance-criteria',
@@ -551,6 +779,7 @@ window.mockData = {
       value: '',
       status: 'missing',
       suggestion: 'Confirm the primary path, D-005 gate, evidence links, blocked state, and static-only preview.',
+      evidenceIds: [],
     },
     {
       id: 'validation-method',
@@ -558,6 +787,7 @@ window.mockData = {
       value: '',
       status: 'needs-lock',
       suggestion: 'Use npm run validate plus manual static MVP navigation and no-network checks.',
+      evidenceIds: ['validation-readiness'],
     },
   ],
 
@@ -617,6 +847,45 @@ window.mockData = {
     },
   ],
 
+  reviewRun: {
+    id: 'review-run-primary-demo',
+    name: 'Primary demo static review',
+    status: 'review_complete',
+    scopeContextIds: ['node-2', 'node-3', 'node-6', 'node-8'],
+    findingIds: ['finding-spec-fields-open', 'finding-d005-open', 'finding-evidence-warning'],
+    verdict: 'Not ready for handoff until static gates clear',
+  },
+
+  findings: [
+    {
+      id: 'finding-spec-fields-open',
+      reviewRunId: 'review-run-primary-demo',
+      severity: 'high',
+      status: 'finding_open',
+      summary: 'Spec draft remains blocked while acceptance criteria and validation method fields are unresolved.',
+      recommendation: 'Keep handoff readiness blocked until required spec fields are locked in local mock state.',
+      evidenceIds: ['validation-readiness'],
+    },
+    {
+      id: 'finding-d005-open',
+      reviewRunId: 'review-run-primary-demo',
+      severity: 'high',
+      status: 'finding_open',
+      summary: 'D-005 remains the visible Point-lock gate for static handoff readiness.',
+      recommendation: 'Keep D-005 in the Needs Point lock lane until the local decision is locked.',
+      evidenceIds: ['locked-decision'],
+    },
+    {
+      id: 'finding-evidence-warning',
+      reviewRunId: 'review-run-primary-demo',
+      severity: 'medium',
+      status: 'finding_open',
+      summary: 'Evidence review is incomplete for the static handoff placeholder.',
+      recommendation: 'Require local evidence review before enabling mock-only handoff readiness.',
+      evidenceIds: ['source-context', 'handoff-placeholder'],
+    },
+  ],
+
   // Decision definitions.
   decisions: [
     {
@@ -625,7 +894,9 @@ window.mockData = {
       description: 'Should the Context Basket be docked or floating?',
       status: 'locked',
       options: ['Floating', 'Docked', 'Collapsible'],
+      selectedOption: 'Docked',
       chosenOption: 'Docked',
+      requiresPointLock: false,
     },
     {
       id: 'D-002',
@@ -633,7 +904,9 @@ window.mockData = {
       description: 'Tab only or dedicated page?',
       status: 'locked',
       options: ['Tab', 'Page', 'Both'],
+      selectedOption: 'Both',
       chosenOption: 'Both',
+      requiresPointLock: false,
     },
     {
       id: 'D-003',
@@ -642,7 +915,9 @@ window.mockData = {
       status: 'locked',
       // Avoid unsafe execution-style wording on action labels. Offer only compliant options.
       options: ['Validate', 'Start review checks'],
+      selectedOption: 'Validate',
       chosenOption: 'Validate',
+      requiresPointLock: false,
     },
     {
       id: 'D-004',
@@ -650,7 +925,9 @@ window.mockData = {
       description: 'Name of the preview tab/page',
       status: 'locked',
       options: ['Preview', 'UI / HTML Viewer'],
+      selectedOption: 'Preview',
       chosenOption: 'Preview',
+      requiresPointLock: false,
     },
     {
       id: 'D-005',
@@ -658,6 +935,7 @@ window.mockData = {
       description: 'Governance checkpoint for when the static Codex handoff preview can be marked ready.',
       status: 'needs-lock',
       options: ['Gated until ready', 'Hold unavailable'],
+      selectedOption: null,
       chosenOption: null,
       requiresPointLock: true,
       gates: ['handoff-preview'],
