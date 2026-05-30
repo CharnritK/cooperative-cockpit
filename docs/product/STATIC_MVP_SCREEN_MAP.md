@@ -1,6 +1,6 @@
 # Static MVP Screen Map — OpenClaw Cooperative Cockpit
 
-Status: Draft for Point review
+Status: Current product canon
 Rule: Preserve the current eight pages unless Point approves expansion.
 
 ## Center of gravity

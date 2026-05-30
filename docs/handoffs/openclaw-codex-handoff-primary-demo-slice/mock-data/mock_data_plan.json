@@ -51,7 +51,7 @@
         "description"
       ],
       "relationships": [
-        "context_basket",
+        "selected_context",
         "trace_links"
       ],
       "scenarios": [
@@ -61,7 +61,7 @@
       "notes": "current nodes already exist"
     },
     {
-      "name": "context_basket",
+      "name": "selected_context",
       "minimum_records": 1,
       "fields": [
         "id",
@@ -88,8 +88,8 @@
         "acceptance_criteria"
       ],
       "relationships": [
-        "context_basket",
-        "decision_locks",
+        "selected_context",
+        "decisions",
         "validation_results"
       ],
       "scenarios": [
@@ -138,7 +138,7 @@
       "notes": "mock only"
     },
     {
-      "name": "decision_lock",
+      "name": "decision",
       "minimum_records": 1,
       "fields": [
         "id",
@@ -152,7 +152,7 @@
         "evidence"
       ],
       "scenarios": [
-        "decision_lock_scope_control",
+        "decision_scope_control",
         "codex_handoff"
       ],
       "notes": "D-005 is key"
@@ -209,7 +209,7 @@
       ],
       "relationships": [
         "work_packet",
-        "decision_locks",
+        "decisions",
         "evidence"
       ],
       "scenarios": [

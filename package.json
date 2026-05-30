@@ -8,7 +8,8 @@
     "check:secrets": "node scripts/check_no_secrets.js",
     "check:tasks": "node scripts/check_task_cards.js",
     "check:gitignore": "node scripts/check_gitignore.js",
-    "validate": "npm run check:structure && npm run check:json && npm run check:secrets && npm run check:tasks && npm run check:gitignore"
+    "check:concept": "node scripts/check_concept_consistency.js",
+    "validate": "npm run check:structure && npm run check:json && npm run check:secrets && npm run check:tasks && npm run check:gitignore && npm run check:concept"
   },
   "private": true
 }

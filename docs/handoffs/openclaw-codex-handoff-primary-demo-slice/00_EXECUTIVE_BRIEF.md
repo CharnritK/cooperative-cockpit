@@ -1,5 +1,7 @@
 # 00 Executive Brief
 
+Status: Historical handoff packet. Current product canon lives in `docs/product/**`; current project state lives in `docs/ops/STATUS.md`.
+
 ## Primary scenario
 
 Product spec creation ending in a gated handoff preview
@@ -30,7 +32,7 @@ A product lead selects context, creates a governed spec, resolves a decision gat
 
 - Context Node
 - Spec Draft
-- Decision Lock
+- Decision
 - Evidence Item
 - Handoff Packet
 
@@ -48,6 +50,6 @@ See `codex/goal.md`.
 
 ## Confidence
 
-Medium.
+High for the current static MVP baseline.
 
-Reason: repo inspection is strong, but the actual Deep Research report was not supplied in this run. The package therefore uses the prompt-provided scenario set and current repo evidence.
+Reason: repo inspection and the now-persisted Deep Research report both support the static context-to-governed-spec-to-gated-handoff path. Treat this packet as historical where it conflicts with `docs/product/**`.

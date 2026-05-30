@@ -1,6 +1,6 @@
 # Static MVP Mock Data and UI State Spec
 
-Status: Draft for Point review
+Status: Current product canon
 Boundary: Static mock data only. No persistence.
 
 ## Required mock entities

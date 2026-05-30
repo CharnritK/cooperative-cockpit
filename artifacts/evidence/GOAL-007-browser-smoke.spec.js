@@ -52,6 +52,12 @@ test('GOAL-007 surfaces Work Packet and derived static Handoff Packet preview', 
     window.appState.evidenceItems.forEach((item) => {
       item.status = 'attached';
     });
+    const existingTargets = new Set(window.appState.traceLinks.map((link) => link.target));
+    window.appState.specFields.forEach((field) => {
+      if (!existingTargets.has(field.id)) {
+        window.appState.traceLinks.push({ source: field.evidenceIds?.[0] || 'source-context', target: field.id });
+      }
+    });
     window.appState.specValidated = true;
     window.appState.evidenceReviewed = true;
     window.appState.reviewBlockersAcknowledged = true;

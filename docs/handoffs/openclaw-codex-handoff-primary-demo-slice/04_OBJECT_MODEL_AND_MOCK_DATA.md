@@ -1,19 +1,21 @@
 # 04 Object Model and Mock Data
 
+Status: Historical handoff packet. Current object canon lives in `docs/product/STATIC_MVP_OBJECT_MODEL.md`.
+
 ## Working object model
 
-Use the existing candidate set:
+Use the current static MVP set:
 
 - Workspace
 - Project
 - Context Node
-- Context Basket
+- Selected Context
 - Spec Template
 - Spec Draft
 - Review Run
 - Finding
-- Decision Lock
-- Artifact
+- Decision
+- Artifact Reference
 - Evidence
 - Handoff Packet
 - Agent Role
@@ -24,17 +26,17 @@ Use the existing candidate set:
 
 Workspace contains Project.
 
-Project contains Context Nodes, Context Basket, Spec Draft, Review Runs, Decisions, Evidence, Artifacts, Work Packet, and Handoff Packet.
+Project contains Context Nodes, Selected Context, Spec Draft, Review Runs, Decisions, Evidence, Artifact References, Work Packet, and Handoff Packet.
 
-Context Basket selects Context Nodes.
+Selected Context derives from Context Nodes and protected exclusions.
 
-Spec Draft references Context Basket.
+Spec Draft references Selected Context.
 
 Review Run produces Findings.
 
-Findings reference Spec Draft or Artifact.
+Findings reference Spec Draft or Artifact Reference.
 
-Decision Lock gates Handoff Packet.
+Decision gates Handoff Packet.
 
 Evidence links source context to spec, decision, validation, and handoff.
 

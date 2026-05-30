@@ -114,7 +114,14 @@ function getPrimaryDemoPath() {
 }
 
 function getMissingEvidenceFields() {
-  return window.appState.specFields.filter((field) => !window.appState.traceLinks.some((link) => link.target === field.id));
+  return window.appState.specFields.filter((field) => {
+    const hasTraceLink = window.appState.traceLinks.some((link) => link.target === field.id);
+    const hasAttachedEvidence = (field.evidenceIds || []).some((evidenceId) => {
+      const evidence = window.appState.evidenceItems.find((item) => item.id === evidenceId);
+      return evidence && evidence.status === 'attached';
+    });
+    return !hasTraceLink && !hasAttachedEvidence;
+  });
 }
 
 function getMissingEvidenceItems() {
@@ -136,12 +143,14 @@ function getReadinessSummary() {
     summary: field.suggestion || field.name,
   }));
   const missingEvidenceItems = getMissingEvidenceItems();
-  const missingEvidence = window.appState.evidenceReviewed ? [] : [...missingEvidenceFields, ...missingEvidenceItems];
+  const missingEvidence = [...missingEvidenceFields, ...missingEvidenceItems];
+  const evidenceReviewPending = !Boolean(window.appState.evidenceReviewed);
   const reviewBlockers = getReviewBlockers();
   const handoffBlockers = [
     ...unresolvedSpecFields.map((field) => `Spec field missing: ${field.name}`),
-    ...pendingDecisions.map((decision) => `Decision Lock open: ${decision.id}`),
+    ...pendingDecisions.map((decision) => `Decision open: ${decision.id}`),
     ...missingEvidence.map((item) => `Evidence missing: ${item.label || item.name || item.id}`),
+    ...(evidenceReviewPending ? ['Evidence review pending: required evidence has not been reviewed locally'] : []),
     ...(validationBlocked ? ['Validation result missing: static spec validation not confirmed'] : []),
     ...reviewBlockers.map((review) => `Review blocker: ${review.name}`),
   ];
@@ -151,6 +160,7 @@ function getReadinessSummary() {
     missingEvidence,
     missingEvidenceFields,
     missingEvidenceItems,
+    evidenceReviewPending,
     pendingDecisions,
     validationBlocked,
     reviewBlockers,
@@ -161,6 +171,54 @@ function getReadinessSummary() {
 
 function updateHandoffReadiness() {
   window.appState.handoffReady = getReadinessSummary().ready;
+}
+
+function getPreviewSyncStatus(readiness = getReadinessSummary()) {
+  const hasUnlockedFields = window.appState.specFields.some((field) => field.status !== 'locked');
+  if (readiness.ready) {
+    return { status: 'validated', label: 'Up to date' };
+  }
+  if (hasUnlockedFields) {
+    return { status: 'needs-sync', label: 'Needs sync' };
+  }
+  return { status: 'blocked', label: 'Blocked by readiness' };
+}
+
+function getSpecCoverageRows(readiness = getReadinessSummary()) {
+  const fieldsMissingEvidence = new Set(readiness.missingEvidenceFields.map((item) => item.id.replace(/^field-/, '')));
+  return window.appState.specFields.map((field) => {
+    if (field.status !== 'locked') {
+      return { field, label: 'Incomplete' };
+    }
+    if (fieldsMissingEvidence.has(field.id)) {
+      return { field, label: 'Missing evidence' };
+    }
+    return { field, label: readiness.ready ? 'Covered' : 'Gated by readiness' };
+  });
+}
+
+function refreshDerivedEvidenceState() {
+  const lockedDecisionIds = new Set(window.appState.decisions.filter((decision) => decision.status === 'locked').map((decision) => decision.id));
+
+  window.appState.evidenceItems.forEach((item) => {
+    if (!item.requiredForHandoff) return;
+    if (item.id === 'locked-decision' && lockedDecisionIds.has('D-005')) {
+      item.status = 'attached';
+      item.summary = 'D-005 is locked in local mock state for the static handoff preview.';
+    }
+    if (item.id === 'validation-readiness' && window.appState.specValidated) {
+      item.status = 'attached';
+      item.summary = 'Static spec validation has been confirmed in local mock state.';
+    }
+  });
+
+  const existingTargets = new Set(window.appState.traceLinks.map((link) => link.target));
+  window.appState.specFields.forEach((field) => {
+    if (existingTargets.has(field.id)) return;
+    const source = (field.evidenceIds || [])[0] || 'source-context';
+    window.appState.traceLinks.push({ source, target: field.id });
+    existingTargets.add(field.id);
+  });
 }
 
 function syncShellState(page) {
@@ -872,8 +930,9 @@ function renderUtilityTray(selectedNode) {
   const markEvidence = tray.querySelector('#mark-evidence-reviewed');
   if (markEvidence) {
     markEvidence.addEventListener('click', () => {
+      refreshDerivedEvidenceState();
       window.appState.evidenceReviewed = true;
-      window.appState.lastLocalValidation = 'Evidence gaps were marked reviewed in local mock state only.';
+      window.appState.lastLocalValidation = 'Evidence and trace links were reviewed in local mock state only.';
       syncShellState(window.appState.currentPage);
       window.renderPage('workbench');
     });
@@ -1077,6 +1136,8 @@ function getStatusClass(status) {
       return 'status-validated';
     case 'needs-lock':
     case 'decision-needs-lock':
+    case 'deferred':
+    case 'decision-deferred':
     case 'validation-warning':
     case 'warning':
       return 'status-needs-lock';
@@ -1124,6 +1185,8 @@ function statusTone(status) {
     case 'needs-answer':
     case 'needs-sync':
     case 'needs-criteria':
+    case 'deferred':
+    case 'decision-deferred':
     case 'validation-warning':
     case 'warning':
       return 'warning';
@@ -1153,6 +1216,8 @@ function statusLabel(status) {
       return 'Locked';
     case 'needs-lock':
       return 'Needs lock';
+    case 'deferred':
+      return 'Deferred';
     case 'needs-answer':
       return 'Needs answer';
     case 'missing':
@@ -1336,6 +1401,7 @@ function renderSpecBuilder(container) {
       window.renderPage('spec-builder');
     } else {
       window.appState.specValidated = true;
+      refreshDerivedEvidenceState();
       updateHandoffReadiness();
       const readiness = getReadinessSummary();
       if (readiness.handoffBlockers.length) {
@@ -1472,7 +1538,7 @@ function renderPreview(container) {
   });
 
   const selectorDiv = createElement('div', 'control-row');
-  const label = createElement('label', '', 'Artifact type');
+  const label = createElement('label', '', 'Artifact Reference type');
   label.setAttribute('for', 'artifact-type');
   const select = createElement('select');
   select.id = 'artifact-type';
@@ -1514,18 +1580,19 @@ function renderPreview(container) {
   });
   container.appendChild(viewportControls);
 
-  const needsSync = window.appState.specFields.some((f) => f.status !== 'locked' && f.status !== 'draft');
+  const readiness = getReadinessSummary();
+  const sync = getPreviewSyncStatus(readiness);
   const syncStatus = createElement('section', 'panel');
   syncStatus.style.marginTop = '12px';
-  syncStatus.innerHTML = `<h3>Sync status</h3>${renderStatusChip(needsSync ? 'needs-sync' : 'validated', needsSync ? 'Needs sync' : 'Up to date')}`;
+  syncStatus.innerHTML = `<h3>Sync status</h3>${renderStatusChip(sync.status, sync.label)}`;
   container.appendChild(syncStatus);
 
   const checklist = createElement('section', 'panel');
   checklist.style.marginTop = '12px';
   checklist.innerHTML = '<h3>Spec coverage</h3>';
   const ul = createElement('ul');
-  window.appState.specFields.forEach((field) => {
-    ul.appendChild(createElement('li', '', `${field.name}: ${field.status === 'locked' || field.status === 'draft' ? 'Covered' : 'Incomplete'}`));
+  getSpecCoverageRows(readiness).forEach((row) => {
+    ul.appendChild(createElement('li', '', `${row.field.name}: ${row.label}`));
   });
   checklist.appendChild(ul);
   container.appendChild(checklist);
@@ -1634,11 +1701,12 @@ function createDecisionCard(dec) {
     ['Lock decision', 'lock', () => {
       dec.status = 'locked';
       if (!dec.chosenOption) dec.chosenOption = dec.options[0];
+      refreshDerivedEvidenceState();
       updateHandoffReadiness();
       window.renderPage('decisions');
     }],
     ['Defer', 'warning', () => {
-      dec.status = 'needs-lock';
+      dec.status = 'deferred';
       dec.chosenOption = null;
       updateHandoffReadiness();
       window.renderPage('decisions');

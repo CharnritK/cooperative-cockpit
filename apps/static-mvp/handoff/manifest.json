@@ -26,6 +26,7 @@
     "assets/fonts/Rajdhani-Medium.ttf",
     "assets/fonts/Rajdhani-Regular.ttf",
     "assets/fonts/Rajdhani-SemiBold.ttf",
+    "handoff/manifest.json",
     "handoff/handoff-placeholder.json"
   ],
   "non_goals": [

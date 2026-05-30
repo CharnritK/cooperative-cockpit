@@ -1,6 +1,6 @@
 # Static MVP Golden Scenario
 
-Status: Draft
+Status: Current product canon
 Purpose: Demo narrative for proving OpenClaw without runtime execution.
 
 ## Primary scenario: context-to-handoff readiness

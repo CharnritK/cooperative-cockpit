@@ -1,15 +1,15 @@
 # Gap Backlog
 
-Status: Draft
+Status: Current backlog
 
 | gap_id | gap_type | severity | description | follow_up_action |
 |---|---|---|---|---|
-| G001 | Missing input | High | Object-model Deep Research result is not stored in this package. | Add to `artifacts/deep-research/` or `docs/research/`. |
-| G002 | Missing input | Medium | Dify UX anatomy report is not stored in this package. | Attach or archive if UI comparison is needed. |
-| G003 | Repo path ambiguity | Medium | `docs/product/**` is proposed, not proven repo convention. | Point approve or redirect path. |
-| G004 | Object-model ambiguity | High | Work Packet vs Handoff Packet requires product lock. | Point approve recommended default. |
-| G005 | Object-model ambiguity | Medium | Artifact Reference vs Artifact object requires lock. | Point approve recommended default. |
-| G006 | UI ambiguity | Medium | Home as Project Overview should be approved to avoid new page. | Point approve. |
-| G007 | QA gap | Medium | Existing QA does not check object-model coverage. | Add QA addendum. |
+| G001 | Historical input | Low | Deep Research is now stored under `docs/research/` and `artifacts/deep-research/`; older handoff docs may still describe it as absent. | Treat older handoff packets as historical unless refreshed. |
+| G002 | Missing input | Medium | Dify UX anatomy report is not stored as a dedicated current artifact. | Attach or archive only if UI comparison is needed. |
+| G003 | Resolved repo path | Low | `docs/product/**` is now the product-canon path. | Preserve this in README and status docs. |
+| G004 | Resolved object model | Low | Work Packet core / Handoff Packet derived is accepted for the static MVP. | Require Point lock to change. |
+| G005 | Resolved object model | Low | Artifact Reference is accepted; generic Artifact page remains avoided. | Require Point lock to change. |
+| G006 | Resolved UI scope | Low | Home acts as Project Overview. | Require Point lock for a new page. |
+| G007 | Resolved QA gap | Low | QA now checks object-model coverage and scope creep. | Keep GOAL-008/009 checks current. |
 | G008 | Runtime ambiguity | High | Review Run wording can imply execution. | Preserve inspect-only labels and avoid “Run” actions. |
-| G009 | Codex handoff risk | High | Codex may skip docs lock and modify app source. | Run GOAL-004 first. |
+| G009 | Codex handoff risk | Medium | Codex may skip current canon and modify app source. | Use root `OPERATING_WORKFLOW.md`, `docs/product/**`, and `npm run validate`. |

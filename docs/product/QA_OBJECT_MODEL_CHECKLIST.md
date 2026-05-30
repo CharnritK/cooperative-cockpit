@@ -1,6 +1,6 @@
 # Static MVP Object Model QA Checklist
 
-Status: Draft
+Status: Current QA baseline
 
 ## Object coverage
 

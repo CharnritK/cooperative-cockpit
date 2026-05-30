@@ -10,7 +10,7 @@ Use `codex/goal.md` as the standalone prompt.
 
 The recommended slice is:
 
-> Align the existing static MVP around “rough context -> governed spec -> gated handoff preview” using existing pages, unified mock data, decision lock visibility, evidence visibility, validation states, and handoff preview.
+> Align the existing static MVP around “rough context -> governed spec -> gated handoff preview” using existing pages, unified mock data, Decision-state visibility, evidence visibility, validation states, and handoff preview.
 
 ## What Codex must not do
 

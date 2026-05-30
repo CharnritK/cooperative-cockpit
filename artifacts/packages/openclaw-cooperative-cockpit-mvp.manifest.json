@@ -6,8 +6,8 @@
   "source": "local_repo_assimilation",
   "status": "assimilated",
   "related_task_id": "GOAL-002",
-  "source_file": "cooperative-cockpit-repo-setup-final/.codex/goals/GOAL-002-assimilate-static-mvp-package.md",
+  "source_file": "artifacts/archive/handoffs/openclaw-static-mvp-lego-pack-v0.1.zip",
   "storage_path": "apps/static-mvp/",
-  "checksum": "sha256:f0a43005b577f9c7c2133ed1395df955047f90dad8abc07b1b0fd1c2ab5c8172",
-  "notes": "Checksum is derived from sorted sha256 sums of all files under apps/static-mvp/."
+  "checksum": "sha256:4c549e00d477f94f20501e6ec4565e67dd89e31f5032142682711fe1046bf0ad",
+  "notes": "Checksum is current as of GOAL-009 and is derived from sorted sha256 sums of all files under apps/static-mvp/."
 }

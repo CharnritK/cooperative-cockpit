@@ -1,5 +1,7 @@
 # Source Register
 
+Status: Historical handoff packet. Current product/source canon lives in `docs/product/**`.
+
 | source_id | title | type | reference | used_for |
 |---|---|---|---|---|
 | S001 | OpenClaw GPT-5.5 Pro Final Handoff Package Prompt | user prompt | uploaded prompt in this chat | handoff scope, constraints, package structure |
@@ -16,9 +18,11 @@
 | S012 | apps/static-mvp/handoff/manifest.json | repo file | apps/static-mvp/handoff/manifest.json | static MVP handoff manifest and non-goals |
 | S013 | apps/static-mvp/handoff/handoff-placeholder.json | repo file | apps/static-mvp/handoff/handoff-placeholder.json | current handoff placeholder data |
 | S014 | .gitignore | repo file | .gitignore | secret/file ignore guardrails |
-| S015 | artifacts/evidence/GOAL-003A-validation.md | repo evidence | artifacts/evidence/GOAL-003A-validation.md | last recorded validation evidence |
+| S015 | artifacts/evidence/GOAL-008-validation.md | repo evidence | artifacts/evidence/GOAL-008-validation.md | current static MVP QA closeout baseline before GOAL-009 |
 | S016 | quality/QA_CHECKLIST.md | repo file | quality/QA_CHECKLIST.md | repo-level QA checklist |
 | S017 | .codex/goals/GOAL-001-bootstrap-agent-ready-repo.md | repo file | .codex/goals/GOAL-001-bootstrap-agent-ready-repo.md | goal format and boundary pattern |
 | S018 | scripts/check_gitignore.js | repo file | scripts/check_gitignore.js | critical ignore validation behavior |
+| S019 | docs/research/deep-research-report.md | repo research | docs/research/deep-research-report.md | persisted Deep Research scenario and scope evidence |
+| S020 | Historical connector inspection | connector result | 3f610a66c52e938e42f004b9f53adccc4f78e9c3 | original package-inspected commit only |
 
 Note: Sources are repo paths and uploaded prompt references. GitHub connector inspection was read-only.

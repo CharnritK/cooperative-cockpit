@@ -1,6 +1,6 @@
 # Build / Defer / Kill Register
 
-Status: Draft
+Status: Current product canon
 
 ## Build now
 

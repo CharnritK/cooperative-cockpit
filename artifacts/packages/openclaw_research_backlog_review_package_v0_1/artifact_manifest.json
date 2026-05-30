@@ -4,10 +4,11 @@
   "created_at": "2026-05-30",
   "owner": "Point",
   "source": "chatgpt",
-  "status": "draft",
+  "status": "historical_extracted_provenance",
   "related_task_id": "RESEARCH-BACKLOG-REVIEW-20260530",
   "source_file": "ChatGPT conversation: OpenClaw research backlog review final response",
-  "storage_path": "artifacts/packages/openclaw-research-backlog-review-package-v0.1.zip",
-  "checksum": "sha256:204515cf60ef83468e2ba8bf8e057bcb7ddcf4b1dd1cb757f7083829caae8c24",
-  "notes": "Documentation-only package for persisting the revised OpenClaw research backlog review, follow-up prompts, Point-lock recommendations, and GOAL-005 handoff candidate. No repo mutation or runtime work authorized."
+  "storage_path": "artifacts/packages/openclaw_research_backlog_review_package_v0_1/",
+  "checksum": "historical-extracted-checksums-not-current",
+  "archive_manifest": "artifacts/archive/handoffs/openclaw-research-backlog-review-package-v0.1.manifest.json",
+  "notes": "Extracted documentation-only package preserved for provenance. Current archive integrity is recorded in artifacts/archive/handoffs/openclaw-research-backlog-review-package-v0.1.manifest.json; extracted CHECKSUMS.txt is historical and not current-authoritative after repo persistence."
 }

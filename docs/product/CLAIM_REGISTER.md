@@ -1,14 +1,14 @@
 # Claim Register
 
-Status: Draft
+Status: Current product canon
 
 | claim_id | claim | claim_type | support_status | confidence | risk_if_wrong | follow_up_action |
 |---|---|---|---|---:|---|---|
 | C001 | Static MVP should remain mock-only/offline with no backend/runtime. | Fact / constraint | Supported by prior repo context | 5 | Scope explosion | Keep in every Codex goal. |
 | C002 | Current MVP should preserve eight pages. | Fact / constraint | Supported by prior repo context | 5 | Page sprawl | Add QA check. |
-| C003 | Current mock data needs explicit P0 object model. | Interpretation | Partial | 4 | Codex builds unstable schema | Confirm during GOAL-005. |
-| C004 | Workbench should remain center of gravity. | Recommendation input | Partial | 4 | UI direction may be wrong | Point lock. |
-| C005 | Work Packet should be core and Handoff Packet derived. | Recommendation input | Assumption | 4 | Handoff model confusion | Point lock. |
-| C006 | Decision Lock should be merged into Decision state. | Recommendation input | Partial | 4 | Duplicate object confusion | Point lock. |
-| C007 | Artifact should be a reference, not a standalone page. | Recommendation input | Assumption | 4 | Under/over-scoped artifact model | Point lock. |
+| C003 | Current mock data follows the locked static MVP object model. | Fact / constraint | Supported by GOAL-005 through GOAL-009 validation | 5 | Codex builds unstable schema | Keep validation current. |
+| C004 | Workbench remains the center of gravity. | Product decision | Accepted | 5 | UI direction may drift | Point lock required to change. |
+| C005 | Work Packet is core and Handoff Packet is derived. | Product decision | Accepted | 5 | Handoff model confusion | Point lock required to change. |
+| C006 | Decision with lock state replaces Decision Lock as a separate object. | Product decision | Accepted | 5 | Duplicate object confusion | Point lock required to change. |
+| C007 | Artifact is represented as Artifact Reference, not a standalone page. | Product decision | Accepted | 5 | Artifact-manager scope creep | Point lock required to change. |
 | C008 | MCP/connectors/runtime orchestration are deferred. | Recommendation input | Supported by boundary | 5 | Runtime scope creep | Guardrail docs. |

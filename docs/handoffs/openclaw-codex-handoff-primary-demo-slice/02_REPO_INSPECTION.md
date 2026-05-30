@@ -1,15 +1,17 @@
 # 02 Repo Inspection
 
+Status: Historical handoff packet. Current product canon lives in `docs/product/**`; current project state lives in `docs/ops/STATUS.md`.
+
 ## Repo access method
 
 GitHub connector, read-only.
 
 ## Latest inspected commit
 
-- SHA: `3f610a66c52e938e42f004b9f53adccc4f78e9c3`
-- Message: `Harden gitignore validation for setup checks`
+- Historical package-inspected SHA: `3f610a66c52e938e42f004b9f53adccc4f78e9c3`
+- Current reconciliation baseline before GOAL-009 edits: `5d9d9e4151f05503f9939b5f07540dd688c9fd24`
 
-This is the latest commit visible in connector search/fetch results for this package. Local working tree status was not available.
+The historical SHA was the latest commit visible in connector search/fetch results for this package. Use local git state and `docs/ops/STATUS.md` for current status.
 
 ## Files/directories inspected
 
@@ -61,7 +63,7 @@ Local working tree status was not available.
 
 No current terminal output was available for `git status --short` or `git log --oneline -5`.
 
-The Deep Research report was not supplied.
+Deep Research is now supplied in `docs/research/deep-research-report.md` and `artifacts/deep-research/`.
 
 ## Current static MVP architecture summary
 
@@ -73,7 +75,7 @@ Current mock data includes:
 
 - 8 workflow nodes
 - visual workflow edges
-- context basket items
+- selected context items
 - protected exclusions
 - spec fields
 - review results
@@ -104,7 +106,7 @@ This package did not run validation locally.
 
 - Handoff readiness may be difficult to demo if all fields and decisions remain incomplete.
 - Existing placeholder can show blocked handoff but may need clearer primary demo copy.
-- Deep Research report is missing.
+- Historical packet content may be stale against current Deep Research and product canon.
 - Local working tree is unknown.
 
 ## Current known open questions

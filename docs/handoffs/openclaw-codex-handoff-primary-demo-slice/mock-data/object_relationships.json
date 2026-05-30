@@ -7,17 +7,17 @@
   "project": {
     "contains": [
       "context_node",
-      "context_basket",
+      "selected_context",
       "spec_draft",
       "review_run",
-      "decision_lock",
+      "decision",
       "evidence_item",
       "validation_result",
       "work_packet",
       "handoff_packet"
     ]
   },
-  "context_basket": {
+  "selected_context": {
     "selects": [
       "context_node"
     ],
@@ -30,13 +30,13 @@
   },
   "spec_draft": {
     "uses": [
-      "context_basket"
+      "selected_context"
     ],
     "requires": [
       "acceptance_criteria"
     ],
     "gated_by": [
-      "decision_lock"
+      "decision"
     ],
     "validated_by": [
       "validation_result"
@@ -50,7 +50,7 @@
       "evidence_item"
     ]
   },
-  "decision_lock": {
+  "decision": {
     "blocks_or_allows": [
       "handoff_packet"
     ],
@@ -62,7 +62,7 @@
     "links": [
       "context_node",
       "spec_draft",
-      "decision_lock",
+      "decision",
       "validation_result",
       "handoff_packet"
     ]
@@ -79,7 +79,7 @@
     "contains": [
       "work_packet",
       "evidence_item",
-      "decision_lock",
+      "decision",
       "validation_result"
     ],
     "status": [
