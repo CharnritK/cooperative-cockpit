@@ -1,9 +1,11 @@
 /goal
 
+Status: Historical handoff goal. Current implementation sequencing lives in `docs/product/CODEX_EXECUTION_SEQUENCE.md`.
+
 Title: Static MVP primary demo alignment — governed spec to gated handoff preview
 
 Objective:
-Align the existing static MVP around the primary scenario “rough context -> governed spec -> gated handoff preview” using existing pages, unified mock data, decision lock visibility, evidence visibility, validation states, and a static handoff preview.
+Align the existing static MVP around the primary scenario “rough context -> governed spec -> gated handoff preview” using existing pages, unified mock data, Decision-state visibility, evidence visibility, validation states, and a static handoff preview.
 
 Autonomy level:
 A2 bounded change unless Point approves otherwise.
@@ -24,7 +26,7 @@ Current inspected state:
 - Current handoff placeholder is in `apps/static-mvp/handoff/handoff-placeholder.json`.
 - Current static MVP QA checklist is in `apps/static-mvp/QA_CHECKLIST.md`.
 - Current repo QA checklist is in `quality/QA_CHECKLIST.md`.
-- Last inspected commit: 3f610a66c52e938e42f004b9f53adccc4f78e9c3 (Harden gitignore validation for setup checks).
+- Historical package-inspected commit: 3f610a66c52e938e42f004b9f53adccc4f78e9c3 (Harden gitignore validation for setup checks). Use local git and `docs/ops/STATUS.md` for current state.
 
 Static MVP boundary:
 No backend, API, auth, database, deployment, runtime workflow execution, real agent orchestration, real external connectors, MCP implementation, or new dependencies.
@@ -65,10 +67,10 @@ Forbidden changes:
 
 Required UI/mock-data changes:
 - Add or align a `primaryDemoPath` mock object that names the path: rough context -> governed spec -> decision/evidence gate -> handoff preview.
-- Ensure selected context, spec draft fields, evidence items, decision lock, validation result, and handoff packet are visibly related.
+- Ensure selected context, spec draft fields, evidence items, Decision, validation result, and handoff packet are visibly related.
 - Make `D-005` Codex handoff gating explicit as the governance checkpoint.
 - Add static evidence items for source context, locked decision, validation readiness, and handoff placeholder.
-- Show a blocked state when evidence, acceptance criteria, or decision lock is missing.
+- Show a blocked state when evidence, acceptance criteria, or Decision state is missing.
 - Show a ready state only as a static/mock readiness state. Do not produce a real export or repo write.
 - Preserve all eight existing pages and route keys.
 - Preserve the page title “Review Runs”; do not add “Run” as an action label.
@@ -80,7 +82,7 @@ Acceptance criteria:
 - Decisions shows the handoff gating decision and its lock status.
 - Trace & Evidence shows evidence links for context, spec, decision, validation, and handoff.
 - Preview or existing handoff control shows a static handoff preview/placeholder.
-- Missing acceptance criteria, missing evidence, or unresolved decision lock visibly blocks handoff readiness.
+- Missing acceptance criteria, missing evidence, or unresolved Decision state visibly blocks handoff readiness.
 - Handoff/export behavior remains static and mock-only.
 - No forbidden live-execution wording appears in action labels.
 - `npm run validate` passes.

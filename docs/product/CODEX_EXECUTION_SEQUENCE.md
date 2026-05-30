@@ -1,6 +1,6 @@
 # Codex Execution Sequence — OpenClaw Static MVP Lock
 
-Status: Draft
+Status: Historical baseline plus current GOAL-009 reconciliation
 Autonomy default: A2 bounded unless Point approves otherwise.
 
 ## Universal constraints
@@ -110,3 +110,26 @@ Manual checks when app files change:
 - Verify no unsafe action labels.
 - Verify no backend/API/auth/database/deployment/runtime behavior.
 - Verify no new dependencies.
+
+## GOAL-009 — Canon reconciliation
+
+Allowed paths:
+
+- `README.md`
+- `OPERATING_WORKFLOW.md`
+- `docs/**`
+- `quality/**`
+- `prompts/**`
+- `apps/static-mvp/**`
+- `schemas/**`
+- `scripts/**`
+- `package.json`
+- `artifacts/**`
+
+Purpose:
+
+- Declare current authoritative sources.
+- Reconcile GOAL-004 through GOAL-008 state as complete or package-local historical.
+- Normalize static MVP object terminology.
+- Prevent handoff readiness from becoming ready while required evidence or trace state is missing.
+- Refresh or mark stale manifests/checksums and remove duplicate package surfaces from active repo scope.

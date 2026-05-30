@@ -1,5 +1,7 @@
 # 01 Research Synthesis
 
+Status: Historical handoff packet. Current product canon lives in `docs/product/**`; current project state lives in `docs/ops/STATUS.md`.
+
 ## Inputs used
 
 - User-provided final handoff prompt.
@@ -9,7 +11,6 @@
 
 ## Inputs missing
 
-- Completed Deep Research report.
 - Any new screenshots beyond repo files.
 - Local working tree status.
 - Current terminal validation output from this exact session.
@@ -40,4 +41,4 @@ Do not add runtime execution, real AI calls, live exports, repository writes, ex
 
 ## Ambiguities
 
-The Deep Research report is absent. Treat scenario rankings and object-model recommendations as provisional until Point reviews them.
+Deep Research is now persisted under `docs/research/` and `artifacts/deep-research/`. Treat this packet's scenario rankings as historical if they conflict with the current product canon.

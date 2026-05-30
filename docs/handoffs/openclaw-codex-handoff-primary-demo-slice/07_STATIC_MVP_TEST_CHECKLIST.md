@@ -1,5 +1,7 @@
 # 07 Static MVP Test Checklist
 
+Status: Historical handoff packet. Current QA canon lives in `apps/static-mvp/QA_CHECKLIST.md` and `quality/QA_CHECKLIST.md`.
+
 ## Scenario completeness
 
 - [ ] Primary demo path is visible.
@@ -8,9 +10,9 @@
 
 ## Object relationships
 
-- [ ] Context Basket references selected Context Nodes.
+- [ ] Selected Context references selected Context Nodes.
 - [ ] Spec Draft references selected context.
-- [ ] Decision Lock gates Handoff Packet.
+- [ ] Decision gates Handoff Packet.
 - [ ] Evidence links to context, spec, decision, validation, and handoff.
 
 ## Governance

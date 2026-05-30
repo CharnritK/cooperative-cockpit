@@ -1,4 +1,7 @@
 {
+  "packet_id": "OPENCLAW-HANDOFF-PREVIEW-001",
+  "title": "Static MVP Primary Demo Handoff Preview",
+  "status": "handoff_blocked",
   "project_id": "COCKPIT-MVP-014",
   "artifact_id": "placeholder-artifact",
   "spec_summary": "This handoff contains a static representation of the primary demo path, selected context, governed spec fields, D-005 gating, trace evidence, validation readiness and handoff preview.",
@@ -31,7 +34,7 @@
   "acceptance_criteria": [
     "User can visually understand rough context -> governed spec -> decision/evidence gate -> handoff preview",
     "D-005 is visible as the handoff gating decision",
-    "Missing acceptance criteria, evidence, or decision lock visibly blocks readiness",
+    "Missing acceptance criteria, evidence, or open Decision state visibly blocks readiness",
     "The preview remains static and mock-only",
     "Validation commands pass"
   ],
@@ -69,7 +72,7 @@
   "decisions": [
     {
       "id": "D-001",
-      "title": "Context Basket placement",
+      "title": "Selected Context placement",
       "status": "locked",
       "chosenOption": "Docked"
     },
@@ -137,7 +140,7 @@
     },
     {
       "id": "locked-decision",
-      "type": "decision_lock",
+      "type": "decision",
       "sourceObjectId": "D-005",
       "targetObjectId": "handoff-preview",
       "status": "missing",

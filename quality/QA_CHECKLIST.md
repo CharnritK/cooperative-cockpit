@@ -30,7 +30,7 @@ Use this checklist to verify that changes meet the repository’s quality standa
 - [ ] `docs/product/STATIC_MVP_SCREEN_MAP.md` maps all eight current pages to the locked object model without adding pages.
 - [ ] `docs/product/STATIC_MVP_MOCK_DATA_SPEC.md` covers workspace, project, context nodes, selected context, spec draft, review run, findings, decisions, evidence, work packet, handoff packet, agent roles, and validation results.
 - [ ] `docs/product/SCOPE_GUARDRAILS_AND_POINT_LOCKS.md` preserves no backend, API, auth, database, deployment, runtime workflow execution, real agent orchestration, external connectors, MCP implementation, or new dependencies.
-- [ ] Product-lock decisions in `docs/product/POINT_LOCK_DECISIONS.md` are reviewed before app-source goals GOAL-005 through GOAL-008 begin.
+- [ ] Product-lock decisions in `docs/product/POINT_LOCK_DECISIONS.md` remain accepted for GOAL-005 through GOAL-009, or any change has explicit Point lock.
 
 ## GOAL-008 static MVP QA closeout
 

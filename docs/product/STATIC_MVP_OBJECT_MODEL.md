@@ -1,8 +1,8 @@
 # Static MVP Object Model — OpenClaw Cooperative Cockpit
 
-Status: Draft for Point lock
+Status: Current product canon
 Scope: Static MVP only
-Readiness: READY_WITH_ASSUMPTIONS
+Readiness: ACCEPTED_FOR_STATIC_MVP
 
 ## Core visible objects — P0
 
@@ -39,8 +39,8 @@ Readiness: READY_WITH_ASSUMPTIONS
 
 | old term | locked treatment |
 |---|---|
-| Decision Lock | Rename to Decision with `needs_lock`, `locked`, or `deferred` state. |
-| Context Basket | Rename conceptually to Selected Context panel. Keep current UI label only if Point wants continuity. |
+| Decision Lock | Use Decision with `needs_lock`, `locked`, or `deferred` state. |
+| Context Basket | Use Selected Context panel. |
 | Artifact | Use concrete Artifact Reference; avoid generic standalone Artifact object/page. |
 
 ## Deferred objects

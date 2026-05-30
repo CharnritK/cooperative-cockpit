@@ -13,6 +13,10 @@
     "source_file": { "type": "string" },
     "storage_path": { "type": "string" },
     "checksum": { "type": "string" },
+    "sha256": { "type": "string" },
+    "size_bytes": { "type": "number" },
+    "entry_count": { "type": "number" },
+    "archive_manifest": { "type": "string" },
     "notes": { "type": "string" }
   },
   "required": ["artifact_id", "artifact_type", "created_at", "owner", "status", "related_task_id"]

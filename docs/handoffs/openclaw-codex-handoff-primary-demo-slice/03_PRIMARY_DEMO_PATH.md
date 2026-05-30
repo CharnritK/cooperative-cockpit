@@ -1,5 +1,7 @@
 # 03 Primary Demo Path
 
+Status: Historical handoff packet. Current product canon lives in `docs/product/**`.
+
 ## Opening state
 
 The viewer opens the static MVP at Home.
@@ -36,7 +38,7 @@ A Business/Product Lead wants to turn rough OpenClaw context into a builder-read
 ## Artifact created
 
 - Spec Draft
-- Decision Lock
+- Decision
 - Evidence Items
 - Validation Result
 - Handoff Packet
@@ -45,7 +47,7 @@ A Business/Product Lead wants to turn rough OpenClaw context into a builder-read
 
 D-005 Codex handoff gating.
 
-The demo should show that handoff is blocked until acceptance criteria, evidence, and decision lock are ready.
+The demo should show that handoff is blocked until acceptance criteria, evidence, and Decision state are ready.
 
 ## Evidence shown
 

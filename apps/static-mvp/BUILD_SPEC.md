@@ -4,7 +4,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 
 ## Locked decisions
 
-- **Context Basket placement** – Docked on the Workbench and collapsible elsewhere.
+- **Selected Context placement** – Docked on the Workbench and collapsible elsewhere.
 - **Spec Builder access** – Available both as a tab in the Workbench inspector and as a focused page.
 - **Review action language** – Use “Validate” or “Start review checks”; avoid unsafe execution-style verbs on buttons and actions.
 - **Preview naming** – The left nav and inspector tab are labelled “Preview”. The page header reads “UI / HTML Viewer”.
@@ -26,7 +26,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 The MVP includes eight pages:
 
 1. **Home** – Operational page with context, protected exclusion and pending lock cards, pipeline progress, recent activity and quick actions.
-2. **Workbench** – Canvas-first workflow studio for selecting governed operator nodes, reviewing safe node types, managing the docked Context Basket and inspecting node configuration/debug details. Shows the governance strip as a secondary safety overlay.
+2. **Workbench** – Canvas-first workflow studio for selecting governed operator nodes, reviewing safe node types, managing the docked Selected Context panel and inspecting node configuration/debug details. Shows the governance strip as a secondary safety overlay.
 3. **Spec Builder** – Template-driven spec editing. Includes field status chips and gating for handoff.
 4. **Review Runs** – Inspect‑only review orchestration. Shows review types and mock findings.
 5. **Preview** – Static mockup viewer and spec coverage checklist.
@@ -82,7 +82,7 @@ Refer to the `QA_CHECKLIST.md` file for detailed acceptance criteria. At a high 
 1. All eight pages are reachable via the left navigation.
 2. The prototype reads as a governed AI workflow studio rather than a dashboard, chatbot or dark command center.
 3. The shell is visually consistent across pages, with a light neutral SaaS palette, local typography, inline icons and clear status chips.
-4. The Workbench is canvas‑first with node selection, a node palette, visual connectors, workflow-operator cards, node configuration/debug inspection and a docked context basket.
+4. The Workbench is canvas‑first with node selection, a node palette, visual connectors, workflow-operator cards, node configuration/debug inspection and a docked Selected Context panel.
 5. The Spec Builder clearly shows templates, fields, statuses and gating for handoff.
 6. Review runs are labelled inspect‑only and provide mock findings.
 7. The preview is static and labelled “UI / HTML Viewer”.

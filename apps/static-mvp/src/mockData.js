@@ -60,7 +60,7 @@ window.mockData = {
     },
     {
       id: 'node-6',
-      label: 'Decision Lock',
+      label: 'Decision',
       type: 'decision',
       status: 'needs-lock',
       description: 'Surfaces unresolved approval points that must be locked before a handoff is available.',
@@ -81,7 +81,7 @@ window.mockData = {
   ],
 
   selectedContext: {
-    includedIds: ['node-2', 'node-3', 'node-8', 'golden-path-brief'],
+    includedIds: ['node-1', 'node-2'],
     protectedExclusions: [
       { id: 'runtime-state', label: 'Runtime state', status: 'excluded' },
       { id: 'secrets', label: 'Secrets', status: 'excluded' },
@@ -161,20 +161,20 @@ window.mockData = {
       status: 'validated',
       family: 'context',
       familyLabel: 'Context Node',
-      title: 'Safe Context Basket',
+      title: 'Safe Selected Context',
       subtitle: 'Separates usable context from protected exclusions.',
       readiness: 'ready',
       blockerCount: 0,
       evidenceCount: 3,
       description: 'Chooses safe source material for the spec while keeping protected surfaces excluded.',
-      config: 'Context basket policy',
+      config: 'Selected Context policy',
       model: 'Static selector',
       inputs: ['Scoped concept packet', 'Protected exclusions'],
       outputs: ['Included context set'],
       guardrails: ['Secrets excluded', 'Repo write authority excluded'],
-      trace: ['source: context basket', 'evidence: exclusions list'],
+      trace: ['source: selected context', 'evidence: exclusions list'],
       requirements: ['Protected exclusions remain sealed', 'Included context stays local to the browser'],
-      evidence: ['Context Basket item list', 'Protected Exclusions list', 'Local mock state only'],
+      evidence: ['Selected Context item list', 'Protected Exclusions list', 'Local mock state only'],
       review: ['Secrets and repo write authority remain excluded'],
       handoff: ['Included context becomes Handoff Packet source material only after gates pass'],
     },
@@ -265,15 +265,15 @@ window.mockData = {
     {
       id: 'node-6',
       index: '06',
-      label: 'Decision Lock',
+      label: 'Decision',
       type: 'decision',
       typeLabel: 'Gate',
       x: 20,
       y: 80,
       status: 'needs-lock',
       family: 'decision',
-      familyLabel: 'Decision Lock',
-      title: 'Point Decision Lock',
+      familyLabel: 'Decision',
+      title: 'Point Decision',
       subtitle: 'Keeps unresolved approvals visible before handoff.',
       readiness: 'needs-decision',
       blockerCount: 1,
@@ -288,7 +288,7 @@ window.mockData = {
       requirements: ['Point choice recorded', 'Deferred choices continue to block handoff'],
       evidence: ['Decision D-005 status'],
       review: ['Codex handoff gating remains unresolved'],
-      handoff: ['All Decision Locks must be closed before handoff can be prepared'],
+      handoff: ['All blocking Decisions must be locked or deferred before handoff can be prepared'],
     },
     {
       id: 'node-7',
@@ -354,7 +354,7 @@ window.mockData = {
     { type: 'spec', label: 'Work Packet', description: 'Controlled spec fields', icon: 'document' },
     { type: 'review', label: 'Review Gate', description: 'Inspect-only review cards', icon: 'review' },
     { type: 'preview', label: 'Evidence', description: 'Static artifact snapshot', icon: 'eye' },
-    { type: 'decision', label: 'Decision Lock', description: 'Point lock decisions', icon: 'lock' },
+    { type: 'decision', label: 'Decision', description: 'Point lock decisions', icon: 'lock' },
     { type: 'trace', label: 'Evidence', description: 'Source-to-target links', icon: 'trace' },
     { type: 'handoff', label: 'Handoff Packet', description: 'Gated static packet', icon: 'archive' },
   ],
@@ -469,7 +469,7 @@ window.mockData = {
       },
       {
         id: 'decision-lock-open',
-        label: 'D-005 decision lock open',
+        label: 'D-005 Decision open',
         status: 'open',
         blocks: 'Handoff readiness',
       },
@@ -487,8 +487,8 @@ window.mockData = {
       },
       {
         id: 'locked-decision',
-        type: 'decision_lock',
-        label: 'D-005 lock evidence',
+        type: 'decision',
+        label: 'D-005 Decision evidence',
         sourceObjectId: 'D-005',
         targetObjectId: 'handoff-preview',
         status: 'missing',
@@ -521,20 +521,12 @@ window.mockData = {
   // Initial context items included in the basket.
   contextItems: [
     {
+      id: 'node-1',
+      label: 'Selected context: Goal Intake',
+    },
+    {
       id: 'node-2',
       label: 'Selected context: Context Selector',
-    },
-    {
-      id: 'node-3',
-      label: 'Governed spec: Spec Builder',
-    },
-    {
-      id: 'node-8',
-      label: 'Handoff preview: Static Handoff Packet',
-    },
-    {
-      id: 'golden-path-brief',
-      label: 'Rough context: primary demo brief',
     },
   ],
 
@@ -597,7 +589,7 @@ window.mockData = {
     acceptance_criteria: [
       'The user can visually follow rough context -> governed spec -> decision/evidence gate -> handoff preview',
       'D-005 is visible as the handoff gating decision',
-      'Missing acceptance criteria, evidence, or decision lock visibly blocks readiness',
+      'Missing acceptance criteria, evidence, or open Decision state visibly blocks readiness',
       'The preview remains static and mock-only',
       'Validation commands pass',
     ],
@@ -639,8 +631,8 @@ window.mockData = {
     },
     {
       id: 'locked-decision',
-      type: 'decision_lock',
-      label: 'D-005 lock evidence',
+      type: 'decision',
+      label: 'D-005 Decision evidence',
       sourceObjectId: 'D-005',
       targetObjectId: 'handoff-preview',
       status: 'missing',
@@ -911,8 +903,8 @@ window.mockData = {
   decisions: [
     {
       id: 'D-001',
-      title: 'Context Basket placement',
-      description: 'Should the Context Basket be docked or floating?',
+      title: 'Selected Context placement',
+      description: 'Should the Selected Context panel be docked or floating?',
       status: 'locked',
       options: ['Floating', 'Docked', 'Collapsible'],
       selectedOption: 'Docked',

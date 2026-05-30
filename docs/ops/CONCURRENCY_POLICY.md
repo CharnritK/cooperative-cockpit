@@ -29,7 +29,11 @@ Each agent must declare:
 - **Files expected to be touched**: Specific files if known.  
 - **Validation commands**: The scripts that will be run to ensure correctness.
 
-Declare this information in the appropriate goal discussion or agent log before committing changes.
+Declare this information in the appropriate goal discussion or agent log before work starts.
+
+## Task ID namespace
+
+Repo-level task IDs must be unique. If an imported package reuses an existing GOAL ID, prefix it as package-local in active tracking, for example `PKG-GOAL-004`, and do not use the plain reused ID in new branch names.
 
 ## Stop conditions
 
@@ -39,7 +43,7 @@ Agents must stop and seek Point approval if any of the following occur:
 - There is a high likelihood of merge conflicts.  
 - The change touches protected surfaces (e.g. product scope, architecture, dependencies).  
 - A dependency or framework change is required.  
-- A repo write, deployment, or external action is requested.  
+- A repo write outside declared paths, deployment, source-control publication, or external action is requested.
 - Secrets or credentials are needed for the task.
 
 Adhering to this policy ensures smooth collaboration and minimises the need for conflict resolution.
