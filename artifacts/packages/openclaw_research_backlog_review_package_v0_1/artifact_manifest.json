@@ -1,0 +1,13 @@
+{
+  "artifact_id": "ART-OPENCLAW-RESEARCH-BACKLOG-REVIEW-20260530-V01",
+  "artifact_type": "zip_package",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "chatgpt",
+  "status": "draft",
+  "related_task_id": "RESEARCH-BACKLOG-REVIEW-20260530",
+  "source_file": "ChatGPT conversation: OpenClaw research backlog review final response",
+  "storage_path": "artifacts/packages/openclaw-research-backlog-review-package-v0.1.zip",
+  "checksum": "sha256:204515cf60ef83468e2ba8bf8e057bcb7ddcf4b1dd1cb757f7083829caae8c24",
+  "notes": "Documentation-only package for persisting the revised OpenClaw research backlog review, follow-up prompts, Point-lock recommendations, and GOAL-005 handoff candidate. No repo mutation or runtime work authorized."
+}
