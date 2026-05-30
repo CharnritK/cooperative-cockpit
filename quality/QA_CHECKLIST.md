@@ -32,9 +32,18 @@ Use this checklist to verify that changes meet the repository’s quality standa
 - [ ] `docs/product/SCOPE_GUARDRAILS_AND_POINT_LOCKS.md` preserves no backend, API, auth, database, deployment, runtime workflow execution, real agent orchestration, external connectors, MCP implementation, or new dependencies.
 - [ ] Product-lock decisions in `docs/product/POINT_LOCK_DECISIONS.md` are reviewed before app-source goals GOAL-005 through GOAL-008 begin.
 
+## GOAL-008 static MVP QA closeout
+
+- [ ] Object visibility is verified across the current eight pages: Project, Context Nodes, Selected Context, Spec Draft, Review Run, Findings, Decisions, Evidence, Artifact Reference, Work Packet, Handoff Packet and Validation Results.
+- [ ] Scope-creep checks confirm no new pages, dependencies, backend/API/auth/database/deployment, runtime workflow execution, real orchestration, external connectors, MCP, secrets, real export, filesystem API or app-driven repo write behavior.
+- [ ] Handoff-readiness checks confirm Handoff and gated-preview controls remain disabled while static gates are blocked, and any enabled handoff behavior stays a static placeholder.
+- [ ] No-network evidence confirms the static MVP makes no remote HTTP/HTTPS requests after loading from local files.
+- [ ] Unsafe-label evidence confirms buttons and CTAs do not use action labels that imply live execution, export, deployment, authentication or external connection.
+- [ ] GOAL-008 evidence records product-doc review, command output, manual/browser QA observations, unresolved issues and next recommended action.
+
 ## QA Hardening
 
 - [ ] QA tests cover all acceptance criteria.  
-- [ ] All known issues are documented in `docs/STATUS.md`.  
+- [ ] All known issues are documented in `docs/ops/STATUS.md`.
 - [ ] Artifacts added during QA have manifests.  
 - [ ] The QA checklist is updated after each cycle.

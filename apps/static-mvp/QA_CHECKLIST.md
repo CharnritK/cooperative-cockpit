@@ -37,6 +37,7 @@ This checklist guides the manual verification of the static MVP prototype. It en
 - **Protected surfaces** – Runtime state, secrets and repo write authority are listed under protected exclusions and cannot be added to Selected Context.
 - **Handoff gating** – Handoff-style actions (Prepare handoff, View gated preview) remain disabled until all gating conditions are satisfied.
 - **Primary demo gating** – `primaryDemoPath` keeps the relationship visible from rough context to governed spec, D-005 gate, evidence items and static handoff preview.
+- **GOAL-008 closeout gate** – Before demo closeout, verify object visibility, no-new-pages, no-network behavior, unsafe-label absence, static-only handoff readiness, and no export/repo-write/runtime/deployment implications in one browser QA pass.
 
 ## Object-model lock checks
 
@@ -65,3 +66,15 @@ This prototype must remain fully offline. After loading `index.html`, no remote 
 Search within the HTML and JavaScript files for unsafe execution-style verbs. The review page name is allowed.
 
 If any button or action label contains those verbs, the prototype fails this check.
+
+## GOAL-008 closeout check
+
+The static MVP closeout passes only if fresh evidence confirms:
+
+- All eight current pages are reachable and non-empty.
+- No ninth page or new route appears in navigation.
+- Object-model surfaces remain visible: Project, Context Nodes, Selected Context, Spec Draft, Review Run, Findings, Decisions, Evidence, Artifact Reference, Work Packet, Handoff Packet and Validation Results.
+- Handoff controls remain gated while mock static readiness is blocked.
+- No remote HTTP/HTTPS requests occur during local browser smoke.
+- No button or CTA implies live execution, real export, deployment, authentication or external connection.
+- `npm run validate` passes and command output is recorded under `artifacts/evidence/`.
