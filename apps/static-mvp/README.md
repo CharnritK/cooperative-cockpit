@@ -21,6 +21,8 @@ The prototype bundles its font files locally under `assets/fonts`:
 
 The font license files are included in the same folder. The app does not load fonts, icons, scripts or styles from a CDN at runtime.
 
+The handoff package inventory in `handoff/manifest.json` includes `styles/fonts.css`, all local `.ttf` files referenced by that stylesheet, and the corresponding `OFL-*.txt` license files so copied handoff packages remain self-contained for local/offline review.
+
 ## Included pages
 
 The MVP comprises the following pages:
