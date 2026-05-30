@@ -380,6 +380,8 @@ function renderWorkbench(container) {
     className: 'workbench-header',
   });
 
+  container.appendChild(renderGoldenPathStrip(selectedNode));
+
   const layout = createElement('section', 'workbench-layout');
   const sidebar = createElement('aside', 'workbench-sidebar');
   sidebar.appendChild(renderNodePalette());
@@ -463,6 +465,33 @@ function renderContextBasket() {
   actions.appendChild(row);
   basket.appendChild(actions);
   return basket;
+}
+
+function renderGoldenPathStrip(selectedNode) {
+  const strip = createElement('section', 'golden-path-strip');
+  const nodes = window.mockData.architectureGraphNodes || [];
+  const edges = window.mockData.architectureGraphEdges || [];
+  strip.innerHTML = `<div class="golden-path-copy">
+      <div class="page-kicker">Static golden path</div>
+      <h3>Architecture node -> Context Basket -> assistant chat -> Handoff Packet</h3>
+      <p>Mock-only flow for Builder Enablement OS handoff preparation. Selecting a node updates local browser state only.</p>
+    </div>
+    <div class="golden-path-steps">
+      ${nodes.map((node, index) => {
+        const edge = edges.find((item) => item.source === node.id);
+        const isActive = selectedNode && node.linkedNodeId === selectedNode.id;
+        return `<article class="golden-path-step${isActive ? ' is-active' : ''}">
+            <div class="golden-path-step-head">
+              <span class="mono">${String(index + 1).padStart(2, '0')}</span>
+              <strong>${node.label}</strong>
+            </div>
+            <p>${node.role}</p>
+            <small>${node.output}</small>
+            ${edge ? `<div class="golden-path-edge">${icon('arrow')}${edge.label}</div>` : ''}
+          </article>`;
+      }).join('')}
+    </div>`;
+  return strip;
 }
 
 function renderNodeCanvas() {
@@ -739,10 +768,12 @@ function renderUtilityTray(selectedNode) {
         </div>
       </section>
       <section class="selected-evidence-panel">
-        <h4>Selected node evidence surface</h4>
-        ${selectedNode ? renderInspectorList(selectedNode.evidence || selectedNode.trace || ['No evidence attached to this mock node']) : '<div class="empty-state compact">Select a node to see its Evidence, Review, and Handoff context here.</div>'}
+        ${renderAssistantPanel(selectedNode)}
       </section>
-      <section class="selected-evidence-panel">
+      <section class="handoff-preview-panel">
+        ${renderHandoffPreviewPanel()}
+      </section>
+      <section class="selected-evidence-panel local-validation-panel">
         <h4>Local validation note</h4>
         <p>${window.appState.lastLocalValidation || 'No local validation action has been recorded in this browser session.'}</p>
         <button class="action-btn" type="button" id="validate-selected-node" ${selectedNode ? '' : 'disabled'}>${icon('review')}Validate selected artifact locally</button>
@@ -787,6 +818,72 @@ function renderUtilityTray(selectedNode) {
   }
 
   return tray;
+}
+
+function renderAssistantPanel(selectedNode) {
+  const transcript = window.mockData.assistantTranscript || [];
+  const basketLabels = window.appState.context.map((item) => item.label);
+  return `<h4>AI-assisted Chat (Mock)</h4>
+    <div class="assistant-context-line">
+      ${renderStatusChip('inspect', 'Mock chat')}
+      <span>${selectedNode ? `Selected: ${selectedNode.title || selectedNode.label}` : 'No node selected'}</span>
+    </div>
+    <div class="chat-transcript" aria-label="Mock assistant transcript">
+      ${transcript.map((message) => `<div class="chat-message chat-message-${message.speaker}">
+          <span>${message.speaker === 'user' ? 'User' : 'Assistant'}</span>
+          <p>${message.text}</p>
+        </div>`).join('')}
+    </div>
+    <div class="assistant-context-line">
+      <span>Basket context</span>
+      <strong>${basketLabels.length ? basketLabels.join(' | ') : 'Empty basket'}</strong>
+    </div>`;
+}
+
+function renderHandoffPreviewPanel() {
+  const packet = window.mockData.handoffPacketPreview;
+  const sectionKeys = [
+    'objective',
+    'allowed_paths',
+    'forbidden_actions',
+    'required_work',
+    'acceptance_criteria',
+    'validation_commands',
+    'stop_conditions',
+    'final_response_format',
+  ];
+
+  return `<div class="handoff-preview-head">
+      <div>
+        <h4>Generated Handoff Packet Preview</h4>
+        <p>${packet.packet_id} / ${packet.title}</p>
+      </div>
+      ${renderStatusChip('inspect', 'Mock preview')}
+    </div>
+    <div class="handoff-preview-grid">
+      ${sectionKeys.map((key) => {
+        const values = Array.isArray(packet[key]) ? packet[key] : [packet[key]];
+        return `<article class="handoff-preview-section">
+            <h5>${formatHandoffSectionLabel(key)}</h5>
+            ${renderInspectorList(values)}
+          </article>`;
+      }).join('')}
+    </div>
+    <div class="static-notice">This is a static packet preview from mock data. It does not export files, scan a repository, call an API, deploy, or create a real handoff.</div>`;
+}
+
+function formatHandoffSectionLabel(key) {
+  const labels = {
+    objective: 'Objective',
+    allowed_paths: 'Allowed paths',
+    forbidden_actions: 'Forbidden actions',
+    required_work: 'Required work',
+    acceptance_criteria: 'Acceptance criteria',
+    validation_commands: 'Validation commands',
+    stop_conditions: 'Stop conditions',
+    final_response_format: 'Final response format',
+  };
+  return labels[key] || key;
 }
 
 function renderReadinessTile(label, count, details, resolved) {

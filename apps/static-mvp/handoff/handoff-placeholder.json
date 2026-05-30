@@ -1,11 +1,64 @@
 {
   "project_id": "COCKPIT-MVP-014",
   "artifact_id": "placeholder-artifact",
-  "spec_summary": "This handoff contains a static representation of the spec, preview, decisions and trace evidence.",
+  "spec_summary": "This handoff contains a static representation of the architecture graph, Context Basket, assistant transcript, packet preview, decisions and trace evidence.",
+  "objective": "Add a static MVP golden path that demonstrates architecture node selection, Context Basket formation, assistant-guided scoping, and a standardized OpenClaw Handoff Packet preview.",
+  "allowed_paths": [
+    "apps/static-mvp/**",
+    "schemas/**",
+    "quality/**",
+    "artifacts/evidence/**",
+    "docs/ops/STATUS.md"
+  ],
+  "forbidden_actions": [
+    "Do not add dependencies",
+    "Do not add backend/API/auth/deployment",
+    "Do not add database/storage",
+    "Do not add runtime mutation",
+    "Do not create real repo scanning or external connectors",
+    "Do not change product scope outside the static Builder Enablement OS demonstration",
+    "Do not touch secrets",
+    "Do not modify files outside allowed paths"
+  ],
+  "required_work": [
+    "Add or update static mock data for architecture graph nodes, architecture graph edges, Context Basket, and handoff packet preview",
+    "Add static UI state for architecture graph/canvas area, selected node inspector, Context Basket, chat-style assistant panel, and generated handoff packet preview",
+    "Add schema or validation coverage where existing validation supports it",
+    "Preserve all static MVP constraints",
+    "Run validation and record evidence"
+  ],
+  "acceptance_criteria": [
+    "User can visually understand Architecture node -> Context Basket -> AI-assisted chat -> Handoff Packet",
+    "Handoff packet includes objective, allowed paths, forbidden actions, required work, acceptance criteria, validation commands, stop conditions, and final response format",
+    "UI does not imply real execution, live repo scanning, backend, API calls, or deployment",
+    "Mock data only",
+    "Validation passes"
+  ],
+  "validation_commands": [
+    "npm run validate",
+    "git diff --check"
+  ],
+  "stop_conditions": [
+    "Stop if a dependency is required",
+    "Stop if backend/API/auth/database/deployment is needed",
+    "Stop if real repo access or external connector access is needed",
+    "Stop if files outside allowed paths must change",
+    "Stop if validation fails and cannot be fixed within scope",
+    "Stop if product/architecture decision is required"
+  ],
+  "final_response_format": [
+    "Verdict:",
+    "Changed files:",
+    "Validation output:",
+    "Evidence recorded:",
+    "Risks:",
+    "Next recommended action:"
+  ],
   "selected_context": [
-    "Architecture View",
-    "GS-001 Rough Concept → Builder Spec",
-    "Feedback Packet"
+    "Architecture node: Context Selector",
+    "Architecture node: Spec Builder",
+    "Architecture node: Handoff Packet",
+    "Goal brief: static golden path"
   ],
   "protected_exclusions": [
     "Runtime state",

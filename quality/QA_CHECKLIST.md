@@ -17,6 +17,9 @@ Use this checklist to verify that changes meet the repository’s quality standa
 - [ ] The handoff manifest is complete.  
 - [ ] No network or API calls are made.  
 - [ ] The MVP remains read‑only and static.
+- [ ] The Workbench golden path clearly shows Architecture node -> Context Basket -> assistant chat -> Handoff Packet.
+- [ ] The handoff packet preview includes objective, allowed paths, forbidden actions, required work, acceptance criteria, validation commands, stop conditions, and final response format.
+- [ ] Architecture graph and handoff preview mock-data schemas remain valid JSON under `schemas/`.
 
 ## QA Hardening
 

@@ -260,19 +260,62 @@ window.mockData = {
     { source: 'node-3', target: 'node-5', tone: 'neutral' },
   ],
 
+  // Static architecture graph used by the golden path explainer. These nodes
+  // mirror the Workbench canvas and describe mock-only artifact flow.
+  architectureGraphNodes: [
+    {
+      id: 'arch-node-selected',
+      label: 'Architecture node',
+      linkedNodeId: 'node-2',
+      role: 'User selects a static architecture node on the canvas.',
+      output: 'Selected node context',
+    },
+    {
+      id: 'arch-context-basket',
+      label: 'Context Basket',
+      linkedNodeId: 'node-2',
+      role: 'Safe context is assembled while protected exclusions stay sealed.',
+      output: 'Included mock context',
+    },
+    {
+      id: 'arch-assistant-chat',
+      label: 'AI-assisted chat',
+      linkedNodeId: 'node-3',
+      role: 'A local mock assistant frames questions and drafts packet sections.',
+      output: 'Structured packet guidance',
+    },
+    {
+      id: 'arch-handoff-preview',
+      label: 'Handoff Packet preview',
+      linkedNodeId: 'node-8',
+      role: 'The standardized packet is shown as a static preview only.',
+      output: 'OpenClaw Handoff Packet preview',
+    },
+  ],
+
+  architectureGraphEdges: [
+    { source: 'arch-node-selected', target: 'arch-context-basket', label: 'Add selected context' },
+    { source: 'arch-context-basket', target: 'arch-assistant-chat', label: 'Ask with safe context' },
+    { source: 'arch-assistant-chat', target: 'arch-handoff-preview', label: 'Preview packet fields' },
+  ],
+
   // Initial context items included in the basket.
   contextItems: [
     {
       id: 'node-2',
-      label: 'Context Selector',
+      label: 'Architecture node: Context Selector',
     },
     {
-      id: 'spec-link',
-      label: 'Concept Intake to Spec Builder',
+      id: 'node-3',
+      label: 'Architecture node: Spec Builder',
     },
     {
-      id: 'feedback-packet',
-      label: 'Static Review Notes',
+      id: 'node-8',
+      label: 'Architecture node: Handoff Packet',
+    },
+    {
+      id: 'golden-path-brief',
+      label: 'Goal brief: static golden path',
     },
   ],
 
@@ -282,6 +325,74 @@ window.mockData = {
     { id: 'secrets', label: 'Secrets', status: 'excluded' },
     { id: 'repo-write', label: 'Repo write authority', status: 'excluded' },
   ],
+
+  assistantTranscript: [
+    {
+      speaker: 'user',
+      text: 'Use the selected architecture node and Context Basket to prepare a bounded OpenClaw handoff.',
+    },
+    {
+      speaker: 'assistant',
+      text: 'I can draft a mock packet preview from safe context only. Runtime state, secrets, repo writes, APIs, and external connectors remain excluded.',
+    },
+    {
+      speaker: 'assistant',
+      text: 'The preview will include objective, allowed paths, forbidden actions, required work, acceptance criteria, validation commands, stop conditions, and final response format.',
+    },
+  ],
+
+  handoffPacketPreview: {
+    packet_id: 'OPENCLAW-HANDOFF-PREVIEW-001',
+    title: 'Static Architecture Graph and Context Basket Golden Path',
+    status: 'mock-preview',
+    objective: 'Add a static MVP golden path that demonstrates architecture node selection, Context Basket formation, assistant-guided scoping, and a standardized OpenClaw Handoff Packet preview.',
+    allowed_paths: [
+      'apps/static-mvp/**',
+      'schemas/**',
+      'quality/**',
+      'artifacts/evidence/**',
+      'docs/ops/STATUS.md',
+    ],
+    forbidden_actions: [
+      'Add dependencies',
+      'Add backend, API, auth, database, storage, or deployment',
+      'Mutate runtime state',
+      'Create real repo scanning or external connectors',
+      'Touch secrets',
+      'Modify files outside allowed paths',
+    ],
+    required_work: [
+      'Update static mock graph, basket, assistant, and handoff preview data',
+      'Show architecture canvas, selected node inspector, Context Basket, assistant panel, and packet preview',
+      'Add schema or quality coverage within existing validation boundaries',
+      'Preserve static MVP constraints',
+      'Run validation and record evidence',
+    ],
+    acceptance_criteria: [
+      'The user can visually follow Architecture node -> Context Basket -> AI-assisted chat -> Handoff Packet',
+      'The handoff packet includes all required OpenClaw sections',
+      'The UI does not imply real execution, live repo scanning, backend, API calls, or deployment',
+      'All data remains mock-only',
+      'Validation passes',
+    ],
+    validation_commands: ['npm run validate', 'git diff --check'],
+    stop_conditions: [
+      'Stop if a dependency is required',
+      'Stop if backend/API/auth/database/deployment is needed',
+      'Stop if real repo or external connector access is needed',
+      'Stop if files outside allowed paths must change',
+      'Stop if validation fails and cannot be fixed within scope',
+      'Stop if a product or architecture decision is required',
+    ],
+    final_response_format: [
+      'Verdict:',
+      'Changed files:',
+      'Validation output:',
+      'Evidence recorded:',
+      'Risks:',
+      'Next recommended action:',
+    ],
+  },
 
   // Specification fields and their statuses.
   specFields: [
