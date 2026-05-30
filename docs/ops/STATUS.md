@@ -12,6 +12,7 @@
 - GOAL-003A gitignore validation hardening is complete; validation evidence is recorded in `artifacts/evidence/GOAL-003A-validation.md`.
 - Static golden-path validation evidence is recorded in `artifacts/evidence/GOAL-004-static-architecture-golden-path.md`.
 - Static MVP product-lock validation evidence is recorded in `artifacts/evidence/GOAL-004-validation.md`.
+- PR #3 refreshed the static MVP handoff package inventory to include local font stylesheet, referenced local font files, and OFL license files; fresh validation evidence is recorded in `artifacts/evidence/VALIDATION-REFRESH-PR3.md`.
 
 ## Completed Assimilation
 
