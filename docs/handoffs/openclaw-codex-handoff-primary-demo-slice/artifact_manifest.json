@@ -1,0 +1,13 @@
+{
+  "artifact_id": "ART-OPENCLAW-CODEX-HANDOFF-001",
+  "artifact_type": "zip_package",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "chatgpt",
+  "status": "draft",
+  "related_task_id": "GOAL-004-primary-demo-alignment",
+  "source_file": "openclaw_gpt55_pro_final_prompt_filled.md",
+  "storage_path": "openclaw-codex-handoff-primary-demo-slice.zip",
+  "checksum": "5bfda50a2908dcf2e731ef3633d8e17b94b64d618f7613ae8cf66b6082a72da2",
+  "notes": "Codex-assimilable handoff package; no repo mutation performed."
+}

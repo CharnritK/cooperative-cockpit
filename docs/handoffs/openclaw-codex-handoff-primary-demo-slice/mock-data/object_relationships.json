@@ -1,0 +1,90 @@
+{
+  "workspace": {
+    "contains": [
+      "project"
+    ]
+  },
+  "project": {
+    "contains": [
+      "context_node",
+      "context_basket",
+      "spec_draft",
+      "review_run",
+      "decision_lock",
+      "evidence_item",
+      "validation_result",
+      "work_packet",
+      "handoff_packet"
+    ]
+  },
+  "context_basket": {
+    "selects": [
+      "context_node"
+    ],
+    "excludes": [
+      "protected_item"
+    ],
+    "feeds": [
+      "spec_draft"
+    ]
+  },
+  "spec_draft": {
+    "uses": [
+      "context_basket"
+    ],
+    "requires": [
+      "acceptance_criteria"
+    ],
+    "gated_by": [
+      "decision_lock"
+    ],
+    "validated_by": [
+      "validation_result"
+    ]
+  },
+  "review_run": {
+    "produces": [
+      "finding"
+    ],
+    "attaches": [
+      "evidence_item"
+    ]
+  },
+  "decision_lock": {
+    "blocks_or_allows": [
+      "handoff_packet"
+    ],
+    "requires": [
+      "Point"
+    ]
+  },
+  "evidence_item": {
+    "links": [
+      "context_node",
+      "spec_draft",
+      "decision_lock",
+      "validation_result",
+      "handoff_packet"
+    ]
+  },
+  "work_packet": {
+    "packaged_in": [
+      "handoff_packet"
+    ],
+    "assigned_to": [
+      "agent_role"
+    ]
+  },
+  "handoff_packet": {
+    "contains": [
+      "work_packet",
+      "evidence_item",
+      "decision_lock",
+      "validation_result"
+    ],
+    "status": [
+      "blocked",
+      "ready"
+    ]
+  }
+}

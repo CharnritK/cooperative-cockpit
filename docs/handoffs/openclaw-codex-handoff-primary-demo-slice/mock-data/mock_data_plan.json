@@ -1,0 +1,256 @@
+{
+  "generated_at": "2026-05-30",
+  "purpose": "Static mock-data plan for the primary OpenClaw demo path",
+  "entities": [
+    {
+      "name": "workspace",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "name",
+        "status"
+      ],
+      "relationships": [
+        "projects"
+      ],
+      "scenarios": [
+        "all"
+      ],
+      "notes": "static only"
+    },
+    {
+      "name": "project",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "workspace_id",
+        "name",
+        "artifact_id",
+        "status"
+      ],
+      "relationships": [
+        "context_nodes",
+        "spec_drafts",
+        "decisions",
+        "evidence",
+        "handoff_packets"
+      ],
+      "scenarios": [
+        "all"
+      ],
+      "notes": "use COCKPIT-MVP-014"
+    },
+    {
+      "name": "context_node",
+      "minimum_records": 5,
+      "fields": [
+        "id",
+        "label",
+        "type",
+        "status",
+        "description"
+      ],
+      "relationships": [
+        "context_basket",
+        "trace_links"
+      ],
+      "scenarios": [
+        "product_spec_creation",
+        "ui_mockup_review"
+      ],
+      "notes": "current nodes already exist"
+    },
+    {
+      "name": "context_basket",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "selected_node_ids",
+        "protected_exclusion_ids"
+      ],
+      "relationships": [
+        "context_nodes",
+        "spec_draft"
+      ],
+      "scenarios": [
+        "product_spec_creation"
+      ],
+      "notes": "preserve protected exclusions"
+    },
+    {
+      "name": "spec_draft",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "title",
+        "status",
+        "fields",
+        "acceptance_criteria"
+      ],
+      "relationships": [
+        "context_basket",
+        "decision_locks",
+        "validation_results"
+      ],
+      "scenarios": [
+        "product_spec_creation"
+      ],
+      "notes": "show draft and ready states"
+    },
+    {
+      "name": "review_run",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "name",
+        "verdict",
+        "severity",
+        "findings"
+      ],
+      "relationships": [
+        "findings",
+        "evidence"
+      ],
+      "scenarios": [
+        "ui_mockup_review",
+        "qa_closeout"
+      ],
+      "notes": "inspect-only"
+    },
+    {
+      "name": "finding",
+      "minimum_records": 5,
+      "fields": [
+        "id",
+        "review_run_id",
+        "severity",
+        "status",
+        "summary"
+      ],
+      "relationships": [
+        "review_run",
+        "evidence"
+      ],
+      "scenarios": [
+        "ui_mockup_review",
+        "qa_closeout"
+      ],
+      "notes": "mock only"
+    },
+    {
+      "name": "decision_lock",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "title",
+        "status",
+        "chosenOption",
+        "blocks_handoff"
+      ],
+      "relationships": [
+        "handoff_packet",
+        "evidence"
+      ],
+      "scenarios": [
+        "decision_lock_scope_control",
+        "codex_handoff"
+      ],
+      "notes": "D-005 is key"
+    },
+    {
+      "name": "evidence_item",
+      "minimum_records": 4,
+      "fields": [
+        "id",
+        "type",
+        "title",
+        "source",
+        "status",
+        "target_id"
+      ],
+      "relationships": [
+        "trace_links",
+        "handoff_packet"
+      ],
+      "scenarios": [
+        "all"
+      ],
+      "notes": "no backend persistence"
+    },
+    {
+      "name": "validation_result",
+      "minimum_records": 3,
+      "fields": [
+        "id",
+        "label",
+        "status",
+        "command",
+        "summary"
+      ],
+      "relationships": [
+        "handoff_packet"
+      ],
+      "scenarios": [
+        "qa_closeout",
+        "codex_handoff"
+      ],
+      "notes": "static result state"
+    },
+    {
+      "name": "handoff_packet",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "status",
+        "selected_context",
+        "decisions",
+        "evidence",
+        "blocked_reasons"
+      ],
+      "relationships": [
+        "work_packet",
+        "decision_locks",
+        "evidence"
+      ],
+      "scenarios": [
+        "codex_handoff"
+      ],
+      "notes": "static placeholder only"
+    },
+    {
+      "name": "agent_role",
+      "minimum_records": 3,
+      "fields": [
+        "id",
+        "name",
+        "allowed",
+        "must_not_do"
+      ],
+      "relationships": [
+        "work_packet"
+      ],
+      "scenarios": [
+        "codex_handoff"
+      ],
+      "notes": "Codex, QA, Point"
+    },
+    {
+      "name": "work_packet",
+      "minimum_records": 1,
+      "fields": [
+        "id",
+        "goal",
+        "allowed_paths",
+        "forbidden_actions",
+        "acceptance_criteria"
+      ],
+      "relationships": [
+        "handoff_packet"
+      ],
+      "scenarios": [
+        "codex_handoff"
+      ],
+      "notes": "bounded implementation slice"
+    }
+  ]
+}
