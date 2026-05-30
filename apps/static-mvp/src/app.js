@@ -228,8 +228,13 @@ function renderPageHeader(container, { kicker, title, subtitle, actions = [], cl
   container.appendChild(header);
 }
 
+function normalizeObjectStatus(status) {
+  return String(status || '').replace(/_/g, '-');
+}
+
 function renderStatusChip(status, label) {
-  return `<span class="status-chip ${getStatusClass(status)}">${label || statusLabel(status)}</span>`;
+  const normalizedStatus = normalizeObjectStatus(status);
+  return `<span class="status-chip ${getStatusClass(normalizedStatus)}">${label || statusLabel(normalizedStatus)}</span>`;
 }
 
 function handleTopBarAction(action) {
@@ -302,14 +307,51 @@ window.renderPage = function renderPage(page) {
 };
 
 function renderHome(container) {
+  const project = window.appState.project || {};
+  const workspace = window.appState.workspace || {};
+  const artifactRef = (window.appState.artifactRefs || [])[0] || {};
+  const workPacket = window.appState.workPacket || {};
+  const validationResults = window.appState.validationResults || [];
   const pendingLocks = window.appState.decisions.filter((decision) => decision.status === 'needs-lock');
   const protectedLabels = window.appState.protected.map((item) => item.label);
   const currentStep = getWorkflowStep(window.appState.currentPage);
 
+  const projectOverview = createElement('section', 'panel project-overview-panel');
+  projectOverview.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <div class="page-kicker">Project Overview</div>
+        <h2 class="page-title">${project.name || 'OpenClaw Cooperative Cockpit Static MVP'}</h2>
+        <p class="page-subtitle">${project.summary || 'Static local prototype for governed cockpit work.'}</p>
+      </div>
+      ${renderStatusChip(project.status || 'draft', `Project object: ${statusLabel(project.status || 'draft')}`)}
+    </div>
+    <div class="rules-summary-grid rules-note">
+      <section class="panel">
+        <h3>Project object</h3>
+        <p><strong>Stage:</strong> ${project.currentStage || 'Static MVP alignment'}</p>
+        <p><strong>Workspace:</strong> ${workspace.name || 'Static workspace'} / ${workspace.mode || 'static_local_only'}</p>
+      </section>
+      <section class="panel">
+        <h3>Artifact Reference</h3>
+        <p><strong>${artifactRef.label || project.artifactId || 'COCKPIT-MVP-014'}</strong></p>
+        <p>Status: ${statusLabel(normalizeObjectStatus(artifactRef.status || 'needs-sync'))}</p>
+      </section>
+      <section class="panel">
+        <h3>Work Packet</h3>
+        <p><strong>${workPacket.title || 'Static MVP work packet'}</strong></p>
+        <p>${workPacket.objective || 'Bounded static work only.'}</p>
+      </section>
+      <section class="panel">
+        <h3>Validation summary</h3>
+        <p>${validationResults.map((result) => `${result.scope}: ${statusLabel(normalizeObjectStatus(result.status))}`).join(' / ') || 'No validation results loaded.'}</p>
+      </section>
+    </div>`;
+  container.appendChild(projectOverview);
+
   const statusGrid = createElement('section', 'home-status-grid');
   statusGrid.appendChild(renderHomeStatusCard({
     iconName: 'branch',
-    label: 'Context items',
+    label: 'Selected Context',
     value: String(window.appState.context.length),
     tone: 'active',
     detail: window.appState.context.map((item) => item.label).join(', ') || 'No context selected',
@@ -323,7 +365,7 @@ function renderHome(container) {
   }));
   statusGrid.appendChild(renderHomeStatusCard({
     iconName: pendingLocks.length ? 'warning' : 'check',
-    label: 'Pending locks',
+    label: 'Pending Decisions',
     value: String(pendingLocks.length),
     tone: pendingLocks.length ? 'warning' : 'validated',
     detail: pendingLocks.length ? pendingLocks.map((decision) => decision.id).join(', ') : 'No pending locks',
@@ -332,11 +374,11 @@ function renderHome(container) {
 
   const banner = createElement('section', 'pipeline-banner');
   banner.innerHTML = `<div>
-      <div class="page-kicker">Active artifact</div>
-      <h2 class="page-title">COCKPIT-MVP-014</h2>
-      <p class="page-subtitle">Governed static workflow studio from concept intake to gated handoff. Current stage: <strong>${currentStep.label}</strong>.</p>
+      <div class="page-kicker">Artifact Reference</div>
+      <h2 class="page-title">${project.artifactId || 'COCKPIT-MVP-014'}</h2>
+      <p class="page-subtitle">Artifact-first governed cockpit from selected context to gated handoff. Current page group: <strong>${currentStep.label}</strong>.</p>
     </div>
-    <div class="pipeline-steps" aria-label="Pipeline progress">
+    <div class="pipeline-steps" aria-label="Object-model page flow">
       ${WORKFLOW_STEPS.map((step) => `<span class="${step.key === currentStep.key ? 'is-active' : ''} ${step.key === 'handoff' && !window.appState.handoffReady ? 'is-blocked' : ''}">${step.label}</span>`).join('')}
     </div>`;
   container.appendChild(banner);
@@ -344,12 +386,12 @@ function renderHome(container) {
 
   const lowerGrid = createElement('section', 'home-ops-grid');
   const recent = createElement('article', 'panel activity-panel');
-  recent.innerHTML = `<h3>Recent Activity</h3>
+  recent.innerHTML = `<h3>Object-model state</h3>
     <ol class="activity-feed">
-      <li><span>Context basket seeded</span><strong>${window.appState.context.length} included</strong></li>
+      <li><span>Selected Context seeded</span><strong>${window.appState.context.length} included</strong></li>
       <li><span>Protected surfaces sealed</span><strong>${window.appState.protected.length} excluded</strong></li>
-      <li><span>Handoff gate checked</span><strong>${window.appState.handoffReady ? 'Ready' : 'Blocked'}</strong></li>
-      <li><span>Spec coverage refreshed</span><strong>${hasUnresolvedSpecFields() ? 'Needs answers' : 'Complete'}</strong></li>
+      <li><span>Decision gate checked</span><strong>${window.appState.handoffReady ? 'Ready' : 'Blocked'}</strong></li>
+      <li><span>Spec Draft coverage refreshed</span><strong>${hasUnresolvedSpecFields() ? 'Needs answers' : 'Complete'}</strong></li>
     </ol>`;
   lowerGrid.appendChild(recent);
 
@@ -359,10 +401,10 @@ function renderHome(container) {
     <div class="safe-action-list"></div>`;
   const actionList = next.querySelector('.safe-action-list');
   [
-    ['Open Workbench', 'graph', 'Review context nodes', () => window.navigate('workbench')],
-    ['Continue Spec', 'document', 'Resolve required fields', () => window.navigate('spec-builder')],
-    ['Validate', 'review', 'Inspect advisory checks', () => window.navigate('review-runs')],
-    ['Resolve Locks', 'decision', pendingLocks.length ? `${pendingLocks.length} pending` : 'No pending locks', () => window.navigate('decisions')],
+    ['Inspect Workbench', 'graph', 'Review Context Nodes', () => window.navigate('workbench')],
+    ['Review Spec Draft', 'document', 'Resolve required fields', () => window.navigate('spec-builder')],
+    ['Inspect Review Runs', 'review', 'Read advisory Findings', () => window.navigate('review-runs')],
+    ['Open Decisions', 'decision', pendingLocks.length ? `${pendingLocks.length} pending` : 'No pending locks', () => window.navigate('decisions')],
   ].forEach(([label, iconName, description, handler]) => {
     const btn = createElement('button', 'safe-action');
     btn.type = 'button';
@@ -394,9 +436,9 @@ function renderWorkbench(container) {
   const selectedNode = getSelectedNode() || window.mockData.nodes[0];
   if (selectedNode) window.appState.selectedNodeId = selectedNode.id;
   renderPageHeader(container, {
-    kicker: 'Artifact-first Builder',
+    kicker: 'Cockpit object map',
     title: 'Workbench',
-    subtitle: 'Canvas-first cockpit for Context Nodes, Work Packets, Review Gates, Evidence, Decision Locks, and Handoff Packets. All actions are static and local-only.',
+    subtitle: 'Canvas-first map for Context Nodes, Selected Context, Evidence, Decisions, Work Packets, and the static Handoff Packet. All actions are inspect-only or local mock updates.',
     className: 'workbench-header',
   });
 
@@ -418,8 +460,8 @@ function renderWorkbench(container) {
 function renderNodePalette() {
   const palette = createElement('section', 'panel node-palette');
   palette.innerHTML = `<div class="node-palette-header">
-      <div class="palette-title-row"><h3>OpenClaw Node Families</h3>${renderStatusChip('inspect', 'Mock data')}</div>
-      <p>Static node families only. Selecting or adding a node changes local browser state, never runtime behavior.</p>
+      <div class="palette-title-row"><h3>Locked object palette</h3>${renderStatusChip('inspect', 'Mock data')}</div>
+      <p>Static cockpit object types only. Selecting or adding a Context Node changes local browser state, never runtime behavior.</p>
     </div>`;
 
   const list = createElement('ul', 'palette-list');
@@ -436,7 +478,8 @@ function renderNodePalette() {
 function renderContextBasket() {
   const basket = createElement('aside', 'context-basket');
   const included = createElement('div', 'basket-section');
-  included.innerHTML = `<div class="basket-section-header"><h3>Context Basket</h3>${renderStatusChip('allowed', `${window.appState.context.length} included`)}</div>`;
+  included.innerHTML = `<div class="basket-section-header"><h3>Selected Context</h3>${renderStatusChip('allowed', `${window.appState.context.length} included`)}</div>
+    <p class="page-subtitle">Derived from Context Nodes and protected exclusions. This remains local mock state.</p>`;
 
   const list = createElement('ul', 'context-items');
   window.appState.context.forEach((item, idx) => {
@@ -467,10 +510,10 @@ function renderContextBasket() {
   const actions = createElement('div', 'basket-section');
   const row = createElement('div', 'basket-actions');
   [
-    ['Add selected', 'add', addSelectedToContext],
-    ['Mark upstream local', 'branch', () => alert('Upstream marker is local-only in this static MVP.')],
-    ['Mark downstream local', 'arrow', () => alert('Downstream marker is local-only in this static MVP.')],
-    ['Clear basket', 'close', () => {
+    ['Add selected context', 'add', addSelectedToContext],
+    ['Mark source link local', 'branch', () => alert('Source link marker is local-only in this static MVP.')],
+    ['Mark target link local', 'arrow', () => alert('Target link marker is local-only in this static MVP.')],
+    ['Clear Selected Context', 'close', () => {
       window.appState.context = [];
       window.renderPage('workbench');
     }],
@@ -536,7 +579,7 @@ function renderGoldenPathStrip(selectedNode) {
 
 function renderNodeCanvas() {
   const canvas = createElement('div', 'node-canvas');
-  canvas.innerHTML = `<div class="canvas-label">Static Workbench canvas / COCKPIT-MVP-014</div>
+  canvas.innerHTML = `<div class="canvas-label">Static Cockpit object map / COCKPIT-MVP-014</div>
     <div class="canvas-toolbar">
       <span class="canvas-mode-chip" title="Inspect-only static canvas">Inspect-only</span>
       <button class="icon-btn" type="button" aria-label="Grid view" title="Static grid view">${icon('graph')}</button>
@@ -974,18 +1017,28 @@ function removeContextItem(idx) {
 }
 
 function getStatusClass(status) {
-  switch (status) {
+  switch (normalizeObjectStatus(status)) {
     case 'validated':
     case 'allowed':
     case 'complete':
+    case 'attached':
+    case 'review-complete':
       return 'status-validated';
     case 'needs-lock':
+    case 'decision-needs-lock':
+    case 'validation-warning':
+    case 'warning':
       return 'status-needs-lock';
     case 'needs-answer':
+    case 'needs-criteria':
       return 'status-needs-answer';
     case 'missing':
+    case 'evidence-missing':
       return 'status-missing';
     case 'blocked':
+    case 'handoff-blocked':
+    case 'validation-blocked':
+    case 'finding-open':
       return 'status-blocked';
     case 'draft':
       return 'status-draft';
@@ -999,6 +1052,7 @@ function getStatusClass(status) {
     case 'inspect':
       return 'status-inspect';
     case 'locked':
+    case 'decision-locked':
       return 'status-validated';
     default:
       return 'status-neutral';
@@ -1006,19 +1060,28 @@ function getStatusClass(status) {
 }
 
 function statusTone(status) {
-  switch (status) {
+  const normalizedStatus = normalizeObjectStatus(status);
+  switch (normalizedStatus) {
     case 'validated':
     case 'allowed':
     case 'complete':
     case 'locked':
+    case 'attached':
+    case 'review-complete':
       return 'validated';
     case 'needs-lock':
     case 'needs-answer':
     case 'needs-sync':
+    case 'needs-criteria':
+    case 'validation-warning':
+    case 'warning':
       return 'warning';
     case 'missing':
     case 'blocked':
-      return status;
+    case 'handoff-blocked':
+    case 'validation-blocked':
+    case 'finding-open':
+      return normalizedStatus;
     case 'draft':
       return 'draft';
     default:
@@ -1027,7 +1090,8 @@ function statusTone(status) {
 }
 
 function statusLabel(status) {
-  switch (status) {
+  const normalizedStatus = normalizeObjectStatus(status);
+  switch (normalizedStatus) {
     case 'validated':
       return 'Validated';
     case 'allowed':
@@ -1056,8 +1120,49 @@ function statusLabel(status) {
       return 'Review blockers';
     case 'needs-decision':
       return 'Needs decision';
+    case 'review-complete':
+      return 'Review complete';
+    case 'finding-open':
+      return 'Finding open';
+    case 'finding-resolved':
+      return 'Finding resolved';
+    case 'validation-blocked':
+      return 'Validation blocked';
+    case 'validation-warning':
+      return 'Validation warning';
+    case 'validation-passed':
+      return 'Validation passed';
+    case 'attached':
+    case 'evidence-attached':
+      return 'Evidence attached';
+    case 'evidence-missing':
+      return 'Evidence missing';
+    case 'handoff-ready':
+      return 'Handoff ready';
+    case 'handoff-blocked':
+      return 'Handoff blocked';
+    case 'handoff-only':
+      return 'Handoff only';
+    case 'mock-preview':
+      return 'Mock preview';
+    case 'selected':
+      return 'Selected';
+    case 'open':
+      return 'Open';
+    case 'excluded':
+      return 'Excluded';
+    case 'needs-criteria':
+      return 'Needs criteria';
+    case 'decision-locked':
+      return 'Decision locked';
+    case 'decision-deferred':
+      return 'Decision deferred';
+    case 'decision-needs-lock':
+      return 'Decision needs lock';
+    case 'warning':
+      return 'Warning';
     default:
-      return status;
+      return normalizedStatus;
   }
 }
 
@@ -1235,20 +1340,33 @@ function hasPendingDecisions() {
 
 function renderReviewRuns(container) {
   showGovernance(true);
+  const reviewRun = window.appState.reviewRun || {};
+  const findings = window.appState.findings || [];
   renderPageHeader(container, {
-    kicker: 'Inspect-only',
+    kicker: 'Review Run object',
     title: 'Review Runs',
-    subtitle: 'Review checks are advisory and inspect-only. They never execute code, mutate runtime state, or touch repositories.',
+    subtitle: 'Inspect-only Review Run and Finding objects. They never execute code, mutate runtime state, or touch repositories.',
   });
 
   const scope = createElement('section', 'panel');
-  scope.innerHTML = `<h3>Scope</h3><p>${window.appState.context.map((c) => c.label).join(', ') || 'No context selected.'}</p>`;
+  scope.innerHTML = `<h3>Review Run object</h3>
+    <p><strong>${reviewRun.name || 'Static review run'}</strong></p>
+    <p>Verdict: ${reviewRun.verdict || 'Inspect-only advisory review'}</p>
+    <p>Scope Context Nodes: ${(reviewRun.scopeContextIds || []).join(', ') || window.appState.context.map((c) => c.label).join(', ') || 'No context selected.'}</p>
+    ${renderStatusChip(normalizeObjectStatus(reviewRun.status || 'review_complete'), statusLabel(normalizeObjectStatus(reviewRun.status || 'review_complete')))}`;
   container.appendChild(scope);
+
+  const findingSummary = createElement('section', 'panel');
+  findingSummary.style.marginTop = '12px';
+  findingSummary.innerHTML = `<h3>Finding objects</h3>
+    <p>${findings.length} advisory Findings are linked to this Review Run. Findings are static records only; actions acknowledge or defer them in local mock state.</p>
+    ${renderInspectorList(findings.map((finding) => `${finding.id}: ${finding.summary}`))}`;
+  container.appendChild(findingSummary);
 
   const btnStart = createElement('button', 'action-btn');
   btnStart.type = 'button';
   btnStart.style.marginTop = '12px';
-  btnStart.innerHTML = `${icon('review')}Start review checks`;
+  btnStart.innerHTML = `${icon('review')}Inspect findings`;
   btnStart.addEventListener('click', () => showReviewResults(resultsDiv));
   container.appendChild(btnStart);
 
@@ -1260,20 +1378,23 @@ function renderReviewRuns(container) {
 
 function showReviewResults(resultsDiv) {
   resultsDiv.innerHTML = '';
-  window.appState.reviewResults.forEach((rev) => {
+  (window.appState.findings || []).forEach((finding) => {
     const card = createElement('article', 'review-result-card');
-    card.innerHTML = `<h4>${rev.name}</h4>
-      <p><strong>Verdict:</strong> ${rev.verdict}</p>
-      <p><strong>Findings:</strong> ${rev.findings}</p>
-      ${renderSeverityChip(rev.severity)}`;
+    card.innerHTML = `<h4>Finding ${finding.id}</h4>
+      <p><strong>Review Run:</strong> ${finding.reviewRunId}</p>
+      <p><strong>Summary:</strong> ${finding.summary}</p>
+      <p><strong>Recommendation:</strong> ${finding.recommendation}</p>
+      <p><strong>Evidence IDs:</strong> ${finding.evidenceIds.join(', ')}</p>
+      ${renderSeverityChip(finding.severity)}
+      ${renderStatusChip(normalizeObjectStatus(finding.status), statusLabel(normalizeObjectStatus(finding.status)))}`;
     const detailList = createElement('ul');
-    rev.details.forEach((detail) => detailList.appendChild(createElement('li', '', detail)));
+    ['Advisory only', 'Inspect-only', 'No runtime or repository mutation'].forEach((detail) => detailList.appendChild(createElement('li', '', detail)));
     card.appendChild(detailList);
 
     const actionRow = createElement('div', 'finding-actions');
     [
-      ['Accept', () => alert('Accepted finding for ' + rev.name)],
-      ['Defer', () => alert('Deferred finding for ' + rev.name)],
+      ['Acknowledge locally', () => alert('Acknowledged finding ' + finding.id + ' in local mock state only.')],
+      ['Defer locally', () => alert('Deferred finding ' + finding.id + ' in local mock state only.')],
     ].forEach(([text, handler]) => {
       const btn = createElement('button', '', text);
       btn.type = 'button';
@@ -1357,8 +1478,8 @@ function renderPreview(container) {
   linked.style.marginTop = '12px';
   linked.innerHTML = '<h3>Linked review findings</h3>';
   const linkedList = createElement('ul');
-  window.appState.reviewResults.forEach((rev) => {
-    linkedList.appendChild(createElement('li', '', `${rev.name}: ${rev.verdict}`));
+  (window.appState.findings || []).forEach((finding) => {
+    linkedList.appendChild(createElement('li', '', `${finding.id}: ${finding.summary}`));
   });
   linked.appendChild(linkedList);
   container.appendChild(linked);
@@ -1488,21 +1609,28 @@ function renderTrace(container) {
 
   const graph = createElement('div', 'trace-graph');
   graph.innerHTML = `<div class="trace-graph-inner">
-      <div class="trace-node">Rough context</div>
-      <div class="trace-node">Governed spec</div>
-      <div class="trace-node">D-005 gate</div>
-      <div class="trace-node">Handoff preview</div>
+      <div class="trace-node">Context Node</div>
+      <div class="trace-node">Spec Draft</div>
+      <div class="trace-node">Decision</div>
+      <div class="trace-node">Handoff Packet</div>
     </div>`;
   container.appendChild(graph);
 
+  const artifactRefs = createElement('section', 'panel');
+  artifactRefs.innerHTML = `<h3>Artifact Reference</h3>
+    <p>Concrete static references linked to Project, Spec Draft, Work Packet, and Handoff Packet objects.</p>
+    ${renderInspectorList((window.appState.artifactRefs || []).map((artifact) => `${artifact.label}: ${statusLabel(normalizeObjectStatus(artifact.status))}`))}`;
+  container.appendChild(artifactRefs);
+
   const evidenceTable = createElement('table', 'evidence-table');
-  evidenceTable.innerHTML = '<thead><tr><th>Evidence</th><th>Source</th><th>Target</th><th>Status</th></tr></thead>';
+  evidenceTable.innerHTML = '<thead><tr><th>Evidence item detail</th><th>Source object</th><th>Target object</th><th>Summary</th><th>Status</th></tr></thead>';
   const evidenceBody = createElement('tbody');
   (window.appState.evidenceItems || []).forEach((item) => {
     const tr = createElement('tr');
     tr.appendChild(createElement('td', '', item.label));
     tr.appendChild(createElement('td', 'mono', item.sourceObjectId));
     tr.appendChild(createElement('td', 'mono', item.targetObjectId));
+    tr.appendChild(createElement('td', '', item.summary));
     const statusTd = createElement('td');
     statusTd.innerHTML = renderStatusChip(item.status === 'attached' ? 'validated' : item.status === 'missing' ? 'blocked' : 'needs-sync', item.status);
     tr.appendChild(statusTd);
