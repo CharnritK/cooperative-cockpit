@@ -37,6 +37,13 @@ This checklist guides the manual verification of the static MVP prototype. It en
 - **Protected surfaces** – Runtime state, secrets and repo write authority are listed under protected exclusions and cannot be added to the context basket.
 - **Handoff gating** – Export actions (Prepare handoff, Prepare preview packet) remain disabled until all gating conditions are satisfied.
 
+## Object-model lock checks
+
+- **Product docs source of truth** – `docs/product/STATIC_MVP_OBJECT_MODEL.md`, `STATIC_MVP_SCREEN_MAP.md` and `STATIC_MVP_MOCK_DATA_SPEC.md` are reviewed before changing mock data or UI labels.
+- **Eight-page boundary** – Object-model alignment must map onto the existing Home, Workbench, Spec Builder, Review Runs, Preview, Decisions, Trace & Evidence and Rules & Scope pages without adding a page.
+- **Static-only object semantics** – Work Packet and Handoff Packet surfaces remain static previews and do not imply export, repo writes, live validation, runtime execution, connectors, auth, database persistence or deployment.
+- **Point-lock gates** – Product decisions listed in `docs/product/POINT_LOCK_DECISIONS.md` must be accepted or redirected before app-source goals GOAL-005 through GOAL-008 begin.
+
 ## Dify-inspired workflow studio visual check
 
 - **Canvas-first read** – On Workbench, the light dotted workflow canvas is the visual center of gravity, with palette and inspector surfaces supporting it rather than dominating it.

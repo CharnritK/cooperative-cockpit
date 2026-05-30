@@ -1,0 +1,12 @@
+{
+  "artifact_id": "ART-OPENCLAW-STATIC-MVP-LEGO-v0.1",
+  "artifact_type": "handoff_package",
+  "created_at": "2026-05-30",
+  "owner": "Point",
+  "source": "ChatGPT Final Synthesizer & Build Packager session",
+  "status": "draft_for_point_review",
+  "related_task_id": "GOAL-004",
+  "storage_path": "artifacts/handoffs/",
+  "recommended_assimilation_goal": ".codex/goals/GOAL-004-lock-static-domain-model.md",
+  "notes": "Planning and Codex handoff files only; no application code."
+}
