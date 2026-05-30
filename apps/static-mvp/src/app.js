@@ -109,8 +109,16 @@ function getWorkflowStep(page) {
   return WORKFLOW_STEPS.find((step) => step.pages.includes(page)) || WORKFLOW_STEPS[0];
 }
 
+function getPrimaryDemoPath() {
+  return window.appState.primaryDemoPath || window.mockData.primaryDemoPath;
+}
+
 function getMissingEvidenceFields() {
   return window.appState.specFields.filter((field) => !window.appState.traceLinks.some((link) => link.target === field.id));
+}
+
+function getMissingEvidenceItems() {
+  return (window.appState.evidenceItems || []).filter((item) => item.requiredForHandoff && item.status !== 'attached');
 }
 
 function getReviewBlockers() {
@@ -121,22 +129,33 @@ function getReviewBlockers() {
 function getReadinessSummary() {
   const unresolvedSpecFields = window.appState.specFields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
   const pendingDecisions = window.appState.decisions.filter((decision) => decision.status === 'needs-lock');
-  const missingEvidence = window.appState.evidenceReviewed ? [] : getMissingEvidenceFields();
+  const validationBlocked = !Boolean(window.appState.specValidated);
+  const missingEvidenceFields = getMissingEvidenceFields().map((field) => ({
+    id: `field-${field.id}`,
+    label: `Spec evidence missing: ${field.name}`,
+    summary: field.suggestion || field.name,
+  }));
+  const missingEvidenceItems = getMissingEvidenceItems();
+  const missingEvidence = window.appState.evidenceReviewed ? [] : [...missingEvidenceFields, ...missingEvidenceItems];
   const reviewBlockers = getReviewBlockers();
   const handoffBlockers = [
     ...unresolvedSpecFields.map((field) => `Spec field missing: ${field.name}`),
     ...pendingDecisions.map((decision) => `Decision Lock open: ${decision.id}`),
-    ...missingEvidence.map((field) => `Evidence link missing: ${field.name}`),
+    ...missingEvidence.map((item) => `Evidence missing: ${item.label || item.name || item.id}`),
+    ...(validationBlocked ? ['Validation result missing: static spec validation not confirmed'] : []),
     ...reviewBlockers.map((review) => `Review blocker: ${review.name}`),
   ];
 
   return {
     unresolvedSpecFields,
     missingEvidence,
+    missingEvidenceFields,
+    missingEvidenceItems,
     pendingDecisions,
+    validationBlocked,
     reviewBlockers,
     handoffBlockers,
-    ready: Boolean(window.appState.specValidated) && handoffBlockers.length === 0,
+    ready: handoffBlockers.length === 0,
   };
 }
 
@@ -169,7 +188,7 @@ function syncShellState(page) {
   if (handoffButton) {
     handoffButton.disabled = !window.appState.handoffReady;
     handoffButton.setAttribute('aria-disabled', String(!window.appState.handoffReady));
-    handoffButton.title = window.appState.handoffReady ? 'Prepare static handoff placeholder' : 'Static handoff gated by local readiness checklist';
+    handoffButton.title = window.appState.handoffReady ? 'Open the static handoff preview placeholder' : 'Static handoff gated by local readiness checklist';
   }
 
   const readinessCount = document.getElementById('readiness-count');
@@ -231,7 +250,7 @@ function handleTopBarAction(action) {
       break;
     case 'handoff':
       if (window.appState.handoffReady) {
-        alert('Preparing static handoff packet... (placeholder)');
+        alert('Static handoff preview is available. No files are written.');
       } else {
         alert('Cannot prepare handoff yet. Clear the local readiness checklist first.');
       }
@@ -321,6 +340,7 @@ function renderHome(container) {
       ${WORKFLOW_STEPS.map((step) => `<span class="${step.key === currentStep.key ? 'is-active' : ''} ${step.key === 'handoff' && !window.appState.handoffReady ? 'is-blocked' : ''}">${step.label}</span>`).join('')}
     </div>`;
   container.appendChild(banner);
+  container.appendChild(renderPrimaryDemoPathPanel('home'));
 
   const lowerGrid = createElement('section', 'home-ops-grid');
   const recent = createElement('article', 'panel activity-panel');
@@ -467,26 +487,46 @@ function renderContextBasket() {
   return basket;
 }
 
+function renderPrimaryDemoPathPanel(surface) {
+  const path = getPrimaryDemoPath();
+  const readiness = getReadinessSummary();
+  const panel = createElement('section', 'panel');
+  panel.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <h3>Primary demo path</h3>
+        <p>${path.name}</p>
+      </div>
+      ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Mock ready' : `${readiness.handoffBlockers.length} blockers`)}
+    </div>
+    <div class="pipeline-steps" aria-label="${surface} primary demo path">
+      ${path.stages.map((stage) => `<span class="${stage.status === 'blocked' || stage.status === 'needs-criteria' ? 'is-blocked' : ''}">
+        <strong>${stage.label}</strong><small>${stage.page}</small>
+      </span>`).join('')}
+    </div>
+    <p class="page-subtitle">${path.summary}</p>
+    <div class="static-notice">Ready means static/mock readiness only. The preview does not write files, call APIs, deploy, or trigger real Codex work.</div>`;
+  return panel;
+}
+
 function renderGoldenPathStrip(selectedNode) {
   const strip = createElement('section', 'golden-path-strip');
-  const nodes = window.mockData.architectureGraphNodes || [];
-  const edges = window.mockData.architectureGraphEdges || [];
+  const path = getPrimaryDemoPath();
   strip.innerHTML = `<div class="golden-path-copy">
-      <div class="page-kicker">Static golden path</div>
-      <h3>Architecture node -> Context Basket -> assistant chat -> Handoff Packet</h3>
-      <p>Mock-only flow for Builder Enablement OS handoff preparation. Selecting a node updates local browser state only.</p>
+      <div class="page-kicker">Primary demo path</div>
+      <h3>${path.name}</h3>
+      <p>D-005 keeps the handoff preview gated until local evidence, acceptance criteria, and Point lock are clear.</p>
     </div>
     <div class="golden-path-steps">
-      ${nodes.map((node, index) => {
-        const edge = edges.find((item) => item.source === node.id);
-        const isActive = selectedNode && node.linkedNodeId === selectedNode.id;
+      ${path.stages.map((stage, index) => {
+        const isActive = selectedNode && stage.linkedNodeId === selectedNode.id;
+        const edge = path.stages[index + 1];
         return `<article class="golden-path-step${isActive ? ' is-active' : ''}">
             <div class="golden-path-step-head">
               <span class="mono">${String(index + 1).padStart(2, '0')}</span>
-              <strong>${node.label}</strong>
+              <strong>${stage.label}</strong>
             </div>
-            <p>${node.role}</p>
-            <small>${node.output}</small>
+            <p>${stage.summary}</p>
+            <small>${stage.page}</small>
             ${edge ? `<div class="golden-path-edge">${icon('arrow')}${edge.label}</div>` : ''}
           </article>`;
       }).join('')}
@@ -648,7 +688,7 @@ function renderNodeInspector(nodeId) {
   if (handoffAction) {
     handoffAction.addEventListener('click', () => {
       if (window.appState.handoffReady) {
-        alert('Preparing static handoff packet... (placeholder)');
+        alert('Static handoff preview is available. No files are written.');
       } else {
         alert('Prepare handoff is gated by local readiness blockers.');
       }
@@ -705,7 +745,7 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
           <h4>Handoff Packet</h4>
           <div class="handoff-gate-card">
             ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Ready locally' : 'Gated locally')}
-            <p>${readiness.ready ? 'The local checklist is clear. Preparing a handoff still creates only a static placeholder.' : 'Prepare handoff stays disabled until the local readiness checklist is clear.'}</p>
+            <p>${readiness.ready ? 'The local checklist is clear. The preview remains a static placeholder and writes no files.' : 'Prepare handoff stays disabled until the local readiness checklist is clear.'}</p>
             ${renderInspectorList(readiness.handoffBlockers.length ? readiness.handoffBlockers : ['No local handoff blockers'])}
             <button class="action-btn action-primary" id="inspector-handoff-action" type="button" ${readiness.ready ? '' : 'disabled'}>${icon('handoff')}Prepare handoff</button>
           </div>
@@ -757,7 +797,7 @@ function renderUtilityTray(selectedNode) {
           <span class="mode-chip">Static / Local only</span>
         </div>
         <div class="readiness-grid">
-          ${renderReadinessTile('Missing evidence', readiness.missingEvidence.length, readiness.missingEvidence.map((field) => field.name), window.appState.evidenceReviewed)}
+          ${renderReadinessTile('Missing evidence', readiness.missingEvidence.length, readiness.missingEvidence.map((item) => item.label || item.name || item.id), window.appState.evidenceReviewed)}
           ${renderReadinessTile('Missing decisions', readiness.pendingDecisions.length, readiness.pendingDecisions.map((decision) => decision.id), false)}
           ${renderReadinessTile('Review blockers', readiness.reviewBlockers.length, readiness.reviewBlockers.map((review) => review.name), window.appState.reviewBlockersAcknowledged)}
           ${renderReadinessTile('Handoff blockers', readiness.handoffBlockers.length, readiness.handoffBlockers, readiness.ready)}
@@ -841,8 +881,10 @@ function renderAssistantPanel(selectedNode) {
 }
 
 function renderHandoffPreviewPanel() {
-  const packet = window.mockData.handoffPacketPreview;
+  const packet = window.appState.handoffPacketPreview || window.mockData.handoffPacketPreview;
+  const evidenceItems = window.appState.evidenceItems || [];
   const sectionKeys = [
+    'primary_demo_path',
     'objective',
     'allowed_paths',
     'forbidden_actions',
@@ -855,11 +897,12 @@ function renderHandoffPreviewPanel() {
 
   return `<div class="handoff-preview-head">
       <div>
-        <h4>Generated Handoff Packet Preview</h4>
+        <h4>Static Handoff Packet Preview</h4>
         <p>${packet.packet_id} / ${packet.title}</p>
       </div>
-      ${renderStatusChip('inspect', 'Mock preview')}
+      ${renderStatusChip(packet.readiness === 'ready' ? 'ready' : 'blocked', packet.readiness === 'ready' ? 'Mock ready' : 'Gated by D-005')}
     </div>
+    <div class="static-notice"><strong>${packet.gate.decision_id}</strong>: ${packet.gate.checkpoint}</div>
     <div class="handoff-preview-grid">
       ${sectionKeys.map((key) => {
         const values = Array.isArray(packet[key]) ? packet[key] : [packet[key]];
@@ -868,12 +911,21 @@ function renderHandoffPreviewPanel() {
             ${renderInspectorList(values)}
           </article>`;
       }).join('')}
+      <article class="handoff-preview-section">
+        <h5>Readiness blockers</h5>
+        ${renderInspectorList(packet.blocked_by || ['No blockers'])}
+      </article>
+      <article class="handoff-preview-section">
+        <h5>Evidence included</h5>
+        ${renderInspectorList(evidenceItems.map((item) => `${item.label}: ${item.status}`))}
+      </article>
     </div>
-    <div class="static-notice">This is a static packet preview from mock data. It does not export files, scan a repository, call an API, deploy, or create a real handoff.</div>`;
+    <div class="static-notice">This is a static packet preview from mock data. It does not write files, scan a repository, call an API, deploy, or create a real handoff.</div>`;
 }
 
 function formatHandoffSectionLabel(key) {
   const labels = {
+    primary_demo_path: 'Primary demo path',
     objective: 'Objective',
     allowed_paths: 'Allowed paths',
     forbidden_actions: 'Forbidden actions',
@@ -1013,6 +1065,27 @@ function readinessLabel(status) {
   return statusLabel(status).replace('Needs lock', 'Needs decision');
 }
 
+function renderSpecReadinessPanel() {
+  const readiness = getReadinessSummary();
+  const acceptance = window.appState.specFields.find((field) => field.id === 'acceptance-criteria');
+  const validation = window.appState.validationResults.find((result) => result.id === 'validation-static-local');
+  const panel = createElement('section', 'panel');
+  panel.style.marginTop = '12px';
+  panel.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <h3>Governed spec readiness</h3>
+        <p>Spec fields feed D-005 and the static handoff preview. Missing acceptance criteria keeps readiness blocked.</p>
+      </div>
+      ${renderStatusChip(readiness.unresolvedSpecFields.length ? 'blocked' : 'ready', readiness.unresolvedSpecFields.length ? `${readiness.unresolvedSpecFields.length} unresolved` : 'Fields clear')}
+    </div>
+    <div class="readiness-grid">
+      ${renderReadinessTile('Acceptance criteria', acceptance && acceptance.status === 'missing' ? 1 : 0, acceptance && acceptance.status === 'missing' ? [acceptance.suggestion] : ['Acceptance criteria present'], acceptance && acceptance.status !== 'missing')}
+      ${renderReadinessTile('Validation state', readiness.validationBlocked ? 1 : 0, [readiness.validationBlocked ? (validation ? validation.summary : 'No validation result recorded') : 'Static spec validation confirmed locally'], !readiness.validationBlocked)}
+      ${renderReadinessTile('D-005 gate', readiness.pendingDecisions.filter((decision) => decision.id === 'D-005').length, ['Codex handoff gating checkpoint'], false)}
+    </div>`;
+  return panel;
+}
+
 function renderSpecBuilder(container) {
   showGovernance(true);
   renderPageHeader(container, {
@@ -1045,6 +1118,7 @@ function renderSpecBuilder(container) {
   });
   templateSelectorDiv.append(label, select);
   container.appendChild(templateSelectorDiv);
+  container.appendChild(renderSpecReadinessPanel());
 
   const table = createElement('table', 'field-table');
   table.innerHTML = '<thead><tr><th>Field</th><th>Value</th><th>Status</th><th>Actions</th></tr></thead>';
@@ -1102,15 +1176,16 @@ function renderSpecBuilder(container) {
   btnValidate.innerHTML = `${icon('review')}Validate artifacts`;
   btnValidate.addEventListener('click', () => {
     if (hasUnresolvedSpecFields()) {
-      alert('Cannot validate: some fields are unresolved.');
+      window.appState.lastLocalValidation = 'Static spec validation is blocked until all required fields are resolved.';
+      window.renderPage('spec-builder');
     } else {
       window.appState.specValidated = true;
       updateHandoffReadiness();
       const readiness = getReadinessSummary();
       if (readiness.handoffBlockers.length) {
-        alert(`Specification validated locally. Handoff remains gated by ${readiness.handoffBlockers.length} local checklist item(s).`);
+        window.appState.lastLocalValidation = `Specification validated locally. Handoff remains gated by ${readiness.handoffBlockers.length} local checklist item(s).`;
       } else {
-        alert('Specification validated locally. Static handoff placeholder is ready.');
+        window.appState.lastLocalValidation = 'Specification validated locally. Static handoff preview is ready in mock state only.';
       }
       window.renderPage('spec-builder');
     }
@@ -1122,11 +1197,11 @@ function renderSpecBuilder(container) {
   btnHandoff.disabled = !window.appState.handoffReady;
   btnHandoff.innerHTML = `${icon('handoff')}Prepare handoff`;
   btnHandoff.addEventListener('click', () => {
-    if (window.appState.handoffReady) {
-      alert('Preparing static handoff placeholder...');
-    } else {
-      alert('Prepare handoff is gated by local readiness blockers.');
-    }
+      if (window.appState.handoffReady) {
+        alert('Static handoff preview is available. No files are written.');
+      } else {
+        alert('Prepare handoff is gated by local readiness blockers.');
+      }
   });
   actions.appendChild(btnHandoff);
   container.appendChild(actions);
@@ -1238,6 +1313,11 @@ function renderPreview(container) {
     </div>`;
   container.appendChild(frame);
 
+  const handoffPreview = createElement('section', 'panel');
+  handoffPreview.style.marginTop = '12px';
+  handoffPreview.innerHTML = renderHandoffPreviewPanel();
+  container.appendChild(handoffPreview);
+
   const viewportControls = createElement('div', 'button-row');
   [
     ['+', () => alert('Zoom in (stub)')],
@@ -1282,7 +1362,7 @@ function renderPreview(container) {
     ['View static mockup', 'spark', () => alert('Opening static mockup placeholder. No generation occurs.')],
     ['Compare static spec', 'check', () => alert('Comparing preview with spec in local mock state only.')],
     ['Inspect UX notes', 'eye', () => alert('UX notes are inspect-only placeholders.')],
-    ['Prepare preview packet', 'handoff', () => alert('Preparing preview packet placeholder only.'), !window.appState.handoffReady],
+    ['View gated preview', 'handoff', () => alert('Static preview only. No file output or repository change occurs.'), !window.appState.handoffReady],
   ].forEach(([text, iconName, handler, disabled]) => {
     const btn = createElement('button', 'action-btn');
     btn.type = 'button';
@@ -1304,8 +1384,22 @@ function renderDecisions(container) {
 
   const needsLock = window.appState.decisions.filter((d) => d.status === 'needs-lock');
   const locked = window.appState.decisions.filter((d) => d.status === 'locked');
+  const d005 = window.appState.decisions.find((d) => d.id === 'D-005');
+  if (d005) {
+    const checkpoint = createElement('section', 'panel');
+    checkpoint.innerHTML = `<div class="handoff-preview-head">
+        <div>
+          <h3>D-005 governance checkpoint</h3>
+          <p>${d005.description}</p>
+        </div>
+        ${renderStatusChip(d005.status === 'locked' ? 'locked' : 'needs-lock', d005.status === 'locked' ? 'Locked' : 'Needs Point lock')}
+      </div>
+      <div class="static-notice">This decision only gates the static handoff preview. It does not approve live Codex work, repository changes, deployment, connectors, or runtime workflow work.</div>`;
+    container.appendChild(checkpoint);
+  }
 
   const section1 = createElement('section');
+  section1.style.marginTop = '16px';
   section1.innerHTML = '<h3 class="section-title">Needs Point lock</h3>';
   const list1 = createElement('div', 'decision-list');
   if (needsLock.length === 0) {
@@ -1333,7 +1427,9 @@ function createDecisionCard(dec) {
   const card = createElement('article', 'decision-card');
   card.innerHTML = `<h4><span class="mono">${dec.id}</span>: ${dec.title}</h4>
     <p>${dec.description}</p>
-    ${renderStatusChip(dec.status === 'locked' ? 'locked' : 'needs-lock', dec.status === 'locked' ? 'Locked' : 'Needs lock')}`;
+    ${renderStatusChip(dec.status === 'locked' ? 'locked' : 'needs-lock', dec.status === 'locked' ? 'Locked' : 'Needs lock')}
+    ${dec.gates ? `<p><strong>Gates:</strong> ${dec.gates.join(', ')}</p>` : ''}
+    ${dec.requiresPointLock ? '<p><strong>Point lock required before mock readiness.</strong></p>' : ''}`;
 
   const comparator = createElement('div', 'decision-options');
   dec.options.forEach((opt) => {
@@ -1385,12 +1481,28 @@ function renderTrace(container) {
 
   const graph = createElement('div', 'trace-graph');
   graph.innerHTML = `<div class="trace-graph-inner">
-      <div class="trace-node">Sources</div>
-      <div class="trace-node">Spec Fields</div>
-      <div class="trace-node">Decisions</div>
-      <div class="trace-node">Artifacts</div>
+      <div class="trace-node">Rough context</div>
+      <div class="trace-node">Governed spec</div>
+      <div class="trace-node">D-005 gate</div>
+      <div class="trace-node">Handoff preview</div>
     </div>`;
   container.appendChild(graph);
+
+  const evidenceTable = createElement('table', 'evidence-table');
+  evidenceTable.innerHTML = '<thead><tr><th>Evidence</th><th>Source</th><th>Target</th><th>Status</th></tr></thead>';
+  const evidenceBody = createElement('tbody');
+  (window.appState.evidenceItems || []).forEach((item) => {
+    const tr = createElement('tr');
+    tr.appendChild(createElement('td', '', item.label));
+    tr.appendChild(createElement('td', 'mono', item.sourceObjectId));
+    tr.appendChild(createElement('td', 'mono', item.targetObjectId));
+    const statusTd = createElement('td');
+    statusTd.innerHTML = renderStatusChip(item.status === 'attached' ? 'validated' : item.status === 'missing' ? 'blocked' : 'needs-sync', item.status);
+    tr.appendChild(statusTd);
+    evidenceBody.appendChild(tr);
+  });
+  evidenceTable.appendChild(evidenceBody);
+  container.appendChild(evidenceTable);
 
   const table = createElement('table', 'evidence-table');
   table.innerHTML = '<thead><tr><th>Source</th><th>Target</th><th>Description</th></tr></thead>';
@@ -1409,7 +1521,15 @@ function renderTrace(container) {
   if (missingFields.length > 0) {
     const warn = createElement('div', 'warning-banner');
     warn.style.marginTop = '12px';
-    warn.innerHTML = `${icon('warning')}Warning: Some spec fields do not have trace evidence. Export will be blocked until all fields are traced.`;
+    warn.innerHTML = `${icon('warning')}Warning: Some spec fields do not have trace evidence. Static handoff readiness stays blocked until all fields are traced.`;
+    container.appendChild(warn);
+  }
+
+  const missingEvidence = getMissingEvidenceItems();
+  if (missingEvidence.length > 0) {
+    const warn = createElement('div', 'warning-banner');
+    warn.style.marginTop = '12px';
+    warn.innerHTML = `${icon('warning')}Required evidence still blocks the handoff preview: ${missingEvidence.map((item) => item.label).join(', ')}.`;
     container.appendChild(warn);
   }
 }
@@ -1442,7 +1562,7 @@ function renderRules(container) {
   ps.innerHTML = `<h3>Protected surfaces</h3><p>${window.appState.protected.map((p) => p.label).join(', ')}</p>`;
   summaries.appendChild(ps);
   const gateSummary = createElement('section', 'panel');
-  gateSummary.innerHTML = '<h3>Review Gate Summary</h3><p>Runtime mutation is blocked; repo writes are only allowed at handoff; secret and external actions are excluded; agents can inspect only; Codex handoff is gated until ready.</p>';
+  gateSummary.innerHTML = '<h3>Review Gate Summary</h3><p>Runtime mutation is blocked; repository changes stay outside this static shell; secret and external actions are excluded; agents can inspect only; Codex handoff is gated until ready.</p>';
   summaries.appendChild(gateSummary);
   container.appendChild(summaries);
 }

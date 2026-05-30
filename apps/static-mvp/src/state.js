@@ -14,6 +14,10 @@
     // proper state management library or framework.
     context: deepCopy(window.mockData.contextItems),
     protected: deepCopy(window.mockData.protectedItems),
+    primaryDemoPath: deepCopy(window.mockData.primaryDemoPath),
+    evidenceItems: deepCopy(window.mockData.primaryDemoPath.evidenceItems),
+    validationResults: deepCopy(window.mockData.validationResults),
+    handoffPacketPreview: deepCopy(window.mockData.handoffPacketPreview),
     specFields: deepCopy(window.mockData.specFields),
     reviewResults: deepCopy(window.mockData.reviewResults),
     decisions: deepCopy(window.mockData.decisions),
