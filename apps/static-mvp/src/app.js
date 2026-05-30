@@ -1205,6 +1205,13 @@ function renderSpecBuilder(container) {
   });
   actions.appendChild(btnHandoff);
   container.appendChild(actions);
+
+  if (window.appState.lastLocalValidation) {
+    const validationNote = createElement('div', window.appState.specValidated ? 'success-banner' : 'warning-banner');
+    validationNote.style.marginTop = '12px';
+    validationNote.innerHTML = `${icon(window.appState.specValidated ? 'check' : 'warning')}${window.appState.lastLocalValidation}`;
+    container.appendChild(validationNote);
+  }
 }
 
 function renderFieldStatus(field) {
