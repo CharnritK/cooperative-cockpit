@@ -1432,6 +1432,10 @@
   border-radius: 6px;
 }
 
+.handoff-preview-section.is-wide {
+  grid-column: 1 / -1;
+}
+
 .handoff-preview-section h5 {
   color: var(--color-accent);
   font-family: var(--font-ui);
