@@ -18,6 +18,7 @@
 | `reports/DR-003_REPO_REALITY_CHECK_AND_GAP_AUDIT.md` | Repo current-state comparison and gaps. |
 | `reports/DR-004_ADJACENT_PRODUCT_BOUNDARY_NOTES.md` | Boundary notes from adjacent products. |
 | `reports/DR-005_RESEARCH_INVENTORY_AND_MISSING_INPUTS.md` | Research inventory and missing-input assumptions. |
+| `reports/DR-006_POST_GOAL_008_STATIC_MVP_PHASE_2_SCOPE_GATE.md` | Post-GOAL-008 static MVP scope gate and Phase-2 recommendation. |
 
 ## Registers
 
@@ -39,6 +40,7 @@
 | file | purpose |
 |---|---|
 | `manifests/openclaw-deep-research-reports-pack.manifest.json` | Repo artifact manifest. |
+| `manifests/DR-006_POST_GOAL_008_STATIC_MVP_PHASE_2_SCOPE_GATE.manifest.json` | Per-report manifest for the supplemental post-GOAL-008 scope gate report. |
 | `manifests/research_report_manifest_template.json` | Per-report manifest template. |
 
 ## Review and prompts
