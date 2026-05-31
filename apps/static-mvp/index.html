@@ -8,13 +8,15 @@
     <!-- Core styles -->
     <link rel="stylesheet" href="styles/fonts.css" />
     <link rel="stylesheet" href="styles/base.css" />
-    <link rel="stylesheet" href="styles/layout.css" />
-    <link rel="stylesheet" href="styles/components.css" />
-    <link rel="stylesheet" href="styles/status.css" />
+    <link rel="stylesheet" href="styles/layout.css?v=p1b-flatflow-legend-20260531-1" />
+    <link rel="stylesheet" href="styles/components.css?v=p1b-flatflow-legend-20260531-1" />
+    <link rel="stylesheet" href="styles/status.css?v=p1b-flatflow-legend-20260531-1" />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Application shell -->
     <div id="app-shell">
+      <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
       <!-- Top bar -->
       <header class="top-bar">
         <div class="top-left">
@@ -37,15 +39,17 @@
           </div>
         </div>
         <div class="top-right">
-          <span class="artifact-badge"><span>Artifact Reference ID</span><strong>COCKPIT-MVP-014</strong></span>
-          <span class="mode-chip" title="Static MVP. All state is local to this browser session.">Static MVP / Local only</span>
-          <button class="action-btn readiness-btn" data-action="checklist" title="Open local readiness checklist">
-            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11" /><path d="m4 6 1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2" /></svg>
-            Checklist <span id="readiness-count">0</span>
-          </button>
-          <button class="action-btn" data-action="preview" title="Open a static preview snapshot only"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg>Preview snapshot</button>
-          <button class="action-btn" data-action="validate" title="Inspect local mock validation surfaces"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg>Validate artifacts</button>
-          <button class="action-btn action-primary" data-action="handoff" title="Gated static handoff placeholder" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg>Prepare handoff</button>
+          <span class="artifact-badge artifact-badge-compact"><span>Artifact</span><strong>COCKPIT-MVP-014</strong></span>
+          <span class="mode-chip mode-chip-compact" title="All state is local to this browser session.">Local preview</span>
+          <div class="top-action-group" aria-label="Workspace actions">
+            <button class="action-btn icon-action readiness-btn" data-action="checklist" title="Open local readiness checklist" aria-label="Open local readiness checklist">
+              <svg class="ui-icon" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11" /><path d="m4 6 1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2" /></svg>
+              <span id="readiness-count" aria-live="polite">0</span>
+            </button>
+            <button class="action-btn icon-action" data-action="preview" title="Open preview snapshot" aria-label="Open preview snapshot"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg></button>
+            <button class="action-btn icon-action" data-action="validate" title="Inspect readiness checks" aria-label="Inspect readiness checks"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg></button>
+            <button class="action-btn action-primary handoff-action" data-action="handoff" title="Handoff unavailable until readiness clears" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg><span>Handoff</span></button>
+          </div>
         </div>
       </header>
       <!-- Left navigation rail -->
@@ -71,7 +75,7 @@
           <li class="nav-item" data-page="rules" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v18" /><path d="M5 7h14" /><path d="m6 7-3 6h6Z" /><path d="m18 7-3 6h6Z" /></svg></span><span>Rules &amp; Scope</span></li>
         </ul>
         <div class="rail-status">
-          <span class="status-chip status-validated">Static studio</span>
+          <span class="status-chip status-validated">Local workspace</span>
           <div class="rail-path">/artifacts/COCKPIT-MVP-014/</div>
         </div>
       </nav>
@@ -81,16 +85,16 @@
       <aside id="right-inspector" class="right-inspector" aria-label="Inspector"></aside>
       <!-- Governance strip shown on high‑risk pages -->
       <footer id="governance-strip" class="governance-strip">
-        <div class="governance-item governance-blocked"><span class="governance-dot" aria-hidden="true"></span><strong>Runtime mutation</strong><span>Blocked</span></div>
+        <div class="governance-item governance-blocked"><span class="governance-dot" aria-hidden="true"></span><strong>Runtime mutation</strong><span>Unavailable</span></div>
         <div class="governance-item governance-handoff"><span class="governance-dot" aria-hidden="true"></span><strong>Repo writes</strong><span>Handoff only</span></div>
         <div class="governance-item governance-allowed"><span class="governance-dot" aria-hidden="true"></span><strong>Artifact drafting</strong><span>Allowed</span></div>
         <div class="governance-item governance-spec"><span class="governance-dot" aria-hidden="true"></span><strong>Dynamic UI</strong><span>Spec first</span></div>
       </footer>
     </div>
     <!-- Scripts -->
-    <script src="src/mockData.js"></script>
-    <script src="src/state.js"></script>
-    <script src="src/router.js"></script>
-    <script src="src/app.js"></script>
+    <script src="src/mockData.js?v=p1b-flatflow-legend-20260531-1"></script>
+    <script src="src/state.js?v=p1b-flatflow-legend-20260531-1"></script>
+    <script src="src/router.js?v=p1b-flatflow-legend-20260531-1"></script>
+    <script src="src/app.js?v=p1b-flatflow-legend-20260531-1"></script>
   </body>
 </html>

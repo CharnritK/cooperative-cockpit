@@ -74,6 +74,11 @@
   color: var(--color-gray);
 }
 
+.status-active::before,
+.status-selected::before {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
 @keyframes status-pulse {
   0%,
   100% {

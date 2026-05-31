@@ -43,5 +43,9 @@
     reviewBlockersAcknowledged: false,
     lastLocalValidation: null,
     handoffReady: false,
+    // Workbench canvas state. Flat flow is the PR-ready default; hierarchy is optional drill-down.
+    currentLevel: 'task',
+    currentParentId: null,
+    viewMode: 'flat',
   };
 })();
