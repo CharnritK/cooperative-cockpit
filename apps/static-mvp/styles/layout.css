@@ -13,14 +13,14 @@
 }
 
 #app-shell.inspector-open {
-  grid-template-columns: 228px minmax(0, 1fr) 360px;
+  grid-template-columns: 228px minmax(0, 1fr) 340px;
 }
 
 .top-bar {
   grid-column: 1 / -1;
   grid-row: 1 / 2;
   display: grid;
-  grid-template-columns: minmax(170px, 0.45fr) minmax(330px, 0.95fr) minmax(430px, 1.2fr);
+  grid-template-columns: minmax(170px, 0.42fr) minmax(210px, 0.5fr) minmax(520px, 1.25fr);
   align-items: center;
   gap: 12px;
   padding: 10px 18px;
@@ -140,6 +140,46 @@
   color: var(--color-amber);
 }
 
+.workflow-stage-pill {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: min(360px, 100%);
+  min-height: 34px;
+  padding: 5px 10px;
+  color: var(--text-muted);
+  background: var(--color-panel-strong);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  line-height: 1;
+}
+
+.workflow-stage-pill span {
+  color: var(--text-dim);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.workflow-stage-pill strong {
+  color: var(--color-accent);
+  font-size: 0.82rem;
+}
+
+.workflow-stage-pill em {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflow-stage-pill.is-blocked strong {
+  color: var(--color-amber);
+}
+
 .artifact-badge {
   display: inline-grid;
   gap: 2px;
@@ -192,6 +232,12 @@
   width: 34px;
   padding: 0;
   gap: 0;
+}
+
+.top-right .icon-action.is-active {
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, #ffffff);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, #ffffff);
 }
 
 .top-right .readiness-btn.icon-action {
@@ -379,9 +425,9 @@
 .governance-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 30px;
-  padding: 5px 9px;
+  gap: 7px;
+  min-height: 28px;
+  padding: 4px 8px;
   background: var(--color-panel-strong);
   border: 1px solid var(--color-border);
   border-radius: 5px;
@@ -389,6 +435,18 @@
   font-family: var(--font-ui);
   font-size: 0.72rem;
   white-space: nowrap;
+}
+
+.stack-sm {
+  margin-top: 8px;
+}
+
+.stack-md {
+  margin-top: 12px;
+}
+
+.stack-lg {
+  margin-top: 18px;
 }
 
 .governance-item strong {

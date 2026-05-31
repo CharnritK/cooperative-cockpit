@@ -20,6 +20,7 @@
 - GOAL-009 canon reconciliation declares authoritative sources, removes the stale duplicate setup package from active repo scope, normalizes object terminology, adds concept-consistency validation, and hardens static handoff readiness semantics. Evidence is recorded in `artifacts/evidence/GOAL-009-validation.md`.
 - P1A static MVP UX interaction hardening is implemented in the current working tree, including safe pasted-audit visual/token refinements while deferring dark mode toggle/storage. Automated validation passes after Point-authorized static MVP package manifest checksum refresh. Evidence is recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`; Codex Browser Use direct `file://` QA remains blocked by policy, but Point-reported normal-browser manual QA is recorded as passing.
 - P1B static MVP UX simplification hardening is implemented in the current working tree, reducing Home explanation density, removing the redundant Workbench primary workflow strip, replacing the free-position Workbench canvas with an ordered responsive node layout, replacing sparse decision cards with denser operational rows, simplifying top-bar competition, and removing demo/development-block language from rendered UI while preserving local safety semantics. Evidence is recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`.
+- GOAL-010 static MVP UX revamp is implemented in the current working tree after one-off read-only Claude Opus 4.7 planning through GitHub Copilot CLI on this machine. Codex implemented bounded edits only under the approved static MVP, status, evidence, and package-manifest surfaces; evidence is recorded in `artifacts/evidence/GOAL-010-static-mvp-ux-revamp.md`.
 
 ## Completed Assimilation
 
@@ -37,16 +38,18 @@
 | GOAL-009 canon reconciliation | Complete | Source authority, product status, object terminology, readiness semantics, manifests, and duplicate package surfaces are reconciled. Evidence recorded in `artifacts/evidence/GOAL-009-validation.md`. |
 | P1A static MVP UX interaction hardening | Complete | Safe local interaction fixes and safe pasted-audit visual/token refinements are implemented. `npm run validate` passes after Point-authorized package manifest checksum refresh. Codex Browser Use direct rendered QA remains blocked, but Point-reported normal-browser manual QA is recorded as passing. Evidence recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`. |
 | P1B static MVP UX simplification hardening | Complete | Home, Workbench, Decisions, inspector tabs and top bar are simplified within static/offline boundaries. Browser render checks cover 760px, 1080px, 1180px and 1280px widths through a local static server. Evidence recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`. |
+| GOAL-010 static MVP UX revamp | Complete | Claude Opus 4.7 provided a read-only local advisory plan through GitHub Copilot CLI; Codex implemented compact Home readiness, Workbench, Spec Builder, Review, Preview, Decisions, Trace, and Rules UI refinements without new pages, dependencies, backend/API/auth/deploy, real AI, external services, object-model changes, or source-control publication. Evidence recorded in `artifacts/evidence/GOAL-010-static-mvp-ux-revamp.md`. |
 
 ## Guardrails
 
 - No dependencies were added.
 - No backend, API, authentication, deployment, real AI, runtime mutation, or repository-write behavior was introduced.
 - Static golden-path additions use mock data only and do not add repo scanning, external connectors, or persistent storage.
+- GOAL-010 Claude planning remained advisory and machine-local; no repo-tracked workflow, agent instruction, commit, push, PR, deployment, or remote sharing was added.
 - Point accepted the static MVP object-model defaults for GOAL-005 and the GOAL-007 Work Packet / Handoff Packet semantics.
 - `docs/product/**` is the product canon; root `OPERATING_WORKFLOW.md` is the agent governance canon; this file is the current-state canon.
 - `cooperative-cockpit-repo-setup-final/` has been removed from active repo scope after verification as stale duplicate package content.
 
 ## Next Recommended Step
 
-Use the P1B evidence as the static MVP UX-hardening baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
+Use the GOAL-010 evidence as the static MVP UX-revamp baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.

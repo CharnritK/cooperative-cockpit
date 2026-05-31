@@ -48,12 +48,17 @@ const WORKFLOW_STEPS = [
   { key: 'handoff', label: 'Handoff', pages: ['decisions', 'trace', 'rules'], caption: 'Locks and evidence' },
 ];
 
+const WORKFLOW_STAGE_FOR_PAGE = WORKFLOW_STEPS.reduce((acc, step) => {
+  step.pages.forEach((page) => {
+    acc[page] = step;
+  });
+  return acc;
+}, {});
+
 const INSPECTOR_TABS = [
   { id: 'overview', label: 'Overview' },
   { id: 'requirements', label: 'Requirements' },
   { id: 'evidence', label: 'Evidence' },
-  { id: 'review', label: 'Review' },
-  { id: 'handoff', label: 'Handoff' },
 ];
 
 const TOAST_DURATION = 3500;
@@ -126,9 +131,48 @@ function dismissToast(toast) {
 function setInspectorOpen(open) {
   const shell = document.getElementById('app-shell');
   const inspector = document.getElementById('right-inspector');
+  window.appState.inspectorVisible = Boolean(open);
   if (shell) shell.classList.toggle('inspector-open', open);
   if (inspector) inspector.classList.toggle('hidden', !open);
+  const toggle = document.querySelector('[data-action="toggle-inspector"]');
+  if (toggle) {
+    toggle.classList.toggle('is-active', Boolean(open));
+    toggle.setAttribute('aria-pressed', String(Boolean(open)));
+  }
   window.requestAnimationFrame(updateAllWorkflowLines);
+}
+
+function renderInspectorEmpty(page = window.appState.currentPage) {
+  const inspector = document.getElementById('right-inspector');
+  if (!inspector) return;
+  const activeStep = getWorkflowStep(page);
+  inspector.innerHTML = `<div class="inspector-header">
+      <div>
+        <span class="chip chip-secondary">${activeStep.label}</span>
+        <div class="inspector-title">Inspector</div>
+        <div class="inspector-id">Route: ${page}</div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Close inspector" id="close-inspector">${icon('close')}</button>
+    </div>
+    <div class="inspector-empty">
+      <h4>${page === 'workbench' ? 'Select a node to inspect details' : 'Workbench nodes have detailed inspector data'}</h4>
+      <p>${page === 'workbench' ? 'Choose a canvas card to review requirements, evidence, and related pages.' : 'Use this panel to confirm the current stage without opening a new route. Detailed object inspection stays on the Workbench.'}</p>
+    </div>`;
+  inspector.querySelector('#close-inspector').addEventListener('click', () => setInspectorOpen(false));
+}
+
+function toggleInspector() {
+  if (window.appState.inspectorVisible) {
+    setInspectorOpen(false);
+    return;
+  }
+  const selectedNode = getSelectedNode();
+  if (window.appState.currentPage === 'workbench' && selectedNode) {
+    renderNodeInspector(selectedNode.id);
+    return;
+  }
+  setInspectorOpen(true);
+  renderInspectorEmpty(window.appState.currentPage);
 }
 
 function showGovernance(show) {
@@ -137,7 +181,7 @@ function showGovernance(show) {
 }
 
 function getWorkflowStep(page) {
-  return WORKFLOW_STEPS.find((step) => step.pages.includes(page)) || WORKFLOW_STEPS[0];
+  return WORKFLOW_STAGE_FOR_PAGE[page] || WORKFLOW_STEPS[0];
 }
 
 function getMissingEvidenceFields() {
@@ -278,12 +322,15 @@ function syncShellState(page) {
   const activeIndex = WORKFLOW_STEPS.findIndex((step) => step.key === activeStep.key);
   const progressIndex = window.appState.handoffReady ? WORKFLOW_STEPS.length : Math.min(activeIndex + 1, WORKFLOW_STEPS.length - 1);
 
-  document.querySelectorAll('.workflow-step').forEach((stepNode, index) => {
-    const stepKey = stepNode.dataset.step;
-    stepNode.classList.toggle('is-active', stepKey === activeStep.key);
-    stepNode.classList.toggle('is-complete', index < activeIndex || (stepKey === 'handoff' && window.appState.handoffReady));
-    stepNode.classList.toggle('is-blocked', stepKey === 'handoff' && !window.appState.handoffReady);
-  });
+  const stagePill = document.getElementById('workflow-stage-pill');
+  const stageLabel = document.getElementById('workflow-stage-label');
+  const stageCaption = document.getElementById('workflow-stage-caption');
+  if (stagePill) {
+    stagePill.dataset.stage = activeStep.key;
+    stagePill.classList.toggle('is-blocked', activeStep.key === 'handoff' && !window.appState.handoffReady);
+  }
+  if (stageLabel) stageLabel.textContent = activeStep.label;
+  if (stageCaption) stageCaption.textContent = window.appState.handoffReady && activeStep.key === 'handoff' ? 'Ready for handoff' : activeStep.caption;
 
   const progressValue = document.getElementById('rail-progress-value');
   const progressFill = document.getElementById('rail-progress-fill');
@@ -370,6 +417,9 @@ function handleTopBarAction(action) {
     case 'validate':
       window.navigate('review-runs');
       break;
+    case 'toggle-inspector':
+      toggleInspector();
+      break;
     case 'handoff':
       if (window.appState.handoffReady) {
         showToast('Handoff preview is available locally. No files are written.', 'success');
@@ -427,13 +477,16 @@ function renderHome(container) {
   const project = window.appState.project || {};
   const workspace = window.appState.workspace || {};
   const artifactRef = (window.appState.artifactRefs || [])[0] || {};
-  const workPacket = window.appState.workPacket || {};
   const validationResults = window.appState.validationResults || [];
   const pendingLocks = window.appState.decisions.filter((decision) => decision.status === 'needs-lock');
   const protectedLabels = window.appState.protected.map((item) => item.label);
   const readiness = getReadinessSummary();
-  const blockerPreview = readiness.handoffBlockers.slice(0, 3);
-  const blockerOverflow = Math.max(readiness.handoffBlockers.length - blockerPreview.length, 0);
+  const validationSummaryText = validationResults.length
+    ? `${validationResults.filter((result) => normalizeObjectStatus(result.status) !== 'blocked').length}/${validationResults.length} clear`
+    : 'Not loaded';
+  const validationCardDetail = validationResults.length
+    ? `Local checks ${validationSummaryText}; ${readiness.handoffBlockers.length} readiness items remain`
+    : 'No validation loaded';
 
   const projectOverview = createElement('section', 'panel home-command-panel');
   projectOverview.innerHTML = `<div class="handoff-preview-head">
@@ -443,30 +496,9 @@ function renderHome(container) {
         <p class="page-subtitle">${project.summary || 'Governed cockpit workspace.'}</p>
       </div>
       ${renderStatusChip(project.status || 'draft', `Project object: ${statusLabel(project.status || 'draft')}`)}
-    </div>
-    <div class="home-command-grid">
-      <section class="home-command-item">
-        <span>Stage</span>
-        <strong>${project.currentStage || 'Cockpit alignment'}</strong>
-        <small>${workspace.name || 'Local workspace'} / ${workspace.mode || 'local_preview'}</small>
-      </section>
-      <section class="home-command-item">
-        <span>Artifact Reference</span>
-        <strong>${artifactRef.label || project.artifactId || 'COCKPIT-MVP-014'}</strong>
-        <small>${statusLabel(normalizeObjectStatus(artifactRef.status || 'needs-sync'))}</small>
-      </section>
-      <section class="home-command-item">
-        <span>Work Packet</span>
-        <strong>${workPacket.title || 'Cockpit work packet'}</strong>
-        <small>${workPacket.objective || 'Bounded local work only.'}</small>
-      </section>
-      <section class="home-command-item home-readiness-item">
-        <span>Handoff Readiness</span>
-        <strong>${readiness.ready ? 'Ready locally' : `${readiness.handoffBlockers.length} open item${readiness.handoffBlockers.length === 1 ? '' : 's'}`}</strong>
-        <small>${blockerPreview.length ? `${blockerPreview.join(' / ')}${blockerOverflow ? ` / +${blockerOverflow} more` : ''}` : 'No open items'}</small>
-      </section>
     </div>`;
   container.appendChild(projectOverview);
+  container.appendChild(renderHomeReadinessBanner(readiness));
 
   const statusGrid = createElement('section', 'home-status-grid is-compact');
   statusGrid.appendChild(renderHomeStatusCard({
@@ -490,16 +522,39 @@ function renderHome(container) {
     tone: pendingLocks.length ? 'warning' : 'validated',
     detail: pendingLocks.length ? pendingLocks.map((decision) => decision.id).join(', ') : 'No pending locks',
   }));
+  statusGrid.appendChild(renderHomeStatusCard({
+    iconName: readiness.validationBlocked ? 'warning' : 'check',
+    label: 'Validation summary',
+    value: readiness.validationBlocked ? 'Waiting' : 'Ready',
+    tone: readiness.validationBlocked ? 'warning' : 'validated',
+    detail: validationCardDetail,
+  }));
   container.appendChild(statusGrid);
 
   const lowerGrid = createElement('section', 'home-ops-grid is-lean');
+  const packets = createElement('article', 'panel home-packet-card');
+  const handoffPacket = window.appState.handoffPacket || {};
+  const workPacket = window.appState.workPacket || {};
+  packets.innerHTML = `<h3>Packet preview</h3>
+    <div class="packet-summary-row">
+      <span>${icon('document')}Work Packet</span>
+      <strong>${workPacket.id || handoffPacket.workPacketId || 'work-packet-primary-workflow'}</strong>
+    </div>
+    <p>${workPacket.objective || 'Bounded local work only.'}</p>
+    <div class="packet-summary-row">
+      <span>${icon('handoff')}Handoff Packet</span>
+      <strong>${readiness.ready ? 'Ready locally' : `${readiness.handoffBlockers.length} open readiness item${readiness.handoffBlockers.length === 1 ? '' : 's'}`}</strong>
+    </div>
+    <button class="action-btn" type="button" id="home-preview-link">${icon('eye')}Open Preview readiness</button>`;
+  lowerGrid.appendChild(packets);
+
   const recent = createElement('article', 'panel activity-panel');
-  recent.innerHTML = `<h3>Object-model state</h3>
+  recent.innerHTML = `<h3>Recent object-model state</h3>
     <ol class="activity-feed">
       <li><span>Selected Context seeded</span><strong>${window.appState.context.length} included</strong></li>
       <li><span>Protected surfaces sealed</span><strong>${window.appState.protected.length} excluded</strong></li>
       <li><span>Decision gate checked</span><strong>${window.appState.handoffReady ? 'Ready' : 'Waiting'}</strong></li>
-      <li><span>Validation summary</span><strong>${validationResults.map((result) => `${result.scope}: ${statusLabel(normalizeObjectStatus(result.status))}`).join(' / ') || 'Not loaded'}</strong></li>
+      <li><span>Validation summary</span><strong>${validationSummaryText}</strong></li>
     </ol>`;
   lowerGrid.appendChild(recent);
 
@@ -522,6 +577,44 @@ function renderHome(container) {
   });
   lowerGrid.appendChild(next);
   container.appendChild(lowerGrid);
+
+  const previewLink = container.querySelector('#home-preview-link');
+  if (previewLink) previewLink.addEventListener('click', () => window.navigate('preview'));
+}
+
+function getReadinessTargetPage(blocker) {
+  if (blocker.startsWith('Spec field')) return 'spec-builder';
+  if (blocker.startsWith('Decision')) return 'decisions';
+  if (blocker.startsWith('Evidence')) return 'trace';
+  if (blocker.startsWith('Validation')) return 'spec-builder';
+  if (blocker.startsWith('Review')) return 'review-runs';
+  return 'workbench';
+}
+
+function renderHomeReadinessBanner(readiness) {
+  const banner = createElement('section', `home-readiness-banner ${readiness.ready ? 'is-ready' : 'is-gated'}`);
+  const blockers = readiness.handoffBlockers.slice(0, 3);
+  banner.innerHTML = `<div>
+      <span class="metric-label">Handoff readiness</span>
+      <h3>${readiness.ready ? 'Ready locally' : `${readiness.handoffBlockers.length} open readiness item${readiness.handoffBlockers.length === 1 ? '' : 's'}`}</h3>
+      <p>${readiness.ready ? 'The local preview is clear. No files are written from the app.' : 'Resolve the top readiness items before the local handoff preview can open.'}</p>
+    </div>
+    <div class="readiness-chip-row"></div>`;
+  const row = banner.querySelector('.readiness-chip-row');
+  if (readiness.ready) {
+    row.innerHTML = renderStatusChip('ready', 'No open items');
+  } else {
+    blockers.forEach((blocker) => {
+      const chip = createElement('button', 'readiness-link-chip');
+      chip.type = 'button';
+      chip.textContent = blocker;
+      chip.addEventListener('click', () => window.navigate(getReadinessTargetPage(blocker)));
+      row.appendChild(chip);
+    });
+    const overflow = readiness.handoffBlockers.length - blockers.length;
+    if (overflow > 0) row.appendChild(createElement('span', 'readiness-more-chip', `+${overflow} more`));
+  }
+  return banner;
 }
 
 function renderHomeStatusCard({ iconName, label, value, tone, detail }) {
@@ -768,16 +861,13 @@ function renderNodeCanvas() {
 
   canvas.innerHTML = `
     ${getBreadcrumbsHTML()}
-    <div class="canvas-label">Cockpit object map / COCKPIT-MVP-014</div>
     <div class="canvas-toolbar">
-      <span class="canvas-mode-chip" title="Inspect-only local canvas">Inspect-only</span>
       <div class="canvas-view-mode-toggle">
         <button class="view-mode-btn ${window.appState.viewMode === 'hierarchical' ? 'active' : ''}" type="button" id="toggle-view-hierarchical" title="Hierarchical Explorer">Hierarchical</button>
         <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat Flow</button>
       </div>
-      <span class="mono" style="color: var(--text-muted); font-size: .72rem; padding: 0 6px;">100%</span>
-      <button class="icon-btn" type="button" aria-label="Lock view" title="Local view lock only">${icon('lock')}</button>
-    </div>`;
+    </div>
+    <span class="canvas-label">COCKPIT-MVP-014</span>`;
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'workflow-lines');
@@ -785,8 +875,9 @@ function renderNodeCanvas() {
   svg.innerHTML = workflowLineDefs();
   canvas.appendChild(svg);
 
-  const legend = createElement('div', 'canvas-legend');
-  legend.innerHTML = `<h4>Edge legend</h4>
+  const legend = createElement('details', 'canvas-legend');
+  legend.open = true;
+  legend.innerHTML = `<summary>Edge legend</summary>
     <div class="canvas-legend-items">
       <div class="canvas-legend-item"><span class="canvas-legend-line edge-validated"></span>Validated</div>
       <div class="canvas-legend-item"><span class="canvas-legend-line edge-pending"></span>Pending</div>
@@ -973,7 +1064,7 @@ function renderNodeInspector(nodeId) {
     const other = window.mockData.nodes.find((n) => n.id === otherId);
     return other ? other.label : otherId;
   };
-  const activeTab = window.appState.inspectorTab || 'overview';
+  const activeTab = INSPECTOR_TABS.some((tab) => tab.id === window.appState.inspectorTab) ? window.appState.inspectorTab : 'overview';
   inspector.innerHTML = `<div class="inspector-header">
       <div>
         <span class="chip chip-secondary">${node.familyLabel || node.typeLabel || node.type}</span>
@@ -1000,23 +1091,16 @@ function renderNodeInspector(nodeId) {
     });
   });
 
-  const handoffAction = inspector.querySelector('#inspector-handoff-action');
-  if (handoffAction) {
-    handoffAction.addEventListener('click', () => {
-      if (window.appState.handoffReady) {
-        showToast('Handoff preview is available locally. No files are written.', 'success');
-      } else {
-        showToast('Prepare handoff is gated by local readiness items.', 'warning');
-      }
-    });
-  }
-
   const exploreAction = inspector.querySelector('#inspector-explore-action');
   if (exploreAction) {
     exploreAction.addEventListener('click', () => {
       drillDownToNode(node);
     });
   }
+
+  inspector.querySelectorAll('[data-inspector-link]').forEach((link) => {
+    link.addEventListener('click', () => window.navigate(link.dataset.inspectorLink));
+  });
 
   inspector.querySelector('#close-inspector').addEventListener('click', () => setInspectorOpen(false));
 }
@@ -1050,33 +1134,6 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
           <h4>Trace links</h4>
           ${renderInspectorList(node.trace || ['No trace links configured'])}
         </div>`;
-    case 'review':
-      return `<div class="inspector-section">
-          <h4>Review Gate</h4>
-          <div class="inspector-count-row">
-            <span>${node.blockerCount || 0} open item${node.blockerCount === 1 ? '' : 's'} on this node</span>
-            ${renderStatusChip(readiness.reviewBlockers.length ? 'review-blocked' : 'ready', readiness.reviewBlockers.length ? `${readiness.reviewBlockers.length} review item${readiness.reviewBlockers.length === 1 ? '' : 's'}` : 'Review acknowledged')}
-          </div>
-          ${renderInspectorList(node.review || ['No review notes configured'])}
-        </div>
-        <div class="inspector-section">
-          <h4>Guardrails</h4>
-          ${renderInspectorList(node.guardrails || ['Inspect-only behavior'])}
-        </div>`;
-    case 'handoff':
-      return `<div class="inspector-section">
-          <h4>Handoff Packet</h4>
-          <div class="handoff-gate-card">
-            ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Ready locally' : 'Gated locally')}
-            <p>${readiness.ready ? 'The local checklist is clear. The preview writes no files.' : 'Prepare handoff stays disabled until the local readiness checklist is clear.'}</p>
-            ${renderInspectorList(readiness.handoffBlockers.length ? readiness.handoffBlockers : ['No open readiness items'])}
-            <button class="action-btn action-primary" id="inspector-handoff-action" type="button" ${readiness.ready ? '' : 'disabled'}>${icon('handoff')}Prepare handoff</button>
-          </div>
-        </div>
-        <div class="inspector-section">
-          <h4>Selected node handoff context</h4>
-          ${renderInspectorList(node.handoff || ['No handoff context configured'])}
-        </div>`;
     case 'overview':
     default:
       const hasChildren = window.appState.viewMode === 'hierarchical' && window.mockData.nodes.some((n) => n.parentId === node.id);
@@ -1090,11 +1147,15 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
             <div class="inspector-row"><span>Readiness</span><strong>${readinessLabel(node.readiness || node.status)}</strong></div>
           </div>
           ${hasChildren ? `
-          <div class="inspector-drill-row" style="margin-top: 16px;">
-            <button class="action-btn action-primary" id="inspector-explore-action" type="button" style="width: 100%; justify-content: center;">
+          <div class="inspector-drill-row">
+            <button class="action-btn action-primary" id="inspector-explore-action" type="button">
               ${icon('arrow')} Drill Down / Explore
             </button>
           </div>` : ''}
+          <div class="inspector-link-row">
+            <button class="action-btn" type="button" data-inspector-link="review-runs">${icon('review')}Review Runs</button>
+            <button class="action-btn" type="button" data-inspector-link="preview">${icon('handoff')}Preview readiness</button>
+          </div>
         </div>`;
   }
 }
@@ -1140,8 +1201,10 @@ function renderUtilityTray(selectedNode) {
       <section class="selected-evidence-panel">
         ${renderAssistantPanel(selectedNode)}
       </section>
-      <section class="handoff-preview-panel">
-        ${renderHandoffPreviewPanel()}
+      <section class="selected-evidence-panel handoff-preview-link-panel">
+        <h4>Preview readiness</h4>
+        <p>Derived Handoff Packet details now live on the Preview page to avoid duplicate readiness surfaces.</p>
+        <button class="action-btn" type="button" id="open-preview-readiness">${icon('eye')}Open Preview readiness</button>
       </section>
       <section class="selected-evidence-panel local-validation-panel">
         <h4>Local validation note</h4>
@@ -1186,6 +1249,11 @@ function renderUtilityTray(selectedNode) {
         : 'No node selected for local validation.';
       window.renderPage('workbench');
     });
+  }
+
+  const previewReadiness = tray.querySelector('#open-preview-readiness');
+  if (previewReadiness) {
+    previewReadiness.addEventListener('click', () => window.navigate('preview'));
   }
 
   return tray;
@@ -1559,6 +1627,26 @@ function unlockLocalSpecField(field) {
   window.renderPage('spec-builder');
 }
 
+function groupFieldsByStatus(fields) {
+  return [
+    {
+      key: 'needs-answer',
+      title: 'Needs answer',
+      fields: fields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status)),
+    },
+    {
+      key: 'draft',
+      title: 'Draft',
+      fields: fields.filter((field) => field.status === 'draft'),
+    },
+    {
+      key: 'locked',
+      title: 'Locked',
+      fields: fields.filter((field) => field.status === 'locked'),
+    },
+  ];
+}
+
 function renderSpecBuilder(container) {
   showGovernance(true);
   renderPageHeader(container, {
@@ -1592,69 +1680,83 @@ function renderSpecBuilder(container) {
   select.addEventListener('change', () => {
     showToast(`Template selector changed to "${select.value}" for local explanation only. Field contents and artifacts are unchanged.`, 'info');
   });
-  templateSelectorDiv.append(label, select);
+  const templateNote = createElement('span', 'template-note', 'Reference only - does not change fields or artifacts.');
+  templateSelectorDiv.append(label, select, templateNote);
   container.appendChild(templateSelectorDiv);
   container.appendChild(renderSpecReadinessPanel());
 
+  const missing = hasUnresolvedSpecFields();
+  const validationBlock = createElement('section', missing ? 'warning-banner spec-validation-block' : 'success-banner spec-validation-block');
+  validationBlock.innerHTML = `${icon(missing ? 'warning' : 'check')}${missing ? 'Required fields still need answers before local validation can clear.' : 'Required fields are resolved. Run local validation before preparing handoff.'}${window.appState.lastLocalValidation ? `<span>${window.appState.lastLocalValidation}</span>` : ''}`;
+  container.appendChild(validationBlock);
+
   const table = createElement('table', 'field-table');
   table.innerHTML = '<thead><tr><th>Field</th><th>Value</th><th>Status</th><th>Actions</th></tr></thead>';
-  const tbody = createElement('tbody');
-  window.appState.specFields.forEach((field) => {
-    const tr = createElement('tr');
-    tr.appendChild(createElement('td', '', field.name));
-    const tdValue = createElement('td');
-    tdValue.textContent = field.value || field.suggestion || '';
-    if (!field.value && field.suggestion) tdValue.style.fontStyle = 'normal';
-    tr.appendChild(tdValue);
+  groupFieldsByStatus(window.appState.specFields).forEach((group) => {
+    if (!group.fields.length) return;
+    const tbody = createElement('tbody', `spec-field-group spec-field-group-${group.key}`);
+    const groupRow = createElement('tr', 'spec-field-group-row');
+    groupRow.innerHTML = `<th colspan="4">${group.title}<span>${group.fields.length} field${group.fields.length === 1 ? '' : 's'}</span></th>`;
+    tbody.appendChild(groupRow);
+    group.fields.forEach((field) => {
+      const tr = createElement('tr');
+      tr.appendChild(createElement('td', '', field.name));
+      const tdValue = createElement('td');
+      tdValue.textContent = field.value || field.suggestion || '';
+      tr.appendChild(tdValue);
 
-    const tdStatus = createElement('td');
-    tdStatus.innerHTML = renderFieldStatus(field);
-    tr.appendChild(tdStatus);
+      const tdStatus = createElement('td');
+      tdStatus.innerHTML = renderFieldStatus(field);
+      tr.appendChild(tdStatus);
 
-    const tdActions = createElement('td', 'field-actions');
-    const fieldActions = [
-      ['Explain', () => showToast(`Local explanation for "${field.name}" only. No AI call or artifact generation occurs.`, 'info')],
-      ['Suggest', () => {
+      const tdActions = createElement('td', 'field-actions field-actions-compact');
+      const suggestBtn = createElement('button', '', 'Suggest');
+      suggestBtn.type = 'button';
+      suggestBtn.disabled = field.status === 'locked';
+      suggestBtn.addEventListener('click', () => {
         field.value = field.suggestion;
         field.status = 'draft';
         markSpecValidationStale(`Field "${field.name}" changed locally. Spec validation must be refreshed.`);
         showToast(`Applied the suggestion to "${field.name}" locally.`, 'success');
         window.renderPage('spec-builder');
-      }],
-      ['Ask one', () => showToast(`Question prompt for "${field.name}" is local feedback only. No AI service is called.`, 'info')],
-      ['Lock', () => {
+      });
+
+      const lockBtn = createElement('button', '', field.status === 'locked' ? 'Unlock' : 'Lock');
+      lockBtn.type = 'button';
+      lockBtn.addEventListener('click', () => {
+        if (field.status === 'locked') {
+          unlockLocalSpecField(field);
+          return;
+        }
         field.status = 'locked';
         markSpecValidationStale(`Field "${field.name}" was locked locally. Spec validation must be refreshed.`);
         showToast(`Locked "${field.name}" locally.`, 'success');
         window.renderPage('spec-builder');
-      }],
-      ['Trace', () => window.navigate('trace')],
-    ];
-    if (field.status === 'locked') {
-      fieldActions.push(['Unlock local field', () => unlockLocalSpecField(field)]);
-    } else if (field.value) {
-      fieldActions.push(['Reset local field', () => resetLocalSpecField(field)]);
-    }
-    fieldActions.forEach(([text, handler]) => {
-      const btn = createElement('button', '', text);
-      btn.type = 'button';
-      btn.addEventListener('click', handler);
-      tdActions.appendChild(btn);
+      });
+
+      const overflow = createElement('details', 'field-overflow');
+      overflow.innerHTML = '<summary>More</summary>';
+      [
+        ['Explain', () => showToast(`Local explanation for "${field.name}" only. No AI call or artifact generation occurs.`, 'info')],
+        ['Ask one', () => showToast(`Question prompt for "${field.name}" is local feedback only. No AI service is called.`, 'info')],
+        ['Trace', () => window.navigate('trace')],
+        ['Reset', () => resetLocalSpecField(field)],
+      ].forEach(([text, handler]) => {
+        const btn = createElement('button', '', text);
+        btn.type = 'button';
+        btn.disabled = text === 'Reset' && !field.value;
+        btn.addEventListener('click', handler);
+        overflow.appendChild(btn);
+      });
+      tdActions.append(suggestBtn, lockBtn, overflow);
+      tr.appendChild(tdActions);
+      tbody.appendChild(tr);
     });
-    tr.appendChild(tdActions);
-    tbody.appendChild(tr);
+    table.appendChild(tbody);
   });
-  table.appendChild(tbody);
   container.appendChild(table);
 
-  const missing = hasUnresolvedSpecFields();
-  const banner = createElement('div', missing ? 'warning-banner' : 'success-banner');
-  banner.style.marginTop = '12px';
-  banner.innerHTML = `${icon(missing ? 'warning' : 'check')}${missing ? 'Some required fields are missing or unresolved. Complete all fields before handoff.' : 'All required fields have been completed.'}`;
-  container.appendChild(banner);
-
-  const actions = createElement('div', 'button-row');
-  actions.style.marginTop = '12px';
+  const actions = createElement('div', 'button-row spec-sticky-actions');
   const btnValidate = createElement('button', 'action-btn');
   btnValidate.type = 'button';
   btnValidate.innerHTML = `${icon('review')}Validate artifacts`;
@@ -1692,13 +1794,6 @@ function renderSpecBuilder(container) {
   });
   actions.appendChild(btnHandoff);
   container.appendChild(actions);
-
-  if (window.appState.lastLocalValidation) {
-    const validationNote = createElement('div', window.appState.specValidated ? 'success-banner' : 'warning-banner');
-    validationNote.style.marginTop = '12px';
-    validationNote.innerHTML = `${icon(window.appState.specValidated ? 'check' : 'warning')}${window.appState.lastLocalValidation}`;
-    container.appendChild(validationNote);
-  }
 }
 
 function renderFieldStatus(field) {
@@ -1731,68 +1826,54 @@ function renderReviewRuns(container) {
   });
 
   const scope = createElement('section', 'panel');
-  scope.innerHTML = `<h3>Review Run object</h3>
-    <p><strong>${reviewRun.name || 'Review run'}</strong></p>
-    <p>Verdict: ${reviewRun.verdict || 'Inspect-only advisory review'}</p>
-    <p>Scope Context Nodes: ${(reviewRun.scopeContextIds || []).join(', ') || window.appState.context.map((c) => c.label).join(', ') || 'No context selected.'}</p>
-    ${renderStatusChip(normalizeObjectStatus(reviewRun.status || 'review_complete'), statusLabel(normalizeObjectStatus(reviewRun.status || 'review_complete')))}`;
+  scope.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <h3>${reviewRun.name || 'Review run'}</h3>
+        <p>${reviewRun.verdict || 'Inspect-only advisory review'} / Scope: ${(reviewRun.scopeContextIds || []).join(', ') || window.appState.context.map((c) => c.label).join(', ') || 'No context selected.'}</p>
+      </div>
+      ${renderStatusChip(normalizeObjectStatus(reviewRun.status || 'review_complete'), statusLabel(normalizeObjectStatus(reviewRun.status || 'review_complete')))}
+    </div>
+    <div class="static-notice">Review Runs are advisory and inspect-only. Local acknowledge/defer controls update browser state only.</div>`;
   container.appendChild(scope);
-
-  const findingSummary = createElement('section', 'panel');
-  findingSummary.style.marginTop = '12px';
-  findingSummary.innerHTML = `<h3>Finding objects</h3>
-    <p>${findings.length} advisory Findings are linked to this Review Run. Actions acknowledge or defer them locally.</p>
-    ${renderInspectorList(findings.map((finding) => `${finding.id}: ${finding.summary}`))}`;
-  container.appendChild(findingSummary);
-
-  const btnStart = createElement('button', 'action-btn');
-  btnStart.type = 'button';
-  btnStart.style.marginTop = '12px';
-  btnStart.innerHTML = `${icon('review')}Inspect findings`;
-  btnStart.addEventListener('click', () => showReviewResults(resultsDiv));
-  container.appendChild(btnStart);
 
   const resultsDiv = createElement('div', 'review-list');
   resultsDiv.id = 'review-results';
-  resultsDiv.style.marginTop = '12px';
+  resultsDiv.innerHTML = renderFindingsList(findings);
   container.appendChild(resultsDiv);
+  bindFindingActions(resultsDiv);
 }
 
-function showReviewResults(resultsDiv) {
-  resultsDiv.innerHTML = '';
-  (window.appState.findings || []).forEach((finding) => {
-    const card = createElement('article', 'review-result-card');
-    card.innerHTML = `<h4>Finding ${finding.id}</h4>
-      <p><strong>Review Run:</strong> ${finding.reviewRunId}</p>
-      <p><strong>Summary:</strong> ${finding.summary}</p>
-      <p><strong>Recommendation:</strong> ${finding.recommendation}</p>
-      <p><strong>Evidence IDs:</strong> ${finding.evidenceIds.join(', ')}</p>
-      ${renderSeverityChip(finding.severity)}
-      ${renderStatusChip(normalizeObjectStatus(finding.status), statusLabel(normalizeObjectStatus(finding.status)))}`;
-    const detailList = createElement('ul');
-    ['Advisory only', 'Inspect-only', 'No runtime or repository mutation'].forEach((detail) => detailList.appendChild(createElement('li', '', detail)));
-    card.appendChild(detailList);
+function renderFindingsList(findings) {
+  return findings.map((finding) => `<article class="review-result-card review-finding-card-compact" data-finding-id="${finding.id}">
+      <div class="review-finding-head">
+        <h4>${finding.id}</h4>
+        <div>${renderSeverityChip(finding.severity)}${renderStatusChip(normalizeObjectStatus(finding.status), statusLabel(normalizeObjectStatus(finding.status)))}</div>
+      </div>
+      <p>${finding.summary}</p>
+      <small>${finding.recommendation}</small>
+      <div class="evidence-chip-list">${finding.evidenceIds.map((id) => `<span class="chip chip-secondary">${id}</span>`).join('')}</div>
+      <div class="finding-actions">
+        <button type="button" data-finding-action="ack">Acknowledge locally</button>
+        <button type="button" data-finding-action="defer">Defer locally</button>
+      </div>
+    </article>`).join('');
+}
 
-    const actionRow = createElement('div', 'finding-actions');
-    [
-      ['Acknowledge locally', () => {
+function bindFindingActions(resultsDiv) {
+  resultsDiv.querySelectorAll('[data-finding-action]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const card = button.closest('[data-finding-id]');
+      const finding = window.appState.findings.find((item) => item.id === card.dataset.findingId);
+      if (!finding) return;
+      if (button.dataset.findingAction === 'ack') {
         finding.status = 'finding_resolved';
         showToast(`Acknowledged ${finding.id} locally. No review result or artifact was changed.`, 'success');
-        showReviewResults(resultsDiv);
-      }],
-      ['Defer locally', () => {
+      } else {
         finding.status = 'finding_deferred';
         showToast(`Deferred ${finding.id} locally. No real review workflow was changed.`, 'warning');
-        showReviewResults(resultsDiv);
-      }],
-    ].forEach(([text, handler]) => {
-      const btn = createElement('button', '', text);
-      btn.type = 'button';
-      btn.addEventListener('click', handler);
-      actionRow.appendChild(btn);
+      }
+      window.renderPage('review-runs');
     });
-    card.appendChild(actionRow);
-    resultsDiv.appendChild(card);
   });
 }
 
@@ -1800,6 +1881,51 @@ function renderSeverityChip(severity) {
   if (severity === 'high') return renderStatusChip('blocked', 'High severity');
   if (severity === 'medium') return renderStatusChip('needs-lock', 'Medium severity');
   return renderStatusChip('validated', 'Low severity');
+}
+
+function renderPreviewWireframe(type) {
+  return `<div class="preview-wireframe" aria-label="${type} static wireframe">
+      <svg viewBox="0 0 720 420" role="img" aria-labelledby="preview-wireframe-title">
+        <title id="preview-wireframe-title">${type} local wireframe</title>
+        <rect x="24" y="24" width="672" height="372" rx="14" class="wireframe-shell" />
+        <rect x="48" y="52" width="132" height="316" rx="10" class="wireframe-rail" />
+        <rect x="204" y="52" width="308" height="182" rx="12" class="wireframe-canvas" />
+        <rect x="532" y="52" width="140" height="316" rx="10" class="wireframe-panel" />
+        <rect x="228" y="82" width="92" height="42" rx="8" class="wireframe-node" />
+        <rect x="348" y="128" width="92" height="42" rx="8" class="wireframe-node is-warn" />
+        <rect x="256" y="178" width="112" height="34" rx="8" class="wireframe-node is-ok" />
+        <path d="M320 103 C350 106 350 137 348 149" class="wireframe-edge" />
+        <path d="M394 170 C376 184 354 190 312 195" class="wireframe-edge is-warn" />
+        <rect x="228" y="266" width="244" height="16" rx="8" class="wireframe-line" />
+        <rect x="228" y="296" width="198" height="12" rx="6" class="wireframe-line muted" />
+        <rect x="228" y="322" width="224" height="12" rx="6" class="wireframe-line muted" />
+        <rect x="556" y="82" width="88" height="16" rx="8" class="wireframe-line" />
+        <rect x="556" y="124" width="88" height="52" rx="8" class="wireframe-card" />
+        <rect x="556" y="198" width="88" height="52" rx="8" class="wireframe-card is-warn" />
+        <rect x="556" y="272" width="88" height="52" rx="8" class="wireframe-card is-ok" />
+      </svg>
+      <div class="preview-wireframe-caption">
+        <strong>${type}</strong>
+        <span>Static local preview / COCKPIT-MVP-014</span>
+      </div>
+    </div>`;
+}
+
+function renderPreviewReadinessRail(readiness) {
+  const sync = getPreviewSyncStatus(readiness);
+  return `<section class="panel preview-readiness-rail">
+      <h3>Readiness rail</h3>
+      <div class="preview-rail-status">${renderStatusChip(sync.status, sync.label)}${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Ready locally' : 'Gated locally')}</div>
+      <div class="preview-rail-section">
+        <h4>Work Packet</h4>
+        ${renderInspectorList([window.appState.workPacket.objective || 'No objective loaded.'])}
+      </div>
+      <div class="preview-rail-section">
+        <h4>Open readiness items</h4>
+        ${renderInspectorList(readiness.handoffBlockers.length ? readiness.handoffBlockers.slice(0, 6) : ['No open readiness items'])}
+      </div>
+      <button class="action-btn" type="button" id="preview-review-link">${icon('review')}Open Review Runs</button>
+    </section>`;
 }
 
 function renderPreview(container) {
@@ -1823,70 +1949,44 @@ function renderPreview(container) {
   });
   select.addEventListener('change', () => {
     showToast(`Artifact type selector changed to "${select.value}" locally. No file is produced and no artifact record is mutated.`, 'info');
+    window.renderPage('preview');
   });
   selectorDiv.append(label, select);
-  container.appendChild(selectorDiv);
-
-  const frame = createElement('div', 'preview-frame');
-  frame.innerHTML = `<div class="preview-frame-content">
-      <div class="preview-frame-title">Preview of selected artifact</div>
-      <div class="preview-frame-caption">COCKPIT-MVP-014 | offline shell</div>
-    </div>`;
-  container.appendChild(frame);
-
-  const workPacketSummary = createElement('section', 'panel');
-  workPacketSummary.style.marginTop = '12px';
-  workPacketSummary.innerHTML = renderWorkPacketSummaryPanel();
-  container.appendChild(workPacketSummary);
-
-  const handoffPreview = createElement('section', 'panel');
-  handoffPreview.style.marginTop = '12px';
-  handoffPreview.innerHTML = renderHandoffPreviewPanel();
-  container.appendChild(handoffPreview);
-
-  const viewportControls = createElement('div', 'button-row');
-  [
-    ['+', () => showToast('Preview zoom is local only. No rendered artifact or file output changes.', 'info')],
-    ['-', () => showToast('Preview zoom is local only. No rendered artifact or file output changes.', 'info')],
-  ].forEach(([text, handler]) => {
-    const btn = createElement('button', 'action-btn', text);
-    btn.type = 'button';
-    btn.addEventListener('click', handler);
-    viewportControls.appendChild(btn);
-  });
-  container.appendChild(viewportControls);
 
   const readiness = getReadinessSummary();
-  const sync = getPreviewSyncStatus(readiness);
-  const syncStatus = createElement('section', 'panel');
-  syncStatus.style.marginTop = '12px';
-  syncStatus.innerHTML = `<h3>Sync status</h3>${renderStatusChip(sync.status, sync.label)}`;
-  container.appendChild(syncStatus);
-
+  const layout = createElement('section', 'preview-layout');
+  const main = createElement('div', 'preview-main');
+  main.appendChild(selectorDiv);
+  const frame = createElement('div', `preview-frame${window.appState.previewWide ? ' is-wide' : ''}`);
+  frame.innerHTML = renderPreviewWireframe(select.value);
+  main.appendChild(frame);
+  const viewportToggle = createElement('button', 'action-btn');
+  viewportToggle.type = 'button';
+  viewportToggle.innerHTML = `${icon('preview')}${window.appState.previewWide ? 'Return to fit' : 'Open in viewport'}`;
+  viewportToggle.addEventListener('click', () => {
+    window.appState.previewWide = !window.appState.previewWide;
+    showToast('Preview viewport changed locally. No file output or artifact record changed.', 'info');
+    window.renderPage('preview');
+  });
+  main.appendChild(viewportToggle);
   const checklist = createElement('section', 'panel');
-  checklist.style.marginTop = '12px';
   checklist.innerHTML = '<h3>Spec coverage</h3>';
   const ul = createElement('ul');
   getSpecCoverageRows(readiness).forEach((row) => {
     ul.appendChild(createElement('li', '', `${row.field.name}: ${row.label}`));
   });
   checklist.appendChild(ul);
-  container.appendChild(checklist);
-
-  const linked = createElement('section', 'panel');
-  linked.style.marginTop = '12px';
-  linked.innerHTML = '<h3>Linked review findings</h3>';
-  const linkedList = createElement('ul');
-  (window.appState.findings || []).forEach((finding) => {
-    linkedList.appendChild(createElement('li', '', `${finding.id}: ${finding.summary}`));
-  });
-  linked.appendChild(linkedList);
-  container.appendChild(linked);
+  main.appendChild(checklist);
+  layout.appendChild(main);
+  const rail = createElement('div');
+  rail.innerHTML = renderPreviewReadinessRail(readiness);
+  layout.appendChild(rail.firstElementChild);
+  container.appendChild(layout);
+  const reviewLink = container.querySelector('#preview-review-link');
+  if (reviewLink) reviewLink.addEventListener('click', () => window.navigate('review-runs'));
 
   const actions = createElement('div', 'button-row');
-  actions.style.marginTop = '12px';
   [
-    ['View preview', 'spark', () => showToast('Opening the preview only. No generation occurs.', 'info')],
     ['Compare spec', 'check', () => showToast('Comparing preview with spec locally. No artifact record is mutated.', 'info')],
     ['Inspect UX notes', 'eye', () => showToast('UX notes are inspect-only. No external calls occur.', 'info')],
     ['View gated preview', 'handoff', () => showToast('Preview only. No file output, repository change, or runtime action occurs.', 'success'), !window.appState.handoffReady],
@@ -1912,6 +2012,9 @@ function renderDecisions(container) {
 
   const needsLock = window.appState.decisions.filter((d) => d.status === 'needs-lock');
   const locked = window.appState.decisions.filter((d) => d.status === 'locked');
+  const filter = window.appState.decisionFilter || 'all';
+  container.appendChild(renderDecisionSummary(needsLock.length, locked.length, filter));
+  bindDecisionFilter(container);
   const d005 = window.appState.decisions.find((d) => d.id === 'D-005');
   if (d005) {
     const checkpoint = createElement('section', 'panel decision-checkpoint');
@@ -1926,8 +2029,33 @@ function renderDecisions(container) {
     container.appendChild(checkpoint);
   }
 
-  container.appendChild(renderDecisionGroup('Needs Point lock', needsLock, 'No decisions require locking.'));
-  container.appendChild(renderDecisionGroup('Locked decisions', locked, 'No locked decisions.'));
+  if (filter !== 'locked') container.appendChild(renderDecisionGroup('Needs Point lock', needsLock, 'No decisions require locking.'));
+  if (filter !== 'needs-lock') container.appendChild(renderDecisionGroup('Locked decisions', locked, 'No locked decisions.'));
+}
+
+function renderDecisionSummary(needsLockCount, lockedCount, activeFilter) {
+  const summary = createElement('section', 'decisions-summary');
+  summary.innerHTML = `<article>
+      <span class="metric-label">Needs Point lock</span>
+      <strong>${needsLockCount}</strong>
+    </article>
+    <article>
+      <span class="metric-label">Locked locally</span>
+      <strong>${lockedCount}</strong>
+    </article>
+    <div class="decision-filter" aria-label="Decision filter">
+      ${['all', 'needs-lock', 'locked'].map((filter) => `<button class="action-btn${activeFilter === filter ? ' selected' : ''}" type="button" data-decision-filter="${filter}">${filter === 'all' ? 'All' : filter === 'needs-lock' ? 'Needs lock' : 'Locked'}</button>`).join('')}
+    </div>`;
+  return summary;
+}
+
+function bindDecisionFilter(container) {
+  container.querySelectorAll('[data-decision-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.appState.decisionFilter = button.dataset.decisionFilter;
+      window.renderPage('decisions');
+    });
+  });
 }
 
 function renderDecisionGroup(title, decisions, emptyText) {
@@ -2006,6 +2134,38 @@ function createDecisionRow(dec) {
   return row;
 }
 
+function renderTraceFlowSvg() {
+  const readiness = getReadinessSummary();
+  const nodeStatuses = [
+    ['Context Node', 'validated'],
+    ['Spec Draft', readiness.unresolvedSpecFields.length ? 'needs-lock' : 'validated'],
+    ['Decision', readiness.pendingDecisions.length ? 'needs-lock' : 'locked'],
+    ['Evidence', readiness.missingEvidence.length ? 'blocked' : 'validated'],
+    ['Artifact Reference', 'needs-sync'],
+    ['Work Packet', 'draft'],
+    ['Handoff Packet', readiness.ready ? 'ready' : 'blocked'],
+  ];
+  const nodeWidth = 112;
+  const gap = 18;
+  const nodes = nodeStatuses.map(([label, status], index) => {
+    const x = 24 + index * (nodeWidth + gap);
+    return `<g class="trace-flow-node status-tone-${statusTone(status)}">
+        <rect x="${x}" y="40" width="${nodeWidth}" height="70" rx="10" />
+        <text x="${x + nodeWidth / 2}" y="73" text-anchor="middle">${label}</text>
+        <text x="${x + nodeWidth / 2}" y="92" text-anchor="middle" class="trace-flow-small">${statusLabel(status)}</text>
+      </g>`;
+  }).join('');
+  const edges = nodeStatuses.slice(0, -1).map((_, index) => {
+    const start = 24 + index * (nodeWidth + gap) + nodeWidth;
+    const end = start + gap;
+    return `<path d="M${start} 75 H${end}" class="trace-flow-edge" /><path d="m${end - 6} 69 6 6-6 6" class="trace-flow-edge" />`;
+  }).join('');
+  return `<svg class="trace-flow-svg" viewBox="0 0 930 150" role="img" aria-label="Trace flow from Context Node to Handoff Packet">
+      ${edges}
+      ${nodes}
+    </svg>`;
+}
+
 function renderTrace(container) {
   showGovernance(true);
   renderPageHeader(container, {
@@ -2015,13 +2175,19 @@ function renderTrace(container) {
     className: 'governance-header',
   });
 
+  const missingFields = window.appState.specFields.filter((f) => !window.appState.traceLinks.some((l) => l.target === f.id));
+  const missingEvidence = getMissingEvidenceItems();
+  if (missingFields.length > 0 || missingEvidence.length > 0) {
+    const warn = createElement('div', 'warning-banner trace-warning-top');
+    const parts = [];
+    if (missingFields.length > 0) parts.push(`${missingFields.length} spec field${missingFields.length === 1 ? '' : 's'} need trace evidence`);
+    if (missingEvidence.length > 0) parts.push(`${missingEvidence.length} required evidence item${missingEvidence.length === 1 ? '' : 's'} still unavailable`);
+    warn.innerHTML = `${icon('warning')}${parts.join(' / ')}. Handoff readiness waits until these local checks clear.`;
+    container.appendChild(warn);
+  }
+
   const graph = createElement('div', 'trace-graph');
-  graph.innerHTML = `<div class="trace-graph-inner">
-      <div class="trace-node">Context Node</div>
-      <div class="trace-node">Spec Draft</div>
-      <div class="trace-node">Decision</div>
-      <div class="trace-node">Handoff Packet</div>
-    </div>`;
+  graph.innerHTML = renderTraceFlowSvg();
   container.appendChild(graph);
 
   const artifactRefs = createElement('section', 'panel');
@@ -2047,6 +2213,8 @@ function renderTrace(container) {
   evidenceTable.appendChild(evidenceBody);
   container.appendChild(evidenceTable);
 
+  const rawLinks = createElement('details', 'raw-trace-links');
+  rawLinks.innerHTML = '<summary>Show raw trace links</summary>';
   const table = createElement('table', 'evidence-table');
   table.innerHTML = '<thead><tr><th>Source</th><th>Target</th><th>Description</th></tr></thead>';
   const tbody = createElement('tbody');
@@ -2058,23 +2226,37 @@ function renderTrace(container) {
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
-  container.appendChild(table);
+  rawLinks.appendChild(table);
+  container.appendChild(rawLinks);
+}
 
-  const missingFields = window.appState.specFields.filter((f) => !window.appState.traceLinks.some((l) => l.target === f.id));
-  if (missingFields.length > 0) {
-    const warn = createElement('div', 'warning-banner');
-    warn.style.marginTop = '12px';
-    warn.innerHTML = `${icon('warning')}Warning: Some spec fields do not have trace evidence. Handoff readiness waits until all fields are traced.`;
-    container.appendChild(warn);
-  }
+function getRuleEnforcement(ruleName) {
+  const map = {
+    'Runtime mutation': ['rules', 'Rules matrix'],
+    'Repo writes': ['preview', 'Handoff gating'],
+    'Artifact drafting': ['spec-builder', 'Spec Builder'],
+    'Dynamic UI': ['spec-builder', 'Spec-first flow'],
+    Secrets: ['workbench', 'Protected exclusions'],
+    'External actions': ['rules', 'Scope rules'],
+    'Review agents': ['review-runs', 'Review Runs'],
+    'Codex handoff': ['decisions', 'D-005'],
+  };
+  return map[ruleName] || ['rules', 'Rules'];
+}
 
-  const missingEvidence = getMissingEvidenceItems();
-  if (missingEvidence.length > 0) {
-    const warn = createElement('div', 'warning-banner');
-    warn.style.marginTop = '12px';
-    warn.innerHTML = `${icon('warning')}Required evidence still keeps the handoff preview unavailable: ${missingEvidence.map((item) => item.label).join(', ')}.`;
-    container.appendChild(warn);
-  }
+function renderRulesOverview() {
+  const allowed = window.appState.rules.filter((rule) => rule.allowed);
+  const blocked = window.appState.rules.filter((rule) => !rule.allowed);
+  return `<section class="rules-allowed-grid">
+      <article>
+        <h3>Allowed locally</h3>
+        ${renderInspectorList(allowed.map((rule) => `${rule.name}: ${rule.reviewGate}`))}
+      </article>
+      <article>
+        <h3>Blocked surfaces</h3>
+        ${renderInspectorList(blocked.map((rule) => `${rule.name}: ${rule.reviewGate}`))}
+      </article>
+    </section>`;
 }
 
 function renderRules(container) {
@@ -2086,20 +2268,34 @@ function renderRules(container) {
     className: 'governance-header',
   });
 
+  const overview = createElement('div');
+  overview.innerHTML = renderRulesOverview();
+  container.appendChild(overview.firstElementChild);
+
   const table = createElement('table', 'rules-matrix');
-  table.innerHTML = '<thead><tr><th>Rule</th><th>Allowed?</th><th>Review Gate</th></tr></thead>';
+  table.innerHTML = '<thead><tr><th>Rule</th><th>Allowed?</th><th>Review Gate</th><th>Enforced at</th></tr></thead>';
   const tbody = createElement('tbody');
   window.appState.rules.forEach((rule) => {
+    const [page, label] = getRuleEnforcement(rule.name);
     const tr = createElement('tr');
     tr.appendChild(createElement('td', '', rule.name));
     const tdAllowed = createElement('td');
     tdAllowed.innerHTML = renderStatusChip(rule.allowed ? 'allowed' : 'blocked', rule.allowed ? 'Yes' : 'No');
     tr.appendChild(tdAllowed);
     tr.appendChild(createElement('td', '', rule.reviewGate));
+    const enforced = createElement('td');
+    const link = createElement('button', 'link-button', label);
+    link.type = 'button';
+    link.dataset.ruleLink = page;
+    enforced.appendChild(link);
+    tr.appendChild(enforced);
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
   container.appendChild(table);
+  container.querySelectorAll('[data-rule-link]').forEach((button) => {
+    button.addEventListener('click', () => window.navigate(button.dataset.ruleLink));
+  });
 
   const summaries = createElement('div', 'rules-summary-grid rules-note');
   const ps = createElement('section', 'panel');
