@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.1 - 2026-05-31
+
+Supplemental repo assimilation update.
+
+Included:
+- added `DR-006_POST_GOAL_008_STATIC_MVP_PHASE_2_SCOPE_GATE.md`
+- added a per-report manifest for DR-006
+- updated the package index and assimilation README
+
 ## v0.1 — 2026-05-30
 
 Initial repo-ready deep research reports pack.

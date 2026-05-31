@@ -66,6 +66,7 @@ npm run validate
 | `reports/DR-003_REPO_REALITY_CHECK_AND_GAP_AUDIT.md` | Captures repo-aware gap audit and current implementation implications. |
 | `reports/DR-004_ADJACENT_PRODUCT_BOUNDARY_NOTES.md` | Summarizes competitor/product-boundary findings to avoid Dify/n8n/Flowise clone drift. |
 | `reports/DR-005_RESEARCH_INVENTORY_AND_MISSING_INPUTS.md` | Lists available vs missing research inputs and assumptions. |
+| `reports/DR-006_POST_GOAL_008_STATIC_MVP_PHASE_2_SCOPE_GATE.md` | Adds the post-GOAL-008 static MVP scope gate, READY_WITH_POLISH verdict, and Phase-2 recommendation to sharpen Work Packet/Handoff contract instead of expanding runtime scope. |
 
 ## Review gate
 
