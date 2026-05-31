@@ -107,3 +107,19 @@ The P1B simplification slice is accepted only when fresh evidence confirms:
 - Passive safety copy is reduced where it only repeats background constraints, while trigger-adjacent safety copy remains in toasts, gated actions, decisions, handoff, and validation feedback.
 - Browser or source/render QA covers widths around 760px, 1080px, 1180px, and 1280px+ and records any screenshot or direct-file policy blocker honestly.
 - Native alert-call and browser-storage API-name searches remain clean; `npm run validate` and `git diff --check` pass.
+
+## GOAL-010 machine-local Claude/Codex UX revamp check
+
+The GOAL-010 revamp slice is accepted only when fresh evidence confirms:
+
+- Claude Opus 4.7 was used through GitHub Copilot CLI as a read-only planner only, and Codex performed the implementation.
+- The top bar uses a single route-aware stage pill and explicit inspector toggle instead of the six-chip stepper.
+- Home shows a readiness banner with page-linked blockers, four object-model status cards, Next Safe Actions, and a Work Packet/Handoff Packet preview snippet.
+- Workbench keeps the Flat Flow default, reduces canvas toolbar chrome, uses a collapsible edge legend, removes duplicate Workbench Handoff preview content, and links to Preview readiness.
+- Spec Builder groups fields by status, uses two visible row actions plus an overflow disclosure, and keeps one validation status block plus sticky local validation actions.
+- Review Runs renders compact Finding cards by default and keeps acknowledge/defer behavior local-only.
+- Preview renders an inline static wireframe and consolidated readiness rail without zoom buttons or duplicate linked-finding lists.
+- Decisions shows Needs Point lock and Locked counts, a local filter, and keeps the D-005 checkpoint language unchanged.
+- Trace & Evidence shows a static SVG trace chain, top warning banner, primary evidence table, and raw links behind a disclosure.
+- Rules & Scope shows an Allowed/Blocked overview grid and an Enforced at link for each rule.
+- The app still has eight pages only, no new dependencies, no browser storage persistence, no native alerts/prompts, no remote runtime requests, and gated handoff remains local-only.
