@@ -37,8 +37,11 @@
     rules: deepCopy(window.mockData.rules),
     // Flags for gating actions
     inspectorTab: 'overview',
+    inspectorVisible: false,
     utilityTrayCollapsed: false,
     mockAddNodeRequested: false,
+    decisionFilter: 'all',
+    previewWide: false,
     evidenceReviewed: false,
     reviewBlockersAcknowledged: false,
     lastLocalValidation: null,
