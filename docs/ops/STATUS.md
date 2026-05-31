@@ -42,7 +42,7 @@
 
 ## Guardrails
 
-- No dependencies were added.
+- Only Storybook dev/test dependencies were added for DS-002A.
 - No backend, API, authentication, deployment, real AI, runtime mutation, or repository-write behavior was introduced.
 - Static golden-path additions use mock data only and do not add repo scanning, external connectors, or persistent storage.
 - GOAL-010 Claude planning remained advisory and machine-local; no repo-tracked workflow, agent instruction, commit, push, PR, deployment, or remote sharing was added.

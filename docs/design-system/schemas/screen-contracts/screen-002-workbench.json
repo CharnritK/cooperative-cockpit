@@ -1,0 +1,29 @@
+{
+  "screenId": "screen-002",
+  "screenName": "Workbench",
+  "routeAssumption": "workbench",
+  "artifactObjectServed": "context nodes and selected context",
+  "requiredComponents": [
+    "WorkflowCanvas",
+    "OperatorNodeCard",
+    "NodePalette",
+    "InspectorPanel"
+  ],
+  "dataContract": [
+    "contextNodes",
+    "selectedContext",
+    "artifactRefs"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "selected"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

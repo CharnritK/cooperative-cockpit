@@ -1,0 +1,30 @@
+{
+  "screenId": "screen-001",
+  "screenName": "Operator Home",
+  "routeAssumption": "home / /",
+  "artifactObjectServed": "workspace/project overview",
+  "requiredComponents": [
+    "AppShell",
+    "TopBar",
+    "Sidebar",
+    "KpiCard",
+    "TaskQueueRow",
+    "DecisionCard"
+  ],
+  "dataContract": [
+    "workspace",
+    "project",
+    "validationResults"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

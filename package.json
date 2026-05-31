@@ -9,7 +9,17 @@
     "check:tasks": "node scripts/check_task_cards.js",
     "check:gitignore": "node scripts/check_gitignore.js",
     "check:concept": "node scripts/check_concept_consistency.js",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "storybook:smoke": "storybook dev -p 6006 --no-open --smoke-test --ci --quiet",
+    "test:visual": "playwright test -c playwright.config.mjs",
+    "test:visual:list": "playwright test -c playwright.config.mjs --list",
     "validate": "npm run check:structure && npm run check:json && npm run check:secrets && npm run check:tasks && npm run check:gitignore && npm run check:concept"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@storybook/addon-a11y": "^10.4.1",
+    "@storybook/html-vite": "^10.4.1",
+    "storybook": "^10.4.1"
+  }
 }

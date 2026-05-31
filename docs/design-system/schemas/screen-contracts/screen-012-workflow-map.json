@@ -1,0 +1,29 @@
+{
+  "screenId": "screen-012",
+  "screenName": "Workflow Canvas / Object Map",
+  "routeAssumption": "/workflow-map",
+  "artifactObjectServed": "object graph",
+  "requiredComponents": [
+    "WorkflowCanvas",
+    "OperatorNodeCard",
+    "NodePalette",
+    "InspectorPanel"
+  ],
+  "dataContract": [
+    "contextNodes",
+    "artifactRefs",
+    "evidenceItems"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "selected"
+  ],
+  "approvalStatus": "proposed",
+  "owner": "Point",
+  "implementationStatus": "not_started"
+}

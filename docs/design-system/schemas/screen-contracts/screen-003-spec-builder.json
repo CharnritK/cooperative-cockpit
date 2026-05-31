@@ -1,0 +1,33 @@
+{
+  "screenId": "screen-003",
+  "screenName": "Spec Builder",
+  "routeAssumption": "spec-builder",
+  "artifactObjectServed": "spec draft",
+  "requiredComponents": [
+    "Card",
+    "SectionHeader",
+    "WarningState",
+    "DecisionCard"
+  ],
+  "dataContract": [
+    "specTemplates",
+    "specDraft",
+    "specFields",
+    "decisions"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "selected",
+    "locked",
+    "pending"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

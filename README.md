@@ -4,6 +4,17 @@ This repository provides the operating system for the **OpenClaw Cooperative Coc
 
 The static MVP has been assimilated under `apps/static-mvp/`. Its entrypoint is `apps/static-mvp/index.html`; it remains a plain HTML/CSS/JavaScript prototype with local assets only.
 
+## Design OS v4 Assimilation
+
+The Design Operating System v4 absorption packet is being assimilated through staged `GOAL-DS-*` packets. Start with:
+
+1. `CODEX_START_HERE.md`
+2. `MANIFEST.md`
+3. `docs/design-system/00_CODEX_ABSORB_FIRST.md`
+4. `.codex/goals/GOAL-DS-001-assimilate-design-os-docs.md`
+
+Live Design OS docs now live under `docs/design-system/**`. Package provenance metadata is preserved under `artifacts/packages/openclaw_design_os_codex_absorbable_v4/`; it is not the current-state authority once files are assimilated into repo paths.
+
 ## Authoritative Sources
 
 - **Product canon:** `docs/product/**` defines the static MVP object model, screen map, scope guardrails, roadmap, and product-lock decisions.

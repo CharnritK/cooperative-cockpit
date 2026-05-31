@@ -1,0 +1,13 @@
+{
+  "artifact_id": "ART-DS-004",
+  "artifact_type": "extracted_package_metadata",
+  "created_at": "2026-05-31",
+  "owner": "Point",
+  "source": "chatgpt",
+  "status": "assimilated_metadata",
+  "related_task_id": "GOAL-DS-001",
+  "source_file": "openclaw_design_os_codex_absorbable_v4.zip",
+  "storage_path": "artifacts/packages/openclaw_design_os_codex_absorbable_v4/",
+  "checksum": "historical-source-zip-sha256:536b49b5117ebde0d0725f8383e4e8e3c76c0ab5822e4c9fba5f7000b2197962",
+  "notes": "Source archive checksum is retained for provenance, but the zip is not present in this repo snapshot. Live assimilated files are installed at repo-root paths; use MANIFEST.md, CHECKSUMS.json, and artifacts/evidence/design-system/ for current validation state."
+}

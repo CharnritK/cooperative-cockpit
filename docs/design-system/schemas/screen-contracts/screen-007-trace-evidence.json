@@ -1,0 +1,28 @@
+{
+  "screenId": "screen-007",
+  "screenName": "Trace & Evidence",
+  "routeAssumption": "trace",
+  "artifactObjectServed": "evidence items and trace links",
+  "requiredComponents": [
+    "EvidenceCard",
+    "DataTable",
+    "FilterBar"
+  ],
+  "dataContract": [
+    "evidenceItems",
+    "artifactRefs"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "selected"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

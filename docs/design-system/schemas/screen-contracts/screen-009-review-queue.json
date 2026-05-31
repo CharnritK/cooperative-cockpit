@@ -1,0 +1,29 @@
+{
+  "screenId": "screen-009",
+  "screenName": "Review Queue",
+  "routeAssumption": "/review-queue",
+  "artifactObjectServed": "review queue planning surface",
+  "requiredComponents": [
+    "DataTable",
+    "FilterBar",
+    "StatusBadge"
+  ],
+  "dataContract": [
+    "reviewRuns",
+    "findings"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "selected",
+    "pending"
+  ],
+  "approvalStatus": "proposed",
+  "owner": "Point",
+  "implementationStatus": "not_started"
+}

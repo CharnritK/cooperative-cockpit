@@ -1,0 +1,29 @@
+{
+  "screenId": "screen-004",
+  "screenName": "Review Runs",
+  "routeAssumption": "review-runs",
+  "artifactObjectServed": "review runs and findings",
+  "requiredComponents": [
+    "DataTable",
+    "FilterBar",
+    "StatusBadge",
+    "ReviewFindingCard"
+  ],
+  "dataContract": [
+    "reviewRuns",
+    "findings",
+    "evidenceItems"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

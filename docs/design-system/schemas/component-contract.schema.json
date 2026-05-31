@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.local/schemas/component-contract.schema.json",
+  "title": "OpenClaw component contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "componentId",
+    "name",
+    "category",
+    "purpose",
+    "requiredProps",
+    "optionalProps",
+    "states",
+    "accessibility",
+    "storybookStories",
+    "playwrightRelevance",
+    "implementationNotes",
+    "antiPatterns"
+  ],
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "pattern": "^cmp-[0-9]{3}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]+$"
+    },
+    "category": {
+      "enum": [
+        "primitives",
+        "shell",
+        "navigation",
+        "layout",
+        "data-display",
+        "feedback",
+        "governance",
+        "evidence",
+        "workflow",
+        "forms",
+        "overlays"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 10
+    },
+    "requiredProps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "optionalProps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "default",
+          "dense",
+          "empty",
+          "loading",
+          "warning",
+          "error",
+          "disabled",
+          "selected",
+          "locked",
+          "pending",
+          "open",
+          "closed"
+        ]
+      }
+    },
+    "accessibility": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "storybookStories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "playwrightRelevance": {
+      "enum": [
+        "none",
+        "screen-critical",
+        "regression-prone",
+        "accessibility-critical"
+      ]
+    },
+    "implementationNotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "antiPatterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "x-validationFailureExamples": [
+    {
+      "case": "missing states",
+      "invalid": {
+        "name": "EvidenceCard",
+        "states": []
+      }
+    },
+    {
+      "case": "bad category",
+      "invalid": {
+        "category": "misc"
+      }
+    }
+  ]
+}

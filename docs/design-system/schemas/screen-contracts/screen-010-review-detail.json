@@ -1,0 +1,28 @@
+{
+  "screenId": "screen-010",
+  "screenName": "Review Detail",
+  "routeAssumption": "/review/:id",
+  "artifactObjectServed": "review run and findings",
+  "requiredComponents": [
+    "ReviewFindingCard",
+    "EvidenceCard",
+    "TraceTimeline"
+  ],
+  "dataContract": [
+    "reviewRuns",
+    "findings",
+    "evidenceItems"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "selected"
+  ],
+  "approvalStatus": "proposed",
+  "owner": "Point",
+  "implementationStatus": "not_started"
+}

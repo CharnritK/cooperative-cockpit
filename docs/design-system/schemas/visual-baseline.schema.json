@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.local/schemas/visual-baseline.schema.json",
+  "title": "OpenClaw visual baseline record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "baselineId",
+    "screenId",
+    "routeOrStory",
+    "viewport",
+    "state",
+    "artifactPath",
+    "commandOutputPath",
+    "status",
+    "capturedAt",
+    "reviewer"
+  ],
+  "properties": {
+    "baselineId": {
+      "type": "string",
+      "pattern": "^vb-[0-9]{3}$"
+    },
+    "screenId": {
+      "type": "string",
+      "pattern": "^screen-[0-9]{3}$"
+    },
+    "routeOrStory": {
+      "type": "string"
+    },
+    "viewport": {
+      "enum": [
+        "760px",
+        "1080px",
+        "1180px",
+        "1280px"
+      ]
+    },
+    "state": {
+      "type": "string"
+    },
+    "artifactPath": {
+      "type": "string"
+    },
+    "commandOutputPath": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "approved",
+        "needs_review",
+        "blocked"
+      ]
+    },
+    "capturedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "reviewer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "x-validationFailureExamples": [
+    {
+      "case": "unsupported viewport",
+      "invalid": {
+        "viewport": "1440px"
+      }
+    },
+    {
+      "case": "false approval risk",
+      "invalid": {
+        "status": "approved",
+        "reviewer": null
+      }
+    }
+  ]
+}

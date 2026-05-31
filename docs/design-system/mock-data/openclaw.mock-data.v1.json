@@ -1,0 +1,569 @@
+{
+  "meta": {
+    "version": "v1",
+    "fixtureStatus": "candidate",
+    "createdAt": "2026-05-31T00:00:00Z"
+  },
+  "workspace": {
+    "id": "ws-001",
+    "name": "OpenClaw Workspace",
+    "status": "active"
+  },
+  "project": {
+    "id": "proj-001",
+    "workspaceId": "ws-001",
+    "name": "Cooperative Cockpit Static MVP",
+    "status": "active",
+    "owner": "Point"
+  },
+  "contextNodes": [
+    {
+      "id": "ctx-001",
+      "projectId": "proj-001",
+      "type": "product_context",
+      "title": "Static MVP boundaries",
+      "status": "included",
+      "riskLevel": "medium"
+    },
+    {
+      "id": "ctx-002",
+      "projectId": "proj-001",
+      "type": "design_direction",
+      "title": "Workflow studio visual direction",
+      "status": "included",
+      "riskLevel": "low"
+    },
+    {
+      "id": "ctx-003",
+      "projectId": "proj-001",
+      "type": "protected_surface",
+      "title": "No backend/API/auth/deployment",
+      "status": "protected",
+      "riskLevel": "critical"
+    },
+    {
+      "id": "ctx-004",
+      "projectId": "proj-001",
+      "type": "qa_evidence",
+      "title": "Visual regression evidence",
+      "status": "included",
+      "riskLevel": "medium"
+    }
+  ],
+  "selectedContext": [
+    "ctx-001",
+    "ctx-002",
+    "ctx-003"
+  ],
+  "specTemplates": [
+    {
+      "id": "tmpl-001",
+      "name": "Screen Contract",
+      "status": "available"
+    },
+    {
+      "id": "tmpl-002",
+      "name": "Component Contract",
+      "status": "available"
+    }
+  ],
+  "specDraft": {
+    "id": "spec-001",
+    "projectId": "proj-001",
+    "templateId": "tmpl-001",
+    "title": "Design OS v4 Assimilation",
+    "status": "draft",
+    "updatedAt": "2026-05-31T02:00:00Z"
+  },
+  "specFields": [
+    {
+      "id": "field-001",
+      "specId": "spec-001",
+      "label": "Allowed paths",
+      "value": "docs/design-system/**",
+      "required": true,
+      "status": "locked"
+    },
+    {
+      "id": "field-002",
+      "specId": "spec-001",
+      "label": "Validation commands",
+      "value": "npm run validate",
+      "required": true,
+      "status": "suggested"
+    },
+    {
+      "id": "field-003",
+      "specId": "spec-001",
+      "label": "Visual baselines",
+      "value": "reviewed candidate screenshots; approved baselines pending Point/design review",
+      "required": false,
+      "status": "suggested"
+    }
+  ],
+  "reviewRuns": [
+    {
+      "id": "rr-001",
+      "specId": "spec-001",
+      "reviewer": "QA Agent",
+      "status": "queued",
+      "result": "not_reviewed",
+      "startedAt": "2026-05-31T03:00:00Z",
+      "endedAt": "2026-05-31T03:10:00Z"
+    },
+    {
+      "id": "rr-002",
+      "specId": "spec-001",
+      "reviewer": "UI Critic",
+      "status": "inspected",
+      "result": "warn",
+      "startedAt": "2026-05-31T04:00:00Z",
+      "endedAt": "2026-05-31T04:15:00Z"
+    },
+    {
+      "id": "rr-003",
+      "specId": "spec-001",
+      "reviewer": "Codex Orchestrator + Fermat",
+      "status": "inspected",
+      "result": "pass",
+      "startedAt": "2026-06-01T01:15:00+07:00",
+      "endedAt": "2026-06-01T01:25:00+07:00"
+    }
+  ],
+  "findings": [
+    {
+      "id": "find-001",
+      "reviewRunId": "rr-002",
+      "title": "Path consistency must be verified",
+      "severity": "high",
+      "status": "open",
+      "evidenceIds": [
+        "ev-001"
+      ]
+    },
+    {
+      "id": "find-002",
+      "reviewRunId": "rr-002",
+      "title": "Token audit requires contrast evidence",
+      "severity": "medium",
+      "status": "deferred",
+      "evidenceIds": [
+        "ev-004"
+      ]
+    },
+    {
+      "id": "find-003",
+      "reviewRunId": "rr-002",
+      "title": "Mock data is safe and fictional",
+      "severity": "low",
+      "status": "acknowledged",
+      "evidenceIds": [
+        "ev-003"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-001",
+      "title": "Approve Storybook dev/test integration",
+      "status": "locked",
+      "lockedBy": "Point",
+      "lockedAt": "2026-05-31T05:00:00Z",
+      "evidenceIds": [
+        "ev-001"
+      ],
+      "rationale": "Needed for component isolation and state coverage."
+    },
+    {
+      "id": "dec-002",
+      "title": "Approve Playwright visual regression",
+      "status": "locked",
+      "lockedBy": "Point",
+      "lockedAt": "2026-05-31T05:05:00Z",
+      "evidenceIds": [
+        "ev-002"
+      ],
+      "rationale": "Needed for screenshot regression evidence."
+    },
+    {
+      "id": "dec-003",
+      "title": "Finalize audited token values",
+      "status": "pending_point_lock",
+      "lockedBy": null,
+      "lockedAt": null,
+      "evidenceIds": [
+        "ev-004"
+      ],
+      "rationale": "Raw-to-semantic token audit is populated; contrast/accessibility approval is still required before values become final."
+    },
+    {
+      "id": "dec-004",
+      "title": "Start DS-005 mock registry baseline",
+      "status": "pending_point_lock",
+      "lockedBy": null,
+      "lockedAt": null,
+      "evidenceIds": [
+        "ev-005"
+      ],
+      "rationale": "Mock registry updates are present; implementation claims require approval."
+    }
+  ],
+  "evidenceItems": [
+    {
+      "id": "ev-001",
+      "projectId": "proj-001",
+      "type": "doc",
+      "title": "Design OS package audit",
+      "status": "complete",
+      "sourceObjectId": "spec-001",
+      "targetObjectId": "dec-001",
+      "summary": "Confirms goal split and path consistency requirements.",
+      "createdAt": "2026-05-31T05:10:00Z"
+    },
+    {
+      "id": "ev-002",
+      "projectId": "proj-001",
+      "type": "visual",
+      "title": "Token audit placeholder",
+      "status": "warning",
+      "sourceObjectId": "ctx-002",
+      "targetObjectId": "dec-003",
+      "summary": "Contrast review is not complete before DS-003 finalization.",
+      "createdAt": "2026-05-31T05:15:00Z"
+    },
+    {
+      "id": "ev-003",
+      "projectId": "proj-001",
+      "type": "fixture",
+      "title": "Mock data safety review",
+      "status": "complete",
+      "sourceObjectId": "proj-001",
+      "targetObjectId": "find-003",
+      "summary": "Fixture uses fictional names and no secrets.",
+      "createdAt": "2026-05-31T05:20:00Z"
+    },
+    {
+      "id": "ev-004",
+      "projectId": "proj-001",
+      "type": "code",
+      "title": "DS-003 token audit table and token status updates",
+      "status": "warning",
+      "sourceObjectId": "ctx-002",
+      "targetObjectId": "dec-003",
+      "summary": "Raw-to-semantic map is populated and token candidates updated; contrast verification remains pending.",
+      "createdAt": "2026-05-31T06:20:00Z"
+    },
+    {
+      "id": "ev-005",
+      "projectId": "proj-001",
+      "type": "doc",
+      "title": "DS-005 state coverage and mock fixture alignment",
+      "status": "warning",
+      "sourceObjectId": "ctx-004",
+      "targetObjectId": "dec-004",
+      "summary": "Registry scope and evidence matrix are updated; candidate execution proof exists for the eight implemented screens, while proposed screens remain Point-locked.",
+      "createdAt": "2026-05-31T06:30:00Z"
+    },
+    {
+      "id": "ev-006",
+      "projectId": "proj-001",
+      "type": "doc",
+      "title": "DS-006 visual baseline review gate",
+      "status": "warning",
+      "sourceObjectId": "ctx-004",
+      "targetObjectId": "dec-002",
+      "summary": "Candidate visual baseline output is reviewer-inspected; Point/design approval is still pending before baselines can be treated as approved.",
+      "createdAt": "2026-05-31T06:40:00Z"
+    },
+    {
+      "id": "ev-007",
+      "projectId": "proj-001",
+      "type": "validation",
+      "title": "DS-002A Storybook scaffold evidence",
+      "status": "complete",
+      "sourceObjectId": "dec-001",
+      "targetObjectId": "gate-002",
+      "summary": "npm package-lock, Storybook dev/test config, and representative EvidenceCard state stories validate with Storybook smoke output.",
+      "createdAt": "2026-06-01T00:40:00+07:00"
+    },
+    {
+      "id": "ev-008",
+      "projectId": "proj-001",
+      "type": "screenshot",
+      "title": "DS-006 candidate static MVP screenshot run",
+      "status": "warning",
+      "sourceObjectId": "ctx-004",
+      "targetObjectId": "gate-006",
+      "summary": "Playwright captured candidate screenshots for eight implemented static MVP screens across four viewport projects; reviewer candidate inspection is recorded.",
+      "createdAt": "2026-06-01T01:18:19+07:00"
+    },
+    {
+      "id": "ev-009",
+      "projectId": "proj-001",
+      "type": "doc",
+      "title": "DS-006 reviewer inspection",
+      "status": "complete",
+      "sourceObjectId": "ctx-004",
+      "targetObjectId": "gate-006",
+      "summary": "Reviewer inspection approves the DS-006 screenshot run as reviewed candidate evidence, not final approved baselines.",
+      "createdAt": "2026-06-01T01:25:00+07:00"
+    }
+  ],
+  "artifactRefs": [
+    {
+      "id": "ar-001",
+      "projectId": "proj-001",
+      "type": "doc",
+      "path": "artifacts/packages/openclaw_design_os_codex_absorbable_v4/README.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-002",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/DS-003-validation.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-003",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/DS-006-blocked.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-004",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/storybook/DS-002A-storybook-scaffold.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-005",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/visual/DS-002B-playwright-scaffold.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-006",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/visual/DS-006-candidate-baseline-run.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-007",
+      "projectId": "proj-001",
+      "type": "validation_log",
+      "path": "artifacts/evidence/design-system/visual/DS-006-reviewer-inspection.md",
+      "status": "available"
+    },
+    {
+      "id": "ar-008",
+      "projectId": "proj-001",
+      "type": "screenshot",
+      "path": "artifacts/evidence/design-system/visual/review/ds-006-contact-sheet.png",
+      "status": "available"
+    }
+  ],
+  "workPackets": [
+    {
+      "id": "wp-001",
+      "projectId": "proj-001",
+      "title": "Assimilate Design OS docs",
+      "status": "ready",
+      "goalId": "GOAL-DS-001",
+      "artifactRefIds": [
+        "ar-001"
+      ]
+    },
+    {
+      "id": "wp-002",
+      "projectId": "proj-001",
+      "title": "Token audit and finalization",
+      "status": "ready",
+      "goalId": "GOAL-DS-003",
+      "artifactRefIds": [
+        "ar-002"
+      ]
+    },
+    {
+      "id": "wp-003",
+      "projectId": "proj-001",
+      "title": "Mock data and screen registry updates",
+      "status": "ready",
+      "goalId": "GOAL-DS-005",
+      "artifactRefIds": [
+        "ar-002"
+      ]
+    },
+    {
+      "id": "wp-004",
+      "projectId": "proj-001",
+      "title": "Storybook component isolation scaffold",
+      "status": "ready",
+      "goalId": "GOAL-DS-002A",
+      "artifactRefIds": [
+        "ar-004"
+      ]
+    },
+    {
+      "id": "wp-005",
+      "projectId": "proj-001",
+      "title": "Playwright scaffold and visual baselines",
+      "status": "ready",
+      "goalId": "GOAL-DS-002B",
+      "artifactRefIds": [
+        "ar-005",
+        "ar-006",
+        "ar-007",
+        "ar-008"
+      ]
+    }
+  ],
+  "handoffPackets": [
+    {
+      "id": "hp-001",
+      "workPacketId": "wp-001",
+      "title": "Codex DS-001 handoff",
+      "status": "ready",
+      "lockedBy": null
+    }
+  ],
+  "agentRoles": [
+    {
+      "id": "role-001",
+      "name": "Codex",
+      "status": "active",
+      "allowedScope": "bounded implementation"
+    },
+    {
+      "id": "role-002",
+      "name": "Point",
+      "status": "active",
+      "allowedScope": "product approval"
+    }
+  ],
+  "validationResults": [
+    {
+      "id": "val-001",
+      "name": "Package JSON parse",
+      "status": "pass",
+      "checkedAt": "2026-05-31T06:00:00Z",
+      "summary": "Local package JSON files parse."
+    },
+    {
+      "id": "val-002",
+      "name": "Repo npm run validate",
+      "status": "pass",
+      "checkedAt": "2026-05-31T06:32:00Z",
+      "summary": "Repository validation passed after DS-001 and checksum refresh."
+    },
+    {
+      "id": "val-003",
+      "name": "Design token JSON parse",
+      "status": "pass",
+      "checkedAt": "2026-05-31T06:35:00Z",
+      "summary": "docs/design-system/tokens/openclaw.tokens.json parses successfully."
+    },
+    {
+      "id": "val-004",
+      "name": "Storybook smoke start",
+      "status": "pass",
+      "checkedAt": "2026-06-01T00:40:00+07:00",
+      "summary": "npm run storybook:smoke exited 0."
+    },
+    {
+      "id": "val-005",
+      "name": "Repo npm run validate after DS-002A",
+      "status": "pass",
+      "checkedAt": "2026-06-01T00:40:00+07:00",
+      "summary": "Repository validation passed after npm lockfile and Storybook scaffold."
+    },
+    {
+      "id": "val-006",
+      "name": "Playwright visual test run",
+      "status": "pass",
+      "checkedAt": "2026-06-01T01:18:19+07:00",
+      "summary": "PLAYWRIGHT_CHROMIUM_CHANNEL=msedge npm run test:visual exited 0 with 32 passed in 23.1s."
+    }
+  ],
+  "qaGates": [
+    {
+      "id": "gate-001",
+      "name": "DS-001 docs assimilation",
+      "status": "pass",
+      "requiredEvidenceIds": [
+        "ev-001"
+      ],
+      "summary": "Completed and validated; repository check passed."
+    },
+    {
+      "id": "gate-002",
+      "name": "DS-002A Storybook scaffold",
+      "status": "pass",
+      "requiredEvidenceIds": [
+        "ev-007"
+      ],
+      "summary": "npm lockfile, Storybook dev/test config, representative EvidenceCard states, and storybook:smoke output are present."
+    },
+    {
+      "id": "gate-003",
+      "name": "DS-002B Playwright baseline scaffold",
+      "status": "pass",
+      "requiredEvidenceIds": [
+        "ev-008"
+      ],
+      "summary": "npm Playwright scaffold exists and produced candidate screenshots across eight implemented screens and four viewport projects."
+    },
+    {
+      "id": "gate-004",
+      "name": "DS-003 token finalization",
+      "status": "warn",
+      "requiredEvidenceIds": [
+        "ev-004"
+      ],
+      "summary": "Raw-to-semantic token audit is populated; contrast/accessibility sign-off and Point lock remain pending."
+    },
+    {
+      "id": "gate-005",
+      "name": "DS-005 mock registry",
+      "status": "warn",
+      "requiredEvidenceIds": [
+        "ev-005"
+      ],
+      "summary": "Coverage matrix and registry structure are updated; runtime implementation still required in later goals."
+    },
+    {
+      "id": "gate-006",
+      "name": "DS-006 visual baselines",
+      "status": "warn",
+      "requiredEvidenceIds": [
+        "ev-008",
+        "ev-009"
+      ],
+      "summary": "Candidate screenshot output is reviewer-inspected; approved baseline promotion remains pending Point/design reviewer approval."
+    }
+  ],
+  "visualBaselines": [
+    {
+      "id": "vb-001",
+      "screenId": "screen-001",
+      "viewport": "1280px",
+      "state": "default",
+      "artifactPath": "artifacts/evidence/design-system/visual/test-results/static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280/attachments/screen-001-operator-home-default-c06592ab33d1ad361a0d0456f273e3764f0cb363.png",
+      "status": "candidate",
+      "capturedAt": "2026-05-31T18:18:19Z"
+    },
+    {
+      "id": "vb-002",
+      "screenId": "screen-002",
+      "viewport": "760px",
+      "state": "selected",
+      "artifactPath": "artifacts/evidence/design-system/visual/test-results/static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760/attachments/screen-002-workbench-selected-ab7d8c21b7d0a6b18bf35b65d28bf313e5046035.png",
+      "status": "candidate",
+      "capturedAt": "2026-05-31T18:18:19Z"
+    }
+  ]
+}

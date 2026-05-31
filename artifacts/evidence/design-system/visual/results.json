@@ -1,0 +1,1427 @@
+{
+  "config": {
+    "configFile": "C:\\Point\\2026\\projects\\cooperative-cockpit\\playwright.config.mjs",
+    "rootDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "viewportId": "vp-760",
+          "purpose": "narrow/mobile-adjacent stress"
+        },
+        "id": "vp-760",
+        "name": "vp-760",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.visual\\.spec\\.mjs/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "viewportId": "vp-1080",
+          "purpose": "medium workspace"
+        },
+        "id": "vp-1080",
+        "name": "vp-1080",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.visual\\.spec\\.mjs/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "viewportId": "vp-1180",
+          "purpose": "known cockpit breakpoint stress"
+        },
+        "id": "vp-1180",
+        "name": "vp-1180",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.visual\\.spec\\.mjs/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "viewportId": "vp-1280",
+          "purpose": "standard desktop cockpit"
+        },
+        "id": "vp-1280",
+        "name": "vp-1280",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.visual\\.spec\\.mjs/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "./artifacts/evidence/design-system/visual/results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "./artifacts/evidence/design-system/visual/html-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "static-mvp.visual.spec.mjs",
+      "file": "static-mvp.visual.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "static MVP visual scaffold",
+          "file": "static-mvp.visual.spec.mjs",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "screen-001-operator-home default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2932,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:20.991Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-001-operator-home-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-760\\attachments\\screen-001-operator-home-default-0be2d8f3bd821d41848bdf1f556ba6f3a06503e7.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-fb07442897a58e2ea807",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-002-workbench selected candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:24.854Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-002-workbench-selected",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760\\attachments\\screen-002-workbench-selected-ab7d8c21b7d0a6b18bf35b65d28bf313e5046035.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-e854515ac20b916fe943",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-003-spec-builder default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2232,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:28.271Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-003-spec-builder-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-760\\attachments\\screen-003-spec-builder-default-7191a5135a6826d0d294b42fe6fc3eb30b2f7242.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-ac0ab1862ca86d1ce93a",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-004-review-runs default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1847,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:30.561Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-004-review-runs-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-760\\attachments\\screen-004-review-runs-default-069a4b719051bcb8e4f61e42b55925d73473a4b2.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-3033a9dbad200547e6a3",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-005-static-preview default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1977,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:32.463Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-005-static-preview-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-760\\attachments\\screen-005-static-preview-default-d4ad301e97835f248f2e3f7839d953c273726ef6.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-5e868364b5c9ec4826ab",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-006-decision-log pending candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1770,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:34.499Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-006-decision-log-pending",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-760\\attachments\\screen-006-decision-log-pending-7de24948d7bacb543a74f30de3f47930e3ddfe4f.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-6ee2d7107672174c9348",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-007-trace-evidence default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:36.303Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-007-trace-evidence-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-760\\attachments\\screen-007-trace-evidence-default-fa91d7c221594088fb1e9eed6fe25ebb4fadab85.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-e2b1223b13ce423e700f",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-008-rules-scope default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2072,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:38.538Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-008-rules-scope-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-760\\attachments\\screen-008-rules-scope-default-12ab15359bb4af5eb90ca6675d27ef1090d89e2d.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-3b888790be108c45a957",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-001-operator-home default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3080,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:20.991Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-001-operator-home-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1080\\attachments\\screen-001-operator-home-default-72f278e7b9038308f09ae7159fb1df940ef461d8.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-a21b57b6c46304927009",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-002-workbench selected candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3380,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:24.827Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-002-workbench-selected",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1080\\attachments\\screen-002-workbench-selected-6d92c9568604bdeea1a1150f6a1fddc2371d915f.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-cf688b82317f96566355",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-003-spec-builder default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:28.452Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-003-spec-builder-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1080\\attachments\\screen-003-spec-builder-default-300b4decfc1602e75c7ade34fb23796df847ee31.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-ec95da459133edf0b9eb",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-004-review-runs default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2041,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:30.676Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-004-review-runs-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1080\\attachments\\screen-004-review-runs-default-9c9d1d17b91f2d97d751042c8b0d5828968370aa.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-27208ecaee4bb22ee554",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-005-static-preview default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2101,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:32.756Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-005-static-preview-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1080\\attachments\\screen-005-static-preview-default-99e7938c28ebbdf61be5fb5c8668837107857531.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-1200ab2494d499afef13",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-006-decision-log pending candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2101,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:34.939Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-006-decision-log-pending",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1080\\attachments\\screen-006-decision-log-pending-293f7227600575aa4bc0477d179dfa8bd32bb35a.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-745e63efea87fda52de1",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-007-trace-evidence default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2440,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:37.076Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-007-trace-evidence-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1080\\attachments\\screen-007-trace-evidence-default-dd5cd1a19507a6eaf515df5579e9ac16dd158f85.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-b20e845bc59cffeea835",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-008-rules-scope default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2129,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:39.549Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-008-rules-scope-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1080\\attachments\\screen-008-rules-scope-default-ae35bead253411528ca4b7629e52ad645901d1ce.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-d4cf5d425f5ba166c248",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-001-operator-home default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3206,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:21.042Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-001-operator-home-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1180\\attachments\\screen-001-operator-home-default-f772139657a29a112dbf12eac80b1a1d1e41c43e.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-1a15a0693e7d63940c81",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-002-workbench selected candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3353,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:24.997Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-002-workbench-selected",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1180\\attachments\\screen-002-workbench-selected-19eb75ce793f3ae3623fef206483d571bdc5bb98.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-b500d38bbf81918a0d9c",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-003-spec-builder default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2235,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:28.439Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-003-spec-builder-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1180\\attachments\\screen-003-spec-builder-default-16d50e65f0dbc58753a9f880a5e8eb0478594323.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-eeb824d635b914f53d66",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-004-review-runs default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2253,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:30.719Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-004-review-runs-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1180\\attachments\\screen-004-review-runs-default-80cc5c61295d6af1796cebc702c1fbb4bf7464bb.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-d6619285be54c66f0953",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-005-static-preview default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2260,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:32.998Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-005-static-preview-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1180\\attachments\\screen-005-static-preview-default-b57d3dddcb04dba435ee989007f42571179b0db3.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-6f759d0c6412d9bccf5c",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-006-decision-log pending candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2176,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:35.287Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-006-decision-log-pending",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1180\\attachments\\screen-006-decision-log-pending-0cd6c5c0495685bec8bc5662c6350b1bd50cb38c.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-743a690b9f3b7f273de8",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-007-trace-evidence default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2391,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:37.493Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-007-trace-evidence-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1180\\attachments\\screen-007-trace-evidence-default-7c7de90f576676a55e0430d6c1341306dc2ab6b4.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-897b7c5492bc3bb2f693",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-008-rules-scope default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2094,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:39.935Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-008-rules-scope-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1180\\attachments\\screen-008-rules-scope-default-65c527462c4c739f9edad61983757e7e6a64af8d.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-71ea380532bbf3bf4ef4",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-001-operator-home default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 3136,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:20.993Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-001-operator-home-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280\\attachments\\screen-001-operator-home-default-c06592ab33d1ad361a0d0456f273e3764f0cb363.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-18bea876cfd32980beea",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-002-workbench selected candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 3276,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:25.047Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-002-workbench-selected",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1280\\attachments\\screen-002-workbench-selected-108e84aa5277fdfcc05526cdde8e216f845ff58e.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-56bffadf5f57d500ae39",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-003-spec-builder default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2245,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:28.486Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-003-spec-builder-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1280\\attachments\\screen-003-spec-builder-default-9361b1e9e58a6f32a74561fc6ba36c5e6141c943.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-c262c97147dba19d9fb8",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-004-review-runs default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2028,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:30.759Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-004-review-runs-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1280\\attachments\\screen-004-review-runs-default-b51bc118cfa5ed16bcf037715f7d54f30fb25411.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-58bdde82c13489dc957d",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-005-static-preview default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2156,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:32.818Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-005-static-preview-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1280\\attachments\\screen-005-static-preview-default-6b25b1dbfef78461e3654656ec109c58b85318f1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-1a2008da697fd5fd38cb",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-006-decision-log pending candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:35.001Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-006-decision-log-pending",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1280\\attachments\\screen-006-decision-log-pending-b2e8a07ac922ab0f7493c5493d76fe2b816a2f16.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-d8ea68c2742a7c9a714e",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-007-trace-evidence default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:37.222Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-007-trace-evidence-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1280\\attachments\\screen-007-trace-evidence-default-85e0b965e099dcbdf59be6129de653afdc587a32.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-46c34d725b1441589ca6",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "screen-008-rules-scope default candidate screenshot",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2275,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-31T18:18:39.714Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screen-008-rules-scope-default",
+                          "contentType": "image/png",
+                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1280\\attachments\\screen-008-rules-scope-default-746e268c3d8ec5b998ecab8ab1f9b00fb2dee1ef.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-085bbd860d4d9c0ce147",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 68,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-31T18:18:19.848Z",
+    "duration": 23114.641,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
