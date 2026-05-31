@@ -1,0 +1,30 @@
+{
+  "screenId": "screen-005",
+  "screenName": "Static Preview",
+  "routeAssumption": "preview",
+  "artifactObjectServed": "work/handoff packet preview",
+  "requiredComponents": [
+    "HandoffPacketCard",
+    "GovernanceStrip",
+    "WarningState"
+  ],
+  "dataContract": [
+    "workPackets",
+    "handoffPackets",
+    "validationResults"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "locked",
+    "pending"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

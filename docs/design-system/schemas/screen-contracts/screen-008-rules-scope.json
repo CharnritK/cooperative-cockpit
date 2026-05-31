@@ -1,0 +1,27 @@
+{
+  "screenId": "screen-008",
+  "screenName": "Rules & Scope",
+  "routeAssumption": "rules",
+  "artifactObjectServed": "rules and protected surfaces",
+  "requiredComponents": [
+    "GovernanceStrip",
+    "DataTable",
+    "WarningState"
+  ],
+  "dataContract": [
+    "validationResults",
+    "decisions"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

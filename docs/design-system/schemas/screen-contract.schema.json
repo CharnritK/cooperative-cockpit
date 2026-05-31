@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.local/schemas/screen-contract.schema.json",
+  "title": "OpenClaw screen contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "screenId",
+    "screenName",
+    "routeAssumption",
+    "artifactObjectServed",
+    "requiredComponents",
+    "dataContract",
+    "statesRequired",
+    "approvalStatus",
+    "owner",
+    "implementationStatus"
+  ],
+  "properties": {
+    "screenId": {
+      "type": "string",
+      "pattern": "^screen-[0-9]{3}$"
+    },
+    "screenName": {
+      "type": "string",
+      "minLength": 3
+    },
+    "routeAssumption": {
+      "type": "string"
+    },
+    "artifactObjectServed": {
+      "type": "string"
+    },
+    "requiredComponents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "dataContract": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "statesRequired": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "default",
+          "dense",
+          "empty",
+          "loading",
+          "warning",
+          "error",
+          "disabled",
+          "selected",
+          "locked",
+          "pending"
+        ]
+      }
+    },
+    "approvalStatus": {
+      "enum": [
+        "proposed",
+        "approved-template",
+        "approved-for-implementation",
+        "deprecated"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "implementationStatus": {
+      "enum": [
+        "not_started",
+        "in_progress",
+        "implemented",
+        "blocked",
+        "unknown"
+      ]
+    }
+  },
+  "x-validationFailureExamples": [
+    {
+      "case": "implementation overclaim",
+      "invalid": {
+        "screenId": "screen-999",
+        "implementationStatus": "done"
+      }
+    },
+    {
+      "case": "missing state coverage",
+      "invalid": {
+        "statesRequired": []
+      }
+    }
+  ]
+}

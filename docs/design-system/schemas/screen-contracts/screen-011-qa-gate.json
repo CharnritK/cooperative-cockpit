@@ -1,0 +1,30 @@
+{
+  "screenId": "screen-011",
+  "screenName": "QA Gate / Acceptance View",
+  "routeAssumption": "/qa-gate",
+  "artifactObjectServed": "QA gates",
+  "requiredComponents": [
+    "KpiCard",
+    "RiskBadge",
+    "DataTable",
+    "WarningState"
+  ],
+  "dataContract": [
+    "qaGates",
+    "validationResults",
+    "visualBaselines"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "pending"
+  ],
+  "approvalStatus": "proposed",
+  "owner": "Point",
+  "implementationStatus": "not_started"
+}

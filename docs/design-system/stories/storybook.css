@@ -1,0 +1,245 @@
+:root {
+  color-scheme: light;
+  font-family: Outfit, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f6f8fb;
+  color: #0f172a;
+}
+
+.oc-story-frame {
+  max-width: 760px;
+  padding: 24px;
+}
+
+.oc-evidence-card {
+  --oc-card-border: #dbe3ee;
+  --oc-card-bg: #ffffff;
+  --oc-status-bg: #e0f2fe;
+  --oc-status-text: #075985;
+  --oc-status-border: #7dd3fc;
+  display: grid;
+  gap: 12px;
+  max-width: 560px;
+  padding: 16px;
+  border: 1px solid var(--oc-card-border);
+  border-radius: 6px;
+  background: var(--oc-card-bg);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+.oc-evidence-card[data-density="dense"] {
+  gap: 8px;
+  padding: 12px;
+}
+
+.oc-evidence-card[data-state="warning"] {
+  --oc-card-border: #fdba74;
+  --oc-status-bg: #ffedd5;
+  --oc-status-text: #9a3412;
+  --oc-status-border: #fdba74;
+}
+
+.oc-evidence-card[data-state="error"] {
+  --oc-card-border: #fca5a5;
+  --oc-status-bg: #fee2e2;
+  --oc-status-text: #991b1b;
+  --oc-status-border: #fca5a5;
+}
+
+.oc-evidence-card[data-state="disabled"] {
+  opacity: 0.62;
+}
+
+.oc-evidence-card__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.oc-evidence-card__title {
+  margin: 0;
+  font-family: Rajdhani, Outfit, system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.oc-evidence-card__meta,
+.oc-evidence-card__summary,
+.oc-evidence-card__empty {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.oc-evidence-card__status {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid var(--oc-status-border);
+  border-radius: 999px;
+  background: var(--oc-status-bg);
+  color: var(--oc-status-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.oc-evidence-card__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.oc-evidence-card__button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #9fb4d0;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.oc-evidence-card__button:focus-visible {
+  outline: 3px solid rgba(8, 145, 178, 0.28);
+  outline-offset: 2px;
+}
+
+.oc-evidence-card__button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.oc-evidence-card__skeleton {
+  display: grid;
+  gap: 8px;
+}
+
+.oc-evidence-card__skeleton span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #edf2f7, #dbe3ee, #edf2f7);
+}
+
+.oc-evidence-card__skeleton span:first-child {
+  width: 72%;
+}
+
+.oc-evidence-card__skeleton span:last-child {
+  width: 46%;
+}
+
+.oc-decision-card {
+  --oc-decision-border: #dbe3ee;
+  --oc-decision-bg: #ffffff;
+  display: grid;
+  gap: 12px;
+  max-width: 620px;
+  padding: 16px;
+  border: 1px solid var(--oc-decision-border);
+  border-radius: 6px;
+  background: var(--oc-decision-bg);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+.oc-decision-card[data-density="dense"] {
+  gap: 8px;
+  padding: 12px;
+}
+
+.oc-decision-card[data-state="warning"] {
+  --oc-decision-border: #fdba74;
+}
+
+.oc-decision-card[data-state="error"] {
+  --oc-decision-border: #fca5a5;
+}
+
+.oc-decision-card[data-state="selected"] {
+  --oc-decision-border: #0891b2;
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.22), 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+.oc-decision-card[data-state="disabled"] {
+  opacity: 0.62;
+}
+
+.oc-decision-card__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.oc-decision-card__title {
+  margin: 0;
+  font-family: Rajdhani, Outfit, system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.oc-decision-card__summary,
+.oc-decision-card__meta,
+.oc-decision-card__empty {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.oc-decision-card__status {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.oc-decision-card[data-state="error"] .oc-decision-card__status {
+  border-color: #fca5a5;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.oc-decision-card[data-state="selected"] .oc-decision-card__status {
+  border-color: #7dd3fc;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.oc-decision-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.oc-decision-card__button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid #9fb4d0;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.oc-decision-card__button:focus-visible {
+  outline: 3px solid rgba(8, 145, 178, 0.28);
+  outline-offset: 2px;
+}
+
+.oc-decision-card__button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}

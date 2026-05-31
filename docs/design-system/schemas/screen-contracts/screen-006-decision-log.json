@@ -1,0 +1,30 @@
+{
+  "screenId": "screen-006",
+  "screenName": "Decision Log",
+  "routeAssumption": "decisions",
+  "artifactObjectServed": "decisions",
+  "requiredComponents": [
+    "DecisionCard",
+    "DataTable",
+    "StatusBadge"
+  ],
+  "dataContract": [
+    "decisions",
+    "evidenceItems"
+  ],
+  "statesRequired": [
+    "default",
+    "dense",
+    "empty",
+    "loading",
+    "warning",
+    "error",
+    "disabled",
+    "selected",
+    "locked",
+    "pending"
+  ],
+  "approvalStatus": "approved-template",
+  "owner": "Point",
+  "implementationStatus": "implemented"
+}

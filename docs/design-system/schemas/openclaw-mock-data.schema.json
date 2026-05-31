@@ -1,0 +1,1179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.local/schemas/openclaw-mock-data.schema.json",
+  "title": "OpenClaw mock data v1",
+  "$comment": "Cross-reference constraints such as evidenceIds referring to evidenceItems are validated by review/check scripts, not fully by this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "meta",
+    "workspace",
+    "project",
+    "contextNodes",
+    "selectedContext",
+    "specTemplates",
+    "specDraft",
+    "specFields",
+    "reviewRuns",
+    "findings",
+    "decisions",
+    "evidenceItems",
+    "artifactRefs",
+    "workPackets",
+    "handoffPackets",
+    "agentRoles",
+    "validationResults",
+    "qaGates",
+    "visualBaselines"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "fixtureStatus",
+        "createdAt"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "fixtureStatus": {
+          "enum": [
+            "candidate",
+            "approved",
+            "deprecated"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "workspace": {
+      "$ref": "#/$defs/workspace"
+    },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
+    "contextNodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/contextNode"
+      }
+    },
+    "selectedContext": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]{2,8}-[0-9]{3}$"
+      }
+    },
+    "specTemplates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/specTemplate"
+      }
+    },
+    "specDraft": {
+      "$ref": "#/$defs/specDraft"
+    },
+    "specFields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/specField"
+      }
+    },
+    "reviewRuns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/reviewRun"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
+    },
+    "evidenceItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "artifactRefs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactRef"
+      }
+    },
+    "workPackets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/workPacket"
+      }
+    },
+    "handoffPackets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/handoffPacket"
+      }
+    },
+    "agentRoles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/agentRole"
+      }
+    },
+    "validationResults": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/validationResult"
+      }
+    },
+    "qaGates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/qaGate"
+      }
+    },
+    "visualBaselines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/visualBaseline"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]{2,8}-[0-9]{3}$"
+    },
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "archived"
+          ]
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "workspaceId",
+        "name",
+        "status",
+        "owner"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "workspaceId": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "paused",
+            "archived"
+          ]
+        },
+        "owner": {
+          "type": "string"
+        }
+      }
+    },
+    "contextNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "type",
+        "title",
+        "status",
+        "riskLevel"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "product_context",
+            "design_direction",
+            "protected_surface",
+            "qa_evidence",
+            "source_note"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "included",
+            "excluded",
+            "protected"
+          ]
+        },
+        "riskLevel": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        }
+      }
+    },
+    "specTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "deprecated"
+          ]
+        }
+      }
+    },
+    "specDraft": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "templateId",
+        "title",
+        "status",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "templateId": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "valid",
+            "invalid",
+            "locked"
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "specField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "specId",
+        "label",
+        "value",
+        "required",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "specId": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "unresolved",
+            "suggested",
+            "locked"
+          ]
+        }
+      }
+    },
+    "reviewRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "specId",
+        "reviewer",
+        "status",
+        "result",
+        "startedAt",
+        "endedAt"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "specId": {
+          "$ref": "#/$defs/id"
+        },
+        "reviewer": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "inspected",
+            "closed"
+          ]
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "warn",
+            "fail",
+            "not_reviewed"
+          ]
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "reviewRunId",
+        "title",
+        "severity",
+        "status",
+        "evidenceIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "reviewRunId": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "status": {
+          "enum": [
+            "open",
+            "acknowledged",
+            "deferred",
+            "resolved"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "status",
+        "lockedBy",
+        "lockedAt",
+        "evidenceIds",
+        "rationale"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending_point_lock",
+            "locked",
+            "deferred"
+          ]
+        },
+        "lockedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lockedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "type",
+        "title",
+        "status",
+        "sourceObjectId",
+        "targetObjectId",
+        "summary",
+        "createdAt"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "doc",
+            "visual",
+            "fixture",
+            "validation",
+            "screenshot",
+            "code"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "incomplete",
+            "warning",
+            "missing"
+          ]
+        },
+        "sourceObjectId": {
+          "$ref": "#/$defs/id"
+        },
+        "targetObjectId": {
+          "$ref": "#/$defs/id"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "type",
+        "path",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "zip_package",
+            "validation_log",
+            "screenshot",
+            "doc",
+            "mock_fixture"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "available",
+            "missing",
+            "approved"
+          ]
+        }
+      }
+    },
+    "workPacket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "title",
+        "status",
+        "goalId",
+        "artifactRefIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready",
+            "blocked",
+            "locked"
+          ]
+        },
+        "goalId": {
+          "type": "string",
+          "pattern": "^GOAL-DS-[0-9]{3}[A-Z]?$"
+        },
+        "artifactRefIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "handoffPacket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "workPacketId",
+        "title",
+        "status",
+        "lockedBy"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "workPacketId": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready",
+            "locked"
+          ]
+        },
+        "lockedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "agentRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status",
+        "allowedScope"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        },
+        "allowedScope": {
+          "type": "string"
+        }
+      }
+    },
+    "validationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status",
+        "checkedAt",
+        "summary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "warn",
+            "fail",
+            "not_run"
+          ]
+        },
+        "checkedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "qaGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "status",
+        "requiredEvidenceIds",
+        "summary"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "warn",
+            "fail",
+            "pending"
+          ]
+        },
+        "requiredEvidenceIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "visualBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "screenId",
+        "viewport",
+        "state",
+        "artifactPath",
+        "status",
+        "capturedAt"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "screenId": {
+          "type": "string",
+          "pattern": "^screen-[0-9]{3}$"
+        },
+        "viewport": {
+          "enum": [
+            "760px",
+            "1080px",
+            "1180px",
+            "1280px"
+          ]
+        },
+        "state": {
+          "type": "string"
+        },
+        "artifactPath": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "approved",
+            "needs_review",
+            "blocked"
+          ]
+        },
+        "capturedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "meta": {
+        "version": "v1",
+        "fixtureStatus": "candidate",
+        "createdAt": "2026-05-31T00:00:00Z"
+      },
+      "workspace": {
+        "id": "ws-001",
+        "name": "OpenClaw Workspace",
+        "status": "active"
+      },
+      "project": {
+        "id": "proj-001",
+        "workspaceId": "ws-001",
+        "name": "Cooperative Cockpit Static MVP",
+        "status": "active",
+        "owner": "Point"
+      },
+      "contextNodes": [
+        {
+          "id": "ctx-001",
+          "projectId": "proj-001",
+          "type": "product_context",
+          "title": "Static MVP boundaries",
+          "status": "included",
+          "riskLevel": "medium"
+        },
+        {
+          "id": "ctx-002",
+          "projectId": "proj-001",
+          "type": "design_direction",
+          "title": "Workflow studio visual direction",
+          "status": "included",
+          "riskLevel": "low"
+        },
+        {
+          "id": "ctx-003",
+          "projectId": "proj-001",
+          "type": "protected_surface",
+          "title": "No backend/API/auth/deployment",
+          "status": "protected",
+          "riskLevel": "critical"
+        },
+        {
+          "id": "ctx-004",
+          "projectId": "proj-001",
+          "type": "qa_evidence",
+          "title": "Visual regression evidence",
+          "status": "included",
+          "riskLevel": "medium"
+        }
+      ],
+      "selectedContext": [
+        "ctx-001",
+        "ctx-002",
+        "ctx-003"
+      ],
+      "specTemplates": [
+        {
+          "id": "tmpl-001",
+          "name": "Screen Contract",
+          "status": "available"
+        },
+        {
+          "id": "tmpl-002",
+          "name": "Component Contract",
+          "status": "available"
+        }
+      ],
+      "specDraft": {
+        "id": "spec-001",
+        "projectId": "proj-001",
+        "templateId": "tmpl-001",
+        "title": "Design OS v4 Assimilation",
+        "status": "draft",
+        "updatedAt": "2026-05-31T02:00:00Z"
+      },
+      "specFields": [
+        {
+          "id": "field-001",
+          "specId": "spec-001",
+          "label": "Allowed paths",
+          "value": "docs/design-system/**",
+          "required": true,
+          "status": "locked"
+        },
+        {
+          "id": "field-002",
+          "specId": "spec-001",
+          "label": "Validation commands",
+          "value": "npm run validate",
+          "required": true,
+          "status": "suggested"
+        },
+        {
+          "id": "field-003",
+          "specId": "spec-001",
+          "label": "Visual baselines",
+          "value": "reviewed candidate screenshots; approved baselines pending Point/design review",
+          "required": false,
+          "status": "unresolved"
+        }
+      ],
+      "reviewRuns": [
+        {
+          "id": "rr-001",
+          "specId": "spec-001",
+          "reviewer": "QA Agent",
+          "status": "queued",
+          "result": "not_reviewed",
+          "startedAt": "2026-05-31T03:00:00Z",
+          "endedAt": "2026-05-31T03:10:00Z"
+        },
+        {
+          "id": "rr-002",
+          "specId": "spec-001",
+          "reviewer": "UI Critic",
+          "status": "inspected",
+          "result": "warn",
+          "startedAt": "2026-05-31T04:00:00Z",
+          "endedAt": "2026-05-31T04:15:00Z"
+        }
+      ],
+      "findings": [
+        {
+          "id": "find-001",
+          "reviewRunId": "rr-002",
+          "title": "Path consistency must be verified",
+          "severity": "high",
+          "status": "open",
+          "evidenceIds": [
+            "ev-001"
+          ]
+        },
+        {
+          "id": "find-002",
+          "reviewRunId": "rr-002",
+          "title": "Token audit requires contrast evidence",
+          "severity": "medium",
+          "status": "deferred",
+          "evidenceIds": [
+            "ev-002"
+          ]
+        },
+        {
+          "id": "find-003",
+          "reviewRunId": "rr-002",
+          "title": "Mock data is safe and fictional",
+          "severity": "low",
+          "status": "acknowledged",
+          "evidenceIds": [
+            "ev-003"
+          ]
+        }
+      ],
+      "decisions": [
+        {
+          "id": "dec-001",
+          "title": "Approve Storybook dev/test integration",
+          "status": "locked",
+          "lockedBy": "Point",
+          "lockedAt": "2026-05-31T05:00:00Z",
+          "evidenceIds": [
+            "ev-001"
+          ],
+          "rationale": "Needed for component isolation and state coverage."
+        },
+        {
+          "id": "dec-002",
+          "title": "Approve Playwright visual regression",
+          "status": "locked",
+          "lockedBy": "Point",
+          "lockedAt": "2026-05-31T05:05:00Z",
+          "evidenceIds": [
+            "ev-002"
+          ],
+          "rationale": "Needed for screenshot regression evidence."
+        },
+        {
+          "id": "dec-003",
+          "title": "Finalize audited token values",
+          "status": "pending_point_lock",
+          "lockedBy": null,
+          "lockedAt": null,
+          "evidenceIds": [],
+          "rationale": "Requires raw-to-semantic audit and contrast checks."
+        }
+      ],
+      "evidenceItems": [
+        {
+          "id": "ev-001",
+          "projectId": "proj-001",
+          "type": "doc",
+          "title": "Design OS package audit",
+          "status": "complete",
+          "sourceObjectId": "spec-001",
+          "targetObjectId": "dec-001",
+          "summary": "Confirms goal split and path consistency requirements.",
+          "createdAt": "2026-05-31T05:10:00Z"
+        },
+        {
+          "id": "ev-002",
+          "projectId": "proj-001",
+          "type": "visual",
+          "title": "Token audit placeholder",
+          "status": "warning",
+          "sourceObjectId": "ctx-002",
+          "targetObjectId": "dec-003",
+          "summary": "Contrast is not complete until DS-003.",
+          "createdAt": "2026-05-31T05:15:00Z"
+        },
+        {
+          "id": "ev-003",
+          "projectId": "proj-001",
+          "type": "fixture",
+          "title": "Mock data safety review",
+          "status": "complete",
+          "sourceObjectId": "proj-001",
+          "targetObjectId": "find-003",
+          "summary": "Fixture uses fictional names and no secrets.",
+          "createdAt": "2026-05-31T05:20:00Z"
+        }
+      ],
+      "artifactRefs": [
+        {
+          "id": "ar-001",
+          "projectId": "proj-001",
+          "type": "doc",
+          "path": "artifacts/packages/openclaw_design_os_codex_absorbable_v4/README.md",
+          "status": "available"
+        },
+        {
+          "id": "ar-002",
+          "projectId": "proj-001",
+          "type": "validation_log",
+          "path": "artifacts/evidence/design-system/DS-001-closeout.md",
+          "status": "available"
+        }
+      ],
+      "workPackets": [
+        {
+          "id": "wp-001",
+          "projectId": "proj-001",
+          "title": "Assimilate Design OS docs",
+          "status": "ready",
+          "goalId": "GOAL-DS-001",
+          "artifactRefIds": [
+            "ar-001"
+          ]
+        }
+      ],
+      "handoffPackets": [
+        {
+          "id": "hp-001",
+          "workPacketId": "wp-001",
+          "title": "Codex DS-001 handoff",
+          "status": "ready",
+          "lockedBy": null
+        }
+      ],
+      "agentRoles": [
+        {
+          "id": "role-001",
+          "name": "Codex",
+          "status": "active",
+          "allowedScope": "bounded implementation"
+        },
+        {
+          "id": "role-002",
+          "name": "Point",
+          "status": "active",
+          "allowedScope": "product approval"
+        }
+      ],
+      "validationResults": [
+        {
+          "id": "val-001",
+          "name": "Package JSON parse",
+          "status": "pass",
+          "checkedAt": "2026-05-31T06:00:00Z",
+          "summary": "Local package JSON files parse."
+        },
+        {
+          "id": "val-002",
+          "name": "Repo npm run validate",
+          "status": "pass",
+          "checkedAt": "2026-05-31T06:32:00Z",
+          "summary": "Repository validation passed during Codex closeout."
+        }
+      ],
+      "qaGates": [
+        {
+          "id": "gate-001",
+          "name": "DS-001 docs assimilation",
+          "status": "pass",
+          "requiredEvidenceIds": [
+            "ev-001"
+          ],
+          "summary": "Codex closeout validation passed with documented scope warnings."
+        }
+      ],
+      "visualBaselines": [
+        {
+          "id": "vb-001",
+          "screenId": "screen-001",
+          "viewport": "1280px",
+          "state": "default",
+          "artifactPath": "artifacts/evidence/design-system/visual/home-default-1280.png",
+          "status": "blocked",
+          "capturedAt": null
+        },
+        {
+          "id": "vb-002",
+          "screenId": "screen-002",
+          "viewport": "760px",
+          "state": "selected",
+          "artifactPath": "artifacts/evidence/design-system/visual/workbench-selected-760.png",
+          "status": "blocked",
+          "capturedAt": null
+        }
+      ]
+    }
+  ],
+  "x-validationFailureExamples": [
+    {
+      "case": "missing required field",
+      "invalid": {
+        "workspace": {
+          "id": "ws-001"
+        }
+      }
+    },
+    {
+      "case": "bad status enum",
+      "invalid": {
+        "finding": {
+          "severity": "urgent"
+        }
+      }
+    },
+    {
+      "case": "real PII risk",
+      "invalid": {
+        "owner": "real-user@example.com"
+      }
+    }
+  ]
+}

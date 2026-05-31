@@ -20,6 +20,7 @@
 - GOAL-009 canon reconciliation declares authoritative sources, removes the stale duplicate setup package from active repo scope, normalizes object terminology, adds concept-consistency validation, and hardens static handoff readiness semantics. Evidence is recorded in `artifacts/evidence/GOAL-009-validation.md`.
 - P1A static MVP UX interaction hardening is implemented in the current working tree, including safe pasted-audit visual/token refinements while deferring dark mode toggle/storage. Automated validation passes after Point-authorized static MVP package manifest checksum refresh. Evidence is recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`; Codex Browser Use direct `file://` QA remains blocked by policy, but Point-reported normal-browser manual QA is recorded as passing.
 - P1B static MVP UX simplification hardening is implemented in the current working tree, reducing Home explanation density, removing the redundant Workbench primary workflow strip, replacing the free-position Workbench canvas with an ordered responsive node layout, replacing sparse decision cards with denser operational rows, simplifying top-bar competition, and removing demo/development-block language from rendered UI while preserving local safety semantics. Evidence is recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`.
+- Design OS v4 docs and governance packets are being assimilated under `docs/design-system/**` and `.codex/goals/GOAL-DS-*`. DS-001 docs assimilation validates locally; DS-002A Storybook dev/test scaffold is implemented with npm/package-lock and smoke evidence; DS-002B Playwright scaffold validates locally; DS-006 candidate screenshots exist for eight implemented screens across four viewport projects and are reviewer-inspected as candidate evidence; DS-004 docs-only component stories cover EvidenceCard and DecisionCard state contracts; DS-003 token audit evidence and DS-005 mock/registry contracts validate locally with warnings. Final token approval, approved visual baseline sign-off, product-canon registry adoption, runtime component migration, and new-screen changes remain pending Point/design-system lock. Evidence is recorded under `artifacts/evidence/design-system/`.
 
 ## Completed Assimilation
 
@@ -37,10 +38,16 @@
 | GOAL-009 canon reconciliation | Complete | Source authority, product status, object terminology, readiness semantics, manifests, and duplicate package surfaces are reconciled. Evidence recorded in `artifacts/evidence/GOAL-009-validation.md`. |
 | P1A static MVP UX interaction hardening | Complete | Safe local interaction fixes and safe pasted-audit visual/token refinements are implemented. `npm run validate` passes after Point-authorized package manifest checksum refresh. Codex Browser Use direct rendered QA remains blocked, but Point-reported normal-browser manual QA is recorded as passing. Evidence recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`. |
 | P1B static MVP UX simplification hardening | Complete | Home, Workbench, Decisions, inspector tabs and top bar are simplified within static/offline boundaries. Browser render checks cover 760px, 1080px, 1180px and 1280px widths through a local static server. Evidence recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`. |
+| GOAL-DS-001 Design OS docs assimilation | PASS_WITH_WARNINGS | Design OS docs/goals are present and validate; package metadata/evidence paths are tracked as broader assimilation scope outside the DS-001 docs-only packet. Evidence recorded under `artifacts/evidence/design-system/`. |
+| GOAL-DS-002A Design OS Storybook scaffold | PASS | npm lockfile and Storybook dev/test scaffold exist; `npm run storybook:smoke` passes. Evidence recorded in `artifacts/evidence/design-system/storybook/DS-002A-storybook-scaffold.md`. |
+| GOAL-DS-002B Design OS Playwright scaffold | PASS | npm Playwright scaffold exists; `PLAYWRIGHT_CHROMIUM_CHANNEL=msedge npm run test:visual` passes with 32 screenshots. Evidence recorded in `artifacts/evidence/design-system/visual/DS-002B-playwright-scaffold.md`. |
+| GOAL-DS-004 Component taxonomy and stories | PASS_WITH_WARNINGS | Docs-only `EvidenceCard` and `DecisionCard` stories cover the required state vocabulary. Runtime component extraction remains Point-locked. |
+| GOAL-DS-006 Design OS candidate visual baselines | PASS_WITH_WARNINGS / reviewed candidate | Candidate screenshot output exists for eight implemented screens across four viewport projects and reviewer inspection is recorded. Baselines remain candidate until Point/design reviewer approval promotes them. |
+| GOAL-DS-003/005 Design OS tokens, mock data, registry | PASS_WITH_WARNINGS / needs Point lock | DS-003 token audit now covers representative contrast plus type, spacing, radius, shadow, z-index, motion and layout gaps. DS-005 mock fixture, registry docs, and 12 screen-contract records parse and pass manual required-key/enum validation. Final token approval, product-canon registry adoption, and app runtime data migration require Point lock. |
 
 ## Guardrails
 
-- No dependencies were added.
+- Only Storybook dev/test dependencies were added for DS-002A.
 - No backend, API, authentication, deployment, real AI, runtime mutation, or repository-write behavior was introduced.
 - Static golden-path additions use mock data only and do not add repo scanning, external connectors, or persistent storage.
 - Point accepted the static MVP object-model defaults for GOAL-005 and the GOAL-007 Work Packet / Handoff Packet semantics.
@@ -49,4 +56,4 @@
 
 ## Next Recommended Step
 
-Use the P1B evidence as the static MVP UX-hardening baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
+Decide whether to promote DS-006 reviewed candidate screenshots to approved visual baselines. Do not perform runtime migration, token adoption, or new screen implementation until the relevant Point locks are satisfied.
