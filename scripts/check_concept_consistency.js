@@ -143,6 +143,57 @@ function checkPreviewSyncRequiresCompleteReadiness() {
   }
 }
 
+function checkWorkbenchDefaultFlatFlowContract() {
+  const context = createAppContext();
+  const state = context.window.appState;
+
+  if (state.viewMode !== 'flat') {
+    fail(`static MVP Workbench must default to flat flow before PR evidence; current default is ${state.viewMode}`);
+    return;
+  }
+
+  const orderedNodes = context.getOrderedWorkbenchNodes();
+  const nodeIds = orderedNodes.map((node) => node.id);
+  const expectedNodeIds = Array.from({ length: 8 }, (_, index) => `node-${index + 1}`);
+
+  if (nodeIds.join(',') !== expectedNodeIds.join(',')) {
+    fail(`static MVP Workbench flat flow must render ordered task nodes ${expectedNodeIds.join(',')}; saw ${nodeIds.join(',')}`);
+  }
+}
+
+function checkWorkbenchFlatFlowLegendContract() {
+  const appFile = path.join(root, 'apps', 'static-mvp', 'src', 'app.js');
+  const stylesFile = path.join(root, 'apps', 'static-mvp', 'styles', 'components.css');
+  const appSource = fs.readFileSync(appFile, 'utf8');
+  const stylesSource = fs.readFileSync(stylesFile, 'utf8');
+
+  if (!appSource.includes('`node-canvas canvas-mode-${window.appState.viewMode}`')) {
+    fail(`${rel(appFile)} must mark the canvas with the active view mode so flat-flow legend layout can be scoped safely`);
+  }
+
+  const legendAppendIndex = appSource.indexOf('canvas.appendChild(legend);');
+  const flowAppendIndex = appSource.indexOf('canvas.appendChild(flow);');
+  if (legendAppendIndex === -1 || flowAppendIndex === -1 || legendAppendIndex > flowAppendIndex) {
+    fail(`${rel(appFile)} must append the edge legend before the flat-flow node grid so it participates in layout instead of covering nodes`);
+  }
+
+  if (!/\.canvas-mode-flat\s+\.canvas-legend\s*{[\s\S]*?position:\s*relative;/.test(stylesSource)) {
+    fail(`${rel(stylesFile)} must dock the edge legend in normal flow for Flat Flow instead of using the absolute map overlay position`);
+  }
+
+  if (!/\.canvas-mode-flat\s+\.canvas-legend-items\s*{[\s\S]*?display:\s*flex;/.test(stylesSource)) {
+    fail(`${rel(stylesFile)} must allow flat-flow edge legend items to wrap inline without overlapping the node grid`);
+  }
+
+  if (!/\.canvas-legend-line\.edge-pending\s*{[\s\S]*?repeating-linear-gradient/.test(stylesSource)) {
+    fail(`${rel(stylesFile)} must render the Pending legend sample as dashed to match pending edge styling`);
+  }
+
+  if (!/\.canvas-legend-line\.edge-risk\s*{[\s\S]*?repeating-linear-gradient/.test(stylesSource)) {
+    fail(`${rel(stylesFile)} must render the Risk legend sample as dashed to match risk edge styling`);
+  }
+}
+
 function checkStaleDuplicateRepoSurface() {
   const duplicate = path.join(root, 'cooperative-cockpit-repo-setup-final');
   if (fs.existsSync(duplicate)) {
@@ -192,6 +243,8 @@ checkHandoffPlaceholderSchema();
 checkStaticHandoffManifestSelfLists();
 checkReadinessCannotOverrideEvidenceState();
 checkPreviewSyncRequiresCompleteReadiness();
+checkWorkbenchDefaultFlatFlowContract();
+checkWorkbenchFlatFlowLegendContract();
 checkStaleDuplicateRepoSurface();
 checkStaticMvpManifestChecksum();
 

@@ -18,6 +18,8 @@
 - GOAL-007 added the Work Packet summary and derived static Handoff Packet preview; evidence is recorded in `artifacts/evidence/GOAL-007-validation.md`.
 - GOAL-008 QA closeout hardens object-model, scope-creep, no-network, unsafe-label, no-new-pages and static handoff-readiness evidence under `quality/`, `apps/static-mvp/QA_CHECKLIST.md` and `artifacts/evidence/GOAL-008-validation.md`.
 - GOAL-009 canon reconciliation declares authoritative sources, removes the stale duplicate setup package from active repo scope, normalizes object terminology, adds concept-consistency validation, and hardens static handoff readiness semantics. Evidence is recorded in `artifacts/evidence/GOAL-009-validation.md`.
+- P1A static MVP UX interaction hardening is implemented in the current working tree, including safe pasted-audit visual/token refinements while deferring dark mode toggle/storage. Automated validation passes after Point-authorized static MVP package manifest checksum refresh. Evidence is recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`; Codex Browser Use direct `file://` QA remains blocked by policy, but Point-reported normal-browser manual QA is recorded as passing.
+- P1B static MVP UX simplification hardening is implemented in the current working tree, reducing Home explanation density, removing the redundant Workbench primary workflow strip, replacing the free-position Workbench canvas with an ordered responsive node layout, replacing sparse decision cards with denser operational rows, simplifying top-bar competition, and removing demo/development-block language from rendered UI while preserving local safety semantics. Evidence is recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`.
 
 ## Completed Assimilation
 
@@ -33,6 +35,8 @@
 | GOAL-007 Work Packet / Handoff Packet preview | Complete | Preview shows Work Packet as the core object and Handoff Packet as a derived static preview with gated readiness. Evidence recorded in `artifacts/evidence/GOAL-007-validation.md`. |
 | GOAL-008 QA hardening and evidence closeout | Complete | QA docs cover object visibility, scope guardrails, static handoff readiness, no-network, unsafe-label and no-new-pages checks. Evidence recorded in `artifacts/evidence/GOAL-008-validation.md`. |
 | GOAL-009 canon reconciliation | Complete | Source authority, product status, object terminology, readiness semantics, manifests, and duplicate package surfaces are reconciled. Evidence recorded in `artifacts/evidence/GOAL-009-validation.md`. |
+| P1A static MVP UX interaction hardening | Complete | Safe local interaction fixes and safe pasted-audit visual/token refinements are implemented. `npm run validate` passes after Point-authorized package manifest checksum refresh. Codex Browser Use direct rendered QA remains blocked, but Point-reported normal-browser manual QA is recorded as passing. Evidence recorded in `artifacts/evidence/P1A-static-mvp-ux-interaction-hardening.md`. |
+| P1B static MVP UX simplification hardening | Complete | Home, Workbench, Decisions, inspector tabs and top bar are simplified within static/offline boundaries. Browser render checks cover 760px, 1080px, 1180px and 1280px widths through a local static server. Evidence recorded in `artifacts/evidence/P1B-static-mvp-ux-simplification-hardening.md`. |
 
 ## Guardrails
 
@@ -45,4 +49,4 @@
 
 ## Next Recommended Step
 
-Use GOAL-008/GOAL-009 evidence as the static MVP closeout baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
+Use the P1B evidence as the static MVP UX-hardening baseline before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
