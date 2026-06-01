@@ -183,3 +183,21 @@ It is not repo-complete until Codex applies goals and records validation evidenc
 - Final token approval remains pending Point/design-system lock even though DS-003 technical audit evidence now exists.
 - Product-canon reconciliation is still required before any new registry screen is treated as implemented product scope.
 - Package-manager decision record is recorded in `artifacts/evidence/design-system/DS-002-package-manager-decision-request.md`.
+
+## Live path mapping
+
+| Package path | Repository path |
+| --- | --- |
+| `index.html` | `apps/static-mvp/index.html` |
+| `src/` | `apps/static-mvp/src/` |
+| `styles/` | `apps/static-mvp/styles/` |
+| `assets/` | `apps/static-mvp/assets/` |
+| `handoff/` | `apps/static-mvp/handoff/` |
+| `design-system/` | `docs/design-system/` |
+| `design-system/schemas/` | `docs/design-system/schemas/` |
+| `design-system/stories/` | `docs/design-system/stories/` |
+| `ops/` | `docs/ops/` |
+| `evidence/` | `artifacts/evidence/` |
+
+Use repository paths as the editable source of truth. Package paths describe the handoff bundle shape only.
+

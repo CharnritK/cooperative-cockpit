@@ -136,7 +136,7 @@ Use this format before asking Codex cloud or Codex local to act.
 ## Context
 - Repo: `/mnt/c/Point/2026/projects/cooperative-cockpit`
 - Current project type: static frontend prototype
-- Relevant docs: `README.md`, `BUILD_SPEC.md`, `QA_CHECKLIST.md`
+- Relevant docs: `README.md`, `apps/static-mvp/BUILD_SPEC.md`, `apps/static-mvp/QA_CHECKLIST.md`
 
 ## Files In Scope
 - [Exact file paths Codex may read or edit.]
@@ -258,4 +258,9 @@ Every worker should report in this shape:
 - Review actions stay inspect-only.
 - Handoff controls stay gated until `appState.handoffReady` is true.
 - Network activity should be limited to local static files.
-- If implementation changes runtime files, validate against `QA_CHECKLIST.md`.
+- If implementation changes runtime files, validate against `apps/static-mvp/QA_CHECKLIST.md`.
+
+## External connector boundary
+
+Cloudflare MCP references are planning-only unless a separately approved and provisioned connector is declared for the task. The current autonomous scope is static files, docs, local scripts, local evidence, and local validation.
+

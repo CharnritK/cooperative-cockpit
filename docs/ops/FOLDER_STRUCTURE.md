@@ -62,3 +62,27 @@ Temporary working area. The inbox, outbox, and review subfolders are used by age
 ## `/.codex`
 
 Goal templates and individual goal files. These guide Codex agents through specific tasks.
+
+## Active repository map
+
+| Path | Purpose |
+| --- | --- |
+| `.codex/goals/` | Task card JSON files validated by local task-card checks. |
+| `.storybook/` | Local Storybook configuration for Design OS component stories. |
+| `apps/static-mvp/` | Browser-only OpenClaw Cooperative Cockpit MVP. |
+| `apps/static-mvp/src/` | Static app source modules. |
+| `apps/static-mvp/handoff/` | Handoff preview packet fixtures. |
+| `artifacts/evidence/` | Goal evidence, validation notes, and review records. |
+| `artifacts/evidence/design-system/` | Design-system visual QA and approval evidence. |
+| `artifacts/packages/` | Package manifests for handoff artifacts. |
+| `docs/design-system/` | Design OS source of truth, governance, schemas, mock data, and screen registry. |
+| `docs/design-system/schemas/` | JSON schemas and screen-contract fixtures. |
+| `docs/design-system/stories/` | Storybook stories for reusable Design OS components. |
+| `docs/ops/` | Operational policy, concurrency policy, status, and structure docs. |
+| `docs/product/` | Product requirements and backlog docs. |
+| `schemas/` | Repository-level artifact, handoff, and task-card schemas. |
+| `scripts/` | Local validation and role-wrapper scripts. |
+| `tests/` | Offline wrapper and validator tests. |
+
+Run `npm run validate` to execute structure, JSON parsing, schema checks, screen-registry checks, secret scanning, task cards, concept consistency, wrapper tests, and open-gate warnings.
+

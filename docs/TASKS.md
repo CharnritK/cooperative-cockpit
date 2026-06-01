@@ -21,3 +21,13 @@
 | GOAL-DS-003/005 | Design OS token, mock data and registry alignment | Orchestrator/Reviewer | 2026-05-31 | 2026-06-01 | PASS_WITH_WARNINGS / needs Point lock | DS-003 token audit and DS-005 screen registry contracts validate locally with warnings; final tokens, product-canon registry adoption, and runtime data changes require Point lock. |
 | GOAL-DS-004 | Design OS component taxonomy and stories | Orchestrator/QA | 2026-06-01 | 2026-06-01 | PASS_WITH_WARNINGS | Docs-only component stories cover `EvidenceCard` and `DecisionCard`; runtime extraction remains Point-locked. |
 | GOAL-DS-002-decision | Package-manager decision record | Orchestrator/PM | 2026-06-01 | 2026-06-01 | Accepted | npm selected as the single repo posture; `package-lock.json` exists. |
+
+## Recent task ledger
+
+| Goal | Status | Summary |
+| --- | --- | --- |
+| GOAL-010 | Completed | Design OS review and initial improvement planning. |
+| GOAL-011 | Completed | Added Claude Opus 4.7 and Codex role wrappers plus role-wrapper documentation. |
+| GOAL-012 | Completed | Added import-safe wrapper modules and offline wrapper smoke tests. |
+| GOAL-013 | Completed | Hardened Design OS validation, wrapper guardrails, docs drift checks, and final Claude Opus 4.7 review. |
+

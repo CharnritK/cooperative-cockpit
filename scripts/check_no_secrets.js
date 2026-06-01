@@ -1,66 +1,140 @@
 const fs = require('fs');
 const path = require('path');
 
-const root = process.cwd();
-const skipDirs = new Set(['.git', 'node_modules', 'cooperative-cockpit-repo-setup-final']);
+const ignoredDirs = new Set([
+  '.git',
+  'node_modules',
+  'cooperative-cockpit-repo-setup-final',
+]);
+
 const textExtensions = new Set([
   '.css',
+  '.env',
+  '.example',
   '.html',
   '.js',
   '.json',
   '.md',
+  '.mjs',
   '.svg',
+  '.toml',
+  '.ts',
   '.txt',
+  '.yaml',
   '.yml',
-  '.yaml'
 ]);
 
 const secretPatterns = [
-  /-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----/,
-  /\b(?:api[_-]?key|secret|token|password)\b\s*[:=]\s*["']?(?!your-|example|placeholder|changeme|<|$)[A-Za-z0-9_./+=-]{16,}/i
+  {
+    name: 'private_key_block',
+    pattern: /-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----/i,
+  },
+  {
+    name: 'github_token',
+    pattern: /\b(?:gh[pousr]_[A-Za-z0-9_]{36,255}|github_pat_[A-Za-z0-9_]{20,255})\b/,
+  },
+  {
+    name: 'aws_access_key_id',
+    pattern: /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/,
+  },
+  {
+    name: 'slack_token',
+    pattern: /\bxox[abprs]-[A-Za-z0-9-]{10,}\b/,
+  },
+  {
+    name: 'google_api_key',
+    pattern: /\bAIza[0-9A-Za-z_-]{35}\b/,
+  },
+  {
+    name: 'jwt',
+    pattern: /\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/,
+  },
+  {
+    name: 'sensitive_assignment',
+    pattern: /\b(?:api[_-]?key|secret|token|password)\b\s*[:=]\s*['"]?(?!REPLACE|PLACEHOLDER|example|sample|changeme|dummy|fake|fixture|test|<|YOUR_|your-|xxx)[A-Za-z0-9_./+=-]{16,}/i,
+  },
 ];
 
-const findings = [];
-
-function scanFile(file) {
-  const relative = path.relative(root, file);
-  const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
-
-  lines.forEach((line, index) => {
-    if (secretPatterns.some((pattern) => pattern.test(line))) {
-      findings.push(`${relative}:${index + 1}`);
-    }
-  });
+function shouldScan(filePath) {
+  const parsed = path.parse(filePath);
+  if (parsed.base === '.env.example') {
+    return true;
+  }
+  if (textExtensions.has(parsed.ext.toLowerCase())) {
+    return true;
+  }
+  return parsed.ext === '' && parsed.base.includes('.');
 }
 
-function walk(dir) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+function detectSecretsInText(text) {
+  const findings = [];
+
+  for (const { name, pattern } of secretPatterns) {
+    const matches = text.match(pattern);
+    if (matches) {
+      findings.push({
+        name,
+        sample: matches[0].slice(0, 24),
+      });
+    }
+  }
+
+  return findings;
+}
+
+function walk(dir, findings) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    const relativePath = path.relative(process.cwd(), fullPath);
+
     if (entry.isDirectory()) {
-      if (!skipDirs.has(entry.name)) {
-        walk(path.join(dir, entry.name));
+      if (ignoredDirs.has(entry.name)) {
+        continue;
       }
+      walk(fullPath, findings);
       continue;
     }
 
-    if (!entry.isFile()) {
+    if (!entry.isFile() || !shouldScan(fullPath)) {
       continue;
     }
 
-    const ext = path.extname(entry.name).toLowerCase();
-    if (textExtensions.has(ext) || entry.name === '.env.example' || entry.name === '.gitignore') {
-      scanFile(path.join(dir, entry.name));
+    const text = fs.readFileSync(fullPath, 'utf8');
+    const matches = detectSecretsInText(text);
+
+    for (const match of matches) {
+      findings.push({
+        path: relativePath,
+        ...match,
+      });
     }
   }
 }
 
-walk(root);
-
-if (findings.length > 0) {
-  console.error('check_no_secrets: FAIL - possible secrets found at:');
-  for (const finding of findings) {
-    console.error(`- ${finding}`);
-  }
-  process.exit(1);
+function runSecretScan(rootDir = process.cwd()) {
+  const findings = [];
+  walk(rootDir, findings);
+  return findings;
 }
 
-console.log('check_no_secrets: PASS');
+if (require.main === module) {
+  const findings = runSecretScan(process.cwd());
+
+  if (findings.length > 0) {
+    console.error('Potential secrets detected:');
+    for (const finding of findings) {
+      console.error(`- ${finding.path}: ${finding.name}`);
+    }
+    process.exit(1);
+  }
+
+  console.log('Secret scan passed.');
+}
+
+module.exports = {
+  detectSecretsInText,
+  runSecretScan,
+  secretPatterns,
+};

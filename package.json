@@ -5,15 +5,25 @@
   "scripts": {
     "check:structure": "node scripts/check_structure.js",
     "check:json": "node scripts/check_json.js",
+    "check:encoding": "node scripts/check_encoding.js",
+    "check:schemas": "node scripts/check_schemas.js",
+    "check:screen-registry": "node scripts/check_screen_registry.js",
     "check:secrets": "node scripts/check_no_secrets.js",
     "check:tasks": "node scripts/check_task_cards.js",
     "check:gitignore": "node scripts/check_gitignore.js",
     "check:concept": "node scripts/check_concept_consistency.js",
+    "check:gates": "node scripts/check_open_gates.js",
+    "copilot:planner": "node scripts/copilot-wrapper.js planner",
+    "copilot:reviewer": "node scripts/copilot-wrapper.js reviewer",
+    "codex:manager": "node scripts/codex-wrapper.js manager",
+    "codex:coder": "node scripts/codex-wrapper.js coder",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:smoke": "storybook dev -p 6006 --no-open --smoke-test --ci --quiet",
+    "test:wrappers": "node tests/wrappers/wrappers.test.js",
+    "test:secrets": "node tests/secrets/check_no_secrets.test.js",
     "test:visual": "playwright test -c playwright.config.mjs",
     "test:visual:list": "playwright test -c playwright.config.mjs --list",
-    "validate": "npm run check:structure && npm run check:json && npm run check:secrets && npm run check:tasks && npm run check:gitignore && npm run check:concept"
+    "validate": "npm run check:structure && npm run check:json && npm run check:encoding && npm run check:schemas && npm run check:screen-registry && npm run check:secrets && npm run test:secrets && npm run check:tasks && npm run check:gitignore && npm run check:concept && npm run test:wrappers && npm run check:gates"
   },
   "private": true,
   "devDependencies": {
