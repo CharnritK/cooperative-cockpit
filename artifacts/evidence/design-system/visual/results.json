@@ -1,7 +1,7 @@
 {
   "config": {
-    "configFile": "C:\\Point\\2026\\projects\\cooperative-cockpit\\playwright.config.mjs",
-    "rootDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+    "configFile": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\playwright.config.mjs",
+    "rootDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
     "forbidOnly": true,
     "fullyParallel": false,
     "globalSetup": null,
@@ -16,7 +16,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -25,7 +25,7 @@
         },
         "id": "vp-760",
         "name": "vp-760",
-        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -33,7 +33,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -42,7 +42,7 @@
         },
         "id": "vp-1080",
         "name": "vp-1080",
-        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -50,7 +50,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -59,7 +59,7 @@
         },
         "id": "vp-1180",
         "name": "vp-1180",
-        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -67,7 +67,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -76,7 +76,7 @@
         },
         "id": "vp-1280",
         "name": "vp-1280",
-        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -146,18 +146,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2932,
+                      "duration": 12725,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:20.991Z",
+                      "startTime": "2026-06-01T08:58:23.394Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-001-operator-home-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-760\\attachments\\screen-001-operator-home-default-0be2d8f3bd821d41848bdf1f556ba6f3a06503e7.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-760\\attachments\\screen-001-operator-home-default-574cea4743d2a98332f9738aa0db055a52402661.png"
                         }
                       ]
                     }
@@ -186,18 +186,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3170,
+                      "duration": 7190,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:24.854Z",
+                      "startTime": "2026-06-01T08:58:39.242Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-002-workbench-selected",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760\\attachments\\screen-002-workbench-selected-ab7d8c21b7d0a6b18bf35b65d28bf313e5046035.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760\\attachments\\screen-002-workbench-selected-35980373231cc6f87b39143f112581b0cb9a8a4a.png"
                         }
                       ]
                     }
@@ -226,18 +226,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2232,
+                      "duration": 9053,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:28.271Z",
+                      "startTime": "2026-06-01T08:58:46.670Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-003-spec-builder-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-760\\attachments\\screen-003-spec-builder-default-7191a5135a6826d0d294b42fe6fc3eb30b2f7242.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-760\\attachments\\screen-003-spec-builder-default-08f390ec6ff78c2039d413d65345034cbfd8b19f.png"
                         }
                       ]
                     }
@@ -266,18 +266,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1847,
+                      "duration": 14698,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:30.561Z",
+                      "startTime": "2026-06-01T08:58:55.790Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-004-review-runs-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-760\\attachments\\screen-004-review-runs-default-069a4b719051bcb8e4f61e42b55925d73473a4b2.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-760\\attachments\\screen-004-review-runs-default-33255bac9592eb29484234c0926c373fe296baae.png"
                         }
                       ]
                     }
@@ -306,18 +306,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1977,
+                      "duration": 7550,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:32.463Z",
+                      "startTime": "2026-06-01T08:59:10.553Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-005-static-preview-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-760\\attachments\\screen-005-static-preview-default-d4ad301e97835f248f2e3f7839d953c273726ef6.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-760\\attachments\\screen-005-static-preview-default-155fe13bdf8b045114d1cc986231072ea6355b11.png"
                         }
                       ]
                     }
@@ -346,18 +346,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1770,
+                      "duration": 6015,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:34.499Z",
+                      "startTime": "2026-06-01T08:59:18.190Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-006-decision-log-pending",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-760\\attachments\\screen-006-decision-log-pending-7de24948d7bacb543a74f30de3f47930e3ddfe4f.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-760\\attachments\\screen-006-decision-log-pending-f6e0685c245460ccd0e22040c8239db00d798124.png"
                         }
                       ]
                     }
@@ -386,18 +386,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2192,
+                      "duration": 8964,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:36.303Z",
+                      "startTime": "2026-06-01T08:59:24.287Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-007-trace-evidence-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-760\\attachments\\screen-007-trace-evidence-default-fa91d7c221594088fb1e9eed6fe25ebb4fadab85.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-760\\attachments\\screen-007-trace-evidence-default-910a9256bfddc772e1da1a607b41c017741af2fc.png"
                         }
                       ]
                     }
@@ -426,18 +426,18 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2072,
+                      "duration": 7281,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:38.538Z",
+                      "startTime": "2026-06-01T08:59:33.430Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-008-rules-scope-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-760\\attachments\\screen-008-rules-scope-default-12ab15359bb4af5eb90ca6675d27ef1090d89e2d.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-760\\attachments\\screen-008-rules-scope-default-b762d1a7d132f42703b97d46bb025ff09bb07afc.png"
                         }
                       ]
                     }
@@ -449,6 +449,74 @@
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
+            },
+            {
+              "title": "screen-002-workbench spatial canvas zoom pan and context dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11855,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:40.920Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-64d2a32c82b86509428f",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "screen-002-workbench secondary mixed map drilldown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22872,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:53.007Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-fba54a27d28905c7e47d",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 139,
+              "column": 3
             },
             {
               "title": "screen-001-operator-home default candidate screenshot",
@@ -466,18 +534,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3080,
+                      "duration": 13881,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:20.991Z",
+                      "startTime": "2026-06-01T08:58:23.451Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-001-operator-home-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1080\\attachments\\screen-001-operator-home-default-72f278e7b9038308f09ae7159fb1df940ef461d8.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1080\\attachments\\screen-001-operator-home-default-88265b70456aba1a4e0c144136e4abc17e4fe956.png"
                         }
                       ]
                     }
@@ -506,18 +574,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3380,
+                      "duration": 9819,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:24.827Z",
+                      "startTime": "2026-06-01T08:58:40.585Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-002-workbench-selected",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1080\\attachments\\screen-002-workbench-selected-6d92c9568604bdeea1a1150f6a1fddc2371d915f.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1080\\attachments\\screen-002-workbench-selected-68302587ac02af1203d53c332db5e95ad64f8c29.png"
                         }
                       ]
                     }
@@ -546,18 +614,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2180,
+                      "duration": 19958,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:28.452Z",
+                      "startTime": "2026-06-01T08:58:50.525Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-003-spec-builder-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1080\\attachments\\screen-003-spec-builder-default-300b4decfc1602e75c7ade34fb23796df847ee31.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1080\\attachments\\screen-003-spec-builder-default-fc9ab381df415008c0772a8556d72b4265b3e16a.png"
                         }
                       ]
                     }
@@ -586,18 +654,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2041,
+                      "duration": 7013,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:30.676Z",
+                      "startTime": "2026-06-01T08:59:10.558Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-004-review-runs-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1080\\attachments\\screen-004-review-runs-default-9c9d1d17b91f2d97d751042c8b0d5828968370aa.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1080\\attachments\\screen-004-review-runs-default-3902d3dcea591d16b075d810e3fa5e35d4ef5664.png"
                         }
                       ]
                     }
@@ -626,18 +694,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2101,
+                      "duration": 12438,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:32.756Z",
+                      "startTime": "2026-06-01T08:59:17.654Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-005-static-preview-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1080\\attachments\\screen-005-static-preview-default-99e7938c28ebbdf61be5fb5c8668837107857531.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1080\\attachments\\screen-005-static-preview-default-1c58ad6835e21dad211abc2edb045bb8fec178fc.png"
                         }
                       ]
                     }
@@ -666,18 +734,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2101,
+                      "duration": 7000,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:34.939Z",
+                      "startTime": "2026-06-01T08:59:30.339Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-006-decision-log-pending",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1080\\attachments\\screen-006-decision-log-pending-293f7227600575aa4bc0477d179dfa8bd32bb35a.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1080\\attachments\\screen-006-decision-log-pending-702ca5ffe34cbf6227434e4285969a35ec73eb83.png"
                         }
                       ]
                     }
@@ -706,18 +774,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2440,
+                      "duration": 6456,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:37.076Z",
+                      "startTime": "2026-06-01T08:59:37.616Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-007-trace-evidence-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1080\\attachments\\screen-007-trace-evidence-default-dd5cd1a19507a6eaf515df5579e9ac16dd158f85.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1080\\attachments\\screen-007-trace-evidence-default-73825874893732db08a259d8462873022e86592f.png"
                         }
                       ]
                     }
@@ -746,18 +814,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2129,
+                      "duration": 10298,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:39.549Z",
+                      "startTime": "2026-06-01T08:59:44.381Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-008-rules-scope-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1080\\attachments\\screen-008-rules-scope-default-ae35bead253411528ca4b7629e52ad645901d1ce.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1080\\attachments\\screen-008-rules-scope-default-009372b213481220d0bef6ccb9665916489b5726.png"
                         }
                       ]
                     }
@@ -769,6 +837,74 @@
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
+            },
+            {
+              "title": "screen-002-workbench spatial canvas zoom pan and context dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19861,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:54.794Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-5380a52f08dc5efb0afe",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "screen-002-workbench secondary mixed map drilldown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 12203,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T09:00:14.903Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-274786976a7c2dcaade1",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 139,
+              "column": 3
             },
             {
               "title": "screen-001-operator-home default candidate screenshot",
@@ -786,18 +922,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3206,
+                      "duration": 21775,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:21.042Z",
+                      "startTime": "2026-06-01T08:58:23.374Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-001-operator-home-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1180\\attachments\\screen-001-operator-home-default-f772139657a29a112dbf12eac80b1a1d1e41c43e.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1180\\attachments\\screen-001-operator-home-default-0a903d8dcc808eed23037e15dc7efa572e7180e4.png"
                         }
                       ]
                     }
@@ -826,18 +962,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3353,
+                      "duration": 17068,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:24.997Z",
+                      "startTime": "2026-06-01T08:58:53.146Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-002-workbench-selected",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1180\\attachments\\screen-002-workbench-selected-19eb75ce793f3ae3623fef206483d571bdc5bb98.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1180\\attachments\\screen-002-workbench-selected-4be968fa695921e49b4afabe6a6360965a9edfbe.png"
                         }
                       ]
                     }
@@ -866,18 +1002,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2235,
+                      "duration": 6982,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:28.439Z",
+                      "startTime": "2026-06-01T08:59:10.604Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-003-spec-builder-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1180\\attachments\\screen-003-spec-builder-default-16d50e65f0dbc58753a9f880a5e8eb0478594323.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1180\\attachments\\screen-003-spec-builder-default-ad510b543f4e2c881343142fe9f4f0ee67ab5032.png"
                         }
                       ]
                     }
@@ -906,18 +1042,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2253,
+                      "duration": 5779,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:30.719Z",
+                      "startTime": "2026-06-01T08:59:17.728Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-004-review-runs-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1180\\attachments\\screen-004-review-runs-default-80cc5c61295d6af1796cebc702c1fbb4bf7464bb.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1180\\attachments\\screen-004-review-runs-default-83f5fabc8714fc1a3e2bb617fecc02bc7b9bc5a8.png"
                         }
                       ]
                     }
@@ -946,18 +1082,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2260,
+                      "duration": 7757,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:32.998Z",
+                      "startTime": "2026-06-01T08:59:23.816Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-005-static-preview-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1180\\attachments\\screen-005-static-preview-default-b57d3dddcb04dba435ee989007f42571179b0db3.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1180\\attachments\\screen-005-static-preview-default-e060ad08b63911b1ba77002c0285a863e0069b8d.png"
                         }
                       ]
                     }
@@ -986,18 +1122,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2176,
+                      "duration": 7460,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:35.287Z",
+                      "startTime": "2026-06-01T08:59:31.689Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-006-decision-log-pending",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1180\\attachments\\screen-006-decision-log-pending-0cd6c5c0495685bec8bc5662c6350b1bd50cb38c.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1180\\attachments\\screen-006-decision-log-pending-6ae2bc32ab8240610db4274eea1c1de884365edd.png"
                         }
                       ]
                     }
@@ -1026,18 +1162,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2391,
+                      "duration": 6535,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:37.493Z",
+                      "startTime": "2026-06-01T08:59:39.449Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-007-trace-evidence-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1180\\attachments\\screen-007-trace-evidence-default-7c7de90f576676a55e0430d6c1341306dc2ab6b4.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1180\\attachments\\screen-007-trace-evidence-default-1e4ee2d36f4f120e8770a3f3720ba2691c247c80.png"
                         }
                       ]
                     }
@@ -1066,18 +1202,18 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2094,
+                      "duration": 8930,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:39.935Z",
+                      "startTime": "2026-06-01T08:59:46.585Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-008-rules-scope-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1180\\attachments\\screen-008-rules-scope-default-65c527462c4c739f9edad61983757e7e6a64af8d.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1180\\attachments\\screen-008-rules-scope-default-c070692257565ad43f68272d9ad78b7eb0331494.png"
                         }
                       ]
                     }
@@ -1089,6 +1225,74 @@
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
+            },
+            {
+              "title": "screen-002-workbench spatial canvas zoom pan and context dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 22017,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:55.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-e3fb3b82b40657a5a520",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "screen-002-workbench secondary mixed map drilldown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 11884,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T09:00:17.966Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-ea4a06b351209be01abf",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 139,
+              "column": 3
             },
             {
               "title": "screen-001-operator-home default candidate screenshot",
@@ -1106,18 +1310,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3136,
+                      "duration": 12707,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:20.993Z",
+                      "startTime": "2026-06-01T08:58:23.395Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-001-operator-home-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280\\attachments\\screen-001-operator-home-default-c06592ab33d1ad361a0d0456f273e3764f0cb363.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280\\attachments\\screen-001-operator-home-default-8537374044f7d2efa4aa6b6b6f2e63a1b1e6c7bf.png"
                         }
                       ]
                     }
@@ -1146,18 +1350,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3276,
+                      "duration": 8152,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:25.047Z",
+                      "startTime": "2026-06-01T08:58:39.178Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-002-workbench-selected",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1280\\attachments\\screen-002-workbench-selected-108e84aa5277fdfcc05526cdde8e216f845ff58e.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1280\\attachments\\screen-002-workbench-selected-ee5a29396c953e9303ca0d5d5f62f8e07774eede.png"
                         }
                       ]
                     }
@@ -1186,18 +1390,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2245,
+                      "duration": 8031,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:28.486Z",
+                      "startTime": "2026-06-01T08:58:47.484Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-003-spec-builder-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1280\\attachments\\screen-003-spec-builder-default-9361b1e9e58a6f32a74561fc6ba36c5e6141c943.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1280\\attachments\\screen-003-spec-builder-default-a2c8bbd2133bff701db66e0abbc309a33e641792.png"
                         }
                       ]
                     }
@@ -1226,18 +1430,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2028,
+                      "duration": 14684,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:30.759Z",
+                      "startTime": "2026-06-01T08:58:55.585Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-004-review-runs-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1280\\attachments\\screen-004-review-runs-default-b51bc118cfa5ed16bcf037715f7d54f30fb25411.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1280\\attachments\\screen-004-review-runs-default-028e04ef92660adcb51e910fd3ed319a005b7ee4.png"
                         }
                       ]
                     }
@@ -1266,18 +1470,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2156,
+                      "duration": 8204,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:32.818Z",
+                      "startTime": "2026-06-01T08:59:10.376Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-005-static-preview-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1280\\attachments\\screen-005-static-preview-default-6b25b1dbfef78461e3654656ec109c58b85318f1.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1280\\attachments\\screen-005-static-preview-default-3c60ce433696160a776f9a21c1b9083d08817aa6.png"
                         }
                       ]
                     }
@@ -1306,18 +1510,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2180,
+                      "duration": 7036,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:35.001Z",
+                      "startTime": "2026-06-01T08:59:18.643Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-006-decision-log-pending",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1280\\attachments\\screen-006-decision-log-pending-b2e8a07ac922ab0f7493c5493d76fe2b816a2f16.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1280\\attachments\\screen-006-decision-log-pending-aee5849700a58e0eb92989fef6f1119db8683a0e.png"
                         }
                       ]
                     }
@@ -1346,18 +1550,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2432,
+                      "duration": 7544,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:37.222Z",
+                      "startTime": "2026-06-01T08:59:25.826Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-007-trace-evidence-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1280\\attachments\\screen-007-trace-evidence-default-85e0b965e099dcbdf59be6129de653afdc587a32.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1280\\attachments\\screen-007-trace-evidence-default-f5c91ca4fccfc3da06c173f7b0be09d9b97f7227.png"
                         }
                       ]
                     }
@@ -1386,18 +1590,18 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2275,
+                      "duration": 6983,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-31T18:18:39.714Z",
+                      "startTime": "2026-06-01T08:59:33.523Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "screen-008-rules-scope-default",
                           "contentType": "image/png",
-                          "path": "C:\\Point\\2026\\projects\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1280\\attachments\\screen-008-rules-scope-default-746e268c3d8ec5b998ecab8ab1f9b00fb2dee1ef.png"
+                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1280\\attachments\\screen-008-rules-scope-default-e788b6819648e9dd05fbd91156d84f360eb75475.png"
                         }
                       ]
                     }
@@ -1409,6 +1613,74 @@
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
+            },
+            {
+              "title": "screen-002-workbench spatial canvas zoom pan and context dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 12500,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:40.637Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-fe0d83c7df0c0e92e2bf",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "screen-002-workbench secondary mixed map drilldown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 20053,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T08:59:53.377Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbbabd229c7687fbeb40-e32f8c0185265fc9ef5b",
+              "file": "static-mvp.visual.spec.mjs",
+              "line": 139,
+              "column": 3
             }
           ]
         }
@@ -1417,9 +1689,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-31T18:18:19.848Z",
-    "duration": 23114.641,
-    "expected": 32,
+    "startTime": "2026-06-01T08:58:20.743Z",
+    "duration": 139574.91199999998,
+    "expected": 40,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

@@ -395,6 +395,19 @@
   grid-column: 2 / 3;
 }
 
+#app-shell.workbench-focus-mode #main-content {
+  padding: 10px 12px;
+}
+
+#app-shell.workbench-focus-mode .top-center,
+#app-shell.workbench-focus-mode .page-header.workbench-header {
+  display: none;
+}
+
+#app-shell.workbench-focus-mode .top-bar {
+  grid-template-columns: minmax(170px, 0.45fr) minmax(430px, 1fr);
+}
+
 .right-inspector {
   display: none;
   grid-column: 3 / 4;

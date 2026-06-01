@@ -2,7 +2,7 @@
 
 This directory contains a **static frontend prototype** for the OpenClaw Cooperative Cockpit MVP. The goal of this prototype is to demonstrate the interaction model and visual direction of the product without any backend, API calls or execution of external code. The prototype includes eight focus pages connected through a persistent shell.
 
-The current visual direction is **Dify-inspired workflow studio with OpenClaw governance overlays**: a clean light SaaS shell, canvas-first Workbench, dotted workflow canvas, configurable operator nodes, compact top controls, node palette/config/debug surfaces, a static golden path from architecture node selection to handoff packet preview, local typography assets, and secondary governance cues across the higher-risk pages.
+The current visual direction is **Dify-inspired workflow studio with OpenClaw governance overlays**: a clean light SaaS shell, canvas-first Workbench, large spatial board, configurable operator nodes, compact top controls, popover-based object/context support surfaces, a manual inspector, a context dock for selected objects, local typography assets, and secondary governance cues across the higher-risk pages.
 
 ## Running locally
 
@@ -28,7 +28,7 @@ The handoff package inventory in `handoff/manifest.json` includes `styles/fonts.
 The MVP comprises the following pages:
 
 1. **Home** – Provides operational status cards for context, protected exclusions and pending locks, plus pipeline progress, recent activity and local-only next safe actions.
-2. **Workbench** – Displays a light workflow-builder studio with a safe node palette, dotted canvas, configurable operator nodes, local selection state, a docked Selected Context panel, chat-style mock assistant panel, generated handoff packet preview, and a configuration/debug inspector. You can select nodes, add them to the context, and see protected exclusions. The governance strip is visible here as a secondary safety overlay.
+2. **Workbench** – Displays a light workflow-builder studio with a large zoomable spatial board, fixed mock object positions, local selection state, object-type and Selected Context popovers, a selected-object context dock, preview-readiness links, and a manually opened configuration/debug inspector. You can zoom, pan, fit, reset, select nodes, add them to the context, and see protected exclusions without shrinking the canvas by default. The governance strip is visible here as a secondary safety overlay.
 3. **Spec Builder** – Allows you to choose a template, view and fill specification fields, apply simple AI suggestions (stubbed), lock fields and validate the spec. Handoff controls stay disabled until `appState.handoffReady` is true.
 4. **Review Runs** – Lists review types and allows you to simulate running review checks. Results are displayed with severity chips and simple action buttons. Reviews are inspect‑only.
 5. **Preview** – Shows a placeholder preview of the UI/HTML artifact and a spec coverage checklist. You can generate a static mockup, compare it against the spec or start a UX check (all stubbed).
@@ -50,7 +50,7 @@ All data in this prototype is mock data defined in `src/mockData.js`. The pages 
 
 ## Known limitations
 
-- The canvas on the Workbench is static; nodes do not move. Connectors are visual-only and based on `mockData.workflowEdges`.
+- The spatial board on the Workbench is static; node positions come from `mockData.workbenchBoard` and reset on reload. Connectors are visual-only and based on static mock relationships.
 - Review actions are purely illustrative; they do not modify the state beyond showing simple messages.
 - The preview page does not render real HTML or UI components.
 - The trace graph is a placeholder text area rather than a real graph.

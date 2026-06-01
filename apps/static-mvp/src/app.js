@@ -15,12 +15,15 @@ const ICONS = {
   decision: '<path d="M10 13 3 20" /><path d="m14 6 4 4" /><path d="m13 7-3 3 4 4 3-3Z" /><path d="M16 16h5" />',
   document: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /><path d="M8 13h8M8 17h6" />',
   eye: '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" />',
+  fit: '<path d="M8 3H3v5" /><path d="M16 3h5v5" /><path d="M8 21H3v-5" /><path d="M16 21h5v-5" /><path d="M3 3l6 6M21 3l-6 6M3 21l6-6M21 21l-6-6" />',
   graph: '<path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" />',
   handoff: '<path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" />',
   home: '<path d="m3 10 9-7 9 7" /><path d="M5 10v10h14V10" /><path d="M9 20v-6h6v6" />',
   lock: '<rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" />',
+  minus: '<path d="M5 12h14" />',
   note: '<path d="M4 4h16v16H4z" /><path d="M8 8h8M8 12h8M8 16h5" />',
   preview: '<path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" />',
+  reset: '<path d="M4 4v6h6" /><path d="M20 20v-6h-6" /><path d="M5.5 15a7 7 0 0 0 11 2" /><path d="M18.5 9a7 7 0 0 0-11-2" />',
   review: '<path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" />',
   rules: '<path d="M12 3v18" /><path d="M5 7h14" /><path d="m6 7-3 6h6Z" /><path d="m18 7-3 6h6Z" />',
   spark: '<path d="m12 3 1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6Z" />',
@@ -168,6 +171,7 @@ function toggleInspector() {
   }
   const selectedNode = getSelectedNode();
   if (window.appState.currentPage === 'workbench' && selectedNode) {
+    setInspectorOpen(true);
     renderNodeInspector(selectedNode.id);
     return;
   }
@@ -237,6 +241,30 @@ function getReadinessSummary() {
     reviewBlockers,
     handoffBlockers,
     ready: handoffBlockers.length === 0,
+  };
+}
+
+function getReadinessProgress(readiness = getReadinessSummary()) {
+  const specFields = window.appState.specFields || [];
+  const decisions = window.appState.decisions || [];
+  const requiredEvidence = (window.appState.evidenceItems || []).filter((item) => item.requiredForHandoff);
+  const missingFieldIds = new Set(readiness.missingEvidenceFields.map((item) => item.id.replace(/^field-/, '')));
+  const highSeverityReviews = (window.appState.reviewResults || []).filter((review) => review.severity === 'high');
+  const gates = [
+    ...specFields.map((field) => field.status === 'locked'),
+    ...decisions.map((decision) => decision.status !== 'needs-lock'),
+    ...requiredEvidence.map((item) => item.status === 'attached'),
+    ...specFields.map((field) => !missingFieldIds.has(field.id)),
+    Boolean(window.appState.evidenceReviewed),
+    Boolean(window.appState.specValidated),
+    ...highSeverityReviews.map(() => Boolean(window.appState.reviewBlockersAcknowledged)),
+  ];
+  const total = gates.length || 1;
+  const complete = gates.filter(Boolean).length;
+  return {
+    complete,
+    total,
+    percent: Math.round((complete / total) * 100),
   };
 }
 
@@ -318,9 +346,12 @@ function markDecisionEvidenceStale(decisionId) {
 function syncShellState(page) {
   updateHandoffReadiness();
   const readiness = getReadinessSummary();
+  const readinessProgress = getReadinessProgress(readiness);
   const activeStep = getWorkflowStep(page);
-  const activeIndex = WORKFLOW_STEPS.findIndex((step) => step.key === activeStep.key);
-  const progressIndex = window.appState.handoffReady ? WORKFLOW_STEPS.length : Math.min(activeIndex + 1, WORKFLOW_STEPS.length - 1);
+  const shell = document.getElementById('app-shell');
+  if (shell) {
+    shell.classList.toggle('workbench-focus-mode', page === 'workbench' && Boolean(window.appState.workbenchFocusMode));
+  }
 
   const stagePill = document.getElementById('workflow-stage-pill');
   const stageLabel = document.getElementById('workflow-stage-label');
@@ -335,9 +366,13 @@ function syncShellState(page) {
   const progressValue = document.getElementById('rail-progress-value');
   const progressFill = document.getElementById('rail-progress-fill');
   const progressCaption = document.getElementById('rail-progress-caption');
-  if (progressValue) progressValue.textContent = `${progressIndex}/6`;
-  if (progressFill) progressFill.style.width = `${(progressIndex / WORKFLOW_STEPS.length) * 100}%`;
-  if (progressCaption) progressCaption.textContent = window.appState.handoffReady ? 'Ready for handoff' : activeStep.caption;
+  if (progressValue) progressValue.textContent = `${readinessProgress.percent}%`;
+  if (progressFill) progressFill.style.width = `${readinessProgress.percent}%`;
+  if (progressCaption) {
+    progressCaption.textContent = readiness.ready
+      ? 'Ready for handoff'
+      : `${readinessProgress.complete}/${readinessProgress.total} gates clear`;
+  }
 
   const handoffButton = document.querySelector('.top-right .action-btn[data-action="handoff"]');
   if (handoffButton) {
@@ -436,8 +471,10 @@ window.renderPage = function renderPage(page) {
   const main = document.getElementById('main-content');
   if (!main) return;
 
+  const keepWorkbenchInspectorOpen = page === 'workbench' && window.appState.inspectorVisible;
   main.innerHTML = '';
-  setInspectorOpen(false);
+  if (!keepWorkbenchInspectorOpen) setInspectorOpen(false);
+  if (page !== 'workbench') window.appState.activeWorkbenchPopover = null;
   showGovernance(false);
   syncShellState(page);
 
@@ -644,10 +681,6 @@ function renderWorkbench(container) {
   });
 
   const layout = createElement('section', 'workbench-layout');
-  const sidebar = createElement('aside', 'workbench-sidebar');
-  sidebar.appendChild(renderNodePalette());
-  sidebar.appendChild(renderContextBasket());
-  layout.appendChild(sidebar);
   const workbenchMain = createElement('div', 'workbench-main');
   workbenchMain.appendChild(renderNodeCanvas());
   workbenchMain.appendChild(renderUtilityTray(selectedNode));
@@ -656,8 +689,8 @@ function renderWorkbench(container) {
   renderNodeInspector(selectedNode ? selectedNode.id : null);
 }
 
-function renderNodePalette() {
-  const palette = createElement('section', 'panel node-palette');
+function renderNodePalette({ embedded = false } = {}) {
+  const palette = createElement('section', `${embedded ? '' : 'panel '}node-palette`);
   palette.innerHTML = `<div class="node-palette-header">
       <div class="palette-title-row"><h3>Locked object palette</h3>${renderStatusChip('inspect', 'Reference data')}</div>
       <p>Cockpit object types only. Selecting or adding a Context Node changes local browser state, never runtime behavior.</p>
@@ -674,8 +707,8 @@ function renderNodePalette() {
   return palette;
 }
 
-function renderContextBasket() {
-  const basket = createElement('aside', 'context-basket');
+function renderContextBasket({ embedded = false } = {}) {
+  const basket = createElement('aside', `context-basket${embedded ? ' context-basket-embedded' : ''}`);
   const included = createElement('div', 'basket-section');
   included.innerHTML = `<div class="basket-section-header"><h3>Selected Context</h3>${renderStatusChip('allowed', `${window.appState.context.length} included`)}</div>
     <p class="page-subtitle">Derived from Context Nodes and protected exclusions. This remains local state.</p>`;
@@ -731,10 +764,19 @@ function renderContextBasket() {
 }
 
 function getOrderedWorkbenchNodes() {
+  if (window.appState.viewMode === 'spatial') {
+    return getSpatialWorkbenchNodes();
+  }
   if (window.appState.viewMode === 'flat') {
     return [...window.mockData.nodes]
       .filter((n) => n.level === 'task')
       .sort((a, b) => Number(a.index || 0) - Number(b.index || 0));
+  }
+  if (window.appState.viewMode === 'mixed') {
+    return getRequirementNodes().flatMap((node) => {
+      if (node.id !== window.appState.expandedNodeId) return [node];
+      return [node, ...getChildNodes(node.id)];
+    });
   }
   if (window.appState.currentParentId === null) {
     return [...window.mockData.nodes]
@@ -743,6 +785,32 @@ function getOrderedWorkbenchNodes() {
   }
   return [...window.mockData.nodes]
     .filter((n) => n.parentId === window.appState.currentParentId)
+    .sort((a, b) => Number(a.index || 0) - Number(b.index || 0));
+}
+
+function getSpatialWorkbenchNodes() {
+  return [...window.mockData.nodes]
+    .sort((a, b) => Number(a.index || 0) - Number(b.index || 0));
+}
+
+function getWorkbenchBoard() {
+  return window.mockData.workbenchBoard || { width: 2600, height: 1400, zones: [], nodePositions: {} };
+}
+
+function getBoardNodePosition(nodeId) {
+  const board = getWorkbenchBoard();
+  return board.nodePositions[nodeId] || { x: board.width / 2, y: board.height / 2 };
+}
+
+function getRequirementNodes() {
+  return [...window.mockData.nodes]
+    .filter((n) => n.level === 'requirements')
+    .sort((a, b) => Number(a.index || 0) - Number(b.index || 0));
+}
+
+function getChildNodes(parentId) {
+  return [...window.mockData.nodes]
+    .filter((n) => n.parentId === parentId)
     .sort((a, b) => Number(a.index || 0) - Number(b.index || 0));
 }
 
@@ -763,23 +831,53 @@ function workflowLineDefs() {
   return `<defs><marker id="edge-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 10 5 L 0 9 z" fill="rgba(100,116,139,.6)"></path></marker></defs>`;
 }
 
+function getActiveWorkbenchEdges() {
+  if (window.appState.viewMode === 'spatial') {
+    return getSpatialWorkbenchEdges();
+  }
+
+  if (window.appState.viewMode === 'flat') {
+    return window.mockData.workflowEdges;
+  }
+
+  if (window.appState.viewMode === 'mixed') {
+    const visibleNodeIds = new Set(getOrderedWorkbenchNodes().map((node) => node.id));
+    return window.mockData.hierarchicalEdges.filter((edge) => (
+      visibleNodeIds.has(edge.source) && visibleNodeIds.has(edge.target)
+    ));
+  }
+
+  return window.mockData.hierarchicalEdges.filter((edge) => {
+    const src = window.mockData.nodes.find((n) => n.id === edge.source);
+    const tgt = window.mockData.nodes.find((n) => n.id === edge.target);
+    return src && tgt && src.parentId === window.appState.currentParentId;
+  });
+}
+
+function getSpatialWorkbenchEdges() {
+  const hierarchyEdges = window.mockData.nodes
+    .filter((node) => node.parentId)
+    .map((node) => ({
+      source: node.parentId,
+      target: node.id,
+      tone: node.readiness === 'ready' ? 'validated' : node.readiness === 'blocked' ? 'risk' : 'pending',
+    }));
+  return [...hierarchyEdges, ...window.mockData.workflowEdges];
+}
+
 function updateWorkflowLines(canvas) {
   if (!canvas || !canvas.isConnected) return;
+  if (window.appState.viewMode === 'spatial') {
+    updateSpatialWorkflowLines(canvas);
+    return;
+  }
   const svg = canvas.querySelector('.workflow-lines');
   if (!svg) return;
   const canvasRect = canvas.getBoundingClientRect();
   svg.setAttribute('viewBox', `0 0 ${Math.max(1, canvasRect.width)} ${Math.max(1, canvasRect.height)}`);
   svg.innerHTML = workflowLineDefs();
 
-  const activeEdges = window.appState.viewMode === 'flat'
-    ? window.mockData.workflowEdges
-    : window.mockData.hierarchicalEdges.filter((edge) => {
-        const src = window.mockData.nodes.find((n) => n.id === edge.source);
-        const tgt = window.mockData.nodes.find((n) => n.id === edge.target);
-        return src && tgt && src.parentId === window.appState.currentParentId;
-      });
-
-  activeEdges.forEach((edge) => {
+  getActiveWorkbenchEdges().forEach((edge) => {
     const source = canvas.querySelector(`[data-node-id="${edge.source}"]`);
     const target = canvas.querySelector(`[data-node-id="${edge.target}"]`);
     if (!source || !target) return;
@@ -820,8 +918,15 @@ function ensureWorkflowLineListeners() {
 }
 
 function getBreadcrumbsHTML() {
+  if (window.appState.viewMode === 'spatial') {
+    return `<div class="canvas-breadcrumbs canvas-breadcrumbs-spatial"><span class="breadcrumb-item active">Spatial Board</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-item active">Whole architecture</span></div>`;
+  }
   if (window.appState.viewMode === 'flat') {
     return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Flat Workflow view</span></div>`;
+  }
+  if (window.appState.viewMode === 'mixed') {
+    const expandedNode = window.mockData.nodes.find((node) => node.id === window.appState.expandedNodeId);
+    return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Mixed Map</span>${expandedNode ? ` <span class="breadcrumb-separator">➔</span> <span class="breadcrumb-item active">${expandedNode.title || expandedNode.label}</span>` : ''}</div>`;
   }
   let html = `<div class="canvas-breadcrumbs"><span class="breadcrumb-item clickable" id="breadcrumb-root">All Requirements</span>`;
   if (window.appState.currentParentId) {
@@ -840,6 +945,14 @@ function getBreadcrumbsHTML() {
 }
 
 function drillDownToNode(node) {
+  if (window.appState.viewMode === 'spatial') {
+    selectNode(node.id);
+    return;
+  }
+  if (window.appState.viewMode === 'mixed') {
+    toggleExpandNode(node);
+    return;
+  }
   const childLevelMap = {
     'requirements': 'architecture',
     'architecture': 'component',
@@ -855,19 +968,513 @@ function drillDownToNode(node) {
   }
 }
 
+function toggleExpandNode(node) {
+  if (window.appState.viewMode !== 'mixed') return;
+  window.appState.expandedNodeId = window.appState.expandedNodeId === node.id ? null : node.id;
+  window.appState.currentParentId = null;
+  window.appState.currentLevel = 'requirements';
+  window.appState.selectedNodeId = node.id;
+  window.renderPage('workbench');
+}
+
+function hasWorkbenchChildren(node) {
+  return window.mockData.nodes.some((n) => n.parentId === node.id);
+}
+
+function createWorkbenchNodeCard(node, options = {}) {
+  const { showExplore = false, expanded = false } = options;
+  const card = createElement('button', `node-card node-type-${node.type} status-tone-${statusTone(node.status)}`);
+  const canExplore = showExplore && hasWorkbenchChildren(node);
+  const exploreActionHTML = canExplore
+    ? `<span class="node-drill-down-action" title="Double click card or click here to ${expanded ? 'collapse children' : 'explore children'}">${icon('arrow')} ${expanded ? 'Collapse' : 'Explore'}</span>`
+    : '';
+
+  card.type = 'button';
+  card.dataset.nodeId = node.id;
+  card.setAttribute('aria-label', `Select ${node.index} ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}. Readiness: ${readinessLabel(node.readiness || node.status)}`);
+  card.title = buildNodeTooltip(node);
+  if (window.appState.selectedNodeId === node.id) card.classList.add('selected');
+
+  card.dataset.level = node.level || 'object';
+
+  if (window.appState.viewMode === 'spatial') {
+    const position = getBoardNodePosition(node.id);
+    card.style.left = `${position.x}px`;
+    card.style.top = `${position.y}px`;
+  } else if (window.appState.viewMode !== 'flat' && window.appState.viewMode !== 'mixed') {
+    card.style.left = `${node.x}%`;
+    card.style.top = `${node.y}%`;
+  }
+
+  card.innerHTML = `<span class="node-handle node-handle-input" aria-hidden="true"></span>
+    <span class="node-handle node-handle-output" aria-hidden="true"></span>
+    <div class="node-topline">
+      <span class="node-type-icon">${icon(NODE_ICON_BY_TYPE[node.type] || 'spark')}</span>
+      <div class="node-label">${node.title || node.label}</div>
+    </div>
+    <div class="node-readiness-row">
+      ${renderStatusChip(node.readiness || node.status, readinessLabel(node.readiness || node.status))}
+      <span class="node-metric node-metric-blocker" title="Open readiness item count">${node.blockerCount || 0} open</span>
+      <span class="node-metric node-metric-evidence" title="Linked evidence count">${node.evidenceCount || 0} ev</span>
+    </div>
+    ${exploreActionHTML}`;
+
+  card.addEventListener('click', (event) => {
+    event.stopPropagation();
+    selectNode(node.id);
+  });
+
+  if (canExplore) {
+    card.addEventListener('dblclick', (event) => {
+      event.stopPropagation();
+      drillDownToNode(node);
+    });
+    const exploreBtn = card.querySelector('.node-drill-down-action');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        drillDownToNode(node);
+      });
+    }
+  }
+
+  return card;
+}
+
+function renderMixedMapNodes(flow) {
+  getRequirementNodes().forEach((node) => {
+    const isExpanded = window.appState.expandedNodeId === node.id;
+    if (!isExpanded) {
+      flow.appendChild(createWorkbenchNodeCard(node, { showExplore: true }));
+      return;
+    }
+
+    const group = createElement('section', 'compound-group');
+    group.dataset.compoundGroupId = node.id;
+    group.innerHTML = `<div class="compound-group-header">
+        <div>
+          <span class="compound-eyebrow">${node.index} / Expanded requirement</span>
+          <strong>${node.title || node.label}</strong>
+        </div>
+        <button class="compound-collapse-action" type="button">${icon('close')}Collapse</button>
+      </div>`;
+
+    const body = createElement('div', 'compound-group-body');
+    const rootCard = createWorkbenchNodeCard(node, { showExplore: true, expanded: true });
+    rootCard.classList.add('compound-root-card');
+    body.appendChild(rootCard);
+    getChildNodes(node.id).forEach((child) => {
+      body.appendChild(createWorkbenchNodeCard(child));
+    });
+    group.appendChild(body);
+
+    const collapse = group.querySelector('.compound-collapse-action');
+    collapse.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleExpandNode(node);
+    });
+
+    flow.appendChild(group);
+  });
+}
+
+function updateSpatialWorkflowLines(canvas) {
+  const svg = canvas.querySelector('.canvas-world .workflow-lines');
+  if (!svg) return;
+  const board = getWorkbenchBoard();
+  svg.setAttribute('viewBox', `0 0 ${board.width} ${board.height}`);
+  svg.innerHTML = workflowLineDefs();
+
+  getSpatialWorkbenchEdges().forEach((edge) => {
+    const source = getBoardNodePosition(edge.source);
+    const target = getBoardNodePosition(edge.target);
+    if (!source || !target) return;
+    const x1 = source.x + 96;
+    const y1 = source.y;
+    const x2 = target.x - 96;
+    const y2 = target.y;
+    const dx = Math.max(Math.abs(x2 - x1) * 0.42, 70);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+    path.setAttribute('class', `edge-${edge.tone || 'neutral'}`);
+    path.setAttribute('marker-end', 'url(#edge-arrow)');
+    svg.appendChild(path);
+  });
+}
+
+function renderOrderedWorkbenchNodes(flow) {
+  getOrderedWorkbenchNodes().forEach((node) => {
+    flow.appendChild(createWorkbenchNodeCard(node, {
+      showExplore: window.appState.viewMode !== 'flat',
+    }));
+  });
+}
+
+function toggleWorkbenchPopover(popoverId) {
+  window.appState.activeWorkbenchPopover = window.appState.activeWorkbenchPopover === popoverId ? null : popoverId;
+  window.renderPage('workbench');
+}
+
+function renderWorkbenchPopover(popoverId) {
+  const title = popoverId === 'palette' ? 'Object types' : 'Selected Context';
+  const popover = createElement('div', `workbench-popover workbench-popover-${popoverId}`);
+  popover.setAttribute('role', 'dialog');
+  popover.setAttribute('aria-label', title);
+  popover.innerHTML = `<div class="workbench-popover-header">
+      <strong>${title}</strong>
+      <button class="icon-btn" type="button" id="close-workbench-popover" aria-label="Close ${title} popover">${icon('close')}</button>
+    </div>`;
+  const content = popoverId === 'palette'
+    ? renderNodePalette({ embedded: true })
+    : renderContextBasket({ embedded: true });
+  popover.appendChild(content);
+  popover.addEventListener('click', (event) => event.stopPropagation());
+  popover.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      window.appState.activeWorkbenchPopover = null;
+      window.renderPage('workbench');
+    }
+  });
+  popover.querySelector('#close-workbench-popover').addEventListener('click', () => {
+    window.appState.activeWorkbenchPopover = null;
+    window.renderPage('workbench');
+  });
+  return popover;
+}
+
+function clampCanvasScale(scale) {
+  return Math.min(1.35, Math.max(0.32, Number(scale.toFixed(2))));
+}
+
+function setCanvasViewport(nextViewport) {
+  window.appState.canvasViewport = {
+    scale: clampCanvasScale(nextViewport.scale),
+    x: Math.round(nextViewport.x),
+    y: Math.round(nextViewport.y),
+  };
+  applyCanvasViewport();
+}
+
+function applyCanvasViewport() {
+  const viewport = window.appState.canvasViewport || { scale: 0.58, x: 70, y: 38 };
+  const world = document.querySelector('.canvas-world');
+  const zoomLabel = document.getElementById('workbench-zoom-level');
+  if (world) {
+    world.style.transform = `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.scale})`;
+  }
+  if (zoomLabel) {
+    zoomLabel.textContent = `${Math.round(viewport.scale * 100)}%`;
+  }
+}
+
+function resetWorkbenchViewport() {
+  setCanvasViewport({ scale: 0.58, x: 70, y: 38 });
+}
+
+function fitWorkbenchBoard(canvas) {
+  const viewport = canvas.querySelector('.canvas-viewport');
+  if (!viewport) return;
+  const rect = viewport.getBoundingClientRect();
+  const board = getWorkbenchBoard();
+  const scale = clampCanvasScale(Math.min((rect.width - 72) / board.width, (rect.height - 72) / board.height));
+  setCanvasViewport({
+    scale,
+    x: (rect.width - board.width * scale) / 2,
+    y: (rect.height - board.height * scale) / 2,
+  });
+}
+
+function zoomWorkbenchCanvas(canvas, direction, anchor) {
+  const viewport = window.appState.canvasViewport || { scale: 0.58, x: 70, y: 38 };
+  const nextScale = clampCanvasScale(viewport.scale + direction * 0.08);
+  const viewportEl = canvas.querySelector('.canvas-viewport');
+  const rect = viewportEl ? viewportEl.getBoundingClientRect() : null;
+  const anchorX = anchor && rect ? anchor.clientX - rect.left : 0;
+  const anchorY = anchor && rect ? anchor.clientY - rect.top : 0;
+  const worldX = rect ? (anchorX - viewport.x) / viewport.scale : 0;
+  const worldY = rect ? (anchorY - viewport.y) / viewport.scale : 0;
+  setCanvasViewport({
+    scale: nextScale,
+    x: rect ? anchorX - worldX * nextScale : viewport.x,
+    y: rect ? anchorY - worldY * nextScale : viewport.y,
+  });
+}
+
+function bindSpatialCanvasViewport(canvas) {
+  const viewport = canvas.querySelector('.canvas-viewport');
+  if (!viewport) return;
+  let dragStart = null;
+
+  viewport.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    zoomWorkbenchCanvas(canvas, event.deltaY < 0 ? 1 : -1, event);
+  }, { passive: false });
+
+  viewport.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button, .workbench-context-dock, .canvas-toolbar, .workbench-popover')) return;
+    dragStart = {
+      pointerId: event.pointerId,
+      clientX: event.clientX,
+      clientY: event.clientY,
+      x: window.appState.canvasViewport.x,
+      y: window.appState.canvasViewport.y,
+    };
+    viewport.classList.add('is-panning');
+    viewport.setPointerCapture(event.pointerId);
+  });
+
+  viewport.addEventListener('pointermove', (event) => {
+    if (!dragStart || dragStart.pointerId !== event.pointerId) return;
+    setCanvasViewport({
+      scale: window.appState.canvasViewport.scale,
+      x: dragStart.x + event.clientX - dragStart.clientX,
+      y: dragStart.y + event.clientY - dragStart.clientY,
+    });
+  });
+
+  const endPan = (event) => {
+    if (!dragStart || dragStart.pointerId !== event.pointerId) return;
+    dragStart = null;
+    viewport.classList.remove('is-panning');
+  };
+  viewport.addEventListener('pointerup', endPan);
+  viewport.addEventListener('pointercancel', endPan);
+}
+
+function renderSpatialBoardZones(world) {
+  const board = getWorkbenchBoard();
+  board.zones.forEach((zone) => {
+    const zoneNode = createElement('section', 'canvas-zone');
+    zoneNode.style.left = `${zone.x}px`;
+    zoneNode.style.top = `${zone.y}px`;
+    zoneNode.style.width = `${zone.width}px`;
+    zoneNode.style.height = `${zone.height}px`;
+    zoneNode.innerHTML = `<span>${zone.label}</span>`;
+    world.appendChild(zoneNode);
+  });
+}
+
+function renderSpatialNodeLevelLabel(node) {
+  const labels = {
+    requirements: 'Requirement',
+    architecture: 'Architecture',
+    component: 'Component',
+    phase: 'Phase',
+    task: 'Task',
+  };
+  return labels[node.level] || node.typeLabel || 'Object';
+}
+
+function renderWorkbenchContextDock(selectedNode) {
+  const dock = createElement('aside', 'workbench-context-dock');
+  dock.setAttribute('aria-label', 'Workbench context dock');
+  const basketLabels = window.appState.context.map((item) => item.label);
+  const protectedLabels = window.appState.protected.map((item) => item.label);
+  const selectedTitle = selectedNode ? selectedNode.title || selectedNode.label : 'No object selected';
+  const selectedSummary = selectedNode ? selectedNode.subtitle || selectedNode.description : 'Select an object on the board to scope the local copilot context.';
+  dock.innerHTML = `<div class="context-dock-header">
+      <div>
+        <span class="context-dock-eyebrow">Context Dock</span>
+        <h3>${selectedTitle}</h3>
+      </div>
+      ${renderStatusChip(selectedNode ? selectedNode.readiness || selectedNode.status : 'draft', selectedNode ? readinessLabel(selectedNode.readiness || selectedNode.status) : 'Select')}
+    </div>
+    <p class="context-dock-summary">${selectedSummary}</p>
+    <dl class="context-dock-meta">
+      <div><dt>Layer</dt><dd>${selectedNode ? renderSpatialNodeLevelLabel(selectedNode) : 'None'}</dd></div>
+      <div><dt>Open</dt><dd>${selectedNode ? selectedNode.blockerCount || 0 : 0}</dd></div>
+      <div><dt>Evidence</dt><dd>${selectedNode ? selectedNode.evidenceCount || 0 : 0}</dd></div>
+    </dl>
+    <div class="context-dock-section">
+      <h4>Selected Context</h4>
+      <p>${basketLabels.length ? basketLabels.join(' | ') : 'No included context in this browser session.'}</p>
+    </div>
+    <div class="context-dock-section">
+      <h4>Protected Exclusions</h4>
+      <p>${protectedLabels.join(' | ')}</p>
+    </div>
+    <div class="context-dock-section context-dock-guidance">
+      <h4>Static copilot guidance</h4>
+      <p>Use the selected object plus Selected Context to discuss architecture scope. This dock is local guidance only and does not send prompts or call AI services.</p>
+    </div>`;
+  return dock;
+}
+
+function refreshWorkbenchContextDock() {
+  const dock = document.querySelector('.workbench-context-dock');
+  if (!dock) return;
+  dock.replaceWith(renderWorkbenchContextDock(getSelectedNode()));
+}
+
+function renderSpatialWorkbenchCanvas(canvas) {
+  const board = getWorkbenchBoard();
+  canvas.innerHTML = `
+    ${getBreadcrumbsHTML()}
+    <div class="canvas-toolbar spatial-canvas-toolbar">
+      <div class="canvas-support-actions" aria-label="Workbench support panels">
+        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'palette' ? 'active' : ''}" type="button" id="toggle-workbench-palette" aria-expanded="${window.appState.activeWorkbenchPopover === 'palette'}" title="Show object types">
+          ${icon('spark')}<span>Object types</span>
+        </button>
+        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'context' ? 'active' : ''}" type="button" id="toggle-workbench-context" aria-expanded="${window.appState.activeWorkbenchPopover === 'context'}" title="Show Selected Context">
+          ${icon('branch')}<span>Selected Context</span><strong>${window.appState.context.length}</strong>
+        </button>
+      </div>
+      <div class="canvas-view-mode-toggle">
+        <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat</button>
+      </div>
+      <div class="canvas-zoom-controls" aria-label="Spatial board zoom controls">
+        <button class="icon-btn" type="button" id="zoom-out-workbench" title="Zoom out" aria-label="Zoom out">${icon('minus')}</button>
+        <span id="workbench-zoom-level" class="canvas-zoom-level">${Math.round(window.appState.canvasViewport.scale * 100)}%</span>
+        <button class="icon-btn" type="button" id="zoom-in-workbench" title="Zoom in" aria-label="Zoom in">${icon('add')}</button>
+        <button class="icon-btn" type="button" id="fit-workbench-board" title="Fit board" aria-label="Fit board">${icon('fit')}</button>
+        <button class="icon-btn" type="button" id="reset-workbench-view" title="Reset view" aria-label="Reset view">${icon('reset')}</button>
+      </div>
+    </div>
+    <span class="canvas-label">COCKPIT-MVP-015 / Spatial Board</span>`;
+
+  const viewport = createElement('div', 'canvas-viewport');
+  const world = createElement('div', 'canvas-world');
+  world.style.width = `${board.width}px`;
+  world.style.height = `${board.height}px`;
+  renderSpatialBoardZones(world);
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'workflow-lines');
+  svg.setAttribute('preserveAspectRatio', 'none');
+  svg.setAttribute('viewBox', `0 0 ${board.width} ${board.height}`);
+  svg.innerHTML = workflowLineDefs();
+  world.appendChild(svg);
+
+  getSpatialWorkbenchNodes().forEach((node) => {
+    world.appendChild(createWorkbenchNodeCard(node));
+  });
+  viewport.appendChild(world);
+  canvas.appendChild(viewport);
+
+  if (window.appState.activeWorkbenchPopover) {
+    canvas.appendChild(renderWorkbenchPopover(window.appState.activeWorkbenchPopover));
+  }
+  canvas.appendChild(renderWorkbenchContextDock(getSelectedNode()));
+  canvas.appendChild(createElement('div', 'canvas-minimap canvas-minimap-spatial'));
+
+  const paletteToggle = canvas.querySelector('#toggle-workbench-palette');
+  const contextToggle = canvas.querySelector('#toggle-workbench-context');
+  if (paletteToggle) {
+    paletteToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleWorkbenchPopover('palette');
+    });
+  }
+  if (contextToggle) {
+    contextToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleWorkbenchPopover('context');
+    });
+  }
+  canvas.querySelector('#toggle-view-spatial').addEventListener('click', (event) => {
+    event.stopPropagation();
+    window.appState.viewMode = 'spatial';
+    window.appState.currentParentId = null;
+    window.appState.currentLevel = 'requirements';
+    window.appState.expandedNodeId = null;
+    window.renderPage('workbench');
+  });
+  canvas.querySelector('#toggle-view-mixed').addEventListener('click', (event) => {
+    event.stopPropagation();
+    window.appState.viewMode = 'mixed';
+    window.appState.currentParentId = null;
+    window.appState.currentLevel = 'requirements';
+    window.appState.expandedNodeId = null;
+    window.appState.selectedNodeId = null;
+    window.renderPage('workbench');
+  });
+  canvas.querySelector('#toggle-view-flat').addEventListener('click', (event) => {
+    event.stopPropagation();
+    window.appState.viewMode = 'flat';
+    window.appState.currentParentId = null;
+    window.appState.currentLevel = 'task';
+    window.appState.expandedNodeId = null;
+    window.appState.selectedNodeId = 'node-1';
+    window.renderPage('workbench');
+  });
+  canvas.querySelector('#zoom-out-workbench').addEventListener('click', (event) => {
+    event.stopPropagation();
+    zoomWorkbenchCanvas(canvas, -1);
+  });
+  canvas.querySelector('#zoom-in-workbench').addEventListener('click', (event) => {
+    event.stopPropagation();
+    zoomWorkbenchCanvas(canvas, 1);
+  });
+  canvas.querySelector('#fit-workbench-board').addEventListener('click', (event) => {
+    event.stopPropagation();
+    fitWorkbenchBoard(canvas);
+  });
+  canvas.querySelector('#reset-workbench-view').addEventListener('click', (event) => {
+    event.stopPropagation();
+    resetWorkbenchViewport();
+  });
+  canvas.addEventListener('click', () => {
+    if (!window.appState.activeWorkbenchPopover) return;
+    window.appState.activeWorkbenchPopover = null;
+    window.renderPage('workbench');
+  });
+
+  bindSpatialCanvasViewport(canvas);
+  applyCanvasViewport();
+  scheduleWorkflowLines(canvas);
+  return canvas;
+}
+
 function renderNodeCanvas() {
   ensureWorkflowLineListeners();
   const canvas = createElement('div', `node-canvas canvas-mode-${window.appState.viewMode}`);
+  if (window.appState.viewMode === 'spatial') {
+    return renderSpatialWorkbenchCanvas(canvas);
+  }
 
   canvas.innerHTML = `
     ${getBreadcrumbsHTML()}
     <div class="canvas-toolbar">
+      <div class="canvas-support-actions" aria-label="Workbench support panels">
+        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'palette' ? 'active' : ''}" type="button" id="toggle-workbench-palette" aria-expanded="${window.appState.activeWorkbenchPopover === 'palette'}" title="Show object types">
+          ${icon('spark')}<span>Object types</span>
+        </button>
+        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'context' ? 'active' : ''}" type="button" id="toggle-workbench-context" aria-expanded="${window.appState.activeWorkbenchPopover === 'context'}" title="Show Selected Context">
+          ${icon('branch')}<span>Selected Context</span><strong>${window.appState.context.length}</strong>
+        </button>
+      </div>
       <div class="canvas-view-mode-toggle">
-        <button class="view-mode-btn ${window.appState.viewMode === 'hierarchical' ? 'active' : ''}" type="button" id="toggle-view-hierarchical" title="Hierarchical Explorer">Hierarchical</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed Map</button>
         <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat Flow</button>
       </div>
     </div>
     <span class="canvas-label">COCKPIT-MVP-014</span>`;
+
+  const paletteToggle = canvas.querySelector('#toggle-workbench-palette');
+  const contextToggle = canvas.querySelector('#toggle-workbench-context');
+  if (paletteToggle) {
+    paletteToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleWorkbenchPopover('palette');
+    });
+  }
+  if (contextToggle) {
+    contextToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleWorkbenchPopover('context');
+    });
+  }
+  if (window.appState.activeWorkbenchPopover) {
+    canvas.appendChild(renderWorkbenchPopover(window.appState.activeWorkbenchPopover));
+  }
+  canvas.addEventListener('click', () => {
+    if (!window.appState.activeWorkbenchPopover) return;
+    window.appState.activeWorkbenchPopover = null;
+    window.renderPage('workbench');
+  });
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'workflow-lines');
@@ -886,71 +1493,40 @@ function renderNodeCanvas() {
     </div>`;
   canvas.appendChild(legend);
 
-  const flowClass = window.appState.viewMode === 'flat' ? 'node-flow node-flow-flat' : 'node-flow node-flow-map';
+  const flowClass = window.appState.viewMode === 'flat'
+    ? 'node-flow node-flow-flat'
+    : window.appState.viewMode === 'mixed'
+      ? 'node-flow node-flow-mixed'
+      : 'node-flow node-flow-map';
   const flow = createElement('div', flowClass);
-  getOrderedWorkbenchNodes().forEach((node) => {
-    const card = createElement('button', `node-card node-type-${node.type} status-tone-${statusTone(node.status)}`);
-    card.type = 'button';
-    card.dataset.nodeId = node.id;
-    card.setAttribute('aria-label', `Select ${node.index} ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}. Readiness: ${readinessLabel(node.readiness || node.status)}`);
-    card.title = buildNodeTooltip(node);
-    if (window.appState.selectedNodeId === node.id) card.classList.add('selected');
-
-    if (window.appState.viewMode !== 'flat') {
-      card.style.left = `${node.x}%`;
-      card.style.top = `${node.y}%`;
-    }
-
-    const hasChildren = window.appState.viewMode === 'hierarchical' && window.mockData.nodes.some((n) => n.parentId === node.id);
-    const exploreActionHTML = hasChildren
-      ? `<span class="node-drill-down-action" title="Double click card or click here to explore children">${icon('arrow')} Explore</span>`
-      : '';
-
-    card.innerHTML = `<span class="node-handle node-handle-input" aria-hidden="true"></span>
-      <span class="node-handle node-handle-output" aria-hidden="true"></span>
-      <div class="node-topline">
-        <span class="node-type-icon">${icon(NODE_ICON_BY_TYPE[node.type] || 'spark')}</span>
-        <div class="node-label">${node.title || node.label}</div>
-      </div>
-      <div class="node-readiness-row">
-        ${renderStatusChip(node.readiness || node.status, readinessLabel(node.readiness || node.status))}
-        <span class="node-metric node-metric-blocker" title="Open readiness item count">${node.blockerCount || 0} open</span>
-        <span class="node-metric node-metric-evidence" title="Linked evidence count">${node.evidenceCount || 0} ev</span>
-      </div>
-      ${exploreActionHTML}`;
-
-    card.addEventListener('click', (event) => {
-      event.stopPropagation();
-      selectNode(node.id);
-    });
-
-    if (hasChildren) {
-      card.addEventListener('dblclick', (event) => {
-        event.stopPropagation();
-        drillDownToNode(node);
-      });
-      const exploreBtn = card.querySelector('.node-drill-down-action');
-      if (exploreBtn) {
-        exploreBtn.addEventListener('click', (event) => {
-          event.stopPropagation();
-          drillDownToNode(node);
-        });
-      }
-    }
-
-    flow.appendChild(card);
-  });
+  if (window.appState.viewMode === 'mixed') {
+    renderMixedMapNodes(flow);
+  } else {
+    renderOrderedWorkbenchNodes(flow);
+  }
   canvas.appendChild(flow);
 
   // Bind toolbar view toggle listeners
-  const toggleHierarchical = canvas.querySelector('#toggle-view-hierarchical');
+  const toggleSpatial = canvas.querySelector('#toggle-view-spatial');
+  const toggleMixed = canvas.querySelector('#toggle-view-mixed');
   const toggleFlat = canvas.querySelector('#toggle-view-flat');
-  if (toggleHierarchical) {
-    toggleHierarchical.addEventListener('click', (event) => {
+  if (toggleSpatial) {
+    toggleSpatial.addEventListener('click', (event) => {
       event.stopPropagation();
-      window.appState.viewMode = 'hierarchical';
+      window.appState.viewMode = 'spatial';
       window.appState.currentParentId = null;
       window.appState.currentLevel = 'requirements';
+      window.appState.expandedNodeId = null;
+      window.renderPage('workbench');
+    });
+  }
+  if (toggleMixed) {
+    toggleMixed.addEventListener('click', (event) => {
+      event.stopPropagation();
+      window.appState.viewMode = 'mixed';
+      window.appState.currentParentId = null;
+      window.appState.currentLevel = 'requirements';
+      window.appState.expandedNodeId = null;
       window.appState.selectedNodeId = null;
       window.renderPage('workbench');
     });
@@ -961,6 +1537,7 @@ function renderNodeCanvas() {
       window.appState.viewMode = 'flat';
       window.appState.currentParentId = null;
       window.appState.currentLevel = 'task';
+      window.appState.expandedNodeId = null;
       window.appState.selectedNodeId = 'node-1';
       window.renderPage('workbench');
     });
@@ -1031,15 +1608,15 @@ function selectNode(nodeId) {
     if (traySubtitle && node) {
       traySubtitle.textContent = `${node.id} / ${node.title || node.label}`;
     }
+    refreshWorkbenchContextDock();
   }
-  renderNodeInspector(nodeId);
+  if (window.appState.inspectorVisible) renderNodeInspector(nodeId);
 }
 
 function renderNodeInspector(nodeId) {
   const inspector = document.getElementById('right-inspector');
   if (!inspector) return;
   const node = window.mockData.nodes.find((n) => n.id === nodeId);
-  setInspectorOpen(true);
   if (!node) {
     inspector.innerHTML = `<div class="inspector-header">
         <div>
@@ -1136,7 +1713,8 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
         </div>`;
     case 'overview':
     default:
-      const hasChildren = window.appState.viewMode === 'hierarchical' && window.mockData.nodes.some((n) => n.parentId === node.id);
+      const hasChildren = window.appState.viewMode !== 'flat' && window.mockData.nodes.some((n) => n.parentId === node.id);
+      const exploreLabel = window.appState.viewMode === 'mixed' && window.appState.expandedNodeId === node.id ? 'Collapse Group' : 'Explore';
       return `<div class="inspector-section">
           <h4>Overview</h4>
           <div class="inspector-grid">
@@ -1149,7 +1727,7 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
           ${hasChildren ? `
           <div class="inspector-drill-row">
             <button class="action-btn action-primary" id="inspector-explore-action" type="button">
-              ${icon('arrow')} Drill Down / Explore
+              ${icon('arrow')} ${exploreLabel}
             </button>
           </div>` : ''}
           <div class="inspector-link-row">
@@ -1197,9 +1775,6 @@ function renderUtilityTray(selectedNode) {
           <button class="action-btn" type="button" id="mark-evidence-reviewed">${icon('check')}Mark evidence reviewed locally</button>
           <button class="action-btn" type="button" id="ack-review-blockers">${icon('review')}Acknowledge review items locally</button>
         </div>
-      </section>
-      <section class="selected-evidence-panel">
-        ${renderAssistantPanel(selectedNode)}
       </section>
       <section class="selected-evidence-panel handoff-preview-link-panel">
         <h4>Preview readiness</h4>
@@ -1416,7 +1991,7 @@ function addSelectedToContext() {
   window.appState.context.push({ id: node.id, label: node.label });
   showToast(`${node.label} was added to local Selected Context only.`, 'success');
   window.renderPage('workbench');
-  renderNodeInspector(node.id);
+  if (window.appState.inspectorVisible) renderNodeInspector(node.id);
 }
 
 function removeContextItem(idx) {
