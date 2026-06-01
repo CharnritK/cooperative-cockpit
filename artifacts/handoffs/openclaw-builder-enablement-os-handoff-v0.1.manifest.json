@@ -1,0 +1,80 @@
+{
+  "artifact_id": "ART-BUILDER-ENABLEMENT-OS-HANDOFF-v0.1",
+  "artifact_type": "handoff_package_assimilation_manifest",
+  "created_at": "2026-06-02",
+  "artifact_pack": "OpenClaw Builder Enablement OS Handoff Package",
+  "version": "v0.1",
+  "owner": "Point",
+  "source": "local_upload",
+  "status": "assimilated_product_lock_candidate",
+  "related_task_id": "PKG-BUILDER-ENABLEMENT-OS",
+  "source_file": "openclaw-builder-enablement-os-handoff-v0.1/",
+  "storage_path": "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/",
+  "readiness": "READY_FOR_PRODUCT_LOCK / NOT_READY_FOR_IMPLEMENTATION",
+  "repo_target": "CharnritK/cooperative-cockpit",
+  "primary_decision": "Lock OpenClaw Cooperative Cockpit as Builder Enablement OS centered on SpecGraph.",
+  "source_research_zip": {
+    "filename": "openclaw-code-object-explorer-research-pack-v0.2.zip",
+    "sha256": "9c3fca4ef7df6a733e801a4f81bfee6010ce97ab0432f69c4ff11f26e8005669",
+    "status": "included_as_provenance_zip_review_only_not_implementation_approval",
+    "storage_path": "artifacts/packages/openclaw-code-object-explorer-research-pack-v0.2.zip"
+  },
+  "hard_boundaries": [
+    "No backend",
+    "No API",
+    "No auth",
+    "No database",
+    "No deployment",
+    "No runtime mutation",
+    "No real AI execution",
+    "No external connectors",
+    "No MCP",
+    "No parser/LSP/indexing",
+    "No source-code upload",
+    "No repo ingestion",
+    "No new dependencies without Point lock",
+    "No repo writes from app",
+    "No app source changes until Point accepts GOAL-016"
+  ],
+  "assimilated_live_paths": [
+    ".codex/goals/GOAL-016-product-lock-builder-enablement-os.md",
+    ".codex/goals/GOAL-017-static-specgraph-fixtures.md",
+    ".codex/goals/GOAL-018-workbench-scenario-lenses.md",
+    ".codex/goals/GOAL-019-static-code-object-lens-fixture.md",
+    "artifacts/handoffs/openclaw-builder-enablement-os-handoff-v0.1.manifest.json",
+    "artifacts/packages/openclaw-code-object-explorer-research-pack-v0.2.provenance.md",
+    "artifacts/packages/openclaw-code-object-explorer-research-pack-v0.2.zip",
+    "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/00_EXECUTIVE_SUMMARY.md",
+    "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/CODEX_SEQUENCE.md",
+    "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/PACKAGE_QA_SUMMARY.md",
+    "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/README.md",
+    "docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/README_FOR_CODEX.md",
+    "docs/product/builder-enablement-os/00_PRODUCT_LOCK.md",
+    "docs/product/builder-enablement-os/01_SPECGRAPH_CONTRACT.md",
+    "docs/product/builder-enablement-os/02_WORKBENCH_UX_CONTRACT.md",
+    "docs/product/builder-enablement-os/03_NODE_AND_LOCK_MODEL.md",
+    "docs/product/builder-enablement-os/04_SPEC_CI_READINESS_GATES.md",
+    "docs/product/builder-enablement-os/05_DEMO_SCENARIOS.md",
+    "docs/product/builder-enablement-os/06_CODE_OBJECT_EXPLORER_INTEGRATION.md",
+    "docs/product/builder-enablement-os/07_STATIC_MVP_SCOPE_LOCK.md",
+    "docs/product/builder-enablement-os/08_REPO_ASSIMILATION_PLAN.md",
+    "docs/product/builder-enablement-os/09_POINT_DECISION_MEMO.md",
+    "docs/product/builder-enablement-os/10_RISK_REGISTER.md",
+    "docs/product/builder-enablement-os/fixtures/specgraph-demo-fixtures.json",
+    "prompts/GPT55_PRO_REVIEW_PROMPT.md",
+    "quality/QA_CHECKLIST_BUILDER_ENABLEMENT_OS.md",
+    "schemas/specgraph.schema.json"
+  ],
+  "superseded_source_paths": [
+    {
+      "source_path": "openclaw-builder-enablement-os-handoff-v0.1/.codex/goals/GOAL-016-product-lock-builder-enablement-os.md",
+      "live_path": ".codex/goals/GOAL-016-product-lock-builder-enablement-os.md",
+      "reason": "Repo copy was already assimilated during GOAL-016 and has stricter guardrails."
+    },
+    {
+      "source_path": "openclaw-builder-enablement-os-handoff-v0.1/docs/product/builder-enablement-os/**",
+      "live_path": "docs/product/builder-enablement-os/**",
+      "reason": "Repo product-lock docs were already assimilated; identical files were retained in place and stricter repo copies were preserved."
+    }
+  ]
+}
