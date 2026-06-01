@@ -1,0 +1,49 @@
+{
+  "package": "OpenClaw Builder Enablement OS SpecGraph demo fixtures",
+  "version": "v0.1",
+  "created": "2026-06-02",
+  "status": "static_mock_only",
+  "guardrails": [
+    "No backend",
+    "No API",
+    "No auth",
+    "No database",
+    "No deployment",
+    "No runtime mutation",
+    "No real AI execution",
+    "No external connectors",
+    "No MCP",
+    "No repo writes",
+    "No source-code upload"
+  ],
+  "scenarios": [
+    {
+      "id": "scenario-portfolio",
+      "title": "Personal Portfolio Website",
+      "complexity": "low",
+      "best_lens": "guided_flow",
+      "pattern": "Personal Portfolio Website Blueprint"
+    },
+    {
+      "id": "scenario-powerbi-databricks",
+      "title": "Power BI + Databricks Dashboard",
+      "complexity": "medium",
+      "best_lens": "lineage_impact_map",
+      "pattern": "Power BI + Databricks Dashboard Blueprint"
+    },
+    {
+      "id": "scenario-openclaw-config",
+      "title": "OpenClaw Personal AI Config",
+      "complexity": "high",
+      "best_lens": "control_plane",
+      "pattern": "Personal AI Control Plane Blueprint"
+    },
+    {
+      "id": "scenario-code-object-lens",
+      "title": "Code Object Explorer Review Lens",
+      "complexity": "technical",
+      "best_lens": "code_review_lens",
+      "pattern": "Evidence-linked Code Review Blueprint"
+    }
+  ]
+}

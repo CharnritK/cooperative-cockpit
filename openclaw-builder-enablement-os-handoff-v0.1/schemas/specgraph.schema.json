@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SpecGraph v0.1",
+  "type": "object",
+  "required": [
+    "specgraph_id",
+    "mission",
+    "nodes",
+    "edges",
+    "readiness"
+  ],
+  "properties": {
+    "specgraph_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "mission": {
+      "$ref": "#/$defs/node"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "readiness": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/readiness_check"
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "summary",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "mission",
+            "idea",
+            "functional_spec",
+            "research_need",
+            "evidence",
+            "decision",
+            "architecture",
+            "code_object",
+            "risk",
+            "build_unit",
+            "phase",
+            "qa_gate",
+            "work_packet",
+            "handoff_packet",
+            "reusable_pattern"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "raw",
+            "clarified",
+            "proposed",
+            "needs_research",
+            "spec_candidate",
+            "accepted",
+            "locked_core",
+            "architecture_ready",
+            "build_ready",
+            "in_progress",
+            "validated",
+            "reusable",
+            "archived"
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "id",
+        "source_id",
+        "target_id",
+        "relation_type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        },
+        "target_id": {
+          "type": "string"
+        },
+        "relation_type": {
+          "type": "string"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "readiness_check": {
+      "type": "object",
+      "required": [
+        "id",
+        "scope",
+        "status",
+        "summary"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "warning",
+            "blocked",
+            "not_applicable"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -25,6 +25,7 @@
 - GOAL-012 wrapper offline smoke harness is implemented in the current working tree. The Claude/Codex role wrappers are import-safe, expose testable command builders, and are covered by offline Node tests wired into `npm run validate`. Evidence is recorded in `artifacts/evidence/GOAL-012-wrapper-offline-smoke-harness.md`.
 - GOAL-014 Workbench Mixed Map drilldown is implemented in the current working tree and remains available as a secondary Workbench review mode.
 - GOAL-015 Workbench Spatial Canvas is implemented in the current working tree. The Workbench defaults to a whole-board spatial canvas with fixed mock object positions, zoom, pan, fit, reset, focus mode and a selected-object context dock while preserving Mixed Map and Flat Flow as secondary review modes.
+- GOAL-016 Builder Enablement OS product-lock docs are assimilated under `docs/product/builder-enablement-os/`: SpecGraph is the primary product artifact, Workbench is a lens/editor, the code-object explorer is a specialist evidence-linked technical lens only, and evidence is recorded in `artifacts/evidence/GOAL-016-product-lock-builder-enablement-os.md`. The stale static-MVP manifest checksum was refreshed after package regeneration so validation can run cleanly.
 
 ## Completed Assimilation
 
@@ -47,6 +48,7 @@
 | GOAL-012 wrapper offline smoke harness | Complete | Wrapper command vectors, import safety, role rejection, timeout parsing, Codex model/sandbox/reasoning settings, and Windows Codex entrypoint resolution are covered by offline Node tests. `npm run validate` now includes `npm run test:wrappers`. Evidence recorded in `artifacts/evidence/GOAL-012-wrapper-offline-smoke-harness.md`. |
 | GOAL-014 Workbench Mixed Map drilldown | Complete | Mixed Map remains available as a secondary drilldown mode, requirement siblings remain visible during one-at-a-time expansion, architecture children render inside a bordered compound group, Flat Flow remains available for `node-1` through `node-8`, and validation covers concept consistency plus Playwright drilldown behavior. Evidence recorded in `artifacts/evidence/GOAL-014-workbench-mixed-hierarchy-drilldown.md`. |
 | GOAL-015 Workbench Spatial Canvas | Complete | Spatial Board is now the Workbench default, all current hierarchy objects render on a fixed-size board from mock data, viewport state supports zoom/pan/fit/reset without browser storage persistence, the context dock updates from selection, and Mixed Map/Flat Flow remain secondary review modes. Evidence recorded in `artifacts/evidence/GOAL-015-workbench-spatial-canvas.md`. |
+| GOAL-016 Builder Enablement OS product lock | Complete | Product canon docs lock OpenClaw as Builder Enablement OS centered on SpecGraph; code-object explorer remains provenance/specialist lens only; stale static-MVP manifest checksum was refreshed after package regeneration. Evidence recorded in `artifacts/evidence/GOAL-016-product-lock-builder-enablement-os.md`. |
 
 ## Guardrails
 
@@ -55,13 +57,14 @@
 - Static golden-path additions use mock data only and do not add repo scanning, external connectors, or persistent storage.
 - GOAL-010 and GOAL-011 Claude planning/review remained advisory and machine-local; no repo-tracked workflow, agent instruction, commit, push, PR, deployment, or remote sharing was added.
 - GOAL-012 wrapper tests are offline command-vector tests; they do not execute live Copilot, live Codex, external connectors, or repository publication.
+- GOAL-016 is documentation/provenance only; it does not authorize GOAL-017, GOAL-018, GOAL-019, app source changes, dependencies, backend/API/auth/database/deployment, parser/LSP/indexing, real AI execution, external connectors, MCP, repo ingestion, source-code upload, commits, pushes, PRs, or deployment.
 - Point accepted the static MVP object-model defaults for GOAL-005 and the GOAL-007 Work Packet / Handoff Packet semantics.
 - `docs/product/**` is the product canon; root `OPERATING_WORKFLOW.md` is the agent governance canon; this file is the current-state canon.
 - `cooperative-cockpit-repo-setup-final/` has been removed from active repo scope after verification as stale duplicate package content.
 
 ## Next Recommended Step
 
-Use the GOAL-010 evidence as the static MVP UX-revamp baseline and the GOAL-011/GOAL-012 wrappers plus offline wrapper tests for future planner/reviewer/manager/coder passes before approving any new product scope, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
+Point review of GOAL-016 Builder Enablement OS / SpecGraph product lock before any GOAL-017 fixture work, GOAL-018 Workbench copy/UI alignment, GOAL-019 code-object lens fixture, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
 
 ## GOAL-013 current status
 
