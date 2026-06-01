@@ -896,6 +896,43 @@ window.mockData = {
     { source: 'node-6', target: 'node-7', tone: 'risk' },
   ],
 
+  workbenchBoard: {
+    width: 3200,
+    height: 1780,
+    zones: [
+      { id: 'zone-requirements', label: 'Product requirements', x: 120, y: 120, width: 1020, height: 330 },
+      { id: 'zone-architecture', label: 'Architecture modules', x: 120, y: 540, width: 1280, height: 430 },
+      { id: 'zone-components', label: 'Software components', x: 1500, y: 120, width: 1040, height: 700 },
+      { id: 'zone-phases', label: 'Delivery phases', x: 1500, y: 900, width: 1260, height: 360 },
+      { id: 'zone-tasks', label: 'Task flow and handoff path', x: 320, y: 1340, width: 2320, height: 280 },
+    ],
+    nodePositions: {
+      'req-1': { x: 410, y: 286 },
+      'req-2': { x: 840, y: 286 },
+      'arch-1': { x: 400, y: 705 },
+      'arch-2': { x: 790, y: 705 },
+      'arch-3': { x: 1180, y: 705 },
+      'comp-1': { x: 1690, y: 310 },
+      'comp-2': { x: 2020, y: 310 },
+      'comp-3': { x: 2350, y: 310 },
+      'comp-4': { x: 1690, y: 610 },
+      'comp-5': { x: 2020, y: 610 },
+      'comp-6': { x: 2350, y: 610 },
+      'phase-1': { x: 1690, y: 1065 },
+      'phase-2': { x: 2020, y: 1065 },
+      'phase-3': { x: 2350, y: 1065 },
+      'phase-4': { x: 2680, y: 1065 },
+      'node-1': { x: 490, y: 1480 },
+      'node-2': { x: 770, y: 1480 },
+      'node-3': { x: 1050, y: 1480 },
+      'node-4': { x: 1330, y: 1480 },
+      'node-5': { x: 1610, y: 1480 },
+      'node-6': { x: 1890, y: 1480 },
+      'node-7': { x: 2170, y: 1480 },
+      'node-8': { x: 2450, y: 1480 },
+    },
+  },
+
   // Architecture graph used by the workflow explainer. These nodes mirror the
   // Workbench canvas and describe local artifact flow.
   architectureGraphNodes: [

@@ -38,6 +38,7 @@
     // Flags for gating actions
     inspectorTab: 'overview',
     inspectorVisible: false,
+    activeWorkbenchPopover: null,
     utilityTrayCollapsed: false,
     mockAddNodeRequested: false,
     decisionFilter: 'all',
@@ -46,9 +47,16 @@
     reviewBlockersAcknowledged: false,
     lastLocalValidation: null,
     handoffReady: false,
-    // Workbench canvas state. Flat flow is the PR-ready default; hierarchy is optional drill-down.
-    currentLevel: 'task',
+    // Workbench canvas state. Spatial board is the default; Mixed Map and Flat Flow remain optional reviews.
+    currentLevel: 'requirements',
     currentParentId: null,
-    viewMode: 'flat',
+    viewMode: 'spatial',
+    expandedNodeId: null,
+    workbenchFocusMode: true,
+    canvasViewport: {
+      scale: 0.58,
+      x: 70,
+      y: 38,
+    },
   };
 })();

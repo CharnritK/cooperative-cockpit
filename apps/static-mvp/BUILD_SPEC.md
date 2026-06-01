@@ -15,6 +15,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 - **Home page** – Shows operational status cards, a full-width pipeline banner, recent activity and next safe actions instead of a generic dashboard.
 - **Deferred pages** – Architecture Map, Golden Scenarios and Feedback & Revisions are deferred to Phase 1.5 and are not part of this MVP.
 - **Codex handoff** – Visible but gated. Handoff actions remain disabled until `appState.handoffReady` is true.
+- **Workbench spatial canvas** – The default Workbench view is a whole-board spatial canvas with fixed mock positions, zoom, pan, fit, reset and a context dock. Mixed Map and Flat Flow remain secondary review modes.
 - **Technology stack** – Plain HTML, CSS and vanilla JavaScript. No frameworks, no packages, no backend, no API calls and no authentication.
 - **Typography assets** – Local bundled fonts only: Rajdhani, Outfit and Fira Code under `assets/fonts`, each with its OFL license file. No CDN font loading is permitted at runtime.
 - **Viewport** – Desktop 16:9 only. Mobile responsiveness is not required.
@@ -26,7 +27,7 @@ This build specification outlines the decisions, scope and acceptance criteria u
 The MVP includes eight pages:
 
 1. **Home** – Operational page with context, protected exclusion and pending lock cards, pipeline progress, recent activity and quick actions.
-2. **Workbench** – Canvas-first workflow studio for selecting governed operator nodes, reviewing safe node types, managing the docked Selected Context panel and inspecting node configuration/debug details. Shows the governance strip as a secondary safety overlay.
+2. **Workbench** – Canvas-first workflow studio for selecting governed operator nodes on a large zoomable spatial board, reviewing safe node types, managing Selected Context through a canvas popover and context dock, and opening node configuration/debug details on demand. Shows the governance strip as a secondary safety overlay.
 3. **Spec Builder** – Template-driven spec editing. Includes field status chips and gating for handoff.
 4. **Review Runs** – Inspect‑only review orchestration. Shows review types and mock findings.
 5. **Preview** – Static mockup viewer and spec coverage checklist.
@@ -70,7 +71,7 @@ Status chips reflect the following colour semantics:
 - **Surfaces:** Light neutral shell, white studio panels, light dotted Workbench canvas, restrained borders and compact control bars. Avoid heavy glass, scanlines, cockpit cues and neon glow.
 - **Interaction finish:** Hover/focus/selected states use subtle blue, green and orange accents, clear outlines, compact status chips and minimal page-enter motion with `prefers-reduced-motion` support.
 - **Icons:** Inline SVG and CSS icons are used for navigation, top actions, nodes, governance and status cues. There is no external icon package.
-- **Workbench connectors:** `window.mockData.workflowEdges` supplies visual-only source/target/tone data for drawing canvas links. Node cards are configurable workflow operators with type icons, config/model/status rows, input/output handles and local-only selection state.
+- **Workbench board:** `window.mockData.workbenchBoard` supplies the fixed board size, visual zones and node positions for the default spatial view. `window.mockData.workflowEdges` and hierarchy relationships supply visual-only source/target/tone data for drawing canvas links. Node cards are configurable workflow operators with type icons, config/model/status rows, input/output handles and local-only selection state.
 
 Supported status labels:
 `Active`, `Selected`, `Allowed`, `Validated`, `Covered`, `Applied`, `Needs Point lock`, `Needs answer`, `Needs sync`, `Missing`, `Blocked`, `Revise`, `Handoff only`, `Inspect only`, `Draft`, `Ready for handoff`.
@@ -82,7 +83,7 @@ Refer to the `QA_CHECKLIST.md` file for detailed acceptance criteria. At a high 
 1. All eight pages are reachable via the left navigation.
 2. The prototype reads as a governed AI workflow studio rather than a dashboard, chatbot or dark command center.
 3. The shell is visually consistent across pages, with a light neutral SaaS palette, local typography, inline icons and clear status chips.
-4. The Workbench is canvas‑first with node selection, a node palette, visual connectors, workflow-operator cards, node configuration/debug inspection and a docked Selected Context panel.
+4. The Workbench is canvas‑first with a default spatial board, zoom/pan controls, node selection, context dock, object-type and Selected Context popovers, visual connectors, workflow-operator cards, and a manually opened node configuration/debug inspector.
 5. The Spec Builder clearly shows templates, fields, statuses and gating for handoff.
 6. Review runs are labelled inspect‑only and provide mock findings.
 7. The preview is static and labelled “UI / HTML Viewer”.
