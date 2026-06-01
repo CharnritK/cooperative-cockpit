@@ -26,6 +26,8 @@
 - GOAL-014 Workbench Mixed Map drilldown is implemented in the current working tree and remains available as a secondary Workbench review mode.
 - GOAL-015 Workbench Spatial Canvas is implemented in the current working tree. The Workbench defaults to a whole-board spatial canvas with fixed mock object positions, zoom, pan, fit, reset, focus mode and a selected-object context dock while preserving Mixed Map and Flat Flow as secondary review modes.
 - GOAL-016 Builder Enablement OS product-lock docs are assimilated under `docs/product/builder-enablement-os/`: SpecGraph is the primary product artifact, Workbench is a lens/editor, the code-object explorer is a specialist evidence-linked technical lens only, and evidence is recorded in `artifacts/evidence/GOAL-016-product-lock-builder-enablement-os.md`. The stale static-MVP manifest checksum was refreshed after package regeneration so validation can run cleanly.
+- The `openclaw-builder-enablement-os-handoff-v0.1/` package shell has been removed from active repo scope after its unique files were placed under governed paths: follow-on goal prompts in `.codex/goals/`, handoff support docs in `docs/handoffs/openclaw-builder-enablement-os-handoff-v0.1/`, static product fixture data in `docs/product/builder-enablement-os/fixtures/`, the SpecGraph schema in `schemas/`, QA in `quality/`, review prompt in `prompts/`, and package provenance in `artifacts/handoffs/` and `artifacts/packages/`. Evidence is recorded in `artifacts/evidence/PKG-BUILDER-ENABLEMENT-OS-assimilation.md`.
+- GOAL-020A/020B/020C Builder Enablement OS QA goals are completed as bounded QA work: product QA docs 11-21 are present, SpecGraph fixture/schema validation is wired into `npm run validate`, Builder Enablement guardrail checks are wired into `npm run validate`, and QA package provenance is preserved under `artifacts/packages/openclaw-builder-enablement-os-qa-planning-v0.1/`. Evidence is recorded in `artifacts/evidence/GOAL-020-builder-enablement-qa-plan.md`.
 
 ## Completed Assimilation
 
@@ -49,6 +51,8 @@
 | GOAL-014 Workbench Mixed Map drilldown | Complete | Mixed Map remains available as a secondary drilldown mode, requirement siblings remain visible during one-at-a-time expansion, architecture children render inside a bordered compound group, Flat Flow remains available for `node-1` through `node-8`, and validation covers concept consistency plus Playwright drilldown behavior. Evidence recorded in `artifacts/evidence/GOAL-014-workbench-mixed-hierarchy-drilldown.md`. |
 | GOAL-015 Workbench Spatial Canvas | Complete | Spatial Board is now the Workbench default, all current hierarchy objects render on a fixed-size board from mock data, viewport state supports zoom/pan/fit/reset without browser storage persistence, the context dock updates from selection, and Mixed Map/Flat Flow remain secondary review modes. Evidence recorded in `artifacts/evidence/GOAL-015-workbench-spatial-canvas.md`. |
 | GOAL-016 Builder Enablement OS product lock | Complete | Product canon docs lock OpenClaw as Builder Enablement OS centered on SpecGraph; code-object explorer remains provenance/specialist lens only; stale static-MVP manifest checksum was refreshed after package regeneration. Evidence recorded in `artifacts/evidence/GOAL-016-product-lock-builder-enablement-os.md`. |
+| PKG-BUILDER-ENABLEMENT-OS handoff package assimilation | Complete | Source package shell removed from active repo scope; unique files moved to governed repo paths; stricter GOAL-016/root product-lock copies preserved instead of being downgraded by source duplicates. Evidence recorded in `artifacts/evidence/PKG-BUILDER-ENABLEMENT-OS-assimilation.md`. |
+| GOAL-020A/020B/020C Builder Enablement OS QA | Complete | QA strategy/matrix/gates docs, no-dependency SpecGraph fixture checker, and no-dependency Builder Enablement guardrail checker are in place and wired into validation. Evidence recorded in `artifacts/evidence/GOAL-020-builder-enablement-qa-plan.md`. |
 
 ## Guardrails
 
@@ -58,20 +62,13 @@
 - GOAL-010 and GOAL-011 Claude planning/review remained advisory and machine-local; no repo-tracked workflow, agent instruction, commit, push, PR, deployment, or remote sharing was added.
 - GOAL-012 wrapper tests are offline command-vector tests; they do not execute live Copilot, live Codex, external connectors, or repository publication.
 - GOAL-016 is documentation/provenance only; it does not authorize GOAL-017, GOAL-018, GOAL-019, app source changes, dependencies, backend/API/auth/database/deployment, parser/LSP/indexing, real AI execution, external connectors, MCP, repo ingestion, source-code upload, commits, pushes, PRs, or deployment.
+- The assimilated GOAL-017, GOAL-018, and GOAL-019 files are queued prompts only. Their presence in `.codex/goals/` is not execution approval.
+- GOAL-020 QA validation scripts are no-dependency local checks only. They do not authorize app feature work, parser/LSP/indexing, repo ingestion, source-code upload, backend/API/auth/database/deployment, runtime behavior, external connectors, MCP, source-control publication, or public demo claims.
 - Point accepted the static MVP object-model defaults for GOAL-005 and the GOAL-007 Work Packet / Handoff Packet semantics.
 - `docs/product/**` is the product canon; root `OPERATING_WORKFLOW.md` is the agent governance canon; this file is the current-state canon.
 - `cooperative-cockpit-repo-setup-final/` has been removed from active repo scope after verification as stale duplicate package content.
 
 ## Next Recommended Step
 
-Point review of GOAL-016 Builder Enablement OS / SpecGraph product lock before any GOAL-017 fixture work, GOAL-018 Workbench copy/UI alignment, GOAL-019 code-object lens fixture, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims.
-
-## GOAL-013 current status
-
-- Branch: `agent/GOAL-013-design-os-improvements`.
-- Scope: validation hardening, role-wrapper guardrails, documentation drift cleanup, and evidence updates.
-- Disallowed: staging, commit, push, PR, deployment, backend/API/auth/db/runtime/live AI, and external connector work.
-- Status: completed locally.
-- Validation: `npm run validate` passed.
-- Reviewer: Claude Opus 4.7 re-review reported no blocking/high findings.
+Point review of GOAL-016 Builder Enablement OS / SpecGraph product lock before any GOAL-017 fixture work, GOAL-018 Workbench copy/UI alignment, GOAL-019 code-object lens fixture, runtime behavior, connector work, backend/API/auth/database/deployment work, or public demo claims. Keep GOAL-020 validation warnings/gates active while reviewing follow-on scope.
 

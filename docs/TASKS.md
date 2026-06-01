@@ -21,6 +21,9 @@
 | GOAL-DS-003/005 | Design OS token, mock data and registry alignment | Orchestrator/Reviewer | 2026-05-31 | 2026-06-01 | PASS_WITH_WARNINGS / needs Point lock | DS-003 token audit and DS-005 screen registry contracts validate locally with warnings; final tokens, product-canon registry adoption, and runtime data changes require Point lock. |
 | GOAL-DS-004 | Design OS component taxonomy and stories | Orchestrator/QA | 2026-06-01 | 2026-06-01 | PASS_WITH_WARNINGS | Docs-only component stories cover `EvidenceCard` and `DecisionCard`; runtime extraction remains Point-locked. |
 | GOAL-DS-002-decision | Package-manager decision record | Orchestrator/PM | 2026-06-01 | 2026-06-01 | Accepted | npm selected as the single repo posture; `package-lock.json` exists. |
+| GOAL-016 | Builder Enablement OS product lock | Planner/Researcher/QA | 2026-06-02 | 2026-06-02 | Completed | Product canon docs center OpenClaw on SpecGraph; implementation follow-ons remain Point-gated. |
+| PKG-BUILDER-ENABLEMENT-OS | Builder Enablement OS handoff package assimilation | Orchestrator/QA | 2026-06-02 | 2026-06-02 | Completed | Unique handoff, prompt, schema, fixture, QA, and provenance files moved to governed paths; source package shell removed from active repo scope. |
+| GOAL-020A/020B/020C | Builder Enablement OS QA docs and validation | QA/Builder | 2026-06-02 | 2026-06-02 | Completed | QA docs 11-21, SpecGraph fixture checker, and Builder Enablement guardrail checker are wired into validation. |
 
 ## Recent task ledger
 
