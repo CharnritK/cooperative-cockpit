@@ -8,6 +8,6 @@
   "related_task_id": "GOAL-002",
   "source_file": "artifacts/archive/handoffs/openclaw-static-mvp-lego-pack-v0.1.zip",
   "storage_path": "apps/static-mvp/",
-  "checksum": "sha256:796e7ed09d2b23c795b0d5a6b2914f2b422a74da2ff1f449cec3871fee00ad9a",
-  "notes": "Checksum refreshed during GOAL-016 assimilation completion after the static MVP package was regenerated; derived from sorted sha256 sums of all files under apps/static-mvp/."
+  "checksum": "sha256:f465e85a7e0f05101d5bf489b496d96edd844ba527b3bd246809915dd4e8100b",
+  "notes": "Checksum refreshed during GOAL-021 static MVP UX upgrade after the realistic product journey and object-aware Workbench were implemented; derived from sorted sha256 sums of all files under apps/static-mvp/."
 }

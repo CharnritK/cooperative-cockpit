@@ -43,7 +43,7 @@ const NODE_ICON_BY_TYPE = {
 };
 
 const WORKFLOW_STEPS = [
-  { key: 'concept', label: 'Concept', pages: ['home'], caption: 'Concept intake' },
+  { key: 'concept', label: 'Journey', pages: ['landing', 'demo-entry', 'project-hub', 'project-init', 'home'], caption: 'Local product entry' },
   { key: 'workbench', label: 'Workbench', pages: ['workbench'], caption: 'Context selected' },
   { key: 'spec', label: 'Spec', pages: ['spec-builder'], caption: 'Spec gates open' },
   { key: 'review', label: 'Review', pages: ['review-runs'], caption: 'Review evidence' },
@@ -62,6 +62,14 @@ const INSPECTOR_TABS = [
   { id: 'overview', label: 'Overview' },
   { id: 'requirements', label: 'Requirements' },
   { id: 'evidence', label: 'Evidence' },
+];
+
+const RIGHT_PANEL_TABS = [
+  { id: 'inspector', label: 'Inspector' },
+  { id: 'edit-fields', label: 'Edit Fields' },
+  { id: 'copilot', label: 'Copilot' },
+  { id: 'evidence', label: 'Evidence' },
+  { id: 'trace', label: 'Trace' },
 ];
 
 const TOAST_DURATION = 3500;
@@ -84,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   syncShellState(window.appState.currentPage);
+  if (typeof window.updateNavHighlight === 'function') window.updateNavHighlight(window.appState.currentPage);
   window.renderPage(window.appState.currentPage);
 });
 
@@ -479,6 +488,18 @@ window.renderPage = function renderPage(page) {
   syncShellState(page);
 
   switch (page) {
+    case 'landing':
+      renderLanding(main);
+      break;
+    case 'demo-entry':
+      renderDemoEntry(main);
+      break;
+    case 'project-hub':
+      renderProjectHub(main);
+      break;
+    case 'project-init':
+      renderProjectInitialize(main);
+      break;
     case 'home':
       renderHome(main);
       break;
@@ -504,11 +525,190 @@ window.renderPage = function renderPage(page) {
       renderRules(main);
       break;
     default:
-      renderHome(main);
+      renderLanding(main);
   }
 
   animatePageEnter(main);
 };
+
+function renderLanding(container) {
+  const journey = window.mockData.productJourney || {};
+  const steps = journey.tutorialSteps || [];
+  const hero = createElement('section', 'journey-hero landing-hero');
+  hero.innerHTML = `<div class="journey-hero-copy">
+      <div class="page-kicker">Landing / Product Concept</div>
+      <h2 class="page-title">OpenClaw Cooperative Cockpit</h2>
+      <p class="page-subtitle">${journey.promise || 'OpenClaw turns messy product and agent ideas into governed builder-ready handoff packets.'}</p>
+      <p class="journey-audience">${journey.audience || 'For builders and reviewers who need a governed route from idea to handoff.'}</p>
+      <div class="quick-actions">
+        <button class="action-btn action-primary" type="button" id="continue-local-demo">${icon('arrow')}Continue to local demo</button>
+        <button class="action-btn" type="button" id="open-existing-home">${icon('home')}Open current cockpit home</button>
+      </div>
+    </div>
+    <div class="journey-hero-panel" aria-label="Three step local tutorial">
+      <h3>Three-step local tutorial</h3>
+      <ol class="journey-step-list">
+        ${steps.map((step, index) => `<li>
+          <span>${index + 1}</span>
+          <div><strong>${step.title}</strong><p>${step.detail}</p></div>
+        </li>`).join('')}
+      </ol>
+    </div>`;
+  container.appendChild(hero);
+
+  const proof = createElement('section', 'journey-card-grid');
+  proof.innerHTML = `<article class="journey-card">
+      <h3>What it is</h3>
+      <p>A local governed workflow studio for context intake, SpecGraph shaping, review evidence, decisions, and handoff readiness.</p>
+    </article>
+    <article class="journey-card">
+      <h3>Who it helps</h3>
+      <p>First-time evaluators, builder/product operators, reviewers, and Point-level approvers who need scope clarity before execution.</p>
+    </article>
+    <article class="journey-card">
+      <h3>What stays blocked</h3>
+      <p>No backend, API, real auth, database, deployment, external connector, real AI/model call, storage persistence, secrets, or private data.</p>
+    </article>`;
+  container.appendChild(proof);
+
+  hero.querySelector('#continue-local-demo').addEventListener('click', () => {
+    window.appState.onboardingStage = 'demo-entry';
+    window.navigate('demo-entry');
+  });
+  hero.querySelector('#open-existing-home').addEventListener('click', () => window.navigate('home'));
+}
+
+function renderDemoEntry(container) {
+  renderPageHeader(container, {
+    kicker: 'Static Demo Entry',
+    title: 'Static Demo Entry',
+    subtitle: 'No real login. This is a local/static/mock-only demo entry for evaluating the product journey safely.',
+    actions: [
+      { label: 'Enter demo', icon: 'arrow', onClick: () => window.navigate('project-hub') },
+    ],
+  });
+
+  const grid = createElement('section', 'journey-card-grid demo-entry-grid');
+  grid.innerHTML = `<article class="journey-card is-strong">
+      <h3>Local/static/mock-only</h3>
+      <p>This entry does not authenticate, connect accounts, call APIs, run models, write files, or persist browser storage.</p>
+    </article>
+    <article class="journey-card">
+      <h3>Safe evaluation mode</h3>
+      <p>All project cards, templates, guided chat, copilot suggestions, evidence, and decisions are fixed local mock data.</p>
+    </article>
+    <article class="journey-card">
+      <h3>What comes next</h3>
+      <p>Choose an existing project or initialize a composite scenario, then open Workbench to inspect the object hierarchy.</p>
+    </article>`;
+  container.appendChild(grid);
+}
+
+function renderProjectHub(container) {
+  const projects = window.mockData.projectCards || [];
+  renderPageHeader(container, {
+    kicker: 'Project Hub',
+    title: 'Project Hub',
+    subtitle: 'Select an existing local project or initialize a safe public/composite scenario. No real customer, seller, or marketplace data is used.',
+  });
+
+  const grid = createElement('section', 'project-card-grid');
+  projects.forEach((project) => {
+    const card = createElement('article', 'project-card');
+    card.innerHTML = `<div class="project-card-head">
+        <div>
+          <h3>${project.name}</h3>
+          <p>${project.summary}</p>
+        </div>
+        ${renderStatusChip(project.status, statusLabel(project.status))}
+      </div>
+      <dl class="project-meta-grid">
+        <div><dt>Status</dt><dd>${statusLabel(project.status)}</dd></div>
+        <div><dt>Open blockers</dt><dd>${project.blockers}</dd></div>
+        <div><dt>Mock last edited</dt><dd>${project.lastEdited}</dd></div>
+        <div><dt>Readiness summary</dt><dd>${project.readiness}</dd></div>
+      </dl>
+      <div class="button-row">
+        <button class="action-btn action-primary" type="button" data-open-project="${project.id}">${icon('graph')}Open project</button>
+        <button class="action-btn" type="button" data-create-template="${project.id}">${icon('document')}Create from template</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+
+  grid.querySelectorAll('[data-open-project]').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.appState.selectedProjectId = button.dataset.openProject;
+      window.navigate('workbench');
+    });
+  });
+  grid.querySelectorAll('[data-create-template]').forEach((button) => {
+    button.addEventListener('click', () => {
+      window.appState.selectedProjectId = button.dataset.createTemplate;
+      window.navigate('project-init');
+    });
+  });
+}
+
+function renderProjectInitialize(container) {
+  const templates = window.mockData.projectTemplates || [];
+  const scenario = window.mockData.demoScenario || {};
+  if (!window.appState.selectedTemplateId && templates[0]) {
+    window.appState.selectedTemplateId = templates[0].id;
+  }
+  const selectedTemplate = templates.find((template) => template.id === window.appState.selectedTemplateId) || templates[0] || {};
+
+  renderPageHeader(container, {
+    kicker: 'Project Initialize',
+    title: 'Project Initialize',
+    subtitle: `${scenario.name || 'Composite scenario'} uses mock/public/composite language only. The guided setup changes browser-local state only.`,
+  });
+
+  const layout = createElement('section', 'project-init-layout');
+  const templateGrid = createElement('div', 'template-card-grid');
+  templates.forEach((template) => {
+    const card = createElement('button', `template-card${template.id === window.appState.selectedTemplateId ? ' selected' : ''}`);
+    card.type = 'button';
+    card.dataset.templateId = template.id;
+    card.innerHTML = `<strong>${template.name}</strong><p>${template.summary}</p>`;
+    card.addEventListener('click', () => {
+      window.appState.selectedTemplateId = template.id;
+      window.renderPage('project-init');
+    });
+    templateGrid.appendChild(card);
+  });
+
+  const guided = createElement('article', 'guided-chat-card');
+  guided.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <h3>Mock guided chat</h3>
+        <p>${scenario.boundary}</p>
+      </div>
+      ${renderStatusChip('inspect', 'Local only')}
+    </div>
+    <div class="chat-transcript">
+      ${(scenario.guidedChat || []).map((message, index) => `<div class="chat-message ${index % 2 === 0 ? 'chat-message-assistant' : 'chat-message-user'}">
+        <span>${index % 2 === 0 ? 'Assistant' : 'Operator'}</span>
+        <p>${message}</p>
+      </div>`).join('')}
+    </div>`;
+
+  const preview = createElement('article', 'selected-context-preview');
+  preview.innerHTML = `<div class="handoff-preview-head">
+      <div>
+        <h3>Selected context preview</h3>
+        <p>${selectedTemplate.name || 'Template'} / browser-local template context</p>
+      </div>
+      ${renderStatusChip('draft', 'Draft')}
+    </div>
+    ${renderInspectorList([...(selectedTemplate.contextPreview || []), ...(scenario.selectedContextPreview || [])])}
+    <button class="action-btn action-primary" type="button" id="open-workbench-from-init">${icon('graph')}Open Workbench</button>`;
+
+  layout.append(templateGrid, guided, preview);
+  container.appendChild(layout);
+
+  preview.querySelector('#open-workbench-from-init').addEventListener('click', () => window.navigate('workbench'));
+}
 
 function renderHome(container) {
   const project = window.appState.project || {};
@@ -665,8 +865,124 @@ function renderHomeStatusCard({ iconName, label, value, tone, detail }) {
   return card;
 }
 
+function getNodeById(nodeId) {
+  return window.mockData.nodes.find((node) => node.id === nodeId) || null;
+}
+
 function getSelectedNode() {
-  return window.mockData.nodes.find((node) => node.id === window.appState.selectedNodeId) || null;
+  return getNodeById(window.appState.selectedNodeId);
+}
+
+function getNodeAncestors(nodeId) {
+  const ancestors = [];
+  let current = getNodeById(nodeId);
+  while (current && current.parentId) {
+    const parent = getNodeById(current.parentId);
+    if (!parent) break;
+    ancestors.push(parent);
+    current = parent;
+  }
+  return ancestors;
+}
+
+function getNodeDescendants(nodeId) {
+  const descendants = [];
+  const visit = (parentId) => {
+    getChildNodes(parentId).forEach((child) => {
+      descendants.push(child);
+      visit(child.id);
+    });
+  };
+  visit(nodeId);
+  return descendants;
+}
+
+function getSelectedRelationshipSets() {
+  const selectedId = window.appState.selectedNodeId;
+  const ancestors = new Set(getNodeAncestors(selectedId).map((node) => node.id));
+  const descendants = new Set(getNodeDescendants(selectedId).map((node) => node.id));
+  const inbound = new Set();
+  const outbound = new Set();
+  [...(window.mockData.workflowEdges || []), ...(window.mockData.hierarchicalEdges || [])].forEach((edge) => {
+    if (edge.target === selectedId) inbound.add(edge.source);
+    if (edge.source === selectedId) outbound.add(edge.target);
+  });
+  return { selectedId, ancestors, descendants, inbound, outbound };
+}
+
+function getNodeRelationshipClasses(node) {
+  const relationships = getSelectedRelationshipSets();
+  const classes = [];
+  if (relationships.selectedId === node.id) classes.push('selected');
+  if (relationships.ancestors.has(node.id)) classes.push('trail-parent');
+  if (relationships.descendants.has(node.id)) classes.push('trail-child');
+  if (relationships.inbound.has(node.id)) classes.push('trail-inbound');
+  if (relationships.outbound.has(node.id)) classes.push('trail-outbound');
+  if (nodeMatchesFocusLens(node, relationships)) classes.push('lens-match');
+  return classes;
+}
+
+function nodeHasEvidenceGap(node) {
+  return (node.evidenceCount || 0) < 2 || normalizeObjectStatus(node.readiness || node.status).includes('evidence');
+}
+
+function nodeHasDecisionGap(node) {
+  const text = `${node.id} ${node.type || ''} ${node.typeLabel || ''} ${node.label || ''} ${node.title || ''} ${(node.guardrails || []).join(' ')}`.toLowerCase();
+  return text.includes('decision') || text.includes('lock') || normalizeObjectStatus(node.readiness || node.status).includes('lock');
+}
+
+function nodeMatchesFocusLens(node, relationships = getSelectedRelationshipSets()) {
+  const readiness = normalizeObjectStatus(node.readiness || node.status);
+  switch (window.appState.focusLens) {
+    case 'missing-evidence':
+      return nodeHasEvidenceGap(node);
+    case 'unlocked-decisions':
+      return nodeHasDecisionGap(node);
+    case 'selected-trail':
+      return node.id === relationships.selectedId
+        || relationships.ancestors.has(node.id)
+        || relationships.descendants.has(node.id)
+        || relationships.inbound.has(node.id)
+        || relationships.outbound.has(node.id);
+    case 'handoff-blockers':
+      return node.blockerCount > 0 || ['blocked', 'needs-lock', 'needs-evidence', 'review-blocked'].includes(readiness);
+    case 'open-work':
+    default:
+      return node.blockerCount > 0 || !['ready', 'validated', 'applied'].includes(readiness);
+  }
+}
+
+function applyWorkbenchSelectionClasses() {
+  document.querySelectorAll('[data-node-id]').forEach((element) => {
+    const node = getNodeById(element.dataset.nodeId);
+    if (!node) return;
+    element.classList.remove('selected', 'trail-parent', 'trail-child', 'trail-inbound', 'trail-outbound', 'lens-match');
+    const classes = getNodeRelationshipClasses(node);
+    if (classes.length) element.classList.add(...classes);
+  });
+  document.querySelectorAll('[data-outline-node-id]').forEach((element) => {
+    const node = getNodeById(element.dataset.outlineNodeId);
+    if (!node) return;
+    element.classList.remove('selected', 'trail-parent', 'trail-child', 'trail-inbound', 'trail-outbound', 'lens-match');
+    const classes = getNodeRelationshipClasses(node);
+    if (classes.length) element.classList.add(...classes);
+  });
+}
+
+function getFocusLensOptionsHTML() {
+  const definitions = window.mockData.focusLensDefinitions || [];
+  return definitions.map((lens) => `<option value="${lens.id}" ${window.appState.focusLens === lens.id ? 'selected' : ''}>${lens.label}</option>`).join('');
+}
+
+function bindFocusLensSelect(container) {
+  const lensSelect = container.querySelector('#focus-lens-select');
+  if (!lensSelect) return;
+  lensSelect.addEventListener('change', () => {
+    window.appState.focusLens = lensSelect.value;
+    applyWorkbenchSelectionClasses();
+    refreshObjectOutline();
+    refreshObjectEditorPanel();
+  });
 }
 
 function renderWorkbench(container) {
@@ -681,12 +997,320 @@ function renderWorkbench(container) {
   });
 
   const layout = createElement('section', 'workbench-layout');
+  const editorLayout = createElement('div', 'workbench-editor-layout');
   const workbenchMain = createElement('div', 'workbench-main');
+  workbenchMain.appendChild(renderObjectOutline(selectedNode));
   workbenchMain.appendChild(renderNodeCanvas());
-  workbenchMain.appendChild(renderUtilityTray(selectedNode));
-  layout.appendChild(workbenchMain);
+  const workbenchDock = createElement('div', 'workbench-dock');
+  workbenchDock.appendChild(renderReadinessQueue());
+  workbenchDock.appendChild(renderUtilityTray(selectedNode));
+  workbenchMain.appendChild(workbenchDock);
+  editorLayout.appendChild(workbenchMain);
+  editorLayout.appendChild(renderObjectEditorPanel(selectedNode));
+  layout.appendChild(editorLayout);
   container.appendChild(layout);
   renderNodeInspector(selectedNode ? selectedNode.id : null);
+  applyWorkbenchSelectionClasses();
+}
+
+function getOutlineRootGroups() {
+  return [
+    {
+      id: 'project',
+      label: 'Project',
+      children: [
+        {
+          id: 'requirements',
+          label: 'Requirements',
+          children: getRequirementNodes().map((node) => buildOutlineNode(node)),
+        },
+      ],
+    },
+  ];
+}
+
+function buildOutlineNode(node) {
+  return {
+    id: node.id,
+    label: node.title || node.label,
+    node,
+    children: getChildNodes(node.id).map((child) => buildOutlineNode(child)),
+  };
+}
+
+function isOutlineExpanded(id) {
+  return (window.appState.outlineExpandedIds || []).includes(id);
+}
+
+function toggleOutlineExpanded(id) {
+  const expanded = new Set(window.appState.outlineExpandedIds || []);
+  if (expanded.has(id)) expanded.delete(id);
+  else expanded.add(id);
+  window.appState.outlineExpandedIds = [...expanded];
+  refreshObjectOutline();
+}
+
+function renderObjectOutline(selectedNode) {
+  const outline = createElement('aside', 'object-outline');
+  outline.setAttribute('aria-label', 'Object Outline hierarchy explorer');
+  outline.innerHTML = `<div class="pane-header">
+      <div>
+        <span class="page-kicker">Object Outline</span>
+        <h3>Hierarchy explorer</h3>
+      </div>
+      ${renderStatusChip(selectedNode ? selectedNode.readiness || selectedNode.status : 'draft', selectedNode ? readinessLabel(selectedNode.readiness || selectedNode.status) : 'Select')}
+    </div>
+    <p class="pane-help">Project -> Requirements -> Architecture -> Component -> Phase -> Task</p>`;
+
+  const tree = createElement('div', 'object-outline-tree');
+  getOutlineRootGroups().forEach((group) => tree.appendChild(renderOutlineGroup(group, 0)));
+  outline.appendChild(tree);
+  return outline;
+}
+
+function renderOutlineGroup(group, depth) {
+  const wrapper = createElement('div', `outline-group outline-depth-${depth}`);
+  const hasChildren = group.children && group.children.length;
+  const expanded = isOutlineExpanded(group.id);
+  const row = createElement('div', `outline-row${group.node ? ' outline-node-row' : ' outline-group-row'}`);
+  row.style.setProperty('--outline-depth', depth);
+  if (group.node) {
+    row.dataset.outlineNodeId = group.node.id;
+    const relationshipClasses = getNodeRelationshipClasses(group.node);
+    if (relationshipClasses.length) row.classList.add(...relationshipClasses);
+  }
+
+  const toggle = createElement('button', 'outline-toggle');
+  toggle.type = 'button';
+  toggle.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Expand'} ${group.label}`);
+  toggle.innerHTML = hasChildren ? (expanded ? icon('minus') : icon('add')) : '';
+  toggle.disabled = !hasChildren;
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleOutlineExpanded(group.id);
+  });
+
+  const select = createElement('button', 'outline-select');
+  select.type = 'button';
+  select.innerHTML = `<span>${group.node ? renderSpatialNodeLevelLabel(group.node) : group.label}</span><strong>${group.label}</strong>`;
+  select.addEventListener('click', () => {
+    if (group.node) selectNode(group.node.id);
+    else if (hasChildren) toggleOutlineExpanded(group.id);
+  });
+
+  row.append(toggle, select);
+  wrapper.appendChild(row);
+
+  if (hasChildren && expanded) {
+    const children = createElement('div', 'outline-children');
+    group.children.forEach((child) => children.appendChild(renderOutlineGroup(child, depth + 1)));
+    wrapper.appendChild(children);
+  }
+  return wrapper;
+}
+
+function refreshObjectOutline() {
+  const outline = document.querySelector('.object-outline');
+  if (!outline) return;
+  outline.replaceWith(renderObjectOutline(getSelectedNode()));
+  applyWorkbenchSelectionClasses();
+}
+
+function renderReadinessQueue() {
+  const readiness = getReadinessSummary();
+  const queue = createElement('section', 'workbench-readiness-queue');
+  queue.setAttribute('aria-label', 'Readiness queue');
+  queue.innerHTML = `<div class="pane-header">
+      <div>
+        <span class="page-kicker">Readiness queue</span>
+        <h3>${readiness.handoffBlockers.length} local blockers</h3>
+      </div>
+      ${renderStatusChip(readiness.ready ? 'ready' : 'blocked', readiness.ready ? 'Clear' : 'Gated')}
+    </div>
+    <div class="readiness-queue-grid">
+      ${renderReadinessQueueGroup('Missing evidence', readiness.missingEvidence.map((item) => item.label || item.name || item.id))}
+      ${renderReadinessQueueGroup('Unlocked decisions', readiness.pendingDecisions.map((decision) => decision.id))}
+      ${renderReadinessQueueGroup('Review blockers', readiness.reviewBlockers.map((review) => review.name))}
+      ${renderReadinessQueueGroup('Validation blockers', readiness.validationBlocked ? ['Spec validation missing locally'] : [])}
+      ${renderReadinessQueueGroup('Handoff blockers', readiness.handoffBlockers)}
+    </div>`;
+  return queue;
+}
+
+function renderReadinessQueueGroup(label, items) {
+  const safeItems = items && items.length ? items.slice(0, 3) : ['Clear'];
+  return `<article class="readiness-queue-group${items && items.length ? ' is-blocked' : ' is-clear'}">
+      <h4>${label}</h4>
+      ${renderInspectorList(safeItems)}
+    </article>`;
+}
+
+function renderObjectEditorPanel(selectedNode) {
+  const node = selectedNode || getSelectedNode();
+  const panel = createElement('aside', 'object-editor-panel');
+  panel.setAttribute('aria-label', 'Object editor panel');
+  const activeTab = RIGHT_PANEL_TABS.some((tab) => tab.id === window.appState.rightPanelTab)
+    ? window.appState.rightPanelTab
+    : 'inspector';
+  window.appState.rightPanelTab = activeTab;
+
+  panel.innerHTML = `<div class="pane-header">
+      <div>
+        <span class="page-kicker">Object editor</span>
+        <h3>${node ? node.title || node.label : 'No object selected'}</h3>
+      </div>
+      ${renderStatusChip(node ? node.readiness || node.status : 'draft', node ? readinessLabel(node.readiness || node.status) : 'Select')}
+    </div>
+    <div class="object-editor-tabs" role="tablist" aria-label="Object editor tabs">
+      ${RIGHT_PANEL_TABS.map((tab) => `<button class="object-editor-tab${activeTab === tab.id ? ' active' : ''}" type="button" role="tab" aria-selected="${activeTab === tab.id}" data-right-panel-tab="${tab.id}">${tab.label}</button>`).join('')}
+    </div>
+    <div class="object-editor-body">
+      ${renderObjectEditorTabContent(node, activeTab)}
+    </div>`;
+
+  panel.querySelectorAll('[data-right-panel-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      window.appState.rightPanelTab = tab.dataset.rightPanelTab;
+      refreshObjectEditorPanel();
+    });
+  });
+
+  bindObjectEditorActions(panel, node);
+  return panel;
+}
+
+function refreshObjectEditorPanel() {
+  const panel = document.querySelector('.object-editor-panel');
+  if (!panel) return;
+  panel.replaceWith(renderObjectEditorPanel(getSelectedNode()));
+}
+
+function renderObjectEditorTabContent(node, activeTab) {
+  if (!node) {
+    return `<div class="inspector-empty"><h4>Select an object</h4><p>Use the outline or board to scope the local object editor.</p></div>`;
+  }
+  const readiness = getReadinessSummary();
+  const inboundEdges = (window.mockData.workflowEdges || []).filter((edge) => edge.target === node.id);
+  const outboundEdges = (window.mockData.workflowEdges || []).filter((edge) => edge.source === node.id);
+  switch (activeTab) {
+    case 'edit-fields':
+      return `<div class="inspector-section">
+          <h4>Edit Fields</h4>
+          <div class="inspector-grid">
+            <div class="inspector-row"><span>Title</span><strong>${node.title || node.label}</strong></div>
+            <div class="inspector-row"><span>Config</span><strong>${node.config || 'Configured locally'}</strong></div>
+            <div class="inspector-row"><span>Mode</span><strong>${node.model || 'Local only'}</strong></div>
+            <div class="inspector-row"><span>Readiness</span><strong>${readinessLabel(node.readiness || node.status)}</strong></div>
+          </div>
+          <div class="static-notice">Field edits are represented as local draft state only. No files, APIs, storage, or external systems are touched.</div>
+        </div>`;
+    case 'copilot':
+      return renderMockCopilotPanel(node, readiness);
+    case 'evidence':
+      return `<div class="inspector-section">
+          <h4>Evidence</h4>
+          ${renderInspectorList(node.evidence || node.trace || ['No evidence configured for this object'])}
+        </div>
+        <div class="inspector-section">
+          <h4>Evidence gaps</h4>
+          ${renderInspectorList(readiness.missingEvidence.map((item) => item.label || item.name || item.id))}
+        </div>`;
+    case 'trace':
+      return `<div class="inspector-section">
+          <h4>Trace</h4>
+          ${renderInspectorList(node.trace || ['No trace links configured'])}
+        </div>
+        <div class="inspector-section">
+          <h4>Selected object links</h4>
+          ${renderInspectorList([
+            ...inboundEdges.map((edge) => `Inbound from ${edge.source}`),
+            ...outboundEdges.map((edge) => `Outbound to ${edge.target}`),
+            ...getNodeAncestors(node.id).map((parent) => `Parent trail: ${parent.title || parent.label}`),
+            ...getNodeDescendants(node.id).map((child) => `Descendant: ${child.title || child.label}`),
+          ])}
+        </div>`;
+    case 'inspector':
+    default:
+      return `<div class="inspector-section">
+          <h4>Inspector</h4>
+          <div class="inspector-grid">
+            <div class="inspector-row"><span>Purpose</span><strong>${node.description}</strong></div>
+            <div class="inspector-row"><span>Layer</span><strong>${renderSpatialNodeLevelLabel(node)}</strong></div>
+            <div class="inspector-row"><span>Open blockers</span><strong>${node.blockerCount || 0}</strong></div>
+            <div class="inspector-row"><span>Linked evidence</span><strong>${node.evidenceCount || 0}</strong></div>
+          </div>
+        </div>
+        <div class="inspector-section">
+          <h4>Requirements</h4>
+          ${renderInspectorList(node.requirements || ['No requirements recorded'])}
+        </div>`;
+  }
+}
+
+function renderMockCopilotPanel(node, readiness) {
+  const suggestions = [
+    `${node.title || node.label}: tighten objective, allowed scope, and evidence link before handoff.`,
+    node.blockerCount > 0 ? `Resolve ${node.blockerCount} object-level blocker(s) or mark them deferred.` : 'No object blockers; keep evidence and decision trace current.',
+    readiness.pendingDecisions.length ? `Decision ${readiness.pendingDecisions[0].id} needs Point lock before handoff readiness clears.` : 'Decision locks are clear in local state.',
+  ];
+  return `<div class="inspector-section mock-copilot-panel">
+      <div class="handoff-preview-head">
+        <div>
+          <h4>Mock local copilot</h4>
+          <p>No AI calls. No backend. No files written.</p>
+        </div>
+        ${renderStatusChip('inspect', 'Static')}
+      </div>
+      <div class="assistant-context-line">
+        <span>Selected object</span>
+        <strong>${node.title || node.label}</strong>
+      </div>
+      <div class="assistant-context-line">
+        <span>Open blockers</span>
+        <strong>${node.blockerCount || 0} object / ${readiness.handoffBlockers.length} handoff</strong>
+      </div>
+      <h4>Suggested next edits</h4>
+      ${renderInspectorList(suggestions)}
+      <h4>Evidence / decision suggestions</h4>
+      ${renderInspectorList([
+        'Attach public/composite evidence before treating review findings as ready.',
+        'Keep Point-lock decisions explicit and visible.',
+        'Preview handoff only after validation, evidence, review, and decision blockers clear.',
+      ])}
+      <div class="button-row">
+        <button class="action-btn" type="button" id="preview-copilot-suggestion">${icon('eye')}Preview suggestion</button>
+        <button class="action-btn" type="button" id="apply-copilot-draft">${icon('check')}Apply to local draft</button>
+        <button class="action-btn" type="button" id="mark-point-lock">${icon('lock')}Mark needs Point lock</button>
+      </div>
+    </div>`;
+}
+
+function bindObjectEditorActions(panel, node) {
+  const preview = panel.querySelector('#preview-copilot-suggestion');
+  if (preview) {
+    preview.addEventListener('click', () => {
+      window.appState.lastLocalValidation = `Previewed mock local copilot suggestion for ${node.title || node.label}.`;
+      showToast('Mock suggestion previewed locally. No AI/API call occurred.', 'info');
+    });
+  }
+
+  const applyDraft = panel.querySelector('#apply-copilot-draft');
+  if (applyDraft) {
+    applyDraft.addEventListener('click', () => {
+      window.appState.copilotDraftApplied = true;
+      window.appState.lastLocalValidation = `Mock local copilot draft applied to browser state for ${node.title || node.label}.`;
+      showToast('Applied to local draft state only.', 'success');
+    });
+  }
+
+  const pointLock = panel.querySelector('#mark-point-lock');
+  if (pointLock) {
+    pointLock.addEventListener('click', () => {
+      window.appState.copilotPointLockMarked = true;
+      window.appState.lastLocalValidation = `Point-lock marker set locally for ${node.title || node.label}.`;
+      showToast('Point-lock marker set in local state only.', 'warning');
+    });
+  }
 }
 
 function renderNodePalette({ embedded = false } = {}) {
@@ -993,7 +1617,8 @@ function createWorkbenchNodeCard(node, options = {}) {
   card.dataset.nodeId = node.id;
   card.setAttribute('aria-label', `Select ${node.index} ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}. Readiness: ${readinessLabel(node.readiness || node.status)}`);
   card.title = buildNodeTooltip(node);
-  if (window.appState.selectedNodeId === node.id) card.classList.add('selected');
+  const relationshipClasses = getNodeRelationshipClasses(node);
+  if (relationshipClasses.length) card.classList.add(...relationshipClasses);
 
   card.dataset.level = node.level || 'object';
 
@@ -1324,6 +1949,10 @@ function renderSpatialWorkbenchCanvas(canvas) {
         <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed</button>
         <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat</button>
       </div>
+      <label class="focus-lens-control" for="focus-lens-select">
+        <span>Lens</span>
+        <select id="focus-lens-select">${getFocusLensOptionsHTML()}</select>
+      </label>
       <div class="canvas-zoom-controls" aria-label="Spatial board zoom controls">
         <button class="icon-btn" type="button" id="zoom-out-workbench" title="Zoom out" aria-label="Zoom out">${icon('minus')}</button>
         <span id="workbench-zoom-level" class="canvas-zoom-level">${Math.round(window.appState.canvasViewport.scale * 100)}%</span>
@@ -1373,6 +2002,7 @@ function renderSpatialWorkbenchCanvas(canvas) {
       toggleWorkbenchPopover('context');
     });
   }
+  bindFocusLensSelect(canvas);
   canvas.querySelector('#toggle-view-spatial').addEventListener('click', (event) => {
     event.stopPropagation();
     window.appState.viewMode = 'spatial';
@@ -1450,6 +2080,10 @@ function renderNodeCanvas() {
         <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed Map</button>
         <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat Flow</button>
       </div>
+      <label class="focus-lens-control" for="focus-lens-select">
+        <span>Lens</span>
+        <select id="focus-lens-select">${getFocusLensOptionsHTML()}</select>
+      </label>
     </div>
     <span class="canvas-label">COCKPIT-MVP-014</span>`;
 
@@ -1467,6 +2101,7 @@ function renderNodeCanvas() {
       toggleWorkbenchPopover('context');
     });
   }
+  bindFocusLensSelect(canvas);
   if (window.appState.activeWorkbenchPopover) {
     canvas.appendChild(renderWorkbenchPopover(window.appState.activeWorkbenchPopover));
   }
@@ -1592,23 +2227,17 @@ function renderNodeCanvas() {
 }
 
 function selectNode(nodeId) {
-  const prevId = window.appState.selectedNodeId;
   window.appState.selectedNodeId = nodeId;
   if (window.appState.currentPage === 'workbench') {
-    // Selective update instead of full re-render
-    if (prevId) {
-      const prevCard = document.querySelector(`[data-node-id="${prevId}"]`);
-      if (prevCard) prevCard.classList.remove('selected');
-    }
-    const nextCard = document.querySelector(`[data-node-id="${nodeId}"]`);
-    if (nextCard) nextCard.classList.add('selected');
-    // Update utility tray header text
+    applyWorkbenchSelectionClasses();
     const traySubtitle = document.querySelector('.utility-tray-header p');
-    const node = window.mockData.nodes.find((n) => n.id === nodeId);
+    const node = getNodeById(nodeId);
     if (traySubtitle && node) {
       traySubtitle.textContent = `${node.id} / ${node.title || node.label}`;
     }
     refreshWorkbenchContextDock();
+    refreshObjectOutline();
+    refreshObjectEditorPanel();
   }
   if (window.appState.inspectorVisible) renderNodeInspector(nodeId);
 }
@@ -2157,6 +2786,8 @@ function statusLabel(status) {
       return 'Decision needs lock';
     case 'warning':
       return 'Warning';
+    case 'scenario':
+      return 'Scenario';
     default:
       return normalizedStatus;
   }

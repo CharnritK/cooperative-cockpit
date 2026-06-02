@@ -24,6 +24,7 @@
 | GOAL-016 | Builder Enablement OS product lock | Planner/Researcher/QA | 2026-06-02 | 2026-06-02 | Completed | Product canon docs center OpenClaw on SpecGraph; implementation follow-ons remain Point-gated. |
 | PKG-BUILDER-ENABLEMENT-OS | Builder Enablement OS handoff package assimilation | Orchestrator/QA | 2026-06-02 | 2026-06-02 | Completed | Unique handoff, prompt, schema, fixture, QA, and provenance files moved to governed paths; source package shell removed from active repo scope. |
 | GOAL-020A/020B/020C | Builder Enablement OS QA docs and validation | QA/Builder | 2026-06-02 | 2026-06-02 | Completed | QA docs 11-21, SpecGraph fixture checker, and Builder Enablement guardrail checker are wired into validation. |
+| GOAL-021 | Static MVP realistic product journey and object-aware Workbench | Builder/QA | 2026-06-02 | 2026-06-02 | Completed | UX upgrade handoff package assimilated; static MVP adds Landing -> Demo Entry -> Project Hub -> Project Initialize and Workbench object outline, focus lenses, right object panel, mock local copilot, readiness queue, and checksum/evidence refresh. |
 
 ## Recent task ledger
 
@@ -33,4 +34,5 @@
 | GOAL-011 | Completed | Added Claude Opus 4.7 and Codex role wrappers plus role-wrapper documentation. |
 | GOAL-012 | Completed | Added import-safe wrapper modules and offline wrapper smoke tests. |
 | GOAL-013 | Completed | Hardened Design OS validation, wrapper guardrails, docs drift checks, and final Claude Opus 4.7 review. |
+| GOAL-021 | Completed | Implemented and validated the static MVP realistic product journey and object-aware Workbench upgrade from the imported handoff package. |
 

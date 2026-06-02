@@ -7,7 +7,7 @@
   const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
   window.appState = {
-    currentPage: 'home',
+    currentPage: 'landing',
     selectedNodeId: null,
     // Clone arrays from mockData so we can mutate them without
     // altering the originals. In a real application we would use a
@@ -36,6 +36,14 @@
     traceLinks: deepCopy(window.mockData.traceLinks),
     rules: deepCopy(window.mockData.rules),
     // Flags for gating actions
+    onboardingStage: 'landing',
+    selectedProjectId: 'project-cooperative-cockpit-static-mvp',
+    selectedTemplateId: null,
+    focusLens: 'open-work',
+    rightPanelTab: 'inspector',
+    outlineExpandedIds: ['project', 'requirements', 'req-1', 'req-2'],
+    copilotDraftApplied: false,
+    copilotPointLockMarked: false,
     inspectorTab: 'overview',
     inspectorVisible: false,
     activeWorkbenchPopover: null,

@@ -1,0 +1,82 @@
+[
+  {
+    "risk_id": "R-001",
+    "risk": "Pre-workspace pages added but Workbench remains confusing",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Make Workbench tri-pane P0",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-002",
+    "risk": "Static demo entry reads like real login",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Use local demo language only",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-003",
+    "risk": "Mock copilot implies real AI",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Label mock/local/no AI calls",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-004",
+    "risk": "Helper panel still resets board state",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Preserve state explicitly",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-005",
+    "risk": "Existing pages regress",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Run workflow regression QA",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-006",
+    "risk": "Dependency creep",
+    "severity": "Medium",
+    "likelihood": "Low",
+    "mitigation": "No dependencies without approval",
+    "owner": "Codex / Point"
+  },
+  {
+    "risk_id": "R-007",
+    "risk": "App becomes too large for MVP",
+    "severity": "Medium",
+    "likelihood": "Medium",
+    "mitigation": "Stage implementation",
+    "owner": "Point"
+  },
+  {
+    "risk_id": "R-008",
+    "risk": "Validation not run",
+    "severity": "High",
+    "likelihood": "Medium",
+    "mitigation": "Require exact output report",
+    "owner": "Codex"
+  },
+  {
+    "risk_id": "R-009",
+    "risk": "Private data accidentally enters scenario",
+    "severity": "High",
+    "likelihood": "Low",
+    "mitigation": "Use mock/public/composite data only",
+    "owner": "Point / Codex"
+  },
+  {
+    "risk_id": "R-010",
+    "risk": "Handoff gating is weakened",
+    "severity": "High",
+    "likelihood": "Low",
+    "mitigation": "Regression test readiness gates",
+    "owner": "Codex"
+  }
+]

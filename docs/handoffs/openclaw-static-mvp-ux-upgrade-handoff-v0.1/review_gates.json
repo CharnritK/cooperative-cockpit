@@ -1,0 +1,44 @@
+[
+  {
+    "gate_id": "G-001",
+    "reviewer": "Point",
+    "review_scope": "Product journey and demo clarity",
+    "pass_condition": "First-time user journey is understandable",
+    "fallback": "Revise pre-workspace flow"
+  },
+  {
+    "gate_id": "G-002",
+    "reviewer": "Local Codex",
+    "review_scope": "Static safety",
+    "pass_condition": "No backend/API/auth/AI/storage/dependency introduced",
+    "fallback": "Revert unsafe edits"
+  },
+  {
+    "gate_id": "G-003",
+    "reviewer": "Local Codex",
+    "review_scope": "Validation",
+    "pass_condition": "npm run validate passes",
+    "fallback": "Fix or stop"
+  },
+  {
+    "gate_id": "G-004",
+    "reviewer": "Point",
+    "review_scope": "Workbench usability",
+    "pass_condition": "Workbench feels like product editor",
+    "fallback": "Create follow-up task"
+  },
+  {
+    "gate_id": "G-005",
+    "reviewer": "Reviewer",
+    "review_scope": "Privacy/data",
+    "pass_condition": "No private data or secrets included",
+    "fallback": "Redact/remove data"
+  },
+  {
+    "gate_id": "G-006",
+    "reviewer": "Point",
+    "review_scope": "Scope control",
+    "pass_condition": "No full app rewrite or production claims",
+    "fallback": "Split into follow-up goals"
+  }
+]
