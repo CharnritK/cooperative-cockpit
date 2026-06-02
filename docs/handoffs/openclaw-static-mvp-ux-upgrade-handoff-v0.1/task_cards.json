@@ -1,0 +1,180 @@
+[
+  {
+    "task_id": "T-000",
+    "task": "Inspect repo",
+    "owner": "local Codex",
+    "target_files_or_areas": "apps/static-mvp/**",
+    "acceptance_criteria": "Actual file structure reported before editing",
+    "dependencies": [],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-001",
+    "task": "Add pre-workspace routes/state",
+    "owner": "local Codex",
+    "target_files_or_areas": "router/state/app",
+    "acceptance_criteria": "Landing \u2192 Demo Entry \u2192 Project Hub \u2192 Project Initialize routes work",
+    "dependencies": [
+      "T-000"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-002",
+    "task": "Implement Landing page",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/css",
+    "acceptance_criteria": "Product concept, user value, tutorial, and CTA render",
+    "dependencies": [
+      "T-001"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-003",
+    "task": "Implement Static Demo Entry",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/css",
+    "acceptance_criteria": "No real auth or login implied",
+    "dependencies": [
+      "T-001"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-004",
+    "task": "Implement Project Hub",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/mockData/css",
+    "acceptance_criteria": "Existing and scenario project cards render",
+    "dependencies": [
+      "T-001"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-005",
+    "task": "Implement Project Initialize",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/mockData/css",
+    "acceptance_criteria": "Templates, mock guided chat, context preview, and Open Workbench CTA render",
+    "dependencies": [
+      "T-001"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-006",
+    "task": "Build Workbench editor shell",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/css",
+    "acceptance_criteria": "Object Outline, board, right panel, and readiness queue visible",
+    "dependencies": [
+      "T-000"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-007",
+    "task": "Implement Object Outline",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/mockData/css",
+    "acceptance_criteria": "Hierarchy selection updates selected object",
+    "dependencies": [
+      "T-006"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-008",
+    "task": "Implement relationship highlighting",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/css",
+    "acceptance_criteria": "Parent, child, selected trail and connected object highlights work",
+    "dependencies": [
+      "T-007"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-009",
+    "task": "Implement focus lenses",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/state/css",
+    "acceptance_criteria": "Open work, Missing evidence, Unlocked decisions, Selected object trail, Handoff blockers lenses work",
+    "dependencies": [
+      "T-008"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-010",
+    "task": "Implement mock copilot tab",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/state/css",
+    "acceptance_criteria": "Mock local copilot uses selected object and local state only",
+    "dependencies": [
+      "T-006"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-011",
+    "task": "Implement readiness queue",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/state/css",
+    "acceptance_criteria": "Blockers grouped and visible",
+    "dependencies": [
+      "T-006"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-012",
+    "task": "Fix helper no-reset behavior",
+    "owner": "local Codex",
+    "target_files_or_areas": "app/state",
+    "acceptance_criteria": "Helper open/close preserves selected object, viewport, mode, lens, tab, outline",
+    "dependencies": [
+      "T-006"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-013",
+    "task": "Add scenario copy",
+    "owner": "local Codex",
+    "target_files_or_areas": "mockData/app",
+    "acceptance_criteria": "Listing Compliance & Seller Appeal Review Harness scenario is mock/public/composite only",
+    "dependencies": [
+      "T-004"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-014",
+    "task": "Update QA checklist",
+    "owner": "local Codex",
+    "target_files_or_areas": "QA docs",
+    "acceptance_criteria": "Manual QA checks are documented",
+    "dependencies": [
+      "T-001",
+      "T-006",
+      "T-009",
+      "T-010",
+      "T-012"
+    ],
+    "status": "not_started"
+  },
+  {
+    "task_id": "T-015",
+    "task": "Run validation",
+    "owner": "local Codex",
+    "target_files_or_areas": "npm scripts",
+    "acceptance_criteria": "Exact validation output reported",
+    "dependencies": [
+      "T-014"
+    ],
+    "status": "not_started"
+  }
+]

@@ -39,4 +39,5 @@
 
   // Expose navigate globally
   window.navigate = navigate;
+  window.updateNavHighlight = updateNavHighlight;
 })();

@@ -1,8 +1,8 @@
 # OpenClaw Cooperative Cockpit MVP (Static Prototype)
 
-This directory contains a **static frontend prototype** for the OpenClaw Cooperative Cockpit MVP. The goal of this prototype is to demonstrate the interaction model and visual direction of the product without any backend, API calls or execution of external code. The prototype includes eight focus pages connected through a persistent shell.
+This directory contains a **static frontend prototype** for the OpenClaw Cooperative Cockpit MVP. The goal of this prototype is to demonstrate the interaction model and visual direction of the product without any backend, API calls or execution of external code. The prototype now includes a four-step local product-entry journey before the existing cockpit workspace pages.
 
-The current visual direction is **Dify-inspired workflow studio with OpenClaw governance overlays**: a clean light SaaS shell, canvas-first Workbench, large spatial board, configurable operator nodes, compact top controls, popover-based object/context support surfaces, a manual inspector, a context dock for selected objects, local typography assets, and secondary governance cues across the higher-risk pages.
+The current visual direction is **Dify-inspired workflow studio with OpenClaw governance overlays**: a clean light SaaS shell, realistic local product journey, canvas-first Workbench, large spatial board, object hierarchy outline, configurable operator nodes, compact top controls, popover-based object/context support surfaces, a local object editor panel, a context dock for selected objects, local typography assets, and secondary governance cues across the higher-risk pages.
 
 ## Running locally
 
@@ -27,30 +27,34 @@ The handoff package inventory in `handoff/manifest.json` includes `styles/fonts.
 
 The MVP comprises the following pages:
 
-1. **Home** – Provides operational status cards for context, protected exclusions and pending locks, plus pipeline progress, recent activity and local-only next safe actions.
-2. **Workbench** – Displays a light workflow-builder studio with a large zoomable spatial board, fixed mock object positions, local selection state, object-type and Selected Context popovers, a selected-object context dock, preview-readiness links, and a manually opened configuration/debug inspector. You can zoom, pan, fit, reset, select nodes, add them to the context, and see protected exclusions without shrinking the canvas by default. The governance strip is visible here as a secondary safety overlay.
-3. **Spec Builder** – Allows you to choose a template, view and fill specification fields, apply simple AI suggestions (stubbed), lock fields and validate the spec. Handoff controls stay disabled until `appState.handoffReady` is true.
-4. **Review Runs** – Lists review types and allows you to simulate running review checks. Results are displayed with severity chips and simple action buttons. Reviews are inspect‑only.
-5. **Preview** – Shows a placeholder preview of the UI/HTML artifact and a spec coverage checklist. You can generate a static mockup, compare it against the spec or start a UX check (all stubbed).
-6. **Decisions** – Lists decisions that require Point approval. You can lock or defer decisions and choose between options for each decision.
-7. **Trace & Evidence** – Shows a placeholder trace graph and a table of source‑to‑target links. It warns if any spec fields lack trace evidence.
-8. **Rules & Scope** – Presents the safety rules and governance model, summarising what is allowed or blocked and which review gates are active.
+1. **Landing** – Explains what OpenClaw is, who it helps, and how it turns messy product and agent ideas into governed builder-ready handoff packets.
+2. **Static Demo Entry** – Clarifies that the experience is local/static/mock-only and does not imply real login or authentication.
+3. **Project Hub** – Shows the OpenClaw Cooperative Cockpit project and the Listing Compliance & Seller Appeal Review Harness composite scenario, including status, blockers, mock timestamp, and readiness summary.
+4. **Project Initialize** – Shows three local templates, mock guided chat, selected context preview, and the Open Workbench CTA.
+5. **Home** – Provides operational status cards for context, protected exclusions and pending locks, plus pipeline progress, recent activity and local-only next safe actions.
+6. **Workbench** – Displays a light workflow-builder studio with Object Outline, large zoomable spatial board, right object editor panel, focus lenses, readiness queue, fixed mock object positions, local selection state, object-type and Selected Context popovers, and a selected-object context dock. You can zoom, pan, fit, reset, select nodes from the outline or board, inspect relationships, use mock local copilot suggestions, and see protected exclusions without external calls. Mixed Map and Flat Flow remain secondary modes. The governance strip is visible here as a secondary safety overlay.
+7. **Spec Builder** – Allows you to choose a template, view and fill specification fields, apply simple local suggestions, lock fields and validate the spec. Handoff controls stay disabled until `appState.handoffReady` is true.
+8. **Review Runs** – Lists review types and allows you to simulate running review checks. Results are displayed with severity chips and simple action buttons. Reviews are inspect-only.
+9. **Preview** – Shows a placeholder preview of the UI/HTML artifact and a spec coverage checklist. Preview controls are local-only and do not produce files.
+10. **Decisions** – Lists decisions that require Point approval. You can lock or defer decisions and choose between options for each decision.
+11. **Trace & Evidence** – Shows a placeholder trace graph and a table of source-to-target links. It warns if any spec fields lack trace evidence.
+12. **Rules & Scope** – Presents the safety rules and governance model, summarising what is allowed or blocked and which review gates are active.
 
 ## Static and mock‑only
 
-All data in this prototype is mock data defined in `src/mockData.js`. The pages simulate state transitions on the client side only. There are **no external API calls**, no back‑end, no authentication and no real AI assistance. Actions such as “Generate static mockup” or “Handoff” display simple alerts instead of performing real work.
+All data in this prototype is mock data defined in `src/mockData.js`. The pages simulate state transitions on the client side only. There are **no external API calls**, no back-end, no authentication and no real AI assistance. Actions such as previewing a suggestion, applying a mock local draft, marking a Point-lock need, validating, or opening handoff feedback update browser-local state or toast feedback only.
 
 ## Explicitly not implemented
 
 - Dedicated Architecture Map, Golden Scenarios and Feedback & Revisions pages (deferred to Phase 1.5). The Workbench now includes a static architecture graph golden-path demonstration only.
 - Any backend, database or API integration.
 - Real AI calls or dynamic code execution.
-- Full mobile layout design. The prototype remains optimized for a desktop (16:9) viewport.
+- Full production mobile design. The prototype includes responsive stress handling for local review widths but remains optimized for desktop/laptop evaluation.
 - Real network requests or repository writes.
 
 ## Known limitations
 
-- The spatial board on the Workbench is static; node positions come from `mockData.workbenchBoard` and reset on reload. Connectors are visual-only and based on static mock relationships.
+- The spatial board on the Workbench is static; node positions come from `mockData.workbenchBoard` and reset on reload. Connectors, focus lenses, relationship highlights, and object editor content are visual/local only and based on static mock relationships.
 - Review actions are purely illustrative; they do not modify the state beyond showing simple messages.
 - The preview page does not render real HTML or UI components.
 - The trace graph is a placeholder text area rather than a real graph.

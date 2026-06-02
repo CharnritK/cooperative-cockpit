@@ -1,0 +1,13 @@
+{
+  "artifact_id": "ART-GOAL-021-UX-UPGRADE-HANDOFF",
+  "artifact_type": "handoff_package_docs",
+  "created_at": "2026-06-02",
+  "owner": "Point",
+  "source": "local_repo_assimilation",
+  "status": "assimilated",
+  "related_task_id": "GOAL-021",
+  "source_file": "docs/handoffs/openclaw-static-mvp-ux-upgrade-handoff-v0.1/",
+  "storage_path": "docs/handoffs/openclaw-static-mvp-ux-upgrade-handoff-v0.1/",
+  "checksum": "sha256:36dc2057726019c311c9c20f97acd0e03eb9015486ffa8c57c2da7de367d5dba",
+  "notes": "Imported OpenClaw Static MVP UX Upgrade Handoff Package v0.1 moved out of repo root into governed handoff docs after GOAL-021 implementation tests passed."
+}

@@ -27,6 +27,90 @@ window.mockData = {
     status: 'draft',
   },
 
+  productJourney: {
+    promise: 'OpenClaw turns messy product and agent ideas into governed builder-ready handoff packets.',
+    audience: 'Product operators, builders, reviewers, and Point-level approvers who need clearer scope before execution.',
+    tutorialSteps: [
+      {
+        title: 'Initialize project',
+        detail: 'Choose a local mock project or template and frame the public/composite scenario.',
+      },
+      {
+        title: 'Shape SpecGraph in Workbench',
+        detail: 'Select objects, inspect hierarchy, focus blockers, and keep evidence connected to decisions.',
+      },
+      {
+        title: 'Resolve blockers and preview handoff',
+        detail: 'Review missing evidence, open locks, validation status, and the gated handoff preview.',
+      },
+    ],
+  },
+
+  projectCards: [
+    {
+      id: 'project-cooperative-cockpit-static-mvp',
+      name: 'OpenClaw Cooperative Cockpit',
+      status: 'draft',
+      blockers: 11,
+      lastEdited: '2026-06-02 09:04 local mock',
+      readiness: 'Handoff gated until evidence, decisions, review, and validation clear.',
+      summary: 'The existing static MVP project for governed workflow-studio review.',
+    },
+    {
+      id: 'project-listing-compliance-review-harness',
+      name: 'Listing Compliance & Seller Appeal Review Harness',
+      status: 'scenario',
+      blockers: 5,
+      lastEdited: '2026-06-02 09:04 local mock',
+      readiness: 'Composite scenario ready for template initialization, with evidence and decision locks still open.',
+      summary: 'Mock/public/composite scenario for shaping intake, evidence review, decisions, and handoff readiness.',
+    },
+  ],
+
+  projectTemplates: [
+    {
+      id: 'template-builder-enablement-os',
+      name: 'Builder Enablement OS',
+      summary: 'Frame a SpecGraph-centered builder workspace with evidence, locks, and handoff gates.',
+      contextPreview: ['Product goal', 'SpecGraph object model', 'Builder handoff checklist'],
+    },
+    {
+      id: 'template-agent-harness-specgraph',
+      name: 'Agent Harness SpecGraph',
+      summary: 'Map agent roles, allowed paths, validation commands, and stop conditions before coding.',
+      contextPreview: ['Role wrapper policy', 'Allowed path envelope', 'Validation command set'],
+    },
+    {
+      id: 'template-compliance-review-workflow',
+      name: 'Compliance Review Workflow',
+      summary: 'Model a safe public/composite review flow without private seller, customer, or marketplace data.',
+      contextPreview: ['Composite listing issue', 'Public policy excerpt', 'Appeal-review checklist'],
+    },
+  ],
+
+  demoScenario: {
+    name: 'Listing Compliance & Seller Appeal Review Harness',
+    boundary: 'Mock/public/composite only. No private marketplace, seller, customer, credential, or confidential source data.',
+    guidedChat: [
+      'What outcome should this review packet support?',
+      'Which evidence is public, attached, and safe to reference?',
+      'Which decision needs Point lock before handoff?',
+    ],
+    selectedContextPreview: [
+      'Composite listing policy summary',
+      'Appeal evidence checklist',
+      'Review findings and decision-lock map',
+    ],
+  },
+
+  focusLensDefinitions: [
+    { id: 'open-work', label: 'Open work', description: 'Highlights non-ready objects and objects with blockers.' },
+    { id: 'missing-evidence', label: 'Missing evidence', description: 'Highlights objects with evidence gaps.' },
+    { id: 'unlocked-decisions', label: 'Unlocked decisions', description: 'Highlights decision and lock gaps.' },
+    { id: 'selected-trail', label: 'Selected object trail', description: 'Highlights selected object, ancestors, descendants, inbound, and outbound objects.' },
+    { id: 'handoff-blockers', label: 'Handoff blockers', description: 'Highlights objects tied to current handoff-readiness blockers.' },
+  ],
+
   contextNodes: [
     {
       id: 'node-1',
