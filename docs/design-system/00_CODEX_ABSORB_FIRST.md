@@ -52,6 +52,23 @@ This is the Design Operating System v4 absorber for Codex. It converts the packa
 
 Do not skip goals. Do not combine goals unless Point approves.
 
+## Current follow-on handoff
+
+The final Claude Design handoff package has been assimilated as a staged adoption gate, not as active app implementation authority.
+
+Read:
+
+1. `docs/design-system/CLAUDE_DESIGN_FINAL_DECISION.md`
+2. `docs/design-system/CLAUDE_DESIGN_SYSTEM_ADOPTION_REVIEW.md`
+3. `.codex/goals/GOAL-022-claude-design-system-adoption-review.md`
+4. `quality/CLAUDE_DESIGN_QA_AND_VALIDATION_PLAN.md`
+5. `quality/CLAUDE_DESIGN_RISK_REGISTER.md`
+6. `docs/design-system/13_STATUS_LANGUAGE_CANON.md`
+
+GOAL-022 must run before any Claude Design adoption decision. GOAL-023 remains gated until GOAL-022 evidence is reviewed and Point approves any required active app visual, token, canon, baseline, or provenance change.
+
+GOAL-023 documentation/QA work is complete when the status-language canon, QA checks, evidence, and validation outputs are present. Any active app CSS/runtime status semantics cleanup remains a separate Point-gated app change.
+
 ## Evidence rule
 
 Validation, screenshots, and baselines are not accepted unless exact command output or evidence paths are reported.

@@ -1,0 +1,14 @@
+# RISK_REGISTER.md
+
+| Risk ID | Risk | Severity | Likelihood | Why it matters | Mitigation | Owner/reviewer | Stop condition if triggered |
+|---|---|---:|---:|---|---|---|---|
+| R-001 | Claude prototype external CDN usage leaks into active app | High | Medium | Violates offline/static MVP boundary and no-network QA. | Keep `Cockpit Wireframes.html` docs-only; no active runtime import. | Codex + QA + Point | Stop if any active app file would load CDN resources. |
+| R-002 | Design token duplication creates long-term drift | High | Medium | Two token systems would make UI QA and visual consistency harder. | Map Claude tokens to active `--color-*` tokens; no duplicate aliases without approval. | Codex + Point | Stop if token canon change is required. |
+| R-003 | Broad redesign expands scope | High | Medium | Would bypass acceptance criteria and create review burden. | Split GOAL-022 review from GOAL-023 smallest safe slice. | Point | Stop if task becomes multi-page redesign. |
+| R-004 | Product-canon route conflict is silently resolved | High | Medium | Old eight-page canon and GOAL-021 twelve-route status need explicit reconciliation. | Surface conflict in GOAL-022 and require Point/product review before language changes. | Point + Product reviewer | Stop if route/page language must change. |
+| R-005 | Screenshot baseline promotion without approval | Medium | Medium | Baselines become acceptance memory and may lock unreviewed design. | Keep screenshots as provenance unless Point approves promotion. | Point + QA | Stop if baseline promotion is requested. |
+| R-006 | Font files duplicated or moved without license/provenance check | Medium | Medium | Could create provenance, licensing, or repo hygiene risk. | Do not move/delete fonts; verify OFL/license if future consolidation is requested. | QA + Point | Stop if font movement is required. |
+| R-007 | Validation failure hidden or summarized too loosely | High | Low | Codex handoff would become unreliable. | Require exact command output summaries and evidence files. | Codex + QA | Stop if validation cannot be run or fails out of scope. |
+| R-008 | Status color semantics become inconsistent | Medium | Medium | Operators may misread ready/wait/blocked/governance states. | GOAL-023 status-language canon and QA checks. | Codex + QA | Stop if app CSS changes are needed without Point approval. |
+| R-009 | Product framing shifts Workbench back to product center | Medium | Medium | Conflicts with Builder Enablement OS product lock where SpecGraph is primary. | Review Workbench language against product lock before edits. | Point + Product reviewer | Stop if wording changes product hierarchy. |
+| R-010 | Provenance assets deleted or moved | Medium | Low | Breaks artifact traceability. | Keep Claude files in place; only add review docs/evidence. | Codex + QA | Stop if cleanup requires delete/move. |

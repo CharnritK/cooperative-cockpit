@@ -73,18 +73,39 @@ window.mockData = {
       name: 'Builder Enablement OS',
       summary: 'Frame a SpecGraph-centered builder workspace with evidence, locks, and handoff gates.',
       contextPreview: ['Product goal', 'SpecGraph object model', 'Builder handoff checklist'],
+      guidedChat: [
+        "Builder Enablement OS setup: Which public product goal should this static scenario structure?",
+        "We should structure the Cooperative Cockpit static MVP framework.",
+        "Static prompt preview: Which boundaries should be visible around SpecGraph objects?",
+        "All cards must represent local inspect-only mock components. Secrets and runtime states must remain sealed.",
+        "Static result preview: protected exclusions are shown as locked in local mock state. Open the Workbench to inspect the map."
+      ]
     },
     {
       id: 'template-agent-harness-specgraph',
       name: 'Agent Harness SpecGraph',
       summary: 'Map agent roles, allowed paths, validation commands, and stop conditions before coding.',
       contextPreview: ['Role wrapper policy', 'Allowed path envelope', 'Validation command set'],
+      guidedChat: [
+        "Agent Harness SpecGraph setup: Which developer role wrapper policy should this static scenario model?",
+        "We are modeling the Codex Builder and GPT Coding Manager wrappers.",
+        "Static prompt preview: Which allowed path envelopes and validation commands should be displayed?",
+        "The paths are apps/static-mvp/ only. The validation command is npm run validate.",
+        "Static result preview: sandbox boundaries are mapped for inspect-only review."
+      ]
     },
     {
       id: 'template-compliance-review-workflow',
       name: 'Compliance Review Workflow',
       summary: 'Model a safe public/composite review flow without private seller, customer, or marketplace data.',
       contextPreview: ['Composite listing issue', 'Public policy excerpt', 'Appeal-review checklist'],
+      guidedChat: [
+        "Compliance Review Harness setup active. Remember: Mock/public/composite scenarios only.",
+        "Understood. Let's initialize a public seller compliance appeal mock review.",
+        "Static prompt preview: Which public policy guidelines and appeal checklists should be shown?",
+        "We will attach the Composite listing issue and the public Seller appeal checklist.",
+        "Static result preview: context nodes are prepared locally for readiness-gate inspection."
+      ]
     },
   ],
 

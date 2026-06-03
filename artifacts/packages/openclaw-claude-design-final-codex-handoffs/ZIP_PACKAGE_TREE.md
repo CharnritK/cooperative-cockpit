@@ -1,0 +1,14 @@
+# ZIP_PACKAGE_TREE.md
+
+```text
+openclaw-claude-design-final-codex-handoffs/
+  README.md
+  FINAL_DECISION.md
+  DESIGN_SYSTEM_ADOPTION_REVIEW.md
+  CODEX_HANDOFF_GOAL_022.md
+  CODEX_HANDOFF_GOAL_023.md
+  QA_AND_VALIDATION_PLAN.md
+  RISK_REGISTER.md
+  MANIFEST.json
+  ZIP_PACKAGE_TREE.md
+```
