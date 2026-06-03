@@ -73,9 +73,15 @@ const RIGHT_PANEL_TABS = [
 ];
 
 const TOAST_DURATION = 3500;
+const DEFAULT_SPEC_TEMPLATE_ID = 'template-product-spec';
+const DEFAULT_SPEC_FIELD_IDS = ['objective', 'layout-regions', 'interaction-states', 'protected-surfaces', 'acceptance-criteria', 'validation-method'];
+const GLOBAL_HANDOFF_GATE_FIELD_IDS = ['acceptance-criteria', 'validation-method'];
 
 document.addEventListener('DOMContentLoaded', () => {
   window.appState.specValidated = Boolean(window.appState.specValidated);
+  const selectedSpecTemplateId = getSelectedSpecTemplateId();
+  window.appState.selectedSpecTemplateId = selectedSpecTemplateId;
+  window.appState.specDraft.templateId = selectedSpecTemplateId;
 
   document.querySelectorAll('.nav-item').forEach((item) => {
     item.addEventListener('click', () => navigateFromItem(item));
@@ -197,8 +203,72 @@ function getWorkflowStep(page) {
   return WORKFLOW_STAGE_FOR_PAGE[page] || WORKFLOW_STEPS[0];
 }
 
+function getSelectedSpecTemplateId() {
+  const templates = (window.appState && window.appState.specTemplates) || [];
+  const draftTemplateId = window.appState && window.appState.specDraft && window.appState.specDraft.templateId;
+  const selectedId = (window.appState && window.appState.selectedSpecTemplateId) || draftTemplateId || DEFAULT_SPEC_TEMPLATE_ID;
+  if (templates.some((template) => template.id === selectedId)) return selectedId;
+  return templates[0] ? templates[0].id : DEFAULT_SPEC_TEMPLATE_ID;
+}
+
+function getSelectedSpecTemplate() {
+  const templateId = getSelectedSpecTemplateId();
+  return ((window.appState && window.appState.specTemplates) || []).find((template) => template.id === templateId) || null;
+}
+
+function setSelectedSpecTemplate(templateId) {
+  const templates = (window.appState && window.appState.specTemplates) || [];
+  const selectedTemplate = templates.find((template) => template.id === templateId) || templates[0] || null;
+  const selectedId = selectedTemplate ? selectedTemplate.id : DEFAULT_SPEC_TEMPLATE_ID;
+  window.appState.selectedSpecTemplateId = selectedId;
+  if (window.appState.specDraft) {
+    window.appState.specDraft.templateId = selectedId;
+    window.appState.specDraft.fieldIds = [...((selectedTemplate && selectedTemplate.fieldIds) || DEFAULT_SPEC_FIELD_IDS)];
+  }
+  return selectedTemplate;
+}
+
+function getSpecFieldsByIds(fieldIds) {
+  const fields = (window.appState && window.appState.specFields) || [];
+  return (fieldIds && fieldIds.length ? fieldIds : DEFAULT_SPEC_FIELD_IDS)
+    .map((fieldId) => fields.find((field) => field.id === fieldId))
+    .filter(Boolean);
+}
+
+function getTemplateSpecFields(template = getSelectedSpecTemplate()) {
+  return getSpecFieldsByIds((template && template.fieldIds) || DEFAULT_SPEC_FIELD_IDS);
+}
+
+function getGlobalHandoffGateFields() {
+  return getSpecFieldsByIds(GLOBAL_HANDOFF_GATE_FIELD_IDS);
+}
+
+function isGlobalHandoffGateField(field) {
+  return field && GLOBAL_HANDOFF_GATE_FIELD_IDS.includes(field.id);
+}
+
+function getTemplateOnlySpecFields(template = getSelectedSpecTemplate()) {
+  return getTemplateSpecFields(template).filter((field) => !isGlobalHandoffGateField(field));
+}
+
+function uniqueSpecFields(fields) {
+  const seen = new Set();
+  return fields.filter((field) => {
+    if (!field || seen.has(field.id)) return false;
+    seen.add(field.id);
+    return true;
+  });
+}
+
+function getActiveSpecFields() {
+  return uniqueSpecFields([
+    ...getTemplateSpecFields(),
+    ...getGlobalHandoffGateFields(),
+  ]);
+}
+
 function getMissingEvidenceFields() {
-  return window.appState.specFields.filter((field) => {
+  return getActiveSpecFields().filter((field) => {
     const hasTraceLink = window.appState.traceLinks.some((link) => link.target === field.id);
     const hasAttachedEvidence = (field.evidenceIds || []).some((evidenceId) => {
       const evidence = window.appState.evidenceItems.find((item) => item.id === evidenceId);
@@ -218,7 +288,7 @@ function getReviewBlockers() {
 }
 
 function getReadinessSummary() {
-  const unresolvedSpecFields = window.appState.specFields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
+  const unresolvedSpecFields = getActiveSpecFields().filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
   const pendingDecisions = window.appState.decisions.filter((decision) => decision.status === 'needs-lock');
   const validationBlocked = !Boolean(window.appState.specValidated);
   const missingEvidenceFields = getMissingEvidenceFields().map((field) => ({
@@ -254,7 +324,7 @@ function getReadinessSummary() {
 }
 
 function getReadinessProgress(readiness = getReadinessSummary()) {
-  const specFields = window.appState.specFields || [];
+  const specFields = getActiveSpecFields() || [];
   const decisions = window.appState.decisions || [];
   const requiredEvidence = (window.appState.evidenceItems || []).filter((item) => item.requiredForHandoff);
   const missingFieldIds = new Set(readiness.missingEvidenceFields.map((item) => item.id.replace(/^field-/, '')));
@@ -282,7 +352,7 @@ function updateHandoffReadiness() {
 }
 
 function getPreviewSyncStatus(readiness = getReadinessSummary()) {
-  const hasUnlockedFields = window.appState.specFields.some((field) => field.status !== 'locked');
+  const hasUnlockedFields = getActiveSpecFields().some((field) => field.status !== 'locked');
   if (readiness.ready) {
     return { status: 'validated', label: 'Up to date' };
   }
@@ -294,7 +364,7 @@ function getPreviewSyncStatus(readiness = getReadinessSummary()) {
 
 function getSpecCoverageRows(readiness = getReadinessSummary()) {
   const fieldsMissingEvidence = new Set(readiness.missingEvidenceFields.map((item) => item.id.replace(/^field-/, '')));
-  return window.appState.specFields.map((field) => {
+  return getActiveSpecFields().map((field) => {
     if (field.status !== 'locked') {
       return { field, label: 'Incomplete' };
     }
@@ -361,6 +431,12 @@ function syncShellState(page) {
   if (shell) {
     shell.classList.toggle('workbench-focus-mode', page === 'workbench' && Boolean(window.appState.workbenchFocusMode));
   }
+
+  const projectOpen = !['landing', 'demo-entry', 'project-hub', 'project-init'].includes(page);
+  document.querySelectorAll('[data-onboarding-nav]').forEach((item) => {
+    item.hidden = projectOpen;
+    item.setAttribute('aria-hidden', String(projectOpen));
+  });
 
   const stagePill = document.getElementById('workflow-stage-pill');
   const stageLabel = document.getElementById('workflow-stage-label');
@@ -461,12 +537,15 @@ function handleTopBarAction(action) {
     case 'validate':
       window.navigate('review-runs');
       break;
+    case 'project-switcher':
+      window.navigate('project-hub');
+      break;
     case 'toggle-inspector':
       toggleInspector();
       break;
     case 'handoff':
       if (window.appState.handoffReady) {
-        showToast('Handoff preview is available locally. No files are written.', 'success');
+        window.navigate('preview');
       } else {
         showToast('Cannot prepare handoff yet. Clear the local readiness checklist first.', 'warning');
       }
@@ -681,13 +760,13 @@ function renderProjectInitialize(container) {
   const guided = createElement('article', 'guided-chat-card');
   guided.innerHTML = `<div class="handoff-preview-head">
       <div>
-        <h3>Mock guided chat</h3>
-        <p>${scenario.boundary}</p>
+        <h3>Static mock transcript</h3>
+        <p>No AI execution, no backend calls, no persistence; transcript is static mock data selected by template.</p>
       </div>
       ${renderStatusChip('inspect', 'Local only')}
     </div>
     <div class="chat-transcript">
-      ${(scenario.guidedChat || []).map((message, index) => `<div class="chat-message ${index % 2 === 0 ? 'chat-message-assistant' : 'chat-message-user'}">
+      ${((selectedTemplate.guidedChat || scenario.guidedChat || [])).map((message, index) => `<div class="chat-message ${index % 2 === 0 ? 'chat-message-assistant' : 'chat-message-user'}">
         <span>${index % 2 === 0 ? 'Assistant' : 'Operator'}</span>
         <p>${message}</p>
       </div>`).join('')}
@@ -985,6 +1064,37 @@ function bindFocusLensSelect(container) {
   });
 }
 
+function renderWorkbenchMacroLayers() {
+  const readiness = getReadinessSummary();
+  const layers = [
+    {
+      id: 'context',
+      title: 'Context',
+      detail: `${window.appState.context.length} included, ${window.appState.protected.length} protected`,
+      status: 'selected',
+    },
+    {
+      id: 'specgraph',
+      title: 'SpecGraph',
+      detail: `${getActiveSpecFields().length} active fields in the current template`,
+      status: readiness.unresolvedSpecFields.length ? 'blocked' : 'ready',
+    },
+    {
+      id: 'handoff-gates',
+      title: 'Handoff Gates',
+      detail: readiness.ready ? 'Preview clear locally' : `${readiness.handoffBlockers.length} readiness items`,
+      status: readiness.ready ? 'ready' : 'blocked',
+    },
+  ];
+  const section = createElement('section', 'workbench-macro-layers');
+  section.setAttribute('aria-label', 'Workbench macro layers');
+  section.innerHTML = layers.map((layer) => `<article class="workbench-macro-layer" data-macro-layer="${layer.id}">
+      <div><span>${layer.title}</span><strong>${layer.detail}</strong></div>
+      ${renderStatusChip(layer.status, statusLabel(layer.status))}
+    </article>`).join('');
+  return section;
+}
+
 function renderWorkbench(container) {
   showGovernance(true);
   const selectedNode = getSelectedNode() || getOrderedWorkbenchNodes()[0] || window.mockData.nodes[0];
@@ -999,6 +1109,7 @@ function renderWorkbench(container) {
   const layout = createElement('section', 'workbench-layout');
   const editorLayout = createElement('div', 'workbench-editor-layout');
   const workbenchMain = createElement('div', 'workbench-main');
+  workbenchMain.appendChild(renderWorkbenchMacroLayers());
   workbenchMain.appendChild(renderObjectOutline(selectedNode));
   workbenchMain.appendChild(renderNodeCanvas());
   const workbenchDock = createElement('div', 'workbench-dock');
@@ -2833,24 +2944,104 @@ function unlockLocalSpecField(field) {
   window.renderPage('spec-builder');
 }
 
-function groupFieldsByStatus(fields) {
+function groupFieldsByStatus(fields = getActiveSpecFields()) {
+  const activeFields = fields;
   return [
     {
       key: 'needs-answer',
       title: 'Needs answer',
-      fields: fields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status)),
+      fields: activeFields.filter((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status)),
     },
     {
       key: 'draft',
       title: 'Draft',
-      fields: fields.filter((field) => field.status === 'draft'),
+      fields: activeFields.filter((field) => field.status === 'draft'),
     },
     {
       key: 'locked',
       title: 'Locked',
-      fields: fields.filter((field) => field.status === 'locked'),
+      fields: activeFields.filter((field) => field.status === 'locked'),
     },
   ];
+}
+
+function appendSpecFieldRow(tbody, field) {
+  const tr = createElement('tr');
+  tr.appendChild(createElement('td', '', field.name));
+  const tdValue = createElement('td');
+  tdValue.textContent = field.value || field.suggestion || '';
+  tr.appendChild(tdValue);
+
+  const tdStatus = createElement('td');
+  tdStatus.innerHTML = renderFieldStatus(field);
+  tr.appendChild(tdStatus);
+
+  const tdActions = createElement('td', 'field-actions field-actions-compact');
+  const suggestBtn = createElement('button', '', 'Suggest');
+  suggestBtn.type = 'button';
+  suggestBtn.disabled = field.status === 'locked';
+  suggestBtn.addEventListener('click', () => {
+    field.value = field.suggestion;
+    field.status = 'draft';
+    markSpecValidationStale(`Field "${field.name}" changed locally. Spec validation must be refreshed.`);
+    showToast(`Applied the suggestion to "${field.name}" locally.`, 'success');
+    window.renderPage('spec-builder');
+  });
+
+  const lockBtn = createElement('button', '', field.status === 'locked' ? 'Unlock' : 'Lock');
+  lockBtn.type = 'button';
+  lockBtn.addEventListener('click', () => {
+    if (field.status === 'locked') {
+      unlockLocalSpecField(field);
+      return;
+    }
+    field.status = 'locked';
+    markSpecValidationStale(`Field "${field.name}" was locked locally. Spec validation must be refreshed.`);
+    showToast(`Locked "${field.name}" locally.`, 'success');
+    window.renderPage('spec-builder');
+  });
+
+  const overflow = createElement('details', 'field-overflow');
+  overflow.innerHTML = '<summary>More</summary>';
+  [
+    ['Explain', () => showToast(`Local explanation for "${field.name}" only. No AI call or artifact generation occurs.`, 'info')],
+    ['Ask one', () => showToast(`Question prompt for "${field.name}" is local feedback only. No AI service is called.`, 'info')],
+    ['Trace', () => window.navigate('trace')],
+    ['Reset', () => resetLocalSpecField(field)],
+  ].forEach(([text, handler]) => {
+    const btn = createElement('button', '', text);
+    btn.type = 'button';
+    btn.disabled = text === 'Reset' && !field.value;
+    btn.addEventListener('click', handler);
+    overflow.appendChild(btn);
+  });
+  tdActions.append(suggestBtn, lockBtn, overflow);
+  tr.appendChild(tdActions);
+  tbody.appendChild(tr);
+}
+
+function appendSpecFieldSection(table, { key, title, description, fields }) {
+  const tbody = createElement('tbody', `spec-field-section spec-field-section-${key}`);
+  tbody.setAttribute('data-spec-field-section', key);
+  const sectionRow = createElement('tr', 'spec-field-section-row');
+  sectionRow.innerHTML = `<th colspan="4">${title}<span>${description}</span></th>`;
+  tbody.appendChild(sectionRow);
+
+  groupFieldsByStatus(fields).forEach((group) => {
+    if (!group.fields.length) return;
+    const groupRow = createElement('tr', 'spec-field-group-row');
+    groupRow.innerHTML = `<th colspan="4">${group.title}<span>${group.fields.length} field${group.fields.length === 1 ? '' : 's'}</span></th>`;
+    tbody.appendChild(groupRow);
+    group.fields.forEach((field) => appendSpecFieldRow(tbody, field));
+  });
+
+  if (!fields.length) {
+    const emptyRow = createElement('tr');
+    emptyRow.innerHTML = '<td colspan="4"><em>No fields for this section.</em></td>';
+    tbody.appendChild(emptyRow);
+  }
+
+  table.appendChild(tbody);
 }
 
 function renderSpecBuilder(container) {
@@ -2866,27 +3057,23 @@ function renderSpecBuilder(container) {
   label.setAttribute('for', 'template-select');
   const select = createElement('select');
   select.id = 'template-select';
-  [
-    'UI / UX Spec',
-    'Workflow Automation Spec',
-    'Data / Read Model Spec',
-    'Decision / Governance Spec',
-    'Feedback Packet Spec',
-    'Integration / Handoff Spec',
-    'Validation / QA Spec',
-    'Agent / Subagent Spec',
-    'Research Promotion Spec',
-    'Runtime-Protected Review Spec',
-  ].forEach((template) => {
+  const selectedTemplate = getSelectedSpecTemplate();
+  (window.appState.specTemplates || []).forEach((tpl) => {
     const option = createElement('option');
-    option.value = template;
-    option.textContent = template;
+    option.value = tpl.id;
+    option.textContent = tpl.name;
+    if (getSelectedSpecTemplateId() === tpl.id) {
+      option.selected = true;
+    }
     select.appendChild(option);
   });
   select.addEventListener('change', () => {
-    showToast(`Template selector changed to "${select.value}" for local explanation only. Field contents and artifacts are unchanged.`, 'info');
+    setSelectedSpecTemplate(select.value);
+    markSpecValidationStale(`Template changed to "${select.options[select.selectedIndex].text}". Spec validation must be refreshed.`);
+    showToast(`Template changed to "${select.options[select.selectedIndex].text}". Spec fields updated.`, 'success');
+    window.renderPage('spec-builder');
   });
-  const templateNote = createElement('span', 'template-note', 'Reference only - does not change fields or artifacts.');
+  const templateNote = createElement('span', 'template-note', 'Changes fields rendered in the table.');
   templateSelectorDiv.append(label, select, templateNote);
   container.appendChild(templateSelectorDiv);
   container.appendChild(renderSpecReadinessPanel());
@@ -2898,67 +3085,17 @@ function renderSpecBuilder(container) {
 
   const table = createElement('table', 'field-table');
   table.innerHTML = '<thead><tr><th>Field</th><th>Value</th><th>Status</th><th>Actions</th></tr></thead>';
-  groupFieldsByStatus(window.appState.specFields).forEach((group) => {
-    if (!group.fields.length) return;
-    const tbody = createElement('tbody', `spec-field-group spec-field-group-${group.key}`);
-    const groupRow = createElement('tr', 'spec-field-group-row');
-    groupRow.innerHTML = `<th colspan="4">${group.title}<span>${group.fields.length} field${group.fields.length === 1 ? '' : 's'}</span></th>`;
-    tbody.appendChild(groupRow);
-    group.fields.forEach((field) => {
-      const tr = createElement('tr');
-      tr.appendChild(createElement('td', '', field.name));
-      const tdValue = createElement('td');
-      tdValue.textContent = field.value || field.suggestion || '';
-      tr.appendChild(tdValue);
-
-      const tdStatus = createElement('td');
-      tdStatus.innerHTML = renderFieldStatus(field);
-      tr.appendChild(tdStatus);
-
-      const tdActions = createElement('td', 'field-actions field-actions-compact');
-      const suggestBtn = createElement('button', '', 'Suggest');
-      suggestBtn.type = 'button';
-      suggestBtn.disabled = field.status === 'locked';
-      suggestBtn.addEventListener('click', () => {
-        field.value = field.suggestion;
-        field.status = 'draft';
-        markSpecValidationStale(`Field "${field.name}" changed locally. Spec validation must be refreshed.`);
-        showToast(`Applied the suggestion to "${field.name}" locally.`, 'success');
-        window.renderPage('spec-builder');
-      });
-
-      const lockBtn = createElement('button', '', field.status === 'locked' ? 'Unlock' : 'Lock');
-      lockBtn.type = 'button';
-      lockBtn.addEventListener('click', () => {
-        if (field.status === 'locked') {
-          unlockLocalSpecField(field);
-          return;
-        }
-        field.status = 'locked';
-        markSpecValidationStale(`Field "${field.name}" was locked locally. Spec validation must be refreshed.`);
-        showToast(`Locked "${field.name}" locally.`, 'success');
-        window.renderPage('spec-builder');
-      });
-
-      const overflow = createElement('details', 'field-overflow');
-      overflow.innerHTML = '<summary>More</summary>';
-      [
-        ['Explain', () => showToast(`Local explanation for "${field.name}" only. No AI call or artifact generation occurs.`, 'info')],
-        ['Ask one', () => showToast(`Question prompt for "${field.name}" is local feedback only. No AI service is called.`, 'info')],
-        ['Trace', () => window.navigate('trace')],
-        ['Reset', () => resetLocalSpecField(field)],
-      ].forEach(([text, handler]) => {
-        const btn = createElement('button', '', text);
-        btn.type = 'button';
-        btn.disabled = text === 'Reset' && !field.value;
-        btn.addEventListener('click', handler);
-        overflow.appendChild(btn);
-      });
-      tdActions.append(suggestBtn, lockBtn, overflow);
-      tr.appendChild(tdActions);
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
+  appendSpecFieldSection(table, {
+    key: 'template',
+    title: selectedTemplate ? `${selectedTemplate.name} fields` : 'Template fields',
+    description: selectedTemplate ? selectedTemplate.description : 'Template-specific static mock fields.',
+    fields: getTemplateOnlySpecFields(selectedTemplate),
+  });
+  appendSpecFieldSection(table, {
+    key: 'global-handoff',
+    title: 'Global handoff gates',
+    description: 'Always visible readiness gates for D-005 and Preview.',
+    fields: getGlobalHandoffGateFields(),
   });
   container.appendChild(table);
 
@@ -3014,7 +3151,7 @@ function renderFieldStatus(field) {
 }
 
 function hasUnresolvedSpecFields() {
-  return window.appState.specFields.some((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
+  return getActiveSpecFields().some((field) => ['ai-suggested', 'missing', 'needs-answer', 'needs-lock'].includes(field.status));
 }
 
 function hasPendingDecisions() {

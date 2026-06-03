@@ -44,6 +44,7 @@
               <span id="readiness-count" aria-live="polite">0</span>
             </button>
             <button class="action-btn icon-action" data-action="toggle-inspector" title="Toggle inspector" aria-label="Toggle inspector"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="M14 5v14" /><path d="M7 9h4M7 13h4" /></svg></button>
+            <button class="action-btn project-switch-btn" data-action="project-switcher" title="Switch project or onboarding" aria-label="Switch project or onboarding"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" /></svg><span>Projects</span></button>
             <button class="action-btn icon-action" data-action="preview" title="Open preview snapshot" aria-label="Open preview snapshot"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.5" /></svg></button>
             <button class="action-btn icon-action" data-action="validate" title="Inspect readiness checks" aria-label="Inspect readiness checks"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m8.8 12.1 2.1 2.1 4.4-5" /></svg></button>
             <button class="action-btn action-primary handoff-action" data-action="handoff" title="Handoff unavailable until readiness clears" disabled><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m7 8 5-5 5 5" /><path d="M5 14v5h14v-5" /></svg><span>Handoff</span></button>
@@ -61,11 +62,11 @@
           <div class="rail-progress-caption" id="rail-progress-caption">Local readiness gates</div>
         </div>
         <ul class="nav-list nav-list-workflow">
-          <li class="nav-section">Start</li>
-          <li class="nav-item active" data-page="landing" tabindex="0" role="button" aria-current="page"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" /></svg></span><span>Landing</span></li>
-          <li class="nav-item" data-page="demo-entry" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" /></svg></span><span>Demo Entry</span></li>
-          <li class="nav-item" data-page="project-hub" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" /></svg></span><span>Project Hub</span></li>
-          <li class="nav-item" data-page="project-init" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /><path d="M8 13h8M8 17h6" /></svg></span><span>Initialize</span></li>
+          <li class="nav-section" data-onboarding-nav="true">Start</li>
+          <li class="nav-item active" data-page="landing" data-onboarding-nav="true" tabindex="0" role="button" aria-current="page"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.4 2.8 7.9 7 10 4.2-2.1 7-5.6 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-5" /></svg></span><span>Landing</span></li>
+          <li class="nav-item" data-page="demo-entry" data-onboarding-nav="true" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h5" /></svg></span><span>Demo Entry</span></li>
+          <li class="nav-item" data-page="project-hub" data-onboarding-nav="true" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" /></svg></span><span>Project Hub</span></li>
+          <li class="nav-item" data-page="project-init" data-onboarding-nav="true" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /><path d="M8 13h8M8 17h6" /></svg></span><span>Initialize</span></li>
           <li class="nav-section">Workflow</li>
           <li class="nav-item" data-page="home" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7" /><path d="M5 10v10h14V10" /><path d="M9 20v-6h6v6" /></svg></span><span>Home</span></li>
           <li class="nav-item" data-page="workbench" tabindex="0" role="button"><span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M6 6h4v4H6zM14 14h4v4h-4zM14 6h4v4h-4z" /><path d="M10 8h4M16 10v4M8 10v6h6" /></svg></span><span>Workbench</span></li>

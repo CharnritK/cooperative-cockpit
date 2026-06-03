@@ -1,0 +1,61 @@
+{
+  "package_name": "openclaw-claude-design-final-codex-handoffs",
+  "package_purpose": "Final synthesis, decision, and Codex-ready handoff package for Claude Design system assimilation.",
+  "generated_by": "GPT-5.5 Pro final synthesis agent",
+  "generated_at": "2026-06-02T18:53:14+07:00",
+  "source_repo": "CharnritK/cooperative-cockpit",
+  "source_paths_reviewed": [
+    "docs/ops/STATUS.md",
+    "package.json",
+    "apps/static-mvp/index.html",
+    "apps/static-mvp/styles/base.css",
+    "apps/static-mvp/QA_CHECKLIST.md",
+    "docs/product/STATIC_MVP_SCREEN_MAP.md",
+    "artifacts/evidence/GOAL-016-product-lock-builder-enablement-os.md",
+    "docs/design-system/claude-proposed-design-system/Cockpit Design System.html",
+    "docs/design-system/claude-proposed-design-system/Cockpit Wireframes.html",
+    "docs/design-system/claude-proposed-design-system/cockpit-ds.css",
+    "docs/design-system/claude-proposed-design-system/**/*.jsx",
+    "docs/design-system/claude-proposed-design-system/refs/*.png",
+    "docs/design-system/claude-proposed-design-system/screenshots/*.png"
+  ],
+  "included_files": [
+    "README.md",
+    "FINAL_DECISION.md",
+    "DESIGN_SYSTEM_ADOPTION_REVIEW.md",
+    "CODEX_HANDOFF_GOAL_022.md",
+    "CODEX_HANDOFF_GOAL_023.md",
+    "QA_AND_VALIDATION_PLAN.md",
+    "RISK_REGISTER.md",
+    "MANIFEST.json",
+    "ZIP_PACKAGE_TREE.md"
+  ],
+  "recommended_goal_sequence": [
+    "GOAL-022 Claude Design System Adoption Review",
+    "Point approval gate",
+    "GOAL-023 Status Language and Token Canon Consistency Slice"
+  ],
+  "approval_required": [
+    "active app visual changes",
+    "screenshot baseline promotion",
+    "token canon changes",
+    "provenance asset movement/deletion",
+    "product language/canon changes",
+    "dependency additions",
+    "validation script changes",
+    "runtime behavior changes"
+  ],
+  "validation_required": [
+    "npm run validate",
+    "npm run test:visual:list",
+    "npm run test:visual",
+    "manual no-network/offline QA",
+    "manual accessibility/status-language QA"
+  ],
+  "timestamp_placeholder": "Refresh generated_at if committed or regenerated in repo.",
+  "notes": [
+    "Claude Design is approved as reference/provenance, not active runtime.",
+    "Do not move React/Babel CDN prototype code into active app.",
+    "GOAL-023 is gated by GOAL-022 evidence and Point approval for any active app edits."
+  ]
+}

@@ -32,7 +32,7 @@ test.describe("GOAL-021 static MVP UX upgrade", () => {
     await expect(page.locator("#main-content")).toContainText("Builder Enablement OS");
     await expect(page.locator("#main-content")).toContainText("Agent Harness SpecGraph");
     await expect(page.locator("#main-content")).toContainText("Compliance Review Workflow");
-    await expect(page.locator("#main-content")).toContainText("Mock guided chat");
+    await expect(page.locator("#main-content")).toContainText("Static mock transcript");
     await expect(page.locator("#main-content")).toContainText("Selected context preview");
 
     await page.getByRole("button", { name: "Open Workbench" }).click();

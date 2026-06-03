@@ -25,6 +25,10 @@
 | PKG-BUILDER-ENABLEMENT-OS | Builder Enablement OS handoff package assimilation | Orchestrator/QA | 2026-06-02 | 2026-06-02 | Completed | Unique handoff, prompt, schema, fixture, QA, and provenance files moved to governed paths; source package shell removed from active repo scope. |
 | GOAL-020A/020B/020C | Builder Enablement OS QA docs and validation | QA/Builder | 2026-06-02 | 2026-06-02 | Completed | QA docs 11-21, SpecGraph fixture checker, and Builder Enablement guardrail checker are wired into validation. |
 | GOAL-021 | Static MVP realistic product journey and object-aware Workbench | Builder/QA | 2026-06-02 | 2026-06-02 | Completed | UX upgrade handoff package assimilated; static MVP adds Landing -> Demo Entry -> Project Hub -> Project Initialize and Workbench object outline, focus lenses, right object panel, mock local copilot, readiness queue, and checksum/evidence refresh. |
+| POINT-UX-SIMPLIFICATION | Point-approved static MVP UX simplification direction | Builder/QA | 2026-06-02 | 2026-06-02 | Completed | Workbench defaults to Context / SpecGraph / Handoff Gates macro layers, onboarding routes hide from the project-open left rail, top Projects access remains available, and Project Initialize transcript stays template-reactive static mock data only. |
+| PKG-CLAUDE-DESIGN-FINAL | Claude Design final handoff package assimilation | Orchestrator/QA | 2026-06-02 | 2026-06-02 | Completed | Final Claude Design handoff files moved into governed goals, design-system docs, quality gates, package provenance, and assimilation evidence paths; follow-on docs/QA closeout refreshed the static-MVP manifest checksum for the allowed QA checklist change. |
+| GOAL-022 | Claude Design System Adoption Review | Reviewer/QA | 2026-06-02 | 2026-06-02 | Completed | Claude Design classified as reference/provenance, active token/component equivalents mapped, CDN/provenance/baseline gates recorded, and product-canon route conflict surfaced. |
+| GOAL-023 | Status Language and Token Canon Consistency Slice | Builder/QA | 2026-06-02 | 2026-06-02 | Completed | Documentation/QA canon added; app CSS/runtime edits remain blocked without explicit approval. Deferred `review-blocked` visual semantics cleanup is Point-gated. |
 
 ## Recent task ledger
 
@@ -35,4 +39,8 @@
 | GOAL-012 | Completed | Added import-safe wrapper modules and offline wrapper smoke tests. |
 | GOAL-013 | Completed | Hardened Design OS validation, wrapper guardrails, docs drift checks, and final Claude Opus 4.7 review. |
 | GOAL-021 | Completed | Implemented and validated the static MVP realistic product journey and object-aware Workbench upgrade from the imported handoff package. |
+| POINT-UX-SIMPLIFICATION | Completed | Implemented Point-approved UX simplification locks for Workbench macro layers, project-open rail behavior, top Projects access, and static template-reactive setup transcript boundaries. |
+| PKG-CLAUDE-DESIGN-FINAL | Completed | Assimilated the final Claude Design handoff package and preserved required Point gates; follow-on GOAL-022/GOAL-023 docs/QA closeout now validates with the allowed static-MVP QA checklist checksum refresh. |
+| GOAL-022 | Completed | Claude Design adoption review/evidence completed without app/runtime/token changes. |
+| GOAL-023 | Completed | Status-language canon and QA checks completed; app visual semantics cleanup remains a Point-gated follow-on. |
 
