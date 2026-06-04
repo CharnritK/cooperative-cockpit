@@ -927,7 +927,7 @@
           "id": "field-003",
           "specId": "spec-001",
           "label": "Visual baselines",
-          "value": "reviewed candidate screenshots; approved baselines pending Point/design review",
+          "value": "approved Playwright snapshots cover eight static MVP screens across four viewport projects; final token approval remains deferred",
           "required": false,
           "status": "unresolved"
         }

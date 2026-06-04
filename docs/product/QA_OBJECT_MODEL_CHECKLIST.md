@@ -30,7 +30,7 @@ Status: Current QA baseline
 - [ ] No connectors.
 - [ ] No MCP implementation.
 - [ ] No new dependencies.
-- [ ] No new pages without Point lock.
+- [ ] No pages/routes beyond the GOAL-021 twelve-route local journey without Point lock.
 - [ ] No action label says “Run” or implies live execution.
 
 ## Handoff readiness

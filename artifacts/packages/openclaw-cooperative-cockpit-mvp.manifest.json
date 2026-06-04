@@ -8,6 +8,6 @@
   "related_task_id": "GOAL-002",
   "source_file": "artifacts/archive/handoffs/openclaw-static-mvp-lego-pack-v0.1.zip",
   "storage_path": "apps/static-mvp/",
-  "checksum": "sha256:d3c8787323ca9704e163039a0e8a0b5f6601117bf0fec2021a72413ee46ea9d7",
-  "notes": "Checksum refreshed during Static MVP V2 UX polish closeout; derived from sorted sha256 sums of all files under apps/static-mvp/."
+  "checksum": "sha256:1b7133f03a5b485826f66cc906a8b21c9f6a155c79fa723e1a091ea7e27ed8af",
+  "notes": "Checksum refreshed during Workbench UX bugfix closeout; derived from sorted sha256 sums of all files under apps/static-mvp/."
 }

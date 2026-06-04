@@ -2,7 +2,7 @@
 
 ## Verdict
 
-READY_FOR_PRODUCT_LOCK
+PRODUCT_LOCK_APPROVED / FOLLOW_ON_QUEUED
 
 ## Diagnosis
 
@@ -32,4 +32,4 @@ The current product already has the primitives: Project, Context Nodes, Selected
 
 ## Next action
 
-Run GOAL-016 as a docs-only product-lock assimilation task.
+Point approved GOAL-016 on 2026-06-04. Run GOAL-017 next only if Point explicitly requests bounded follow-on execution.

@@ -53,7 +53,8 @@ This checklist guides manual verification of the local cockpit preview. It ensur
 - **Handoff gating** – Handoff-style actions (Prepare handoff, View gated preview) remain disabled until all gating conditions are satisfied.
 - **Primary workflow gating** – The relationship from context to governed spec, D-005 gate, evidence items and handoff preview remains available through the canvas, Preview, Decisions, and Trace surfaces without a separate Workbench explainer strip.
 - **GOAL-008 closeout gate** – Before closeout, verify object visibility, route-scope control, no-network behavior, unsafe-label absence, local handoff readiness, and no export/repo-write/runtime/deployment implications in one browser QA pass. GOAL-021 supersedes the old no-new-pages assumption with the approved twelve-route local journey.
-- **Claude Design adoption gate** – Claude Design remains reference/provenance unless Point approves a specific active app visual, token, canon, baseline, or provenance change. `review-blocked` status coloring has a documented open gate in `docs/design-system/13_STATUS_LANGUAGE_CANON.md` and must not be silently patched.
+- **Claude Design adoption gate** – Claude Design remains reference/provenance unless Point approves a specific active app visual, token, canon, baseline, or provenance change. Point-approved `review-blocked` semantics use the split model documented in `docs/design-system/13_STATUS_LANGUAGE_CANON.md`: amber node-card container, red internal blocker chip. Final token approval remains deferred.
+- **Workbench state sync regression** – Canvas node cards, Object Outline, context dock, embedded object editor and hidden inspector data must derive Workbench readiness from local `window.appState` gates, not stale `window.mockData.nodes` blocker/readiness fields.
 
 ## Object-model lock checks
 

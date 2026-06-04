@@ -180,14 +180,14 @@ function renderInspectorEmpty(page = window.appState.currentPage) {
 }
 
 function toggleInspector() {
-  if (window.appState.inspectorVisible) {
+  if (window.appState.currentPage === 'workbench') {
     setInspectorOpen(false);
+    const panel = document.querySelector('.object-editor-panel');
+    if (panel && typeof panel.focus === 'function') panel.focus({ preventScroll: true });
     return;
   }
-  const selectedNode = getSelectedNode();
-  if (window.appState.currentPage === 'workbench' && selectedNode) {
-    setInspectorOpen(true);
-    renderNodeInspector(selectedNode.id);
+  if (window.appState.inspectorVisible) {
+    setInspectorOpen(false);
     return;
   }
   setInspectorOpen(true);
@@ -559,9 +559,9 @@ window.renderPage = function renderPage(page) {
   const main = document.getElementById('main-content');
   if (!main) return;
 
-  const keepWorkbenchInspectorOpen = page === 'workbench' && window.appState.inspectorVisible;
+  const keepInspectorOpen = page !== 'workbench' && window.appState.inspectorVisible;
   main.innerHTML = '';
-  if (!keepWorkbenchInspectorOpen) setInspectorOpen(false);
+  if (!keepInspectorOpen) setInspectorOpen(false);
   if (page !== 'workbench') window.appState.activeWorkbenchPopover = null;
   showGovernance(false);
   syncShellState(page);
@@ -952,6 +952,72 @@ function getSelectedNode() {
   return getNodeById(window.appState.selectedNodeId);
 }
 
+function getWorkbenchNodeViewState(node, readiness = getReadinessSummary()) {
+  if (!node) {
+    return {
+      status: 'draft',
+      toneStatus: 'draft',
+      label: 'Select',
+      blockerCount: 0,
+      evidenceCount: 0,
+    };
+  }
+
+  const baseStatus = normalizeObjectStatus(node.readiness || node.status || 'draft');
+  const view = {
+    status: baseStatus,
+    toneStatus: normalizeObjectStatus(node.status || baseStatus),
+    label: readinessLabel(baseStatus),
+    blockerCount: node.blockerCount || 0,
+    evidenceCount: node.evidenceCount || 0,
+  };
+  const setView = (status, blockerCount, label = readinessLabel(status), toneStatus = status) => ({
+    ...view,
+    status,
+    toneStatus,
+    label,
+    blockerCount,
+  });
+
+  switch (node.id) {
+    case 'node-3': {
+      const blockerCount = readiness.unresolvedSpecFields.length + (readiness.validationBlocked ? 1 : 0);
+      if (!blockerCount) return setView('validated', 0);
+      return setView(readiness.unresolvedSpecFields.length ? 'needs-lock' : 'validation-blocked', blockerCount);
+    }
+    case 'node-4': {
+      const blockerCount = readiness.reviewBlockers.length;
+      return blockerCount
+        ? setView('review-blocked', blockerCount)
+        : setView('finding-resolved', 0, statusLabel('finding-resolved'), 'finding-resolved');
+    }
+    case 'node-5': {
+      const blockerCount = readiness.missingEvidence.length + (readiness.evidenceReviewPending ? 1 : 0);
+      const previewStatus = getPreviewSyncStatus(readiness);
+      return setView(previewStatus.status, blockerCount, previewStatus.label, previewStatus.status);
+    }
+    case 'node-6': {
+      const blockerCount = readiness.pendingDecisions.length;
+      return blockerCount
+        ? setView('decision-needs-lock', blockerCount, statusLabel('decision-needs-lock'), 'needs-lock')
+        : setView('decision-locked', 0, statusLabel('decision-locked'), 'validated');
+    }
+    case 'node-7': {
+      const blockerCount = readiness.missingEvidence.length + (readiness.evidenceReviewPending ? 1 : 0);
+      if (!blockerCount) return setView('validated', 0);
+      return setView(readiness.missingEvidence.length ? 'needs-evidence' : 'needs-sync', blockerCount, undefined, 'needs-sync');
+    }
+    case 'node-8': {
+      const blockerCount = readiness.handoffBlockers.length;
+      return readiness.ready
+        ? setView('ready', 0, statusLabel('ready'), 'ready')
+        : setView('handoff-blocked', blockerCount, statusLabel('handoff-blocked'), 'blocked');
+    }
+    default:
+      return view;
+  }
+}
+
 function getNodeAncestors(nodeId) {
   const ancestors = [];
   let current = getNodeById(nodeId);
@@ -1002,16 +1068,19 @@ function getNodeRelationshipClasses(node) {
 }
 
 function nodeHasEvidenceGap(node) {
-  return (node.evidenceCount || 0) < 2 || normalizeObjectStatus(node.readiness || node.status).includes('evidence');
+  const view = getWorkbenchNodeViewState(node);
+  return (view.evidenceCount || 0) < 2 || normalizeObjectStatus(view.status).includes('evidence');
 }
 
 function nodeHasDecisionGap(node) {
+  const view = getWorkbenchNodeViewState(node);
   const text = `${node.id} ${node.type || ''} ${node.typeLabel || ''} ${node.label || ''} ${node.title || ''} ${(node.guardrails || []).join(' ')}`.toLowerCase();
-  return text.includes('decision') || text.includes('lock') || normalizeObjectStatus(node.readiness || node.status).includes('lock');
+  return text.includes('decision') || text.includes('lock') || normalizeObjectStatus(view.status).includes('lock');
 }
 
 function nodeMatchesFocusLens(node, relationships = getSelectedRelationshipSets()) {
-  const readiness = normalizeObjectStatus(node.readiness || node.status);
+  const view = getWorkbenchNodeViewState(node);
+  const readiness = normalizeObjectStatus(view.status);
   switch (window.appState.focusLens) {
     case 'missing-evidence':
       return nodeHasEvidenceGap(node);
@@ -1024,10 +1093,10 @@ function nodeMatchesFocusLens(node, relationships = getSelectedRelationshipSets(
         || relationships.inbound.has(node.id)
         || relationships.outbound.has(node.id);
     case 'handoff-blockers':
-      return node.blockerCount > 0 || ['blocked', 'needs-lock', 'needs-evidence', 'review-blocked'].includes(readiness);
+      return view.blockerCount > 0 || ['blocked', 'needs-lock', 'needs-evidence', 'review-blocked'].includes(readiness);
     case 'open-work':
     default:
-      return node.blockerCount > 0 || !['ready', 'validated', 'applied'].includes(readiness);
+      return view.blockerCount > 0 || !['ready', 'validated', 'applied'].includes(readiness);
   }
 }
 
@@ -1120,7 +1189,7 @@ function renderWorkbench(container) {
   editorLayout.appendChild(renderObjectEditorPanel(selectedNode));
   layout.appendChild(editorLayout);
   container.appendChild(layout);
-  renderNodeInspector(selectedNode ? selectedNode.id : null);
+  renderInspectorEmpty('workbench');
   applyWorkbenchSelectionClasses();
 }
 
@@ -1163,13 +1232,14 @@ function toggleOutlineExpanded(id) {
 
 function renderObjectOutline(selectedNode) {
   const outline = createElement('aside', 'object-outline');
+  const view = getWorkbenchNodeViewState(selectedNode);
   outline.setAttribute('aria-label', 'Object Outline hierarchy explorer');
   outline.innerHTML = `<div class="pane-header">
       <div>
         <span class="page-kicker">Object Outline</span>
         <h3>Hierarchy explorer</h3>
       </div>
-      ${renderStatusChip(selectedNode ? selectedNode.readiness || selectedNode.status : 'draft', selectedNode ? readinessLabel(selectedNode.readiness || selectedNode.status) : 'Select')}
+      ${renderStatusChip(view.status, selectedNode ? view.label : 'Select')}
     </div>
     <p class="pane-help">Project -> Requirements -> Architecture -> Component -> Phase -> Task</p>`;
 
@@ -1185,6 +1255,7 @@ function renderOutlineGroup(group, depth) {
   const expanded = isOutlineExpanded(group.id);
   const row = createElement('div', `outline-row${group.node ? ' outline-node-row' : ' outline-group-row'}`);
   row.style.setProperty('--outline-depth', depth);
+  row.dataset.outlineGroupId = group.id;
   if (group.node) {
     row.dataset.outlineNodeId = group.node.id;
     const relationshipClasses = getNodeRelationshipClasses(group.node);
@@ -1220,11 +1291,35 @@ function renderOutlineGroup(group, depth) {
   return wrapper;
 }
 
+function getFocusedOutlineControl() {
+  const active = document.activeElement;
+  if (!active || !active.closest || !active.closest('.object-outline')) return null;
+  const row = active.closest('[data-outline-group-id]');
+  if (!row) return null;
+  return {
+    groupId: row.dataset.outlineGroupId,
+    nodeId: row.dataset.outlineNodeId || null,
+    control: active.classList.contains('outline-toggle') ? 'toggle' : active.classList.contains('outline-select') ? 'select' : null,
+  };
+}
+
+function restoreOutlineFocus(focused) {
+  if (!focused || !focused.control) return;
+  const rowSelector = focused.nodeId
+    ? `[data-outline-node-id="${focused.nodeId}"]`
+    : `[data-outline-group-id="${focused.groupId}"]`;
+  const controlSelector = focused.control === 'toggle' ? '.outline-toggle' : '.outline-select';
+  const target = document.querySelector(`.object-outline ${rowSelector} ${controlSelector}`);
+  if (target && typeof target.focus === 'function') target.focus({ preventScroll: true });
+}
+
 function refreshObjectOutline() {
   const outline = document.querySelector('.object-outline');
   if (!outline) return;
+  const focused = getFocusedOutlineControl();
   outline.replaceWith(renderObjectOutline(getSelectedNode()));
   applyWorkbenchSelectionClasses();
+  restoreOutlineFocus(focused);
 }
 
 function renderReadinessQueue() {
@@ -1260,6 +1355,8 @@ function renderObjectEditorPanel(selectedNode) {
   const node = selectedNode || getSelectedNode();
   const panel = createElement('aside', 'object-editor-panel');
   panel.setAttribute('aria-label', 'Object editor panel');
+  panel.tabIndex = -1;
+  const view = getWorkbenchNodeViewState(node);
   const activeTab = RIGHT_PANEL_TABS.some((tab) => tab.id === window.appState.rightPanelTab)
     ? window.appState.rightPanelTab
     : 'inspector';
@@ -1270,7 +1367,7 @@ function renderObjectEditorPanel(selectedNode) {
         <span class="page-kicker">Object editor</span>
         <h3>${node ? node.title || node.label : 'No object selected'}</h3>
       </div>
-      ${renderStatusChip(node ? node.readiness || node.status : 'draft', node ? readinessLabel(node.readiness || node.status) : 'Select')}
+      ${renderStatusChip(view.status, node ? view.label : 'Select')}
     </div>
     <div class="object-editor-tabs" role="tablist" aria-label="Object editor tabs">
       ${RIGHT_PANEL_TABS.map((tab) => `<button class="object-editor-tab${activeTab === tab.id ? ' active' : ''}" type="button" role="tab" aria-selected="${activeTab === tab.id}" data-right-panel-tab="${tab.id}">${tab.label}</button>`).join('')}
@@ -1301,6 +1398,7 @@ function renderObjectEditorTabContent(node, activeTab) {
     return `<div class="inspector-empty"><h4>Select an object</h4><p>Use the outline or board to scope the local object editor.</p></div>`;
   }
   const readiness = getReadinessSummary();
+  const view = getWorkbenchNodeViewState(node, readiness);
   const inboundEdges = (window.mockData.workflowEdges || []).filter((edge) => edge.target === node.id);
   const outboundEdges = (window.mockData.workflowEdges || []).filter((edge) => edge.source === node.id);
   switch (activeTab) {
@@ -1311,7 +1409,7 @@ function renderObjectEditorTabContent(node, activeTab) {
             <div class="inspector-row"><span>Title</span><strong>${node.title || node.label}</strong></div>
             <div class="inspector-row"><span>Config</span><strong>${node.config || 'Configured locally'}</strong></div>
             <div class="inspector-row"><span>Mode</span><strong>${node.model || 'Local only'}</strong></div>
-            <div class="inspector-row"><span>Readiness</span><strong>${readinessLabel(node.readiness || node.status)}</strong></div>
+            <div class="inspector-row"><span>Readiness</span><strong>${view.label}</strong></div>
           </div>
           <div class="static-notice">Field edits are represented as local draft state only. No files, APIs, storage, or external systems are touched.</div>
         </div>`;
@@ -1347,8 +1445,8 @@ function renderObjectEditorTabContent(node, activeTab) {
           <div class="inspector-grid">
             <div class="inspector-row"><span>Purpose</span><strong>${node.description}</strong></div>
             <div class="inspector-row"><span>Layer</span><strong>${renderSpatialNodeLevelLabel(node)}</strong></div>
-            <div class="inspector-row"><span>Open blockers</span><strong>${node.blockerCount || 0}</strong></div>
-            <div class="inspector-row"><span>Linked evidence</span><strong>${node.evidenceCount || 0}</strong></div>
+            <div class="inspector-row"><span>Open blockers</span><strong>${view.blockerCount || 0}</strong></div>
+            <div class="inspector-row"><span>Linked evidence</span><strong>${view.evidenceCount || 0}</strong></div>
           </div>
         </div>
         <div class="inspector-section">
@@ -1359,9 +1457,10 @@ function renderObjectEditorTabContent(node, activeTab) {
 }
 
 function renderMockCopilotPanel(node, readiness) {
+  const view = getWorkbenchNodeViewState(node, readiness);
   const suggestions = [
     `${node.title || node.label}: tighten objective, allowed scope, and evidence link before handoff.`,
-    node.blockerCount > 0 ? `Resolve ${node.blockerCount} object-level blocker(s) or mark them deferred.` : 'No object blockers; keep evidence and decision trace current.',
+    view.blockerCount > 0 ? `Resolve ${view.blockerCount} object-level blocker(s) or mark them deferred.` : 'No object blockers; keep evidence and decision trace current.',
     readiness.pendingDecisions.length ? `Decision ${readiness.pendingDecisions[0].id} needs Point lock before handoff readiness clears.` : 'Decision locks are clear in local state.',
   ];
   return `<div class="inspector-section mock-copilot-panel">
@@ -1378,7 +1477,7 @@ function renderMockCopilotPanel(node, readiness) {
       </div>
       <div class="assistant-context-line">
         <span>Open blockers</span>
-        <strong>${node.blockerCount || 0} object / ${readiness.handoffBlockers.length} handoff</strong>
+        <strong>${view.blockerCount || 0} object / ${readiness.handoffBlockers.length} handoff</strong>
       </div>
       <h4>Suggested next edits</h4>
       ${renderInspectorList(suggestions)}
@@ -1550,12 +1649,13 @@ function getChildNodes(parentId) {
 }
 
 function buildNodeTooltip(node) {
+  const view = getWorkbenchNodeViewState(node);
   return [
     `${node.index}. ${node.title || node.label}`,
     node.subtitle || node.description,
-    `Readiness: ${readinessLabel(node.readiness || node.status)}`,
-    `Open items: ${node.blockerCount || 0}`,
-    `Evidence: ${node.evidenceCount || 0}`,
+    `Readiness: ${view.label}`,
+    `Open items: ${view.blockerCount || 0}`,
+    `Evidence: ${view.evidenceCount || 0}`,
     node.config ? `Config: ${node.config}` : null,
     node.model ? `Mode: ${node.model}` : null,
     node.handoff && node.handoff.length ? `Handoff: ${node.handoff.join('; ')}` : null,
@@ -1595,9 +1695,25 @@ function getSpatialWorkbenchEdges() {
     .map((node) => ({
       source: node.parentId,
       target: node.id,
-      tone: node.readiness === 'ready' ? 'validated' : node.readiness === 'blocked' ? 'risk' : 'pending',
+      tone: getWorkbenchNodeViewState(node).status === 'ready' ? 'validated' : getWorkbenchNodeViewState(node).status === 'blocked' ? 'risk' : 'pending',
+      layout: 'hierarchy',
     }));
-  return [...hierarchyEdges, ...window.mockData.workflowEdges];
+  const workflowEdges = window.mockData.workflowEdges.map((edge) => ({ ...edge, layout: 'workflow' }));
+  return [...hierarchyEdges, ...workflowEdges];
+}
+
+function getSpatialNodeCardSize(nodeId) {
+  const node = getNodeById(nodeId);
+  const widthByLevel = {
+    requirements: 250,
+    architecture: 230,
+    phase: 190,
+    task: 190,
+  };
+  return {
+    width: widthByLevel[node && node.level] || 206,
+    height: 112,
+  };
 }
 
 function updateWorkflowLines(canvas) {
@@ -1663,20 +1779,7 @@ function getBreadcrumbsHTML() {
     const expandedNode = window.mockData.nodes.find((node) => node.id === window.appState.expandedNodeId);
     return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Mixed Map</span>${expandedNode ? ` <span class="breadcrumb-separator">➔</span> <span class="breadcrumb-item active">${expandedNode.title || expandedNode.label}</span>` : ''}</div>`;
   }
-  let html = `<div class="canvas-breadcrumbs"><span class="breadcrumb-item clickable" id="breadcrumb-root">All Requirements</span>`;
-  if (window.appState.currentParentId) {
-    const ancestors = [];
-    let cur = window.mockData.nodes.find((n) => n.id === window.appState.currentParentId);
-    while (cur) {
-      ancestors.unshift(cur);
-      cur = window.mockData.nodes.find((n) => n.id === cur.parentId);
-    }
-    ancestors.forEach((node) => {
-      html += ` <span class="breadcrumb-separator">➔</span> <span class="breadcrumb-item clickable" data-breadcrumb-node="${node.id}">${node.title || node.label}</span>`;
-    });
-  }
-  html += `</div>`;
-  return html;
+  return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Workbench Map</span></div>`;
 }
 
 function drillDownToNode(node) {
@@ -1718,7 +1821,8 @@ function hasWorkbenchChildren(node) {
 
 function createWorkbenchNodeCard(node, options = {}) {
   const { showExplore = false, expanded = false } = options;
-  const card = createElement('button', `node-card node-type-${node.type} status-tone-${statusTone(node.status)}`);
+  const view = getWorkbenchNodeViewState(node);
+  const card = createElement('button', `node-card node-type-${node.type} status-tone-${statusTone(view.toneStatus || view.status)}`);
   const canExplore = showExplore && hasWorkbenchChildren(node);
   const exploreActionHTML = canExplore
     ? `<span class="node-drill-down-action" title="Double click card or click here to ${expanded ? 'collapse children' : 'explore children'}">${icon('arrow')} ${expanded ? 'Collapse' : 'Explore'}</span>`
@@ -1726,7 +1830,7 @@ function createWorkbenchNodeCard(node, options = {}) {
 
   card.type = 'button';
   card.dataset.nodeId = node.id;
-  card.setAttribute('aria-label', `Select ${node.index} ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}. Readiness: ${readinessLabel(node.readiness || node.status)}`);
+  card.setAttribute('aria-label', `Select ${node.index} ${node.familyLabel || node.typeLabel || node.type} ${node.title || node.label}. Readiness: ${view.label}`);
   card.title = buildNodeTooltip(node);
   const relationshipClasses = getNodeRelationshipClasses(node);
   if (relationshipClasses.length) card.classList.add(...relationshipClasses);
@@ -1749,9 +1853,9 @@ function createWorkbenchNodeCard(node, options = {}) {
       <div class="node-label">${node.title || node.label}</div>
     </div>
     <div class="node-readiness-row">
-      ${renderStatusChip(node.readiness || node.status, readinessLabel(node.readiness || node.status))}
-      <span class="node-metric node-metric-blocker" title="Open readiness item count">${node.blockerCount || 0} open</span>
-      <span class="node-metric node-metric-evidence" title="Linked evidence count">${node.evidenceCount || 0} ev</span>
+      ${renderStatusChip(view.status, view.label)}
+      <span class="node-metric node-metric-blocker" title="Open readiness item count">${view.blockerCount || 0} open</span>
+      <span class="node-metric node-metric-evidence" title="Linked evidence count">${view.evidenceCount || 0} ev</span>
     </div>
     ${exploreActionHTML}`;
 
@@ -1825,14 +1929,26 @@ function updateSpatialWorkflowLines(canvas) {
     const source = getBoardNodePosition(edge.source);
     const target = getBoardNodePosition(edge.target);
     if (!source || !target) return;
-    const x1 = source.x + 96;
-    const y1 = source.y;
-    const x2 = target.x - 96;
-    const y2 = target.y;
-    const dx = Math.max(Math.abs(x2 - x1) * 0.42, 70);
+    const sourceSize = getSpatialNodeCardSize(edge.source);
+    const targetSize = getSpatialNodeCardSize(edge.target);
+    const verticalHierarchy = edge.layout === 'hierarchy' && Math.abs(target.y - source.y) > Math.abs(target.x - source.x);
+    const x1 = verticalHierarchy ? source.x : source.x + sourceSize.width / 2;
+    const y1 = verticalHierarchy
+      ? source.y + (target.y >= source.y ? sourceSize.height / 2 : -sourceSize.height / 2)
+      : source.y;
+    const x2 = verticalHierarchy ? target.x : target.x - targetSize.width / 2;
+    const y2 = verticalHierarchy
+      ? target.y + (target.y >= source.y ? -targetSize.height / 2 : targetSize.height / 2)
+      : target.y;
+    const curve = verticalHierarchy
+      ? `C ${x1} ${y1 + (y2 - y1) * 0.42}, ${x2} ${y2 - (y2 - y1) * 0.42}, ${x2} ${y2}`
+      : `C ${x1 + Math.max(Math.abs(x2 - x1) * 0.42, 70)} ${y1}, ${x2 - Math.max(Math.abs(x2 - x1) * 0.42, 70)} ${y2}, ${x2} ${y2}`;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`);
+    path.setAttribute('d', `M ${x1} ${y1} ${curve}`);
     path.setAttribute('class', `edge-${edge.tone || 'neutral'}`);
+    path.dataset.edgeSource = edge.source;
+    path.dataset.edgeTarget = edge.target;
+    path.dataset.edgeLayout = edge.layout || 'workflow';
     path.setAttribute('marker-end', 'url(#edge-arrow)');
     svg.appendChild(path);
   });
@@ -1846,9 +1962,37 @@ function renderOrderedWorkbenchNodes(flow) {
   });
 }
 
-function toggleWorkbenchPopover(popoverId) {
+function refreshWorkbenchPopover(canvas = document.querySelector('.node-canvas')) {
+  if (!canvas) return;
+  canvas.querySelector('.workbench-popover')?.remove();
+
+  const paletteToggle = canvas.querySelector('#toggle-workbench-palette');
+  const contextToggle = canvas.querySelector('#toggle-workbench-context');
+  const activePopover = window.appState.activeWorkbenchPopover;
+
+  if (paletteToggle) {
+    paletteToggle.classList.toggle('active', activePopover === 'palette');
+    paletteToggle.setAttribute('aria-expanded', String(activePopover === 'palette'));
+  }
+  if (contextToggle) {
+    contextToggle.classList.toggle('active', activePopover === 'context');
+    contextToggle.setAttribute('aria-expanded', String(activePopover === 'context'));
+  }
+
+  if (activePopover) {
+    canvas.appendChild(renderWorkbenchPopover(activePopover));
+  }
+}
+
+function closeWorkbenchPopover(canvas = document.querySelector('.node-canvas')) {
+  if (!window.appState.activeWorkbenchPopover) return;
+  window.appState.activeWorkbenchPopover = null;
+  refreshWorkbenchPopover(canvas);
+}
+
+function toggleWorkbenchPopover(popoverId, canvas = document.querySelector('.node-canvas')) {
   window.appState.activeWorkbenchPopover = window.appState.activeWorkbenchPopover === popoverId ? null : popoverId;
-  window.renderPage('workbench');
+  refreshWorkbenchPopover(canvas);
 }
 
 function renderWorkbenchPopover(popoverId) {
@@ -1867,13 +2011,11 @@ function renderWorkbenchPopover(popoverId) {
   popover.addEventListener('click', (event) => event.stopPropagation());
   popover.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      window.appState.activeWorkbenchPopover = null;
-      window.renderPage('workbench');
+      closeWorkbenchPopover();
     }
   });
   popover.querySelector('#close-workbench-popover').addEventListener('click', () => {
-    window.appState.activeWorkbenchPopover = null;
-    window.renderPage('workbench');
+    closeWorkbenchPopover();
   });
   return popover;
 }
@@ -2004,6 +2146,7 @@ function renderSpatialNodeLevelLabel(node) {
 function renderWorkbenchContextDock(selectedNode) {
   const dock = createElement('aside', 'workbench-context-dock');
   dock.setAttribute('aria-label', 'Workbench context dock');
+  const view = getWorkbenchNodeViewState(selectedNode);
   const basketLabels = window.appState.context.map((item) => item.label);
   const protectedLabels = window.appState.protected.map((item) => item.label);
   const selectedTitle = selectedNode ? selectedNode.title || selectedNode.label : 'No object selected';
@@ -2013,13 +2156,13 @@ function renderWorkbenchContextDock(selectedNode) {
         <span class="context-dock-eyebrow">Context Dock</span>
         <h3>${selectedTitle}</h3>
       </div>
-      ${renderStatusChip(selectedNode ? selectedNode.readiness || selectedNode.status : 'draft', selectedNode ? readinessLabel(selectedNode.readiness || selectedNode.status) : 'Select')}
+      ${renderStatusChip(view.status, selectedNode ? view.label : 'Select')}
     </div>
     <p class="context-dock-summary">${selectedSummary}</p>
     <dl class="context-dock-meta">
       <div><dt>Layer</dt><dd>${selectedNode ? renderSpatialNodeLevelLabel(selectedNode) : 'None'}</dd></div>
-      <div><dt>Open</dt><dd>${selectedNode ? selectedNode.blockerCount || 0 : 0}</dd></div>
-      <div><dt>Evidence</dt><dd>${selectedNode ? selectedNode.evidenceCount || 0 : 0}</dd></div>
+      <div><dt>Open</dt><dd>${selectedNode ? view.blockerCount || 0 : 0}</dd></div>
+      <div><dt>Evidence</dt><dd>${selectedNode ? view.evidenceCount || 0 : 0}</dd></div>
     </dl>
     <div class="context-dock-section">
       <h4>Selected Context</h4>
@@ -2045,34 +2188,38 @@ function refreshWorkbenchContextDock() {
 function renderSpatialWorkbenchCanvas(canvas) {
   const board = getWorkbenchBoard();
   canvas.innerHTML = `
-    ${getBreadcrumbsHTML()}
-    <div class="canvas-toolbar spatial-canvas-toolbar">
-      <div class="canvas-support-actions" aria-label="Workbench support panels">
-        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'palette' ? 'active' : ''}" type="button" id="toggle-workbench-palette" aria-expanded="${window.appState.activeWorkbenchPopover === 'palette'}" title="Show object types">
-          ${icon('spark')}<span>Object types</span>
-        </button>
-        <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'context' ? 'active' : ''}" type="button" id="toggle-workbench-context" aria-expanded="${window.appState.activeWorkbenchPopover === 'context'}" title="Show Selected Context">
-          ${icon('branch')}<span>Selected Context</span><strong>${window.appState.context.length}</strong>
-        </button>
+    <div class="spatial-canvas-head">
+      <div class="spatial-canvas-title">
+        ${getBreadcrumbsHTML()}
+        <span class="canvas-label">COCKPIT-MVP-015 / Spatial Board</span>
       </div>
-      <div class="canvas-view-mode-toggle">
-        <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
-        <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed</button>
-        <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat</button>
+      <div class="canvas-toolbar spatial-canvas-toolbar">
+        <div class="canvas-support-actions" aria-label="Workbench support panels">
+          <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'palette' ? 'active' : ''}" type="button" id="toggle-workbench-palette" aria-expanded="${window.appState.activeWorkbenchPopover === 'palette'}" title="Show object types">
+            ${icon('spark')}<span>Object types</span>
+          </button>
+          <button class="canvas-support-btn ${window.appState.activeWorkbenchPopover === 'context' ? 'active' : ''}" type="button" id="toggle-workbench-context" aria-expanded="${window.appState.activeWorkbenchPopover === 'context'}" title="Show Selected Context">
+            ${icon('branch')}<span>Selected Context</span><strong>${window.appState.context.length}</strong>
+          </button>
+        </div>
+        <div class="canvas-view-mode-toggle">
+          <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
+          <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed</button>
+          <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat</button>
+        </div>
+        <label class="focus-lens-control" for="focus-lens-select">
+          <span>Lens</span>
+          <select id="focus-lens-select">${getFocusLensOptionsHTML()}</select>
+        </label>
+        <div class="canvas-zoom-controls" aria-label="Spatial board zoom controls">
+          <button class="icon-btn" type="button" id="zoom-out-workbench" title="Zoom out" aria-label="Zoom out">${icon('minus')}</button>
+          <span id="workbench-zoom-level" class="canvas-zoom-level">${Math.round(window.appState.canvasViewport.scale * 100)}%</span>
+          <button class="icon-btn" type="button" id="zoom-in-workbench" title="Zoom in" aria-label="Zoom in">${icon('add')}</button>
+          <button class="icon-btn" type="button" id="fit-workbench-board" title="Fit board" aria-label="Fit board">${icon('fit')}</button>
+          <button class="icon-btn" type="button" id="reset-workbench-view" title="Reset view" aria-label="Reset view">${icon('reset')}</button>
+        </div>
       </div>
-      <label class="focus-lens-control" for="focus-lens-select">
-        <span>Lens</span>
-        <select id="focus-lens-select">${getFocusLensOptionsHTML()}</select>
-      </label>
-      <div class="canvas-zoom-controls" aria-label="Spatial board zoom controls">
-        <button class="icon-btn" type="button" id="zoom-out-workbench" title="Zoom out" aria-label="Zoom out">${icon('minus')}</button>
-        <span id="workbench-zoom-level" class="canvas-zoom-level">${Math.round(window.appState.canvasViewport.scale * 100)}%</span>
-        <button class="icon-btn" type="button" id="zoom-in-workbench" title="Zoom in" aria-label="Zoom in">${icon('add')}</button>
-        <button class="icon-btn" type="button" id="fit-workbench-board" title="Fit board" aria-label="Fit board">${icon('fit')}</button>
-        <button class="icon-btn" type="button" id="reset-workbench-view" title="Reset view" aria-label="Reset view">${icon('reset')}</button>
-      </div>
-    </div>
-    <span class="canvas-label">COCKPIT-MVP-015 / Spatial Board</span>`;
+    </div>`;
 
   const viewport = createElement('div', 'canvas-viewport');
   const world = createElement('div', 'canvas-world');
@@ -2104,13 +2251,13 @@ function renderSpatialWorkbenchCanvas(canvas) {
   if (paletteToggle) {
     paletteToggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      toggleWorkbenchPopover('palette');
+      toggleWorkbenchPopover('palette', canvas);
     });
   }
   if (contextToggle) {
     contextToggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      toggleWorkbenchPopover('context');
+      toggleWorkbenchPopover('context', canvas);
     });
   }
   bindFocusLensSelect(canvas);
@@ -2157,9 +2304,7 @@ function renderSpatialWorkbenchCanvas(canvas) {
     resetWorkbenchViewport();
   });
   canvas.addEventListener('click', () => {
-    if (!window.appState.activeWorkbenchPopover) return;
-    window.appState.activeWorkbenchPopover = null;
-    window.renderPage('workbench');
+    closeWorkbenchPopover(canvas);
   });
 
   bindSpatialCanvasViewport(canvas);
@@ -2203,13 +2348,13 @@ function renderNodeCanvas() {
   if (paletteToggle) {
     paletteToggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      toggleWorkbenchPopover('palette');
+      toggleWorkbenchPopover('palette', canvas);
     });
   }
   if (contextToggle) {
     contextToggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      toggleWorkbenchPopover('context');
+      toggleWorkbenchPopover('context', canvas);
     });
   }
   bindFocusLensSelect(canvas);
@@ -2217,9 +2362,7 @@ function renderNodeCanvas() {
     canvas.appendChild(renderWorkbenchPopover(window.appState.activeWorkbenchPopover));
   }
   canvas.addEventListener('click', () => {
-    if (!window.appState.activeWorkbenchPopover) return;
-    window.appState.activeWorkbenchPopover = null;
-    window.renderPage('workbench');
+    closeWorkbenchPopover(canvas);
   });
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -2288,31 +2431,6 @@ function renderNodeCanvas() {
       window.renderPage('workbench');
     });
   }
-
-  // Bind breadcrumb click listeners
-  const bcRoot = canvas.querySelector('#breadcrumb-root');
-  if (bcRoot) {
-    bcRoot.addEventListener('click', (event) => {
-      event.stopPropagation();
-      window.appState.currentParentId = null;
-      window.appState.currentLevel = 'requirements';
-      window.appState.selectedNodeId = null;
-      window.renderPage('workbench');
-    });
-  }
-  canvas.querySelectorAll('[data-breadcrumb-node]').forEach((bcNode) => {
-    bcNode.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const nodeId = bcNode.dataset.breadcrumbNode;
-      const node = window.mockData.nodes.find((n) => n.id === nodeId);
-      if (node) {
-        window.appState.currentParentId = node.id;
-        window.appState.currentLevel = node.level;
-        window.appState.selectedNodeId = null;
-        window.renderPage('workbench');
-      }
-    });
-  });
 
   const addNode = createElement('button', 'canvas-add-node');
   addNode.type = 'button';
@@ -2424,6 +2542,7 @@ function renderNodeInspector(nodeId) {
 
 function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges, edgeLabel) {
   const readiness = getReadinessSummary();
+  const view = getWorkbenchNodeViewState(node, readiness);
   switch (activeTab) {
     case 'requirements':
       return `<div class="inspector-section">
@@ -2462,7 +2581,7 @@ function renderInspectorTabContent(node, activeTab, inboundEdges, outboundEdges,
             <div class="inspector-row"><span>Family</span><strong>${node.familyLabel || node.typeLabel || node.type}</strong></div>
             <div class="inspector-row"><span>Config</span><strong>${node.config || 'Configured'}</strong></div>
             <div class="inspector-row"><span>Mode</span><strong>${node.model || 'Local only'}</strong></div>
-            <div class="inspector-row"><span>Readiness</span><strong>${readinessLabel(node.readiness || node.status)}</strong></div>
+            <div class="inspector-row"><span>Readiness</span><strong>${view.label}</strong></div>
           </div>
           ${hasChildren ? `
           <div class="inspector-drill-row">
@@ -2807,6 +2926,7 @@ function statusTone(status) {
     case 'finding-deferred':
     case 'validation-warning':
     case 'warning':
+    case 'review-blocked':
       return 'warning';
     case 'missing':
     case 'blocked':

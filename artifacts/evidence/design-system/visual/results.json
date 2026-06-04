@@ -1,7 +1,7 @@
 {
   "config": {
-    "configFile": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\playwright.config.mjs",
-    "rootDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
+    "configFile": "C:\\Point\\2026\\projects\\cooperative-cockpit\\playwright.config.mjs",
+    "rootDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
     "forbidOnly": true,
     "fullyParallel": false,
     "globalSetup": null,
@@ -11,12 +11,12 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 4
+      "actualWorkers": 8
     },
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -25,7 +25,7 @@
         },
         "id": "vp-760",
         "name": "vp-760",
-        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -33,7 +33,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -42,7 +42,7 @@
         },
         "id": "vp-1080",
         "name": "vp-1080",
-        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -50,7 +50,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -59,7 +59,7 @@
         },
         "id": "vp-1180",
         "name": "vp-1180",
-        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -67,7 +67,7 @@
         "timeout": 30000
       },
       {
-        "outputDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
+        "outputDir": "C:/Point/2026/projects/cooperative-cockpit/artifacts/evidence/design-system/visual/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -76,7 +76,7 @@
         },
         "id": "vp-1280",
         "name": "vp-1280",
-        "testDir": "C:/Users/extchkho/Documents/personal/cooperative-cockpit/tests/visual",
+        "testDir": "C:/Point/2026/projects/cooperative-cockpit/tests/visual",
         "testIgnore": [],
         "testMatch": [
           "/.*\\.visual\\.spec\\.mjs/"
@@ -118,6 +118,2233 @@
   },
   "suites": [
     {
+      "title": "static-mvp.goal021.visual.spec.mjs",
+      "file": "static-mvp.goal021.visual.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "GOAL-021 static MVP UX upgrade",
+          "file": "static-mvp.goal021.visual.spec.mjs",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "pre-workspace journey routes from landing to workbench without real auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2581,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.147Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-725af6028269faa77e5b",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "workbench outline focus lenses right panel and helpers preserve local state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2892,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:54.969Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-d273b5a14b979f52a711",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "pre-workspace journey routes from landing to workbench without real auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 3590,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.272Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-0410a86b53b09a0f7c4a",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "workbench outline focus lenses right panel and helpers preserve local state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 3195,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:56.377Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-889d28ff4b947c93dfc8",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "pre-workspace journey routes from landing to workbench without real auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2280,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:07.909Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-5fa29f8b1c83a4852e0b",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "workbench outline focus lenses right panel and helpers preserve local state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2797,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:10.559Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-dc86e1d90a542b417544",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "pre-workspace journey routes from landing to workbench without real auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3520,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:10.215Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-c5499aed2d69e59d7fd7",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "workbench outline focus lenses right panel and helpers preserve local state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3084,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:14.266Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3fac51b9a4357c51c182-6f684a5e953a44d6c582",
+              "file": "static-mvp.goal021.visual.spec.mjs",
+              "line": 45,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "static-mvp.point-ux.visual.spec.mjs",
+      "file": "static-mvp.point-ux.visual.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "POINT UX simplification locks",
+          "file": "static-mvp.point-ux.visual.spec.mjs",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "workbench defaults to three macro layers before deep inspection tools",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1178,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.209Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-4919740bde4492a5c9ec",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "project-open shell hides onboarding rail entries and exposes top project access",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1458,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:53.706Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-8f73646cd0fd298ba0a6",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "project initialize transcript reacts by template as static mock data only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1076,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:55.187Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-4e22190acc5c18edd153",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "review-blocked node uses amber card tone with red blocker chip",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 981,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:56.286Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-8602a34db231bb5b31f3",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "workbench node cards follow local readiness state after review acknowledgement",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:57.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-3785dc3e5c8aff6158d4",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "workbench task cards derive blockers from mutable local gate state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 916,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:58.820Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-9e0461eebdd5ee75d9af",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "object outline preserves keyboard focus after node selection refresh",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1053,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:59.762Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-4dccc158a34b662a14c6",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 122,
+              "column": 3
+            },
+            {
+              "title": "spatial hierarchy edges use vertical routing while workflow edges stay horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 937,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:00.836Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-c17eaa699a8d1f30638d",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 137,
+              "column": 3
+            },
+            {
+              "title": "spatial board header keeps title controls and viewport separated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1194,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:01.797Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-1b0bd4262fedc0dc3411",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 160,
+              "column": 3
+            },
+            {
+              "title": "workbench support popovers update without rerendering the canvas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1463,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:03.014Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-dada97df3fbb535cea59",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 191,
+              "column": 3
+            },
+            {
+              "title": "current workbench modes do not expose legacy clickable breadcrumbs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1688,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:04.496Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-c42f6a22cf8cfb0578b2",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 240,
+              "column": 3
+            },
+            {
+              "title": "workbench defaults to three macro layers before deep inspection tools",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1559,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.244Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-d89fa10d736d023f6c25",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "project-open shell hides onboarding rail entries and exposes top project access",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1754,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:54.195Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-206c095d55532de85b32",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "project initialize transcript reacts by template as static mock data only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1082,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:55.982Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-ed59d6aba8f068cf1ff3",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "review-blocked node uses amber card tone with red blocker chip",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1184,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:57.090Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-73284649978a245de25f",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "workbench node cards follow local readiness state after review acknowledgement",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1422,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:58.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-61b3525acbda0dbc06e9",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "workbench task cards derive blockers from mutable local gate state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1196,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:59.742Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-b73605606461103b3b7a",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "object outline preserves keyboard focus after node selection refresh",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1101,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:00.960Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-e1ee5c0689f1148b5cd9",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 122,
+              "column": 3
+            },
+            {
+              "title": "spatial hierarchy edges use vertical routing while workflow edges stay horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1078,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:02.082Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-490111c3fc86e44d5d3f",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 137,
+              "column": 3
+            },
+            {
+              "title": "spatial board header keeps title controls and viewport separated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1001,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:03.227Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-a87c4ad30b2868075f4b",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 160,
+              "column": 3
+            },
+            {
+              "title": "workbench support popovers update without rerendering the canvas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1607,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:04.247Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-3dff21cb321f2f40bf79",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 191,
+              "column": 3
+            },
+            {
+              "title": "current workbench modes do not expose legacy clickable breadcrumbs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1665,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:05.873Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-fbe1bbe839e90ee396fa",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 240,
+              "column": 3
+            },
+            {
+              "title": "workbench defaults to three macro layers before deep inspection tools",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:09.016Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-ade2d46eeea046fe4564",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "project-open shell hides onboarding rail entries and exposes top project access",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1496,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:11.039Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-68a3c9b840d285bcb7a3",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "project initialize transcript reacts by template as static mock data only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1095,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:12.563Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-9ceedfdb676815084932",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "review-blocked node uses amber card tone with red blocker chip",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1035,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:13.680Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-4a1b60646ffbca2bf405",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "workbench node cards follow local readiness state after review acknowledgement",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1383,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:14.738Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-64df3c2b824d23d4b6f7",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "workbench task cards derive blockers from mutable local gate state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1092,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:16.146Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-ad8065ee5d302d7daa1c",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "object outline preserves keyboard focus after node selection refresh",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1059,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:17.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-739a8d342e3b47a3b749",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 122,
+              "column": 3
+            },
+            {
+              "title": "spatial hierarchy edges use vertical routing while workflow edges stay horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1007,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:18.350Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-d10e5f853d03361a5c16",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 137,
+              "column": 3
+            },
+            {
+              "title": "spatial board header keeps title controls and viewport separated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1137,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:19.401Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-d81665da30bc2878e9ba",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 160,
+              "column": 3
+            },
+            {
+              "title": "workbench support popovers update without rerendering the canvas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1788,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:20.556Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-f957c628b9411a3e5f51",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 191,
+              "column": 3
+            },
+            {
+              "title": "current workbench modes do not expose legacy clickable breadcrumbs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1540,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:22.364Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-af7236d879e7348d76a4",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 240,
+              "column": 3
+            },
+            {
+              "title": "workbench defaults to three macro layers before deep inspection tools",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1516,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:14.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-ed0a4e8702cb9437d47c",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "project-open shell hides onboarding rail entries and exposes top project access",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1367,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:16.309Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-30046d33b6ac060317ea",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "project initialize transcript reacts by template as static mock data only",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 989,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:17.730Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-23c5e01093d175f53595",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "review-blocked node uses amber card tone with red blocker chip",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 988,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:18.742Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-67944090f56ee478b9a8",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 59,
+              "column": 3
+            },
+            {
+              "title": "workbench node cards follow local readiness state after review acknowledgement",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1342,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:19.758Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-de271c7056e95a245e41",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "workbench task cards derive blockers from mutable local gate state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 986,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:21.154Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-45fc8641e6f2c86d733b",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "object outline preserves keyboard focus after node selection refresh",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 926,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:22.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-caa6c2bb5490679e16e7",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 122,
+              "column": 3
+            },
+            {
+              "title": "spatial hierarchy edges use vertical routing while workflow edges stay horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 783,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:23.107Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-773a0b6608a7b19e152a",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 137,
+              "column": 3
+            },
+            {
+              "title": "spatial board header keeps title controls and viewport separated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:23.909Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-6589328a21e788c747f9",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 160,
+              "column": 3
+            },
+            {
+              "title": "workbench support popovers update without rerendering the canvas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 1126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:24.571Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-eec0a08fedfee8af76c1",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 191,
+              "column": 3
+            },
+            {
+              "title": "current workbench modes do not expose legacy clickable breadcrumbs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 936,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:25.721Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1e48ccf47fa45d7c713-d8b1db2f3f0aff4b38e4",
+              "file": "static-mvp.point-ux.visual.spec.mjs",
+              "line": 240,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "static-mvp.v2-ux-polish.visual.spec.mjs",
+      "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "static MVP V2 UX polish",
+          "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "spec template selection changes template fields while global gates stay visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1438,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.224Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-37c7e6e9a905111d63f5",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "top bar handoff navigates to preview when readiness clears locally",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1137,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:54.028Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-1fff7ea72bf333ea1ecf",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "workbench spatial canvas keeps a subtle grid matrix under readable nodes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-760",
+                  "projectName": "vp-760",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1011,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:55.189Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-9ed3b64dbc85b4297b2c",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "spec template selection changes template fields while global gates stay visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 7819,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:46:52.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-d9b125e3cb7f3d361aec",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "top bar handoff navigates to preview when readiness clears locally",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 1346,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:00.629Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-274b0a4eba4a58e8ec24",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "workbench spatial canvas keeps a subtle grid matrix under readable nodes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1080",
+                  "projectName": "vp-1080",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 1059,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:02.006Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-eb2873b1f8b32116ea3f",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "spec template selection changes template fields while global gates stay visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 1339,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:12.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-8e68a670b2a3997290a1",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "top bar handoff navigates to preview when readiness clears locally",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 1142,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:13.995Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-375cf3de8842d1a5c2b6",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "workbench spatial canvas keeps a subtle grid matrix under readable nodes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1180",
+                  "projectName": "vp-1180",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 1197,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:15.211Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-df495042f4fb2832eb13",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "spec template selection changes template fields while global gates stay visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1441,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:16.050Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-8cf2f7df98081850fbb0",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 8,
+              "column": 3
+            },
+            {
+              "title": "top bar handoff navigates to preview when readiness clears locally",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1127,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:17.935Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-cf85c8958f79ca177502",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "workbench spatial canvas keeps a subtle grid matrix under readable nodes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "vp-1280",
+                  "projectName": "vp-1280",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1002,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-04T02:47:19.085Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a47b37a0f2350ec335eb-c8c40922ab83c732fb49",
+              "file": "static-mvp.v2-ux-polish.visual.spec.mjs",
+              "line": 64,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "static-mvp.visual.spec.mjs",
       "file": "static-mvp.visual.spec.mjs",
       "column": 0,
@@ -131,7 +2358,7 @@
           "column": 6,
           "specs": [
             {
-              "title": "screen-001-operator-home default candidate screenshot",
+              "title": "screen-001-operator-home default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -143,35 +2370,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 12725,
+                      "duration": 1622,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:23.394Z",
+                      "startTime": "2026-06-04T02:46:52.226Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-001-operator-home-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-760\\attachments\\screen-001-operator-home-default-574cea4743d2a98332f9738aa0db055a52402661.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-fb07442897a58e2ea807",
+              "id": "dbbabd229c7687fbeb40-f6a853954c7261fe7950",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-002-workbench selected candidate screenshot",
+              "title": "screen-002-workbench selected approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -183,35 +2404,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 7190,
+                      "duration": 1642,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:39.242Z",
+                      "startTime": "2026-06-04T02:46:54.269Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-002-workbench-selected",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760\\attachments\\screen-002-workbench-selected-35980373231cc6f87b39143f112581b0cb9a8a4a.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-e854515ac20b916fe943",
+              "id": "dbbabd229c7687fbeb40-a9f78b0a8ee7b1f585e8",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-003-spec-builder default candidate screenshot",
+              "title": "screen-003-spec-builder default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -223,35 +2438,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 9053,
+                      "duration": 1127,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:46.670Z",
+                      "startTime": "2026-06-04T02:46:55.942Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-003-spec-builder-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-760\\attachments\\screen-003-spec-builder-default-08f390ec6ff78c2039d413d65345034cbfd8b19f.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-ac0ab1862ca86d1ce93a",
+              "id": "dbbabd229c7687fbeb40-674bd1aa01187c142d29",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-004-review-runs default candidate screenshot",
+              "title": "screen-004-review-runs default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -263,35 +2472,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 14698,
+                      "duration": 1304,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:55.790Z",
+                      "startTime": "2026-06-04T02:46:57.102Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-004-review-runs-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-760\\attachments\\screen-004-review-runs-default-33255bac9592eb29484234c0926c373fe296baae.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-3033a9dbad200547e6a3",
+              "id": "dbbabd229c7687fbeb40-2e1b6dea01be4a1bd67e",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-005-static-preview default candidate screenshot",
+              "title": "screen-005-static-preview default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -303,35 +2506,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 7550,
+                      "duration": 1326,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:10.553Z",
+                      "startTime": "2026-06-04T02:46:58.436Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-005-static-preview-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-760\\attachments\\screen-005-static-preview-default-155fe13bdf8b045114d1cc986231072ea6355b11.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-5e868364b5c9ec4826ab",
+              "id": "dbbabd229c7687fbeb40-cf6942b93992c9513bb0",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-006-decision-log pending candidate screenshot",
+              "title": "screen-006-decision-log pending approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -343,35 +2540,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6015,
+                      "duration": 1104,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:18.190Z",
+                      "startTime": "2026-06-04T02:46:59.787Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-006-decision-log-pending",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-760\\attachments\\screen-006-decision-log-pending-f6e0685c245460ccd0e22040c8239db00d798124.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-6ee2d7107672174c9348",
+              "id": "dbbabd229c7687fbeb40-3ef3f2156df49bf23180",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-007-trace-evidence default candidate screenshot",
+              "title": "screen-007-trace-evidence default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -383,35 +2574,29 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 8964,
+                      "duration": 995,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:24.287Z",
+                      "startTime": "2026-06-04T02:47:00.914Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-007-trace-evidence-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-760\\attachments\\screen-007-trace-evidence-default-910a9256bfddc772e1da1a607b41c017741af2fc.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-e2b1223b13ce423e700f",
+              "id": "dbbabd229c7687fbeb40-7c9c1445204ed6cd2c7b",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-008-rules-scope default candidate screenshot",
+              "title": "screen-008-rules-scope default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -423,29 +2608,23 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 7281,
+                      "duration": 892,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:33.430Z",
+                      "startTime": "2026-06-04T02:47:01.930Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-008-rules-scope-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-760\\attachments\\screen-008-rules-scope-default-b762d1a7d132f42703b97d46bb025ff09bb07afc.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-3b888790be108c45a957",
+              "id": "dbbabd229c7687fbeb40-568aacb2f807bfa13e6d",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
@@ -463,15 +2642,15 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 11855,
+                      "duration": 2115,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:40.920Z",
+                      "startTime": "2026-06-04T02:47:02.844Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -481,7 +2660,7 @@
               ],
               "id": "dbbabd229c7687fbeb40-64d2a32c82b86509428f",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 88,
+              "line": 81,
               "column": 3
             },
             {
@@ -497,15 +2676,15 @@
                   "projectName": "vp-760",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 22872,
+                      "duration": 3103,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:53.007Z",
+                      "startTime": "2026-06-04T02:47:04.977Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -515,11 +2694,11 @@
               ],
               "id": "dbbabd229c7687fbeb40-fba54a27d28905c7e47d",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 139,
+              "line": 132,
               "column": 3
             },
             {
-              "title": "screen-001-operator-home default candidate screenshot",
+              "title": "screen-001-operator-home default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -531,35 +2710,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 13881,
+                      "duration": 2962,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:23.451Z",
+                      "startTime": "2026-06-04T02:46:52.305Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-001-operator-home-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1080\\attachments\\screen-001-operator-home-default-88265b70456aba1a4e0c144136e4abc17e4fe956.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-a21b57b6c46304927009",
+              "id": "dbbabd229c7687fbeb40-f1d86002b7e19d8b33d0",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-002-workbench selected candidate screenshot",
+              "title": "screen-002-workbench selected approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -571,35 +2744,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 9819,
+                      "duration": 1605,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:40.585Z",
+                      "startTime": "2026-06-04T02:46:55.779Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-002-workbench-selected",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1080\\attachments\\screen-002-workbench-selected-68302587ac02af1203d53c332db5e95ad64f8c29.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-cf688b82317f96566355",
+              "id": "dbbabd229c7687fbeb40-db53e93879202be0d16d",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-003-spec-builder default candidate screenshot",
+              "title": "screen-003-spec-builder default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -611,35 +2778,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 19958,
+                      "duration": 1660,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:50.525Z",
+                      "startTime": "2026-06-04T02:46:57.640Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-003-spec-builder-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1080\\attachments\\screen-003-spec-builder-default-fc9ab381df415008c0772a8556d72b4265b3e16a.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-ec95da459133edf0b9eb",
+              "id": "dbbabd229c7687fbeb40-e590d5d42ec29e6b142b",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-004-review-runs default candidate screenshot",
+              "title": "screen-004-review-runs default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -651,35 +2812,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 7013,
+                      "duration": 1342,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:10.558Z",
+                      "startTime": "2026-06-04T02:46:59.329Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-004-review-runs-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1080\\attachments\\screen-004-review-runs-default-3902d3dcea591d16b075d810e3fa5e35d4ef5664.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-27208ecaee4bb22ee554",
+              "id": "dbbabd229c7687fbeb40-ff21edb101b94e6972bb",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-005-static-preview default candidate screenshot",
+              "title": "screen-005-static-preview default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -691,35 +2846,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 12438,
+                      "duration": 1205,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:17.654Z",
+                      "startTime": "2026-06-04T02:47:00.699Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-005-static-preview-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1080\\attachments\\screen-005-static-preview-default-1c58ad6835e21dad211abc2edb045bb8fec178fc.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-1200ab2494d499afef13",
+              "id": "dbbabd229c7687fbeb40-f426032bc2b34777c824",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-006-decision-log pending candidate screenshot",
+              "title": "screen-006-decision-log pending approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -731,35 +2880,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 7000,
+                      "duration": 1220,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:30.339Z",
+                      "startTime": "2026-06-04T02:47:01.929Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-006-decision-log-pending",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1080\\attachments\\screen-006-decision-log-pending-702ca5ffe34cbf6227434e4285969a35ec73eb83.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-745e63efea87fda52de1",
+              "id": "dbbabd229c7687fbeb40-16a80a53817c65983c89",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-007-trace-evidence default candidate screenshot",
+              "title": "screen-007-trace-evidence default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -771,35 +2914,29 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 6456,
+                      "duration": 1156,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:37.616Z",
+                      "startTime": "2026-06-04T02:47:03.170Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-007-trace-evidence-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1080\\attachments\\screen-007-trace-evidence-default-73825874893732db08a259d8462873022e86592f.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-b20e845bc59cffeea835",
+              "id": "dbbabd229c7687fbeb40-b5954ed5412278df4b2e",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-008-rules-scope default candidate screenshot",
+              "title": "screen-008-rules-scope default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -811,29 +2948,23 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 10298,
+                      "duration": 995,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:44.381Z",
+                      "startTime": "2026-06-04T02:47:04.350Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-008-rules-scope-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1080\\attachments\\screen-008-rules-scope-default-009372b213481220d0bef6ccb9665916489b5726.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-d4cf5d425f5ba166c248",
+              "id": "dbbabd229c7687fbeb40-0e53a95dfc9f53192583",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
@@ -851,15 +2982,15 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 19861,
+                      "duration": 2505,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:54.794Z",
+                      "startTime": "2026-06-04T02:47:05.368Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -869,7 +3000,7 @@
               ],
               "id": "dbbabd229c7687fbeb40-5380a52f08dc5efb0afe",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 88,
+              "line": 81,
               "column": 3
             },
             {
@@ -885,15 +3016,15 @@
                   "projectName": "vp-1080",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 12203,
+                      "duration": 3735,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T09:00:14.903Z",
+                      "startTime": "2026-06-04T02:47:07.898Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -903,11 +3034,11 @@
               ],
               "id": "dbbabd229c7687fbeb40-274786976a7c2dcaade1",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 139,
+              "line": 132,
               "column": 3
             },
             {
-              "title": "screen-001-operator-home default candidate screenshot",
+              "title": "screen-001-operator-home default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -919,35 +3050,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 21775,
+                      "duration": 1302,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:23.374Z",
+                      "startTime": "2026-06-04T02:47:07.087Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-001-operator-home-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1180\\attachments\\screen-001-operator-home-default-0a903d8dcc808eed23037e15dc7efa572e7180e4.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-1a15a0693e7d63940c81",
+              "id": "dbbabd229c7687fbeb40-0e8f3578d31f588cbb0a",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-002-workbench selected candidate screenshot",
+              "title": "screen-002-workbench selected approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -959,35 +3084,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 17068,
+                      "duration": 1601,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:53.146Z",
+                      "startTime": "2026-06-04T02:47:08.820Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-002-workbench-selected",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1180\\attachments\\screen-002-workbench-selected-4be968fa695921e49b4afabe6a6360965a9edfbe.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-b500d38bbf81918a0d9c",
+              "id": "dbbabd229c7687fbeb40-cd1c874a7b9ce5ac2d9a",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-003-spec-builder default candidate screenshot",
+              "title": "screen-003-spec-builder default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -999,35 +3118,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 6982,
+                      "duration": 1218,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:10.604Z",
+                      "startTime": "2026-06-04T02:47:10.464Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-003-spec-builder-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1180\\attachments\\screen-003-spec-builder-default-ad510b543f4e2c881343142fe9f4f0ee67ab5032.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-eeb824d635b914f53d66",
+              "id": "dbbabd229c7687fbeb40-605a88e44404aae5a698",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-004-review-runs default candidate screenshot",
+              "title": "screen-004-review-runs default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1039,35 +3152,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 5779,
+                      "duration": 1210,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:17.728Z",
+                      "startTime": "2026-06-04T02:47:11.706Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-004-review-runs-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1180\\attachments\\screen-004-review-runs-default-83f5fabc8714fc1a3e2bb617fecc02bc7b9bc5a8.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-d6619285be54c66f0953",
+              "id": "dbbabd229c7687fbeb40-88751cd7765b5f6d3eb1",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-005-static-preview default candidate screenshot",
+              "title": "screen-005-static-preview default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1079,35 +3186,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 7757,
+                      "duration": 1080,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:23.816Z",
+                      "startTime": "2026-06-04T02:47:12.938Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-005-static-preview-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1180\\attachments\\screen-005-static-preview-default-e060ad08b63911b1ba77002c0285a863e0069b8d.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-6f759d0c6412d9bccf5c",
+              "id": "dbbabd229c7687fbeb40-27592e602b997272e054",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-006-decision-log pending candidate screenshot",
+              "title": "screen-006-decision-log pending approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1119,35 +3220,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 7460,
+                      "duration": 1206,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:31.689Z",
+                      "startTime": "2026-06-04T02:47:14.039Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-006-decision-log-pending",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1180\\attachments\\screen-006-decision-log-pending-6ae2bc32ab8240610db4274eea1c1de884365edd.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-743a690b9f3b7f273de8",
+              "id": "dbbabd229c7687fbeb40-385875549d12121b0e98",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-007-trace-evidence default candidate screenshot",
+              "title": "screen-007-trace-evidence default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1159,35 +3254,29 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 6535,
+                      "duration": 1361,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:39.449Z",
+                      "startTime": "2026-06-04T02:47:15.267Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-007-trace-evidence-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1180\\attachments\\screen-007-trace-evidence-default-1e4ee2d36f4f120e8770a3f3720ba2691c247c80.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-897b7c5492bc3bb2f693",
+              "id": "dbbabd229c7687fbeb40-48a884b774e9245cfaf0",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-008-rules-scope default candidate screenshot",
+              "title": "screen-008-rules-scope default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1199,29 +3288,23 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 8930,
+                      "duration": 1155,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:46.585Z",
+                      "startTime": "2026-06-04T02:47:16.663Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-008-rules-scope-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1180\\attachments\\screen-008-rules-scope-default-c070692257565ad43f68272d9ad78b7eb0331494.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-71ea380532bbf3bf4ef4",
+              "id": "dbbabd229c7687fbeb40-b2210d65b8a719b33ae6",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
@@ -1239,15 +3322,15 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 22017,
+                      "duration": 2269,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:55.878Z",
+                      "startTime": "2026-06-04T02:47:17.844Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1257,7 +3340,7 @@
               ],
               "id": "dbbabd229c7687fbeb40-e3fb3b82b40657a5a520",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 88,
+              "line": 81,
               "column": 3
             },
             {
@@ -1273,15 +3356,15 @@
                   "projectName": "vp-1180",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 8,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 11884,
+                      "duration": 3396,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T09:00:17.966Z",
+                      "startTime": "2026-06-04T02:47:20.134Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1291,11 +3374,11 @@
               ],
               "id": "dbbabd229c7687fbeb40-ea4a06b351209be01abf",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 139,
+              "line": 132,
               "column": 3
             },
             {
-              "title": "screen-001-operator-home default candidate screenshot",
+              "title": "screen-001-operator-home default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1307,35 +3390,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 12707,
+                      "duration": 1444,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:23.395Z",
+                      "startTime": "2026-06-04T02:47:19.193Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-001-operator-home-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280\\attachments\\screen-001-operator-home-default-8537374044f7d2efa4aa6b6b6f2e63a1b1e6c7bf.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-18bea876cfd32980beea",
+              "id": "dbbabd229c7687fbeb40-064e350c50c59cd8b79f",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-002-workbench selected candidate screenshot",
+              "title": "screen-002-workbench selected approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1347,35 +3424,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 8152,
+                      "duration": 1301,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:39.178Z",
+                      "startTime": "2026-06-04T02:47:21.192Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-002-workbench-selected",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-1280\\attachments\\screen-002-workbench-selected-ee5a29396c953e9303ca0d5d5f62f8e07774eede.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-56bffadf5f57d500ae39",
+              "id": "dbbabd229c7687fbeb40-77e87665dbe7c74d5164",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-003-spec-builder default candidate screenshot",
+              "title": "screen-003-spec-builder default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1387,35 +3458,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 8031,
+                      "duration": 1096,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:47.484Z",
+                      "startTime": "2026-06-04T02:47:22.516Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-003-spec-builder-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-516d4-efault-candidate-screenshot-vp-1280\\attachments\\screen-003-spec-builder-default-a2c8bbd2133bff701db66e0abbc309a33e641792.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-c262c97147dba19d9fb8",
+              "id": "dbbabd229c7687fbeb40-aefc693c0d49f77ee0b9",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-004-review-runs default candidate screenshot",
+              "title": "screen-004-review-runs default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1427,35 +3492,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 14684,
+                      "duration": 744,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:58:55.585Z",
+                      "startTime": "2026-06-04T02:47:23.632Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-004-review-runs-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-233a9-efault-candidate-screenshot-vp-1280\\attachments\\screen-004-review-runs-default-028e04ef92660adcb51e910fd3ed319a005b7ee4.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-58bdde82c13489dc957d",
+              "id": "dbbabd229c7687fbeb40-b1dc1f6c0acc3f4a7c20",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-005-static-preview default candidate screenshot",
+              "title": "screen-005-static-preview default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1467,35 +3526,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 8204,
+                      "duration": 749,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:10.376Z",
+                      "startTime": "2026-06-04T02:47:24.393Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-005-static-preview-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-b31ba-efault-candidate-screenshot-vp-1280\\attachments\\screen-005-static-preview-default-3c60ce433696160a776f9a21c1b9083d08817aa6.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-1a2008da697fd5fd38cb",
+              "id": "dbbabd229c7687fbeb40-45b1c46ed2d7ec2f8cea",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-006-decision-log pending candidate screenshot",
+              "title": "screen-006-decision-log pending approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1507,35 +3560,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 7036,
+                      "duration": 685,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:18.643Z",
+                      "startTime": "2026-06-04T02:47:25.157Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-006-decision-log-pending",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-a6158-ending-candidate-screenshot-vp-1280\\attachments\\screen-006-decision-log-pending-aee5849700a58e0eb92989fef6f1119db8683a0e.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-d8ea68c2742a7c9a714e",
+              "id": "dbbabd229c7687fbeb40-64c578674b353459db1c",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-007-trace-evidence default candidate screenshot",
+              "title": "screen-007-trace-evidence default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1547,35 +3594,29 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 7544,
+                      "duration": 670,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:25.826Z",
+                      "startTime": "2026-06-04T02:47:25.859Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-007-trace-evidence-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-1881c-efault-candidate-screenshot-vp-1280\\attachments\\screen-007-trace-evidence-default-f5c91ca4fccfc3da06c173f7b0be09d9b97f7227.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-46c34d725b1441589ca6",
+              "id": "dbbabd229c7687fbeb40-64719d1e7efc81decf75",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
             },
             {
-              "title": "screen-008-rules-scope default candidate screenshot",
+              "title": "screen-008-rules-scope default approved baseline screenshot",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1587,29 +3628,23 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 6983,
+                      "duration": 540,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:33.523Z",
+                      "startTime": "2026-06-04T02:47:26.545Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screen-008-rules-scope-default",
-                          "contentType": "image/png",
-                          "path": "C:\\Users\\extchkho\\Documents\\personal\\cooperative-cockpit\\artifacts\\evidence\\design-system\\visual\\test-results\\static-mvp.visual-static-M-eebdf-efault-candidate-screenshot-vp-1280\\attachments\\screen-008-rules-scope-default-e788b6819648e9dd05fbd91156d84f360eb75475.png"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "dbbabd229c7687fbeb40-085bbd860d4d9c0ce147",
+              "id": "dbbabd229c7687fbeb40-0056955aa69803c7f666",
               "file": "static-mvp.visual.spec.mjs",
               "line": 68,
               "column": 5
@@ -1627,15 +3662,15 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 12500,
+                      "duration": 1154,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:40.637Z",
+                      "startTime": "2026-06-04T02:47:27.099Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1645,7 +3680,7 @@
               ],
               "id": "dbbabd229c7687fbeb40-fe0d83c7df0c0e92e2bf",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 88,
+              "line": 81,
               "column": 3
             },
             {
@@ -1661,15 +3696,15 @@
                   "projectName": "vp-1280",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 15,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 20053,
+                      "duration": 2422,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-01T08:59:53.377Z",
+                      "startTime": "2026-06-04T02:47:28.265Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1679,7 +3714,7 @@
               ],
               "id": "dbbabd229c7687fbeb40-e32f8c0185265fc9ef5b",
               "file": "static-mvp.visual.spec.mjs",
-              "line": 139,
+              "line": 132,
               "column": 3
             }
           ]
@@ -1689,9 +3724,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-06-01T08:58:20.743Z",
-    "duration": 139574.91199999998,
-    "expected": 40,
+    "startTime": "2026-06-04T02:46:51.206Z",
+    "duration": 39644.814999999995,
+    "expected": 104,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

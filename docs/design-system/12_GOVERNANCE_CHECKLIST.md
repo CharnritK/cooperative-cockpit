@@ -24,7 +24,7 @@
 - [x] Evidence storage path is approved.
 - [x] No visual pass claimed without output.
 - [x] Candidate screenshots reviewed as candidate evidence.
-- [ ] Candidate screenshots promoted to approved baselines.
+- [x] Candidate screenshots promoted to approved baselines.
 
 ## Token readiness
 
@@ -44,8 +44,15 @@
 ## Screen registry readiness
 
 - [x] Old eight-page cap replaced with governed registry.
+- [x] Current product-canon route count reconciled to GOAL-021 twelve local routes.
 - [x] Registry does not claim implementation without evidence.
 - [x] New screens require Point approval.
+
+## Status semantics readiness
+
+- [x] Status-language canon documented.
+- [x] App QA references status-language canon.
+- [x] `review-blocked` visual semantics cleanup approved.
 
 ## Codex handoff readiness
 

@@ -39,7 +39,7 @@ Approved only after Point gate:
 
 - Any active app CSS change.
 - Any token canon change.
-- Any screenshot baseline promotion.
+- Any future screenshot baseline promotion or approved baseline update.
 - Any product-language/canon change.
 - Any provenance movement.
 
@@ -76,8 +76,8 @@ Scale: 1 = weak / high risk. 5 = strong / low risk.
 | Design-system drift from duplicate CSS tokens | Map Claude tokens to active `--color-*` variables before app edits. |
 | External CDN usage leaks into active runtime | Keep wireframe gallery docs-only; add no-network QA gate. |
 | Broad redesign pressure | Split into GOAL-022 review and GOAL-023 smallest safe slice. |
-| Product-canon conflict between old eight-page canon and GOAL-021 twelve-route current state | Record the conflict and require Point/product review before route-related claims. |
-| Screenshot/token open gates remain unresolved | Treat screenshot baseline promotion and final token approval as Point gates. |
+| Product-canon conflict between old eight-page canon and GOAL-021 twelve-route current state | Reconciled as documentation-only: GOAL-021 twelve-route current state governs; the eight-page language is historical/core cockpit scope only. |
+| Screenshot/token open gates remain unresolved | Screenshot baseline promotion is approved with conditions; final token approval remains deferred as a Point gate. |
 
 ## Human approval gates
 

@@ -25,7 +25,7 @@ If any command fails, Codex must report:
 ## Manual QA steps
 
 1. Open the active app locally through `apps/static-mvp/index.html` or the repo's existing approved local static server workflow.
-2. Visit all current local routes in navigation.
+2. Visit all twelve current local routes through the intended journey, rail, CTA, and Projects utility access.
 3. Confirm pages remain local/static/mock-only.
 4. Confirm no new route/page appears unless already product-approved.
 5. Confirm Workbench remains object-aware and local-only.
@@ -81,6 +81,7 @@ Review gate:
 - Scope: Any screenshot baseline promotion or use of Claude screenshots as approved baselines.
 - Pass condition: Candidate screenshots are explicitly selected, named, compared, and approved.
 - Fallback: Keep screenshots as provenance/reference only.
+- Current decision: Approved with conditions for the eight static MVP screen targets across `vp-760`, `vp-1080`, `vp-1180`, and `vp-1280`. Approved snapshots live under `tests/visual/static-mvp.visual.spec.mjs-snapshots/` and must be regenerated only after explicit visual approval.
 
 ## Product-canon consistency checks
 
@@ -100,6 +101,16 @@ Check:
   - login/auth controls,
   - real export/repo write claim,
   - MCP configuration.
+
+## First-time evaluator UX review
+
+Use this checklist with a person who has not recently worked on the repo. Time-box the first pass to 2 minutes before giving hints.
+
+- Product comprehension within 2 minutes: evaluator can state that OpenClaw turns selected context into a governed SpecGraph/Work Packet and gated handoff preview.
+- Workbench macro-layer clarity: evaluator can identify Context, SpecGraph, and Handoff Gates as the three macro layers without needing the object-depth controls explained first.
+- SpecGraph and handoff-gate understanding: evaluator can explain why D-005, evidence, validation, and review blockers keep Handoff unavailable.
+- No fake-auth/fake-AI confusion: evaluator does not believe Demo Entry logs into a real workspace or Mock local copilot calls an AI model.
+- Handoff readiness clarity: evaluator can name the page or control they would use next to clear the largest readiness blocker.
 
 ## Evidence Codex must record
 

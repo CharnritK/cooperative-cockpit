@@ -4,7 +4,7 @@
 
 - Storybook is approved for MVP dev/test integration only.
 - Playwright is approved for MVP visual regression only.
-- The old eight-page cap is superseded for design-system planning and replaced by a governed screen registry; current app implementation remains evidence-bound.
+- The old eight-page cap is superseded by the GOAL-021 twelve-route local journey and the governed screen registry; current app implementation remains evidence-bound.
 - Design tokens must be finalized from the current static MVP implementation, current styling, Dify-inspired workflow-studio direction, and accessibility requirements.
 - Component naming and organization must be semantic, scalable, and Codex-readable.
 - Mock data must be canonical, realistic, schema-backed, and contain no real PII or secrets.
@@ -31,11 +31,11 @@
 
 ## Superseded constraint
 
-The previous eight-page-only cap is superseded by Point's approval to use a governed screen registry. This does not mean every screen is implemented. It means screen growth is allowed only through screen contracts, registry status, and approval gates.
+The previous eight-page-only cap is superseded by the GOAL-021 twelve-route local journey and Point's approval to use a governed screen registry. This does not mean every registry screen is implemented. It means screen growth is allowed only through screen contracts, registry status, and approval gates.
 
 ## Current product-canon reconciliation note
 
-The current static MVP still implements the existing eight-page shell. Until `docs/product/**` is explicitly reconciled, new registry rows are planning/proposed surfaces only and must not be treated as implemented app scope. Product-canon edits, app runtime changes, and new screen implementation still require Point lock.
+The current static MVP implements twelve local routes: four Start journey routes plus eight core cockpit routes. Registry rows beyond the implemented cockpit routes remain planning/proposed surfaces only and must not be treated as implemented app scope. Product-canon edits that add or remove routes, app runtime changes, and new screen implementation still require Point lock.
 
 ## Resolved tooling decisions
 
@@ -51,7 +51,7 @@ The current static MVP still implements the existing eight-page shell. Until `do
 | D-DS-001 | Final audited token values | Point + design-system reviewer | Applying tokens to app runtime CSS/components |
 | D-DS-004 | Whether app component folders may be refactored | Point | DS-004 runtime/source migration |
 | D-DS-005 | Which registry screens enter implementation next | Point | Any new screen implementation |
-| D-DS-006 | Product-canon reconciliation for governed registry | Point | Treating registry growth as current product canon |
+| D-DS-006 | Future registry-to-product-canon expansion beyond the current twelve routes | Point | Treating additional registry screens as current product canon |
 
 ## Change control rule
 

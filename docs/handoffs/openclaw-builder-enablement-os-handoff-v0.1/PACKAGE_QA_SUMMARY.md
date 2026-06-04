@@ -4,10 +4,12 @@
 
 This summary describes the source package before repo assimilation. The assimilated repo state is tracked in `docs/ops/STATUS.md`, `docs/TASKS.md`, `docs/ROADMAP.md`, and `artifacts/evidence/PKG-BUILDER-ENABLEMENT-OS-assimilation.md`.
 
+Approval update: Point approved the GOAL-016 product lock on 2026-06-04. GOAL-017, GOAL-018, and GOAL-019 are product-lock unblocked but remain queued until explicit scoped execution.
+
 ## Status
 
-READY_FOR_PRODUCT_LOCK  
-NOT_READY_FOR_IMPLEMENTATION
+PRODUCT_LOCK_APPROVED
+FOLLOW_ON_QUEUED
 
 ## Created
 
@@ -42,5 +44,5 @@ NOT_READY_FOR_IMPLEMENTATION
 
 Reviewer: Point.  
 Scope: product lock, scope boundary, code-object lens, Codex goal sequence.  
-Pass condition: product semantics accepted and static boundaries preserved.  
+Pass condition: Passed on 2026-06-04; product semantics accepted and static boundaries preserved.
 Fallback: revise docs before Codex assimilation.

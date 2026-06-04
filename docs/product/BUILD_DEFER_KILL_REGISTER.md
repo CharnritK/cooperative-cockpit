@@ -7,7 +7,7 @@ Status: Current product canon
 | item | decision | rationale | next action |
 |---|---|---|---|
 | Static MVP object model docs | Build | Prevent object drift and Codex overreach. | GOAL-004 |
-| Screen/object map | Build | Preserve eight-page scope. | GOAL-004 |
+| Screen/object map | Build | Preserve the GOAL-021 twelve-route local journey while keeping the eight core cockpit pages as the workspace core. | GOAL-004, updated by GOAL-021/current route closeout |
 | Mock-data spec | Build | Prepare safe data normalization. | GOAL-004 |
 | Work Packet | Build | Core handoff object. | GOAL-007 |
 | Validation Result | Build | Required for readiness. | GOAL-005/007 |
@@ -31,3 +31,4 @@ Status: Current product canon
 | Fake execution logs | Avoid | Misleading runtime implication. |
 | Standalone generic Artifact page | Avoid | Dilutes artifact-first wedge. |
 | Dedicated Agent Roles admin page | Avoid in MVP | Premature admin surface. |
+| Routes beyond GOAL-021 twelve-route surface | Avoid unless Point-approved | Prevents route sprawl and fake product-scope expansion. |

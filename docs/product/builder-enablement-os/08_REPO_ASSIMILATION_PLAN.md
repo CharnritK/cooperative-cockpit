@@ -13,13 +13,13 @@ Assimilate Builder Enablement OS / SpecGraph product lock into the repo with min
 
 ## First safe Codex task
 
-Run GOAL-016 only.
+GOAL-016 was the first safe Codex task and is now Point-approved as of 2026-06-04.
 
-It is docs-only and should not modify app source.
+The next Builder Enablement lane task is GOAL-017 only if Point explicitly requests bounded follow-on execution. GOAL-017, GOAL-018, and GOAL-019 remain scoped to their own allowed paths, forbidden actions, and validation gates.
 
 ## Review gate
 
 Reviewer: Point.  
 Scope: product lock, terminology, MVP boundary, code-object lens scope.  
-Pass condition: SpecGraph lock is accepted and does not expand implementation scope.  
+Pass condition: Passed on 2026-06-04; SpecGraph lock is accepted and does not expand implementation scope.
 Fallback: revise docs, do not proceed to fixtures or UI.

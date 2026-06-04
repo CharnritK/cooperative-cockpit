@@ -10,7 +10,7 @@
 
 ## 1. Mental Model
 
-OpenClaw is a governed workbench for shaping one Work Packet until it is ready for a downstream Builder agent. The current local route surface has twelve pages:
+OpenClaw is a governed workbench for shaping one Work Packet until it is ready for a downstream Builder agent. The current local route surface has twelve pages/routes:
 
 - **Start:** Landing, Demo Entry, Project Hub, Initialize.
 - **Workflow:** Home, Workbench, Spec Builder, Review Runs, Preview.

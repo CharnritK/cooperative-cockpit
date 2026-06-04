@@ -2,7 +2,9 @@
 
 ## Status
 
-Assimilated product-lock candidate for GOAL-016. Requires Point approval before implementation, UI, fixture, parser, backend, connector, or runtime work.
+Point-approved product lock for GOAL-016. Point approved this lock on 2026-06-04, satisfying the product-lock precondition for bounded GOAL-017, GOAL-018, and GOAL-019 execution under their own scoped goal cards.
+
+This approval does not itself execute GOAL-017, GOAL-018, or GOAL-019, broaden their allowed paths, approve final tokens, approve visual baselines, or authorize dependencies, backend/API/auth/database/deployment, parser/LSP/indexing, real AI execution, external connectors, MCP, source-code upload, app repo-write behavior, commits, pushes, PRs, public demo claims, or deployment.
 
 ## Product category
 

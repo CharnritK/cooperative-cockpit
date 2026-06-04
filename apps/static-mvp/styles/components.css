@@ -1381,6 +1381,8 @@
 }
 
 .canvas-mode-spatial {
+  display: flex;
+  flex-direction: column;
   min-height: calc(100vh - 154px);
 }
 
@@ -1391,6 +1393,13 @@
   overflow: hidden;
   cursor: grab;
   touch-action: none;
+}
+
+.canvas-mode-spatial .canvas-viewport {
+  position: relative;
+  inset: auto;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .canvas-viewport.is-panning {
@@ -1464,8 +1473,42 @@
 }
 
 .spatial-canvas-toolbar {
-  position: absolute;
-  right: 10px;
+  position: static;
+  top: auto;
+  right: auto;
+  justify-content: flex-end;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  flex-wrap: wrap;
+  box-shadow: none;
+}
+
+.spatial-canvas-head {
+  position: relative;
+  z-index: 12;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(0, auto);
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(248, 250, 252, 0.9);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+
+.spatial-canvas-title {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.spatial-canvas-title .canvas-breadcrumbs {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  backdrop-filter: none;
 }
 
 .canvas-zoom-controls {
@@ -1720,15 +1763,15 @@
 }
 
 .canvas-label {
-  position: absolute;
-  top: 62px;
-  left: 18px;
-  z-index: 4;
+  display: block;
   color: var(--color-cyan);
   font-family: var(--font-ui);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .workflow-lines {
@@ -3794,7 +3837,17 @@
   }
 
   .canvas-mode-spatial .canvas-viewport {
-    top: 98px;
+    top: auto;
+  }
+
+  .spatial-canvas-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .spatial-canvas-toolbar {
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .canvas-support-actions {

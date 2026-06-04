@@ -29,11 +29,11 @@ Static MVP only:
 | id | item | target area | acceptance criteria |
 |---|---|---|---|
 | P0-001 | Lock static MVP object model | `docs/product/STATIC_MVP_OBJECT_MODEL.md` | Complete in GOAL-004/005 lineage. |
-| P0-002 | Lock screen/object map | `docs/product/STATIC_MVP_SCREEN_MAP.md` | Complete; all existing eight pages map to objects and mock states. |
+| P0-002 | Lock screen/object map | `docs/product/STATIC_MVP_SCREEN_MAP.md` | Complete; the current twelve local routes map to the local journey, core cockpit objects, and mock states. |
 | P0-003 | Lock mock-data requirements | `docs/product/STATIC_MVP_MOCK_DATA_SPEC.md` | Complete; required static entities and fields documented without persistence implications. |
 | P0-004 | Normalize static mock data | `apps/static-mvp/src/mockData.js`, `apps/static-mvp/src/state.js` | Complete; explicit static entities exist and current UI behavior remains static. |
 | P0-005 | Surface Work Packet / Handoff preview | Existing Home, Preview, Trace, Rules panels | Complete; Work Packet summary and static handoff readiness are visible. |
-| P0-006 | Harden QA against scope creep | `apps/static-mvp/QA_CHECKLIST.md`, `quality/QA_CHECKLIST.md` | Complete; QA checks object coverage, no runtime semantics, no connectors, no new pages, no unsafe labels. |
+| P0-006 | Harden QA against scope creep | `apps/static-mvp/QA_CHECKLIST.md`, `quality/QA_CHECKLIST.md` | Complete; QA checks object coverage, no runtime semantics, no connectors, no routes beyond GOAL-021, and no unsafe labels. |
 
 ## Polish — P1
 
@@ -74,8 +74,8 @@ Static MVP only:
 - fake execution logs;
 - standalone generic Artifact page;
 - dedicated Agent Roles admin page;
-- new pages beyond the current eight without Point lock.
+- new pages/routes beyond the GOAL-021 twelve-route local journey without Point lock.
 
 ## Next recommended Codex goal
 
-Run only bounded post-closeout work. The immediate current task is `GOAL-009 — Canon reconciliation`; after it passes, feature iteration requires Point approval for new product scope.
+Run only bounded post-closeout work unless Point approves a new product-scope goal. The current route surface is the GOAL-021 twelve-route local journey; feature iteration beyond that boundary requires Point approval.

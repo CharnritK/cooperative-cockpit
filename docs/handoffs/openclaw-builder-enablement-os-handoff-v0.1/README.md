@@ -3,11 +3,11 @@
 Created: 2026-06-02  
 Owner: Point  
 Repo target: `CharnritK/cooperative-cockpit`  
-Status: READY_FOR_PRODUCT_LOCK / NOT_READY_FOR_IMPLEMENTATION
+Status: PRODUCT_LOCK_APPROVED / FOLLOW_ON_QUEUED
 
 ## Assimilation note
 
-This file is the imported package README preserved under `docs/handoffs/`. The package has now been assimilated into governed repo paths; GOAL-016 remains the only completed goal from this package, and GOAL-017 through GOAL-019 remain gated behind Point review of the product lock.
+This file is the imported package README preserved under `docs/handoffs/`. The package has now been assimilated into governed repo paths; GOAL-016 remains the only completed goal from this package, and Point approved its product lock on 2026-06-04. GOAL-017 through GOAL-019 are product-lock unblocked but remain queued until explicit scoped execution.
 
 ## Purpose
 
@@ -30,6 +30,6 @@ The original package did not modify the repository. Repo assimilation of the pac
 ## Assimilation order
 
 1. Review `docs/product/builder-enablement-os/00_PRODUCT_LOCK.md`.
-2. Point approves or revises the lock.
-3. Keep GOAL-017, GOAL-018, and GOAL-019 blocked until that review is explicit.
-4. Continue to fixtures and UI copy only after validation and Point approval.
+2. Point approved the lock on 2026-06-04.
+3. GOAL-017, GOAL-018, and GOAL-019 may be run only after a separate explicit scoped execution request.
+4. Continue to fixtures and UI copy only after validation and a separate explicit scoped execution request.

@@ -30,4 +30,4 @@ Do not start app code changes before the product lock is accepted.
 
 ## Execution gate
 
-GOAL-017, GOAL-018, and GOAL-019 are follow-on prompts only. Do not execute them until Point accepts or revises the GOAL-016 product lock.
+GOAL-017, GOAL-018, and GOAL-019 are follow-on prompts only. Point approved the GOAL-016 product lock on 2026-06-04, so their product-lock precondition is satisfied; do not execute them without a separate explicit scoped execution request.

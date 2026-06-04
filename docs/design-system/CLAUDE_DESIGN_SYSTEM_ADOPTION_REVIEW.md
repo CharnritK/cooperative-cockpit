@@ -201,27 +201,32 @@ Known items to verify:
 
 - Claude package includes `refs/*.png` and `screenshots/*.png`.
 - PR #18 reported open gates around candidate screenshot promotion and final token approval.
-- These assets are reference/provenance until screenshot baseline promotion is explicitly approved.
+- Point later approved promotion of the current static MVP candidate screenshot set with conditions. Final token approval remains deferred.
 
 Default decision:
 
-- Keep as evidence/provenance.
-- Do not promote to approved baselines without Point gate.
+- Keep Claude package screenshots as evidence/provenance.
+- Do not promote or update approved baselines without a Point gate.
 - Do not delete or rename without manifest/evidence updates and Point gate.
 
-## Product-canon conflicts
+## Product-canon route count closeout
 
-Potential conflicts:
+Resolved route-count decision:
 
-1. Older static MVP screen-map docs may refer to an eight-page static MVP.
-2. Current status/QA evidence indicates GOAL-021 expanded the local static route surface to twelve local routes.
-3. Builder Enablement OS product lock states SpecGraph is the primary product artifact and Workbench is a lens/editor, not the product center.
-4. Claude Workbench explorations may over-emphasize Workbench as the center unless mapped carefully.
+1. Older static MVP screen-map docs referred to an eight-page static MVP.
+2. GOAL-021 expanded the current local static route surface to twelve routes.
+3. The reconciled product-canon wording treats the eight routes as the core cockpit workspace and the four added routes as the local Start journey.
+4. No additional route, backend/API/auth/deployment/runtime, real AI, external connector, or repo-write behavior is approved by this reconciliation.
+
+Remaining product-framing risk:
+
+- Builder Enablement OS product lock states SpecGraph is the primary product artifact and Workbench is a lens/editor, not unchecked product-center expansion.
+- Claude Workbench explorations may over-emphasize Workbench as the center unless mapped carefully.
 
 Required action:
 
-- GOAL-022 must explicitly record which product-canon document currently governs route count and app framing.
-- Any language change that shifts product positioning requires Point approval.
+- `docs/product/STATIC_MVP_SCREEN_MAP.md`, `docs/product/USER_MANUAL.md`, `apps/static-mvp/QA_CHECKLIST.md`, and `docs/ops/STATUS.md` govern the current twelve-route local journey.
+- Any future language change that adds/removes routes or shifts product positioning requires Point approval.
 
 ## Recommended smallest safe adoption slice
 

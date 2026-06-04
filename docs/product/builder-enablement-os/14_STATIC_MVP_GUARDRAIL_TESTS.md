@@ -30,7 +30,7 @@ Docs are expected to mention forbidden terms as guardrails. Runtime scans must t
 | test_id | check | pass |
 |---|---|---|
 | GM-001 | network tab | local files only |
-| GM-002 | page count | eight pages |
+| GM-002 | route count | twelve local routes, no additional routes |
 | GM-003 | no login | no auth surface |
 | GM-004 | handoff | gated preview only |
 | GM-005 | Workbench copy | SpecGraph-first |

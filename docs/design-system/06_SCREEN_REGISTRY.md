@@ -1,6 +1,15 @@
 # 06 — Governed Screen Registry
 
-The old eight-page cap is superseded as a design-system planning constraint, but the current static MVP still implements the existing eight-page shell. Screen growth is governed by this registry; registry inclusion is not implementation proof.
+The old eight-page cap is superseded as a design-system planning constraint and by the GOAL-021 twelve-route local journey. The current static MVP implements four Start journey routes plus eight core cockpit routes. Screen growth beyond that surface is governed by this registry; registry inclusion is not implementation proof.
+
+## Current local journey routes outside the cockpit screen registry
+
+| route | purpose | implementation status |
+|---|---|---|
+| Landing | product concept and local demo entry | implemented |
+| Static Demo Entry | no-login/no-auth/static boundary | implemented |
+| Project Hub | project/scenario selection | implemented |
+| Project Initialize | local setup rehearsal | implemented |
 
 | screen_id | screen | route assumption | artifact object served | required components | data contract | states required | approval status | owner | implementation status |
 |---|---|---|---|---|---|---|---|---|---|

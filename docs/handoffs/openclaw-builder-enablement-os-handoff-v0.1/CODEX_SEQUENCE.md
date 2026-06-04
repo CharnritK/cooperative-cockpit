@@ -2,7 +2,7 @@
 
 ## Gate
 
-GOAL-016 is the only completed assimilation goal from this package. Do not run GOAL-017, GOAL-018, or GOAL-019 until Point accepts or revises the GOAL-016 product lock.
+GOAL-016 is the only completed assimilation goal from this package. Point approved the GOAL-016 product lock on 2026-06-04, so GOAL-017, GOAL-018, and GOAL-019 are product-lock unblocked but remain queued until explicit scoped execution.
 
 ## Step 1
 

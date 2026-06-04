@@ -15,7 +15,7 @@ Owner: Point
 - Product positioning changes
 - Object model changes
 - Public demo claims
-- New pages beyond current eight
+- New pages/routes beyond the GOAL-021 twelve-route local journey
 - Work Packet vs Handoff Packet semantics
 - Decision naming changes
 - Artifact object treatment
@@ -31,7 +31,7 @@ Owner: Point
 | Decision naming | Decision object with lock state |
 | Artifact treatment | Artifact Reference only; no standalone page |
 | Agent Roles | Embedded metadata only |
-| New pages | Do not add |
+| New pages/routes | Do not add beyond GOAL-021 without Point lock |
 
 ## Stop conditions for Codex
 
@@ -39,7 +39,7 @@ Stop if:
 
 - a dependency is needed;
 - backend/API/auth/database/deployment is suggested;
-- a new page is required;
+- a new page/route beyond GOAL-021 is required;
 - live execution or connector behavior is implied;
 - files outside allowed paths need edits;
 - validation fails and cannot be fixed within scope;

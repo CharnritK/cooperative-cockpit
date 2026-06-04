@@ -10,6 +10,8 @@ A2 bounded change unless Point approves otherwise.
 Execution gate:
 Do not run this goal until Point explicitly accepts or revises the GOAL-016 Builder Enablement OS / SpecGraph product lock.
 
+Status: Point approved the GOAL-016 Builder Enablement OS / SpecGraph product lock on 2026-06-04. The gate above is satisfied; do not run this goal without a separate explicit scoped execution request, and keep the work inside this goal card's allowed paths, forbidden actions, and validation gates.
+
 Allowed paths:
 - apps/static-mvp/src/mockData.js
 - apps/static-mvp/src/app.js
@@ -45,7 +47,7 @@ Validation commands:
 - git diff --check
 
 Stop conditions:
-- Stop if GOAL-016 has not been accepted or revised by Point.
+- Stop if Point supersedes or narrows the 2026-06-04 GOAL-016 product-lock approval.
 - Stop if parser/LSP/dependency is needed.
 - Stop if new page is required.
 - Stop if real source code or secrets would be displayed.

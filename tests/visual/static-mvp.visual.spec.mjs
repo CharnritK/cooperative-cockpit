@@ -65,22 +65,15 @@ const visualTargets = [
 
 test.describe("static MVP visual scaffold", () => {
   for (const target of visualTargets) {
-    test(`${target.id} ${target.state} candidate screenshot`, async ({ page }, testInfo) => {
+    test(`${target.id} ${target.state} approved baseline screenshot`, async ({ page }) => {
       await page.goto(staticMvpUrl);
       await page.waitForFunction(() => typeof window.navigate === "function");
       await page.evaluate((pageKey) => window.navigate(pageKey), target.pageKey);
 
       await expect(page.locator("#main-content")).toContainText(target.expectedText);
 
-      const screenshotPath = testInfo.outputPath(`${target.id}-${target.state}.png`);
-      await page.screenshot({
-        path: screenshotPath,
+      await expect(page).toHaveScreenshot(`${target.id}-${target.state}.png`, {
         fullPage: true
-      });
-
-      await testInfo.attach(`${target.id}-${target.state}`, {
-        path: screenshotPath,
-        contentType: "image/png"
       });
     });
   }
@@ -173,8 +166,9 @@ test.describe("static MVP visual scaffold", () => {
     await page.locator('[data-node-id="arch-1"]').click();
     await expect(page.locator("#app-shell")).not.toHaveClass(/inspector-open/);
     await page.locator('[data-action="toggle-inspector"]').click();
-    await expect(page.locator("#app-shell")).toHaveClass(/inspector-open/);
-    await expect(page.locator("#right-inspector")).toContainText("Canvas Engine");
+    await expect(page.locator("#app-shell")).not.toHaveClass(/inspector-open/);
+    await expect(page.locator("#right-inspector")).toBeHidden();
+    await expect(page.locator(".object-editor-panel")).toContainText("Canvas Engine");
 
     await page.locator('[data-compound-group-id="req-1"] .compound-collapse-action').click();
     await expect(page.locator('[data-compound-group-id="req-1"]')).toHaveCount(0);

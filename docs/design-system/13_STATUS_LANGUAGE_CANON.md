@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This canon fixes the meaning of status hues across Claude Design reference files and the active static MVP. It is documentation and QA authority only. It does not approve active app CSS changes, token finalization, screenshot baseline promotion, route changes, runtime behavior, or product-canon changes.
+This canon fixes the meaning of status hues across Claude Design reference files and the active static MVP. It is documentation and QA authority only. It does not approve token finalization, route changes, backend/API/runtime workflow behavior, or product-canon changes. Point later approved screenshot baseline promotion and the targeted `review-blocked` split semantic cleanup recorded in this file.
 
 ## Canonical Status Hues
 
@@ -29,14 +29,14 @@ The active status-chip classes in `apps/static-mvp/styles/status.css` already en
 
 `apps/static-mvp/src/app.js` routes most rendered status chips through `getStatusClass(status)`, which maps runtime values to those classes.
 
-## Known Open Gate
+## Approved Split Semantic Model
 
-`review-blocked` currently has a semantics tension:
+Point approved a split semantic model for `review-blocked`:
 
-- status chips map `review-blocked` to red through `.status-review-blocked`;
-- node-card tones group `review-blocked` with amber waiting states through `.node-card.status-tone-review-blocked`.
+- status chips map `review-blocked` to red through `.status-review-blocked`, because the review gate blocks handoff compliance;
+- node-card containers map `review-blocked` to the amber/warning tone, because the node itself represents completed work waiting for a review gate rather than missing data or an unsafe runtime error.
 
-Default decision: preserve the active app as-is until Point approves a precise CSS/runtime visual semantics cleanup. GOAL-023 records this as a deferred app visual change, not a silent patch.
+This means an amber node card may intentionally contain a red `Review items` chip. QA should treat that combination as approved, not inconsistent, as long as the red chip remains readable and explicit.
 
 ## QA Rule
 

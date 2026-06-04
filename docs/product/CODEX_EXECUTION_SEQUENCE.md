@@ -17,7 +17,7 @@ Every Codex goal must preserve:
 - no external connectors;
 - no MCP implementation;
 - no new dependencies;
-- no new pages unless Point approves;
+- no new pages/routes beyond the GOAL-021 twelve-route local journey unless Point approves;
 - no app source changes in GOAL-004.
 
 ## GOAL-004 — Lock static MVP domain model and roadmap docs
@@ -105,7 +105,7 @@ npm run validate
 Manual checks when app files change:
 
 - Open `apps/static-mvp/index.html`.
-- Verify all eight pages remain reachable.
+- Verify all twelve current local routes remain reachable and no additional route appears.
 - Verify no external requests.
 - Verify no unsafe action labels.
 - Verify no backend/API/auth/database/deployment/runtime behavior.

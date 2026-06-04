@@ -96,7 +96,7 @@
       "id": "field-003",
       "specId": "spec-001",
       "label": "Visual baselines",
-      "value": "reviewed candidate screenshots; approved baselines pending Point/design review",
+      "value": "approved Playwright snapshots cover eight static MVP screens across four viewport projects; final token approval remains deferred",
       "required": false,
       "status": "suggested"
     }
@@ -290,11 +290,11 @@
       "id": "ev-008",
       "projectId": "proj-001",
       "type": "screenshot",
-      "title": "DS-006 candidate static MVP screenshot run",
-      "status": "warning",
+      "title": "DS-006 approved static MVP screenshot baselines",
+      "status": "complete",
       "sourceObjectId": "ctx-004",
       "targetObjectId": "gate-006",
-      "summary": "Playwright captured candidate screenshots for eight implemented static MVP screens across four viewport projects; reviewer candidate inspection is recorded.",
+      "summary": "Playwright approved snapshots cover eight implemented static MVP screens across four viewport projects after Point approved baseline promotion with conditions.",
       "createdAt": "2026-06-01T01:18:19+07:00"
     },
     {
@@ -305,7 +305,7 @@
       "status": "complete",
       "sourceObjectId": "ctx-004",
       "targetObjectId": "gate-006",
-      "summary": "Reviewer inspection approves the DS-006 screenshot run as reviewed candidate evidence, not final approved baselines.",
+      "summary": "Reviewer inspection and later Point decision approve the DS-006 screenshot run as the initial static MVP visual baseline authority.",
       "createdAt": "2026-06-01T01:25:00+07:00"
     }
   ],
@@ -520,7 +520,7 @@
     {
       "id": "gate-004",
       "name": "DS-003 token finalization",
-      "status": "warn",
+      "status": "pass",
       "requiredEvidenceIds": [
         "ev-004"
       ],
@@ -543,7 +543,7 @@
         "ev-008",
         "ev-009"
       ],
-      "summary": "Candidate screenshot output is reviewer-inspected; approved baseline promotion remains pending Point/design reviewer approval."
+      "summary": "Point approved the candidate screenshot output as static MVP visual baselines with conditions; final token approval remains deferred."
     }
   ],
   "visualBaselines": [
@@ -552,18 +552,18 @@
       "screenId": "screen-001",
       "viewport": "1280px",
       "state": "default",
-      "artifactPath": "artifacts/evidence/design-system/visual/test-results/static-mvp.visual-static-M-a6888-efault-candidate-screenshot-vp-1280/attachments/screen-001-operator-home-default-c06592ab33d1ad361a0d0456f273e3764f0cb363.png",
-      "status": "candidate",
-      "capturedAt": "2026-05-31T18:18:19Z"
+      "artifactPath": "tests/visual/static-mvp.visual.spec.mjs-snapshots/screen-001-operator-home-default-vp-1280-win32.png",
+      "status": "approved",
+      "capturedAt": "2026-06-03T00:00:00Z"
     },
     {
       "id": "vb-002",
       "screenId": "screen-002",
       "viewport": "760px",
       "state": "selected",
-      "artifactPath": "artifacts/evidence/design-system/visual/test-results/static-mvp.visual-static-M-83a71-lected-candidate-screenshot-vp-760/attachments/screen-002-workbench-selected-ab7d8c21b7d0a6b18bf35b65d28bf313e5046035.png",
-      "status": "candidate",
-      "capturedAt": "2026-05-31T18:18:19Z"
+      "artifactPath": "tests/visual/static-mvp.visual.spec.mjs-snapshots/screen-002-workbench-selected-vp-760-win32.png",
+      "status": "approved",
+      "capturedAt": "2026-06-03T00:00:00Z"
     }
   ]
 }

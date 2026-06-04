@@ -20,7 +20,7 @@ Do not approve baselines silently. A baseline is approved only after reviewer in
 
 ## Current status
 
-Candidate evidence exists. DS-002B Playwright scaffold, a DS-006 candidate screenshot run, and reviewer inspection are recorded. The screenshots are reviewed candidate evidence, not final approved baselines.
+Approved baseline evidence exists. DS-002B Playwright scaffold, a DS-006 candidate screenshot run, reviewer inspection, and Point approval are recorded. The eight static MVP screen targets across four viewport projects are now enforced through Playwright snapshot assertions.
 
 ## DS-002B scaffold
 
@@ -43,7 +43,17 @@ Configured viewport matrix:
 - `vp-1180`: 1180px wide
 - `vp-1280`: 1280px wide
 
-Candidate screenshots produced by the visual test runner should remain review artifacts until explicitly approved.
+Candidate screenshots produced by the visual test runner remain review artifacts unless explicitly approved. The current approved baseline set lives under:
+
+```text
+tests/visual/static-mvp.visual.spec.mjs-snapshots/
+```
+
+Approved baseline coverage:
+
+- eight static MVP screen targets;
+- four viewport projects: `vp-760`, `vp-1080`, `vp-1180`, `vp-1280`;
+- 32 snapshot PNG files generated after the approved `review-blocked` split semantic cleanup.
 
 Candidate output:
 

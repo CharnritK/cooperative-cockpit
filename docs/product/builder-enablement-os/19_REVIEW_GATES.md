@@ -2,7 +2,7 @@
 
 | gate_id | reviewer | review_scope | pass_condition | fallback |
 |---|---|---|---|---|
-| RG-001 | Point | product lock | SpecGraph approved | revise docs |
+| RG-001 | Point | product lock | Passed: Point approved the SpecGraph-centered Builder Enablement OS product lock on 2026-06-04 | reopen docs only if Point revises the lock |
 | RG-002 | QA | static guardrails | no scope creep | block app work |
 | RG-003 | Security/QA | code lens | no parser/source risk | defer lens |
 | RG-004 | Point | dependencies | explicit approval | no dependency |

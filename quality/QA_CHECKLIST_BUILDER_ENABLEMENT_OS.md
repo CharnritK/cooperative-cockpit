@@ -37,7 +37,7 @@
 - [ ] No repo writes from app.
 - [ ] No secrets.
 - [ ] No new dependencies without Point lock.
-- [ ] No app source changes before Point accepts the GOAL-016 product lock.
+- [x] GOAL-016 product lock accepted by Point before GOAL-017, GOAL-018, or GOAL-019 app-source work.
 
 ## Review gate
 

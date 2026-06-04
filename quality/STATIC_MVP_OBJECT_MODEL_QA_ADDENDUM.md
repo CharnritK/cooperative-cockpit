@@ -33,7 +33,7 @@ Use this addendum with `quality/QA_CHECKLIST.md` and `apps/static-mvp/QA_CHECKLI
 - [ ] No external connectors added.
 - [ ] No MCP implementation added.
 - [ ] No new dependencies added.
-- [ ] No new pages added.
+- [ ] No pages/routes beyond the GOAL-021 twelve-route local journey added.
 - [ ] No unsafe execution action labels added.
 
 ## Handoff-readiness checks
@@ -46,8 +46,8 @@ Use this addendum with `quality/QA_CHECKLIST.md` and `apps/static-mvp/QA_CHECKLI
 
 ## Browser evidence checks
 
-- [ ] All eight pages remain reachable and non-empty.
-- [ ] No ninth page or hidden routed page is introduced.
+- [ ] All twelve current local routes remain reachable and non-empty.
+- [ ] No thirteenth route or hidden routed page is introduced.
 - [ ] Browser console has no app errors during the closeout smoke.
 - [ ] Network capture records no remote HTTP/HTTPS requests.
 - [ ] Buttons and CTAs avoid live-action labels such as run, execute, deploy, export, login, authenticate, connect account or run workflow.
