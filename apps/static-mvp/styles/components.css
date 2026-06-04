@@ -1069,6 +1069,87 @@
   gap: 10px;
 }
 
+.code-object-lens {
+  display: grid;
+  gap: 12px;
+}
+
+.code-lens-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: start;
+}
+
+.code-lens-head p {
+  margin-top: 4px;
+}
+
+.code-lens-anchor .inspector-row {
+  grid-template-columns: 76px minmax(0, 1fr);
+}
+
+.code-lens-section {
+  display: grid;
+  gap: 7px;
+}
+
+.code-lens-section h5 {
+  color: var(--text-strong);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.code-lens-list {
+  display: grid;
+  gap: 7px;
+}
+
+.code-lens-item {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  background: var(--color-panel-strong);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.code-lens-item div:first-child {
+  display: grid;
+  grid-template-columns: minmax(74px, auto) minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+}
+
+.code-lens-item span:first-child {
+  color: var(--text-dim);
+  font-family: var(--font-ui);
+  font-size: 0.64rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.code-lens-item strong,
+.code-lens-item p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.code-lens-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.code-lens-evidence .chip {
+  height: auto;
+  min-height: 24px;
+  max-width: 100%;
+  white-space: normal;
+}
+
 .focus-lens-control {
   display: inline-flex;
   align-items: center;
@@ -1085,7 +1166,7 @@
 }
 
 .focus-lens-control select {
-  max-width: 150px;
+  max-width: 190px;
   color: var(--text-strong);
   background: #ffffff;
   border: 1px solid var(--color-border);
@@ -4035,6 +4116,7 @@
 }
 
 .view-mode-btn {
+  min-height: 30px;
   border: none;
   background: transparent;
   padding: 4px 11px;
@@ -4042,9 +4124,17 @@
   font-family: var(--font-primary);
   font-size: 0.72rem;
   font-weight: 500;
+  line-height: 1.08;
+  text-align: center;
   color: var(--text-muted);
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
+}
+
+.view-mode-btn span {
+  display: inline-block;
+  max-width: 92px;
 }
 
 .view-mode-btn:hover {

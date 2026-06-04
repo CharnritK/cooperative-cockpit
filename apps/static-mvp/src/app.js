@@ -44,7 +44,7 @@ const NODE_ICON_BY_TYPE = {
 
 const WORKFLOW_STEPS = [
   { key: 'concept', label: 'Journey', pages: ['landing', 'demo-entry', 'project-hub', 'project-init', 'home'], caption: 'Local product entry' },
-  { key: 'workbench', label: 'Workbench', pages: ['workbench'], caption: 'Context selected' },
+  { key: 'workbench', label: 'Workbench', pages: ['workbench'], caption: 'SpecGraph lens active' },
   { key: 'spec', label: 'Spec', pages: ['spec-builder'], caption: 'Spec gates open' },
   { key: 'review', label: 'Review', pages: ['review-runs'], caption: 'Review evidence' },
   { key: 'preview', label: 'Preview', pages: ['preview'], caption: 'Preview sync' },
@@ -1086,18 +1086,36 @@ function nodeMatchesFocusLens(node, relationships = getSelectedRelationshipSets(
       return nodeHasEvidenceGap(node);
     case 'unlocked-decisions':
       return nodeHasDecisionGap(node);
+    case 'lineage_impact_map':
     case 'selected-trail':
       return node.id === relationships.selectedId
         || relationships.ancestors.has(node.id)
         || relationships.descendants.has(node.id)
         || relationships.inbound.has(node.id)
         || relationships.outbound.has(node.id);
+    case 'control_plane':
     case 'handoff-blockers':
-      return view.blockerCount > 0 || ['blocked', 'needs-lock', 'needs-evidence', 'review-blocked'].includes(readiness);
+      return nodeHasDecisionGap(node)
+        || view.blockerCount > 0
+        || ['blocked', 'needs-lock', 'needs-evidence', 'review-blocked'].includes(readiness);
+    case 'code_review_lens':
+      return nodeMatchesCodeObjectLens(node);
+    case 'guided_flow':
     case 'open-work':
     default:
       return view.blockerCount > 0 || !['ready', 'validated', 'applied'].includes(readiness);
   }
+}
+
+function getCodeObjectLens() {
+  return window.mockData.codeObjectLens || null;
+}
+
+function nodeMatchesCodeObjectLens(node) {
+  const lens = getCodeObjectLens();
+  if (!node || !lens) return false;
+  if (node.id === lens.selected_workbench_object_id) return true;
+  return (window.mockData.codeObjects || []).some((object) => object.workbench_node_id === node.id && object.workbench_node_id === lens.selected_workbench_object_id);
 }
 
 function applyWorkbenchSelectionClasses() {
@@ -1119,6 +1137,9 @@ function applyWorkbenchSelectionClasses() {
 
 function getFocusLensOptionsHTML() {
   const definitions = window.mockData.focusLensDefinitions || [];
+  if (definitions.length && !definitions.some((lens) => lens.id === window.appState.focusLens)) {
+    window.appState.focusLens = definitions[0].id;
+  }
   return definitions.map((lens) => `<option value="${lens.id}" ${window.appState.focusLens === lens.id ? 'selected' : ''}>${lens.label}</option>`).join('');
 }
 
@@ -1169,9 +1190,9 @@ function renderWorkbench(container) {
   const selectedNode = getSelectedNode() || getOrderedWorkbenchNodes()[0] || window.mockData.nodes[0];
   if (selectedNode) window.appState.selectedNodeId = selectedNode.id;
   renderPageHeader(container, {
-    kicker: 'Cockpit object map',
+    kicker: 'SpecGraph lens editor',
     title: 'Workbench',
-    subtitle: 'Canvas-first map for Context Nodes, evidence, decisions, Work Packets, and the Handoff Packet preview.',
+    subtitle: 'Scenario-lens editor for SpecGraph objects, evidence, decisions, Work Packets, and the Handoff Packet preview.',
     className: 'workbench-header',
   });
 
@@ -1452,8 +1473,85 @@ function renderObjectEditorTabContent(node, activeTab) {
         <div class="inspector-section">
           <h4>Requirements</h4>
           ${renderInspectorList(node.requirements || ['No requirements recorded'])}
-        </div>`;
+        </div>
+        ${renderCodeObjectLensPanel(node)}`;
   }
+}
+
+function getCodeObjectEvidenceLabel(id) {
+  const ref = (window.mockData.evidenceRefs || []).find((item) => item.id === id);
+  return ref ? ref.label : id;
+}
+
+function renderCodeObjectEvidenceChips(evidenceIds = []) {
+  return `<div class="code-lens-evidence">${evidenceIds.map((id) => `<span class="chip chip-secondary" title="${id}">${getCodeObjectEvidenceLabel(id)}</span>`).join('')}</div>`;
+}
+
+function renderCodeObjectLensPanel(node) {
+  const lens = getCodeObjectLens();
+  if (!lens || !node) return '';
+  const isAnchorSelected = node.id === lens.selected_workbench_object_id;
+  const isActiveLens = window.appState.focusLens === 'code_review_lens';
+  if (!isAnchorSelected && !isActiveLens) return '';
+
+  const anchorNode = getNodeById(lens.selected_workbench_object_id);
+  const codeObjects = window.mockData.codeObjects || [];
+  const selectedObject = codeObjects.find((object) => object.id === lens.selected_code_object_id) || codeObjects[0];
+  const relationEdges = window.mockData.relationEdges || [];
+  const reviewFindings = window.mockData.reviewFindings || [];
+  const agentAnnotations = window.mockData.agentAnnotations || [];
+  const anchorLabel = anchorNode ? anchorNode.title || anchorNode.label : lens.selected_workbench_object_id;
+
+  return `<div class="inspector-section code-object-lens" aria-label="Code object review lens">
+      <div class="code-lens-head">
+        <div>
+          <h4>code_review_lens</h4>
+          <p>${lens.scope_summary}</p>
+        </div>
+        ${renderStatusChip('inspect', 'Static lens')}
+      </div>
+      <div class="inspector-grid code-lens-anchor">
+        <div class="inspector-row"><span>Anchor</span><strong>${anchorLabel}</strong></div>
+        <div class="inspector-row"><span>Selected</span><strong>${selectedObject ? selectedObject.name : 'No object'}</strong></div>
+      </div>
+      <div class="code-lens-section">
+        <h5>Facts</h5>
+        <div class="code-lens-list">
+          ${codeObjects.map((object) => `<article class="code-lens-item">
+            <div><span>${object.kind}</span><strong>${object.name}</strong></div>
+            <p>${object.summary}</p>
+          </article>`).join('')}
+        </div>
+      </div>
+      <div class="code-lens-section">
+        <h5>Relations</h5>
+        <div class="code-lens-list">
+          ${relationEdges.map((edge) => `<article class="code-lens-item">
+            <div><span>${edge.relation_type}</span><strong>${edge.source_id} -> ${edge.target_id}</strong></div>
+            ${renderCodeObjectEvidenceChips(edge.evidence_ids || [])}
+          </article>`).join('')}
+        </div>
+      </div>
+      <div class="code-lens-section">
+        <h5>Findings</h5>
+        <div class="code-lens-list">
+          ${reviewFindings.map((finding) => `<article class="code-lens-item code-lens-finding">
+            <div><span>${finding.severity}</span><strong>${finding.id}</strong></div>
+            <p>${finding.summary}</p>
+            ${renderCodeObjectEvidenceChips(finding.evidence_ids || [])}
+          </article>`).join('')}
+        </div>
+      </div>
+      <div class="code-lens-section">
+        <h5>AI annotations</h5>
+        <div class="code-lens-list">
+          ${agentAnnotations.map((annotation) => `<article class="code-lens-item code-lens-annotation">
+            <div><span>${annotation.annotation_type}</span><strong>${annotation.object_id}</strong></div>
+            <p>${annotation.summary}</p>
+          </article>`).join('')}
+        </div>
+      </div>
+    </div>`;
 }
 
 function renderMockCopilotPanel(node, readiness) {
@@ -1770,16 +1868,16 @@ function ensureWorkflowLineListeners() {
 
 function getBreadcrumbsHTML() {
   if (window.appState.viewMode === 'spatial') {
-    return `<div class="canvas-breadcrumbs canvas-breadcrumbs-spatial"><span class="breadcrumb-item active">Spatial Board</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-item active">Whole architecture</span></div>`;
+    return `<div class="canvas-breadcrumbs canvas-breadcrumbs-spatial"><span class="breadcrumb-item active">guided_flow</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-item active">SpecGraph scenario map</span></div>`;
   }
   if (window.appState.viewMode === 'flat') {
-    return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Flat Workflow view</span></div>`;
+    return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">control_plane</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-item active">Task order</span></div>`;
   }
   if (window.appState.viewMode === 'mixed') {
     const expandedNode = window.mockData.nodes.find((node) => node.id === window.appState.expandedNodeId);
-    return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Mixed Map</span>${expandedNode ? ` <span class="breadcrumb-separator">➔</span> <span class="breadcrumb-item active">${expandedNode.title || expandedNode.label}</span>` : ''}</div>`;
+    return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">lineage_impact_map</span>${expandedNode ? ` <span class="breadcrumb-separator">-&gt;</span> <span class="breadcrumb-item active">${expandedNode.title || expandedNode.label}</span>` : ''}</div>`;
   }
-  return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">Workbench Map</span></div>`;
+  return `<div class="canvas-breadcrumbs"><span class="breadcrumb-item active">SpecGraph map</span></div>`;
 }
 
 function drillDownToNode(node) {
@@ -2191,7 +2289,7 @@ function renderSpatialWorkbenchCanvas(canvas) {
     <div class="spatial-canvas-head">
       <div class="spatial-canvas-title">
         ${getBreadcrumbsHTML()}
-        <span class="canvas-label">COCKPIT-MVP-015 / Spatial Board</span>
+        <span class="canvas-label">COCKPIT-MVP-015 / guided_flow</span>
       </div>
       <div class="canvas-toolbar spatial-canvas-toolbar">
         <div class="canvas-support-actions" aria-label="Workbench support panels">
@@ -2203,9 +2301,9 @@ function renderSpatialWorkbenchCanvas(canvas) {
           </button>
         </div>
         <div class="canvas-view-mode-toggle">
-          <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
-          <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed</button>
-          <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat</button>
+          <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="guided_flow scenario lens">guided_flow</button>
+          <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="lineage_impact_map scenario lens"><span>lineage_<wbr>impact_map</span></button>
+          <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="control_plane scenario lens">control_plane</button>
         </div>
         <label class="focus-lens-control" for="focus-lens-select">
           <span>Lens</span>
@@ -2332,9 +2430,9 @@ function renderNodeCanvas() {
         </button>
       </div>
       <div class="canvas-view-mode-toggle">
-        <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="Spatial Board">Board</button>
-        <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="Mixed Map">Mixed Map</button>
-        <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="Flat Sequential Flow">Flat Flow</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'spatial' ? 'active' : ''}" type="button" id="toggle-view-spatial" title="guided_flow scenario lens">guided_flow</button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'mixed' ? 'active' : ''}" type="button" id="toggle-view-mixed" title="lineage_impact_map scenario lens"><span>lineage_<wbr>impact_map</span></button>
+        <button class="view-mode-btn ${window.appState.viewMode === 'flat' ? 'active' : ''}" type="button" id="toggle-view-flat" title="control_plane scenario lens">control_plane</button>
       </div>
       <label class="focus-lens-control" for="focus-lens-select">
         <span>Lens</span>
