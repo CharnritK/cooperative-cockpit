@@ -3,11 +3,11 @@
 Created: 2026-06-02  
 Owner: Point  
 Repo target: `CharnritK/cooperative-cockpit`  
-Status: PRODUCT_LOCK_APPROVED / FOLLOW_ON_QUEUED
+Status: PRODUCT_LOCK_APPROVED / FOLLOW_ON_IMPLEMENTED_ON_BRANCH
 
 ## Assimilation note
 
-This file is the imported package README preserved under `docs/handoffs/`. The package has now been assimilated into governed repo paths; GOAL-016 remains the only completed goal from this package, and Point approved its product lock on 2026-06-04. GOAL-017 through GOAL-019 are product-lock unblocked but remain queued until explicit scoped execution.
+This file is the imported package README preserved under `docs/handoffs/`. The package has now been assimilated into governed repo paths; Point approved the GOAL-016 product lock on 2026-06-04, and GOAL-017 through GOAL-019 were later explicitly executed on branch `agent/GOAL-017-019-specgraph-lenses` as bounded static/mock-only follow-on work.
 
 ## Purpose
 
@@ -31,5 +31,5 @@ The original package did not modify the repository. Repo assimilation of the pac
 
 1. Review `docs/product/builder-enablement-os/00_PRODUCT_LOCK.md`.
 2. Point approved the lock on 2026-06-04.
-3. GOAL-017, GOAL-018, and GOAL-019 may be run only after a separate explicit scoped execution request.
-4. Continue to fixtures and UI copy only after validation and a separate explicit scoped execution request.
+3. GOAL-017, GOAL-018, and GOAL-019 were later run only after a separate explicit scoped execution request.
+4. Review or mainline the follow-on branch only after validation and explicit Point authorization for that source-control action.

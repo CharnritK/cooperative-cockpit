@@ -4,12 +4,12 @@
 
 This summary describes the source package before repo assimilation. The assimilated repo state is tracked in `docs/ops/STATUS.md`, `docs/TASKS.md`, `docs/ROADMAP.md`, and `artifacts/evidence/PKG-BUILDER-ENABLEMENT-OS-assimilation.md`.
 
-Approval update: Point approved the GOAL-016 product lock on 2026-06-04. GOAL-017, GOAL-018, and GOAL-019 are product-lock unblocked but remain queued until explicit scoped execution.
+Approval update: Point approved the GOAL-016 product lock on 2026-06-04. GOAL-017, GOAL-018, and GOAL-019 were later explicitly executed on branch `agent/GOAL-017-019-specgraph-lenses` as bounded static/mock-only follow-on work.
 
 ## Status
 
 PRODUCT_LOCK_APPROVED
-FOLLOW_ON_QUEUED
+FOLLOW_ON_IMPLEMENTED_ON_BRANCH
 
 ## Created
 
@@ -33,7 +33,7 @@ FOLLOW_ON_QUEUED
 ## Not done
 
 - Source package created no repo modifications before assimilation; the repo now contains the moved package files under governed paths.
-- No code implemented.
+- The source package itself implemented no code before repo assimilation; later branch work implemented the static/mock-only GOAL-017/018/019 follow-on scope.
 - Package build did not run tests; repo assimilation validation is recorded separately.
 - No validation claimed.
 - No dependencies added.

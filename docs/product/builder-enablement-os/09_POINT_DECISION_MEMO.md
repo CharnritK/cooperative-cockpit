@@ -16,7 +16,7 @@ SpecGraph is the primary product artifact. Workbench is a lens/editor for SpecGr
 
 The code-object explorer research is accepted as review-stage research and may inform a specialized evidence-linked technical lens. It does not authorize parser, LSP, indexing, backend, dependency, connector, MCP, repo ingestion, source-code upload, deployment, or runtime work.
 
-This approval satisfies the product-lock precondition for GOAL-017, GOAL-018, and GOAL-019 as bounded queued goals only. It does not itself execute those goals, broaden their allowed paths, approve final tokens, approve visual baselines, authorize source-control publication, or authorize public demo claims.
+This approval satisfied the product-lock precondition for GOAL-017, GOAL-018, and GOAL-019. At approval time those follow-on goals were not yet executed; they were later explicitly executed on branch `agent/GOAL-017-019-specgraph-lenses` as static/mock-only SpecGraph fixture, Workbench scenario-lens, and `code_review_lens` work. This approval did not itself execute those goals, broaden their allowed paths, approve final tokens, approve visual baselines, authorize source-control publication, or authorize public demo claims.
 
 ## Options
 

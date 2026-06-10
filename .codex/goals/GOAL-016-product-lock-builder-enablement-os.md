@@ -60,4 +60,4 @@ Stop conditions:
 - Stop if any task requires Point approval beyond GOAL-016 docs assimilation.
 
 Recommended next step:
-Point approved GOAL-016 on 2026-06-04. GOAL-017, GOAL-018, and GOAL-019 are product-lock unblocked but remain queued until a separate explicit scoped execution request.
+Point approved GOAL-016 on 2026-06-04. GOAL-017, GOAL-018, and GOAL-019 were later explicitly executed on branch `agent/GOAL-017-019-specgraph-lenses` as bounded static/mock-only follow-on work. Review or mainline that branch only after validation and explicit Point authorization for the source-control action.
