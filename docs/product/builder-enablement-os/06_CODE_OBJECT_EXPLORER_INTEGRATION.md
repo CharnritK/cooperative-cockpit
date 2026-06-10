@@ -4,6 +4,8 @@
 
 Research-informed specialist lens. Not implementation approval.
 
+Static MVP specialist lens fixture implemented on 2026-06-04. This is not approval for parser/LSP/indexing, backend, external connectors, source upload, or repository write behavior.
+
 ## Research package
 
 Source package: `openclaw-code-object-explorer-research-pack-v0.2.zip`  
@@ -45,8 +47,22 @@ Evidence-linked code-object review:
 - Static evidence references.
 - Static findings.
 - Static annotations.
-- Bounded selected-object graph.
+- Bounded selected-object review neighborhood.
 - Evidence inspector.
+
+## Static MVP implementation
+
+GOAL-019 adds the following local-only fixture and UI surfaces:
+
+- `window.mockData.codeObjectLens` defines one selected Workbench object anchor: `comp-2` / `Inspector & Sidebar Rails`.
+- `window.mockData.codeObjects` lists the selected function-sized object plus immediate neighbor functions by id, name, kind, role and summary only. No source body is embedded.
+- `window.mockData.relationEdges` describes bounded selected-object relations with evidence ids.
+- `window.mockData.evidenceRefs` provides human-readable evidence labels for review chips.
+- `window.mockData.reviewFindings` keeps every finding evidence-linked through a non-empty `evidence_ids` array.
+- `window.mockData.agentAnnotations` separates AI commentary from static facts and review findings.
+- `apps/static-mvp/src/app.js` renders the lens inside the existing Workbench object editor panel when `code_review_lens` is active or the anchor Workbench object is selected.
+
+This is an inert fixture and right-panel rendering slice only. It does not create a route, dependency, backend service, source intake, persistent index, live analyzer, generated-code claim, or app-side write behavior.
 
 ## Requires Point lock
 

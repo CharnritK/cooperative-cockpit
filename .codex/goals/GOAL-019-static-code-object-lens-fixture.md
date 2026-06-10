@@ -10,7 +10,7 @@ A2 bounded change unless Point approves otherwise.
 Execution gate:
 Do not run this goal until Point explicitly accepts or revises the GOAL-016 Builder Enablement OS / SpecGraph product lock.
 
-Status: Point approved the GOAL-016 Builder Enablement OS / SpecGraph product lock on 2026-06-04. The gate above is satisfied; do not run this goal without a separate explicit scoped execution request, and keep the work inside this goal card's allowed paths, forbidden actions, and validation gates.
+Status: Executed by Codex on 2026-06-04 after Point's explicit scoped implementation request. The GOAL-016 product-lock gate above is satisfied; final token approval, visual-baseline promotion, commits, pushes, PRs, deployment, and publication remain out of scope.
 
 Allowed paths:
 - apps/static-mvp/src/mockData.js
@@ -19,6 +19,7 @@ Allowed paths:
 - docs/product/builder-enablement-os/06_CODE_OBJECT_EXPLORER_INTEGRATION.md
 - apps/static-mvp/QA_CHECKLIST.md
 - artifacts/evidence/**
+- artifacts/packages/openclaw-cooperative-cockpit-mvp.manifest.json
 - .codex/goals/GOAL-019-static-code-object-lens-fixture.md
 
 Forbidden actions:
@@ -36,6 +37,12 @@ Required work:
 3. Separate facts, findings, and AI annotations.
 4. Update QA.
 5. Run validation.
+
+Implementation record:
+- Added static `codeObjects`, `relationEdges`, `evidenceRefs`, `reviewFindings`, and `agentAnnotations` fixtures.
+- Rendered `code_review_lens` inside the existing Workbench object editor panel with separate Facts, Relations, Findings, and AI annotations sections.
+- Kept every review finding evidence-linked and kept the fixture bounded to one selected Workbench object neighborhood.
+- Refreshed the static-MVP manifest checksum because app-source edits changed `apps/static-mvp/**`.
 
 Acceptance criteria:
 1. No whole-repo graph.
